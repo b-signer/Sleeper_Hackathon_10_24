@@ -10,8 +10,9 @@ from pathlib import Path
 import pytest
 from fastapi.testclient import TestClient
 
+from sleeper.config import Settings
 from sleeper.contracts import RunResult, RunSettings
-from sleeper.server import FakeRunner, RunStore, create_app
+from sleeper.server import FAKE_MODEL, FakeRunner, RunStore, app_from_settings, create_app
 from sleeper.server.store import read_events
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -189,10 +190,69 @@ def test_a_crashed_run_still_ends_with_a_record(tmp_path):
     assert result["status"] == "error" and "model provider down" in result["error"]
 
 
+# ---- Real runs through T10 (app_from_settings) ------------------------------------
+
+
+def settings_for(tmp_path: Path, offline: bool) -> Settings:
+    return Settings(
+        github_token=None,
+        openrouter_api_key=None,
+        dev_model="openai/gpt-5.6-luna",
+        demo_model="openai/gpt-5.6-terra",
+        offline=offline,
+        cache_dir=tmp_path / "cache",
+        runs_dir=tmp_path / "runs",
+        universes_dir=tmp_path / "universes",
+    )
+
+
+@pytest.fixture
+def agent_client(tmp_path, monkeypatch):
+    monkeypatch.chdir(ROOT)  # the fake universe and fake run are found relative to the repo
+    return TestClient(app_from_settings(settings_for(tmp_path, offline=True)))
+
+
+def test_config_lists_models_and_offline(agent_client):
+    config = agent_client.get("/api/config").json()
+    assert config["offline"] is True and config["default_model"] == FAKE_MODEL
+    by_id = {m["id"]: m for m in config["models"]}
+    assert by_id[FAKE_MODEL]["offline_ok"] is True
+    assert by_id["openai/gpt-5.6-terra"]["input_per_m"] == 2.0
+
+
+def test_scripted_run_through_t10_end_to_end(agent_client):
+    res = agent_client.post("/api/runs", json={"topic": "fake", "model": FAKE_MODEL, "universe_file": "fixtures/fake/universe.json"})
+    assert res.status_code == 202, res.text
+    run_id = res.json()["run_id"]
+    messages = parse_sse(agent_client.get(f"/api/runs/{run_id}/events").text)
+    assert messages[0]["event"] == "run_started" and messages[-2]["event"] == "run_finished"
+    result = RunResult.model_validate(agent_client.get(f"/api/runs/{run_id}/result").json())
+    assert result.status == "ok" and 1 <= len(result.cards) <= 5
+
+
+@pytest.mark.parametrize(
+    "body, reason",
+    [
+        ({"topic": "fake", "model": "openai/gpt-5.6-luna"}, "offline mode"),
+        ({"topic": "rust-devtools", "model": FAKE_MODEL}, "only works on the 'fake' universe"),
+    ],
+)
+def test_refused_settings(agent_client, body, reason):
+    res = agent_client.post("/api/runs", json=body)
+    assert res.status_code == 400 and reason in res.json()["detail"]
+
+
 # ---- The page -------------------------------------------------------------------
 
 
-def test_page_loads_with_no_external_assets(client):
+def test_page_and_assets_load_with_no_external_assets(client):
     res = client.get("/")
     assert res.status_code == 200 and "<title>Sleeper</title>" in res.text
     assert not re.search(r"""(src|href)\s*=\s*["']?(https?:)?//""", res.text), "page must work offline (C4)"
+    assets = re.findall(r"""(?:src|href)="(/static/[^"]+)\"""", res.text)
+    assert "/static/app.js" in assets and "/static/app.css" in assets
+    modules = ["/static/util.js", "/static/trace.js", "/static/cards.js"]
+    for path in assets + modules:
+        body = client.get(path)
+        assert body.status_code == 200, path
+        assert not re.search(r"""(import[^;]*from\s*["']https?:|url\(\s*["']?https?:|@import)""", body.text), path
