@@ -50,7 +50,7 @@
 {"seq":49,"ts":"2026-10-24T14:01:38Z","run_id":"20261024-140000_fake","type":"usage","turn":6,"max_turns":25,"usage":{"prompt_tokens":91900,"completion_tokens":4510,"cached_tokens":0,"total_tokens":96410,"cost_usd":0.023792},"token_budget":300000,"tokens_remaining":203590}
 {"seq":50,"ts":"2026-10-24T14:01:40Z","run_id":"20261024-140000_fake","type":"status","phase":"fact_checking","message":null}
 {"seq":51,"ts":"2026-10-24T14:01:42Z","run_id":"20261024-140000_fake","type":"fact_check","repo":"acme/quiver","flags":[]}
-{"seq":52,"ts":"2026-10-24T14:01:44Z","run_id":"20261024-140000_fake","type":"fact_check","repo":"lumen-dev/tidepool","flags":[{"card_path":"case[1].text","shown":"14","source_call_id":"c_004","source_path":"/metrics/forks_30d","found":"9","message":"14 does not match forks_30d = 9 in c_004"}]}
+{"seq":52,"ts":"2026-10-24T14:01:44Z","run_id":"20261024-140000_fake","type":"fact_check","repo":"lumen-dev/tidepool","flags":[{"card_path":"case[1].text","shown":"14","source_call_id":"c_004","source_path":null,"found":null,"message":"14 is not in the cited output (c_004)"}]}
 {"seq":53,"ts":"2026-10-24T14:01:46Z","run_id":"20261024-140000_fake","type":"fact_check","repo":"ghostly/phantom-build","flags":[]}
 {"seq":54,"ts":"2026-10-24T14:01:48Z","run_id":"20261024-140000_fake","type":"status","phase":"finished","message":null}
 {"seq":55,"ts":"2026-10-24T14:01:50Z","run_id":"20261024-140000_fake","type":"run_finished","status":"ok","error":null}

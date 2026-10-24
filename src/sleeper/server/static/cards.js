@@ -29,7 +29,12 @@ function renderCard(card, open) {
   const flagsAt = (path) => {
     const found = flags.filter((f) => f.card_path === path);
     found.forEach((f) => shown.add(f));
-    return found.map((f) => h("span", { class: "flag", title: f.message, tabindex: "0" }, `⚠ ${f.shown} ≠ ${f.found ?? "source"}`));
+    return found.map((f) => {
+      const text = f.found != null ? `⚠ ${f.shown} ≠ ${f.found}` : `⚠ ${f.shown} not in source`;
+      return f.source_call_id
+        ? h("button", { class: "flag", type: "button", title: `${f.message}. Click to see ${f.source_call_id}.`, onclick: () => open(f.source_call_id, f.source_path) }, text)
+        : h("span", { class: "flag", title: f.message, tabindex: "0" }, text);
+    });
   };
 
   const cite = (ids) =>
