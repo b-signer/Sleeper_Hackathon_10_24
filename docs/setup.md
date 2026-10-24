@@ -5,14 +5,17 @@ You need two keys in a `.env` file in the project root. Copy `.env.example` to `
 | Key | What it's for | Cost | Who has it |
 |---|---|---|---|
 | `OPENROUTER_API_KEY` | Calls the AI models: luna for development, terra for the demo | Paid from prepaid credits | **One shared team key.** Ask Roee for it by direct message or password manager |
-| `GITHUB_TOKEN` | Reads public repo data from GitHub: stars, commits, READMEs. Without a token, GitHub allows only 60 requests per hour | Free | **Everyone makes their own**, because rate limits are per token |
+| `GITHUB_TOKEN` | Reads **other people's public repos** (the ones Sleeper analyzes): stars, stargazers, commits, READMEs. It isn't used for our own repo; pushing and pulling use your normal git login | Free | Anyone whose code calls GitHub: the data track and the agent track. Everyone uses their own, because rate limits are per token |
 
 ## Make your GitHub token (2 minutes)
 
-1. Go to github.com → Settings → Developer settings → Personal access tokens → **Fine-grained tokens** → Generate new token.
+Use a **classic** token with **no scopes**. Fine-grained tokens can't read stargazer lists (GitHub returns `403 Resource not accessible by personal access token`), and the momentum metric depends on them. A classic token with no scopes can only read public data.
+
+1. Go to github.com → Settings → Developer settings → Personal access tokens → **Tokens (classic)** → Generate new token (classic).
 2. Name it `sleeper-hackathon` and set it to expire in 7 days.
-3. Repository access: **Public repositories (read-only)**. Add no other permissions.
-4. Generate the token and paste it into `.env` as `GITHUB_TOKEN=`.
+3. **Leave every scope box unticked.**
+4. Generate the token (it starts with `ghp_`) and paste it into `.env` as `GITHUB_TOKEN=`.
+5. Check it: `uv run pytest -m live` should pass.
 
 ## Spending safety
 

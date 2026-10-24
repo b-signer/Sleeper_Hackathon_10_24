@@ -33,3 +33,4 @@ Append one dated line per finding, naming your ticket. Don't rewrite other peopl
 - 2026-10-24 (T04): OpenRouter key works, with a $50 key limit and $0 used. **The account has only $5 of credit**, so top it up to $50 before tuning runs.
 - 2026-10-24 (T04): `gpt-5.6-luna` and `gpt-5.6-terra` are both available with tool calling. Luna returned 3 tool calls in one turn, so parallel calls work. `usage` includes token counts and exact `cost` (`"usage": {"include": true}`).
 - 2026-10-24 (T04): python.org's Python on macOS fails SSL verification until its certificates are installed (see `docs/setup.md`).
+- 2026-10-24 (T04): **Fine-grained GitHub tokens get `403` on stargazers** (REST and GraphQL), even for public repos. Use a classic token with no scopes. `docs/setup.md` is updated.
