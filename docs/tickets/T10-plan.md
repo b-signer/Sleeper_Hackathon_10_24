@@ -4,21 +4,23 @@ Coordinator plan for T10 ([agent.md](agent.md)). Two work packages, **W1** (engi
 
 ## 1. Done-when checklist (T10)
 
-| # | Item | Owner | Test |
-|---|---|---|---|
-| 1 | Loop calls the configured model via OpenRouter (OpenAI-compatible chat completions) with the tools | W2 client, W1 loop | `test_agent_openrouter.py`, live |
-| 2 | Tool calls from one turn run concurrently; `submit` runs after the others in that turn | W1 | `test_parallel_tool_calls` |
-| 3 | Narration (`narration`), reasoning (`reasoning`), `tool_call`, `tool_result` events recorded as they happen | W1 emits, W2 writes | `test_events_*` |
-| 4 | No web: `:online` models, search models and `plugins`/`web_search_options` refused in code | W2 | `test_no_web_*` |
-| 5 | Usage and cost taken from the provider's `usage` (request sets `"usage": {"include": true}`) | W2 | `test_parses_usage_and_cost` |
-| 6 | Budget line shown to the model every turn (turn n/max, tokens used/left, $ so far, phase) | W1 | `test_budget_line_each_turn` |
-| 7 | Wrap-up warning when budget runs low; at the end only `submit` is offered and forced | W1 | `test_budget_phases`, `test_submit_only_phase` |
-| 8 | Spend guard: a run that would push total spend past $45 is refused before it starts (no run folder) | W2 | `test_spend_guard_*`, `test_cli_run_refused_by_spend_guard` |
-| 9 | Statuses `ok`, `budget_exhausted`, `invalid`, `timeout`, `error`, incl. a stalled model | W1 | `test_status_*` |
-| 10 | Run folder `runs/<run_id>/`: `settings.json`, `events.jsonl` written live (another process can read it mid-run), `result.json` | W2 | `test_records_*` |
-| 11 | `sleeper run` command | W2 | `test_cli_run_*` |
-| 12 | Scripted fake model drives a full run on fake data, offline, producing valid records | W1 model+script, W2 CLI `--fake` | `test_status_ok_full_run`, `test_cli_run_fake` |
-| 13 | Offline end-to-end test (CLI `--fake` -> valid run folder) | W2 (enabled after merge) | `test_cli_run_fake` |
+| # | Item | Owner | Test | Done |
+|---|---|---|---|---|
+| 1 | Loop calls the configured model via OpenRouter (OpenAI-compatible chat completions) with the tools | W2 client, W1 loop | `test_agent_openrouter.py`, live | ✅ |
+| 2 | Tool calls from one turn run concurrently; `submit` runs after the others in that turn | W1 | `test_parallel_tool_calls` | ✅ |
+| 3 | Narration (`narration`), reasoning (`reasoning`), `tool_call`, `tool_result` events recorded as they happen | W1 emits, W2 writes | `test_events_*` | ✅ |
+| 4 | No web: `:online` models, search models and `plugins`/`web_search_options` refused in code | W2 | `test_no_web_*` | ✅ |
+| 5 | Usage and cost taken from the provider's `usage` (request sets `"usage": {"include": true}`) | W2 | `test_parses_usage_and_cost` | ✅ |
+| 6 | Budget line shown to the model every turn (turn n/max, tokens used/left, $ so far, phase) | W1 | `test_budget_line_each_turn` | ✅ |
+| 7 | Wrap-up warning when budget runs low; at the end only `submit` is offered and forced | W1 | `test_budget_phases`, `test_submit_only_phase` | ✅ |
+| 8 | Spend guard: a run that would push total spend past $45 is refused before it starts (no run folder) | W2 | `test_spend_guard_*`, `test_cli_run_refused_by_spend_guard` | ✅ |
+| 9 | Statuses `ok`, `budget_exhausted`, `invalid`, `timeout`, `error`, incl. a stalled model | W1 | `test_status_*` | ✅ |
+| 10 | Run folder `runs/<run_id>/`: `settings.json`, `events.jsonl` written live (another process can read it mid-run), `result.json` | W2 | `test_records_*` | ✅ |
+| 11 | `sleeper run` command | W2 | `test_cli_run_*` | ✅ |
+| 12 | Scripted fake model drives a full run on fake data, offline, producing valid records | W1 model+script, W2 CLI `--fake` | `test_status_ok_full_run`, `test_cli_run_fake` | ✅ |
+| 13 | Offline end-to-end test (CLI `--fake` -> valid run folder) | W2 (enabled after merge) | `test_cli_run_fake` | ✅ |
+
+Integrated on `feat/t10-agent-loop` (W1 + W2 merged; 177 offline tests pass; fake run and a live luna run end `ok`). Coordinator fixes at integration: budget phases also project from the last turn's size, so small budgets still get a submit-only turn; parallel tool calls are bounded by the wall clock (`timeout` instead of a hang).
 
 ## 2. Layout and file ownership
 
@@ -264,13 +266,13 @@ Every run emits `run_started` first (settings, universe header, `git_sha`, `prom
 **Consumes:** contracts; `types.py`; `sleeper.fakes` (`fake_universe()`, tool output helpers, and `fake_run()` as a reference for a realistic script and cards). Uses an in-test `ListSink` (implements `EventSink`, keeps events in a list, assigns seq/ts/run_id, round-trips each through `dump_event`/`parse_event`) instead of W2's `RunRecorder`.
 
 **Steps:**
-- [ ] `types.py`, `__init__.py` verbatim from §3.
-- [ ] `tool_specs.py`: `{"type": "function", "function": {name, description, parameters}}` per tool from `TOOL_ARGS[...].model_json_schema()`; short descriptions. Make sure `$defs`/`$ref` schemas are accepted by OpenAI-style APIs (inline refs if in doubt).
-- [ ] `stub_tools.py`: `StubTools`: validate args with `TOOL_ARGS` (-> `BAD_ARGS`), then browse/repo_details/readme via `sleeper.fakes.browse_output` / `repo_details_output` / `readme_output`; submit is the only new logic: validate `Submission`, check card repos are in the universe, cited call ids exist and were successful, `len(cards) <= max_picks`; track attempts. Thread-safe (lock around the outputs record). Keep it small: T09 replaces it.
-- [ ] `prompt.py`: a short placeholder prompt (task, tools, cite call ids, memory is not a source, budget line meaning). T11 owns the real text.
-- [ ] `budget.py`: cumulative `Usage`, turn count, phase, `line()`, `exhausted`.
-- [ ] `scripted.py`: `ScriptedModel`, `reply()` (tool call ids like `call_1`; cost from luna prices, `sleeper.fakes.PRICE_PER_M`, if not given), `fake_script(u)` on `fake_universe()`, modelled on `fakes.fake_run()`'s turns: browse; browse with filters; several `repo_details` in parallel (incl. one repo outside the universe -> `NOT_IN_UNIVERSE`); `readme`s (incl. `mystery/unknown-cli` -> `NOT_FOUND`); a rejected submit; a valid submit with cards citing the real call ids (deterministic `c_001`… in order, so the script can hard-code them, or build cards from earlier tool messages via a callable step).
-- [ ] `loop.py`: `run_agent` per §4.
+- [x] `types.py`, `__init__.py` verbatim from §3.
+- [x] `tool_specs.py`: `{"type": "function", "function": {name, description, parameters}}` per tool from `TOOL_ARGS[...].model_json_schema()`; short descriptions. Make sure `$defs`/`$ref` schemas are accepted by OpenAI-style APIs (inline refs if in doubt).
+- [x] `stub_tools.py`: `StubTools`: validate args with `TOOL_ARGS` (-> `BAD_ARGS`), then browse/repo_details/readme via `sleeper.fakes.browse_output` / `repo_details_output` / `readme_output`; submit is the only new logic: validate `Submission`, check card repos are in the universe, cited call ids exist and were successful, `len(cards) <= max_picks`; track attempts. Thread-safe (lock around the outputs record). Keep it small: T09 replaces it.
+- [x] `prompt.py`: a short placeholder prompt (task, tools, cite call ids, memory is not a source, budget line meaning). T11 owns the real text.
+- [x] `budget.py`: cumulative `Usage`, turn count, phase, `line()`, `exhausted`.
+- [x] `scripted.py`: `ScriptedModel`, `reply()` (tool call ids like `call_1`; cost from luna prices, `sleeper.fakes.PRICE_PER_M`, if not given), `fake_script(u)` on `fake_universe()`, modelled on `fakes.fake_run()`'s turns: browse; browse with filters; several `repo_details` in parallel (incl. one repo outside the universe -> `NOT_IN_UNIVERSE`); `readme`s (incl. `mystery/unknown-cli` -> `NOT_FOUND`); a rejected submit; a valid submit with cards citing the real call ids (deterministic `c_001`… in order, so the script can hard-code them, or build cards from earlier tool messages via a callable step).
+- [x] `loop.py`: `run_agent` per §4.
 
 **Acceptance tests (offline):**
 - `test_status_ok_full_run`: `fake_script(fake_universe())` + `StubTools(fake_universe())` -> `status == "ok"`, 1–5 cards, ranking non-empty, `submit_attempts == 2`; events: seq contiguous from 0, all parse with `parse_event`, first `run_started`, last `run_finished(status="ok")`, every `tool_call` has a `tool_result` with the same `call_id`, one `usage` event per turn, `narration` texts equal the script's texts; `result.usage == last usage event's usage`; `RunResult.model_validate_json(result.model_dump_json())` round-trips.
@@ -299,12 +301,12 @@ Every run emits `run_started` first (settings, universe header, `git_sha`, `prom
 **Consumes:** contracts, `config.load_settings`, `types.py`; `sleeper.fakes` / `fixtures/fake/` (fake universe; the recorded run `fixtures/fake/runs/20261024-140000_fake/` as test input for `read_events`); W1's `run_agent`, `ScriptedModel`, `fake_script`, `StubTools` (lazy imports in `execute_run`; tests needing them use `pytest.importorskip("sleeper.agent.loop")` so they skip in W2's worktree and run after merge).
 
 **Steps:**
-- [ ] `types.py`, `__init__.py` verbatim from §3.
-- [ ] `openrouter.py` per §4 (httpx, sync). Optional `HTTP-Referer`/`X-Title` headers.
-- [ ] `spend.py` per §4.
-- [ ] `records.py`: `new_run_id`, `RunRecorder` (lock, append + flush per event, optional `echo`), `write_result`, `read_events`.
-- [ ] `runner.py`: `load_universe`, `execute_run` per §3.4; `git_sha` from `git rev-parse --short HEAD` if available.
-- [ ] `cli.py`: `sleeper run --topic T [--universe PATH] [--model M (default cfg.dev_model)] [--max-picks N] [--min-ranked N] [--token-budget N] [--max-turns N] [--max-wall-clock S] [--fake] [--quiet]`. `--fake` sets model `scripted/fake`. Prints narration/tool lines live via `echo` unless `--quiet`, then the run folder and status. Exit 0 if `ok`, 1 for other statuses, 2 if refused (web, spend, universe missing) with a one-line reason.
+- [x] `types.py`, `__init__.py` verbatim from §3.
+- [x] `openrouter.py` per §4 (httpx, sync). Optional `HTTP-Referer`/`X-Title` headers.
+- [x] `spend.py` per §4.
+- [x] `records.py`: `new_run_id`, `RunRecorder` (lock, append + flush per event, optional `echo`), `write_result`, `read_events`.
+- [x] `runner.py`: `load_universe`, `execute_run` per §3.4; `git_sha` from `git rev-parse --short HEAD` if available.
+- [x] `cli.py`: `sleeper run --topic T [--universe PATH] [--model M (default cfg.dev_model)] [--max-picks N] [--min-ranked N] [--token-budget N] [--max-turns N] [--max-wall-clock S] [--fake] [--quiet]`. `--fake` sets model `scripted/fake`. Prints narration/tool lines live via `echo` unless `--quiet`, then the run folder and status. Exit 0 if `ok`, 1 for other statuses, 2 if refused (web, spend, universe missing) with a one-line reason.
 
 **Acceptance tests (offline unless marked):**
 - `test_no_web_refuses_online_and_search_models`: `:online`, `perplexity/sonar`, `openai/gpt-4o-search-preview` raise `WebAccessRefused`; luna and terra pass; `OpenRouterModel("x:online", "k")` raises.

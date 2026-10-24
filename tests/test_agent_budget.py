@@ -13,15 +13,16 @@ def u(tokens: int, cost: float = 0.0) -> Usage:
 def test_budget_phases():
     b = Budget(token_budget=100_000, max_turns=25)
     assert b.phase == "researching" and not b.exhausted
-    b.add(u(70_000))
-    assert b.phase == "researching"
+    for _ in range(7):
+        b.add(u(10_000))
+    assert b.phase == "researching"  # 30k left, last turn 10k
     b.add(u(5_000))  # 25% left
     assert b.phase == "wrapping_up"
     b.add(u(15_000))  # 10% left
     assert b.phase == "submit_only" and not b.exhausted
     b.add(u(10_000))
     assert b.exhausted and b.tokens_remaining == 0
-    assert b.usage.total_tokens == 100_000 and b.turns == 4
+    assert b.usage.total_tokens == 100_000 and b.turns == 10
 
 
 def test_budget_phases_by_turns():
@@ -53,3 +54,15 @@ def test_budget_line_has_the_numbers():
     assert "turn 2/25" in line
     assert "3,200" in line and "296,800 left" in line and "300,000" in line
     assert "$0.0008" in line and "researching" in line
+
+
+def test_budget_projects_from_last_turn_size():
+    """A small budget with big turns: submit_only comes before the fraction thresholds would trigger it."""
+    b = Budget(token_budget=60_000, max_turns=25)
+    b.add(u(12_000))
+    assert b.phase == "researching"  # 48k left > 3 x 12k
+    b.add(u(14_000))
+    assert b.phase == "wrapping_up"  # 34k left < 3 x 14k (fraction alone: 57% left)
+    b.add(u(16_000))
+    assert b.phase == "submit_only"  # 18k left < 1.5 x 16k (fraction alone: 30% left)
+    assert not b.exhausted
