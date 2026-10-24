@@ -29,7 +29,7 @@
 3. `sleeper backtest run --past <that file> [--model ...]` is a normal run (`execute_run`) with the live prompt plus an as-of block, and READMEs as of the date.
 4. `sleeper backtest score <run_id> --github` writes `backtest.json` in the run folder (agent vs universe average, momentum and popularity baselines, random-portfolio percentiles, ranking Spearman, caveats).
 
-It doesn't copy anything from T11, T18 or T19: the live prompt (`sleeper.agent.prompt.system_prompt`) and the scorer (`sleeper.scoring.score_universe`, `SCORING`) are looked up at call time, the repo set comes from the current universe (so T18's relevance filter carries over), and runs go through `execute_run` like the UI. Rerun `prepare` after T18 rebuilds the universes. Offline demo: `tests/test_backtest_run.py`.
+It doesn't copy anything from T11, T18 or T19: the live prompt (`sleeper.agent.prompt.system_prompt`, given today = the as-of date, then a backtest override block for its "live run" wording) and the scorer (`sleeper.scoring.score_universe`, `SCORING`) are looked up at call time, the repo set comes from the current universe (so T18's relevance filter carries over), and runs go through `execute_run` like the UI. Rerun `prepare` after T18 rebuilds the universes. Offline demo: `tests/test_backtest_run.py`.
 
 ---
 

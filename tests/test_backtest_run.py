@@ -81,3 +81,22 @@ def test_backtest_prompt_custom_base():
     s = RunSettings(topic="fake", model="scripted/fake")
     text = bt_prompt.backtest_prompt(s, u.header, date(2026, 8, 1), base=lambda st, h: "BASE")
     assert text.startswith("BASE") and "after 2026-08-01" in text
+
+
+def test_backtest_prompt_passes_as_of_as_today_to_the_live_prompt(monkeypatch):
+    seen = {}
+
+    def fake(settings, header, today=None):
+        seen["today"] = today
+        return "LIVE"
+
+    monkeypatch.setattr(live, "system_prompt", fake)
+    bt_prompt.backtest_prompt(RunSettings(topic="fake", model="scripted/fake"), fake_universe().header, date(2026, 8, 1))
+    assert seen["today"] == date(2026, 8, 1)
+
+
+def test_backtest_prompt_on_the_real_live_prompt():
+    """With T11's real prompt: its "today" is the as-of date, and the override comes last."""
+    text = bt_prompt.backtest_prompt(RunSettings(topic="fake", model="scripted/fake"), fake_universe().header, date(2026, 8, 1))
+    assert "Today is 2026-08-01" in text.split("BACKTEST OVERRIDE")[0]
+    assert text.rstrip().endswith("The language rules above still apply.")
