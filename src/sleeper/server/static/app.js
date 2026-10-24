@@ -10,73 +10,227 @@ const EVENT_TYPES = [
 ];
 
 const $ = (id) => document.getElementById(id);
-const state = { config: null, universes: [], runs: [], runId: null, source: null, lastSeq: -1, outputs: {}, tab: null };
+const state = {
+  config: null, universes: [], runs: [], runId: null, source: null, lastSeq: -1, outputs: {}, tab: null,
+  mode: "replay", spend: null,
+};
 const trace = new Trace($("trace"));
 
+// Errors carry `status`, and `reason` when the server refused a run (400 detail = {reason, message}).
 async function api(path, options) {
   const res = await fetch(path, options);
   const body = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error(typeof body.detail === "string" ? body.detail : `${res.status} ${res.statusText}`);
+  if (!res.ok) {
+    const d = body.detail;
+    let message = `${res.status} ${res.statusText}`;
+    if (typeof d === "string") message = d;
+    else if (Array.isArray(d)) message = d.map((x) => `${(x.loc || []).slice(1).join(".")}: ${x.msg}`).join("; ");
+    else if (d && typeof d.message === "string") message = d.message;
+    const err = new Error(message);
+    err.status = res.status;
+    err.reason = d && typeof d === "object" && !Array.isArray(d) ? d.reason ?? null : null;
+    throw err;
+  }
   return body;
 }
 
-// ---- Launcher ----------------------------------------------------------------
+// ---- Launcher: Replay (default, free) or Live run (real model, costs money) ------------
+
+const REFUSAL_TITLES = {
+  spend_guard: "Not started: spend limit",
+  offline: "Not started: offline mode",
+  no_universe: "Not started: universe not found",
+  no_api_key: "Not started: no API key",
+  web_model: "Not started: model has web access",
+  other: "Not started",
+};
+
+function showRefusal(err) {
+  let title = REFUSAL_TITLES[err.reason] ?? "Not started";
+  if (!err.reason && err.status === 409) title = "Not started: a run is in progress";
+  else if (!err.reason && err.status === 422) title = "Not started: invalid settings";
+  else if (!err.reason && !err.status) title = "Not started: can't reach the server";
+  $("launch-error-title").textContent = title;
+  $("launch-error-msg").textContent = err.message;
+  $("launch-error").hidden = false;
+}
+
+function hideRefusal() {
+  $("launch-error").hidden = true;
+}
+
+function setMode(mode) {
+  if (mode === "live" && state.config.live_disabled_reason) mode = "replay";
+  state.mode = mode;
+  for (const [id, m] of [["mode-replay", "replay"], ["mode-live", "live"]]) {
+    $(id).classList.toggle("active", mode === m);
+    $(id).setAttribute("aria-selected", String(mode === m));
+  }
+  $("replay-form").hidden = mode !== "replay";
+  $("launcher").hidden = mode !== "live";
+  cancelConfirm();
+  hideRefusal();
+  if (mode === "live") loadSpend();
+}
 
 function fillLauncher() {
-  const { config, universes } = state;
+  const { config } = state;
   $("offline-pill").hidden = !config.offline;
-  $("f-universe").replaceChildren(
-    ...universes.map((u) => h("option", { value: u.file, dataset: { topic: u.topic } }, `${u.topic_label} · ${u.rows} repos`)),
-  );
+  const reason = config.live_disabled_reason;
+  $("mode-live").disabled = Boolean(reason);
+  $("mode-live").title = reason || "";
+  $("live-disabled").textContent = reason || "";
+  $("live-disabled").hidden = !reason;
   $("f-model").replaceChildren(
     ...config.models.map((m) => {
       const price = m.input_per_m == null ? "" : ` · $${m.input_per_m}/$${m.output_per_m} per M`;
-      return h("option", { value: m.id, disabled: config.offline && !m.offline_ok }, m.label + price);
+      return h("option", { value: m.id }, m.label + price);
     }),
   );
   $("f-model").value = config.default_model;
+  $("f-budget").value = config.default_token_budget;
   syncModel();
+  setMode("replay");
 }
 
-// The scripted fake model only knows the fake universe.
+// Finished runs, newest first. Default: the newest with cards, else the recorded fake run.
+function fillReplay() {
+  const list = $("r-run");
+  const keep = list.value;
+  const done = state.runs.filter((r) => r.status !== "running");
+  list.replaceChildren(
+    ...done.map((r) =>
+      h("option", { value: r.run_id }, `${r.topic} · ${r.model.replace(/^.*\//, "")} · ${r.cards} picks · ${fmtTime(r.started_at)}`),
+    ),
+  );
+  const fallback = done.find((r) => r.cards > 0) ?? done.find((r) => r.topic === "fake") ?? done[0];
+  if (done.some((r) => r.run_id === keep)) list.value = keep;
+  else if (fallback) list.value = fallback.run_id;
+  $("r-start").disabled = !done.length;
+  if (!done.length) list.replaceChildren(h("option", { value: "" }, "No finished runs yet"));
+}
+
+const modelInfo = () => state.config.models.find((m) => m.id === $("f-model").value);
+const isFake = () => $("f-model").value === state.config.fake_model;
+
+// Same formula as sleeper.agent.spend.estimate_max_cost (unknown prices: the dearest known
+// model's). The server checks the guard again when the run starts.
+function worstCase() {
+  const m = modelInfo();
+  if (!m || isFake()) return 0;
+  const budget = Number($("f-budget").value) || 0;
+  const dearest = state.config.models.reduce((a, x) => ((x.input_per_m ?? 0) > (a.input_per_m ?? 0) ? x : a), {});
+  const pin = m.input_per_m ?? dearest.input_per_m ?? 0;
+  const pout = m.output_per_m ?? dearest.output_per_m ?? 0;
+  return (budget * (pin + state.config.output_share * pout)) / 1e6;
+}
+
+// The scripted fake model only knows the fake universe; real models only the real ones.
 function syncModel() {
-  const fake = $("f-model").value === state.config.fake_model;
-  if (fake) {
-    const u = state.universes.find((x) => x.topic === "fake");
-    if (u) $("f-universe").value = u.file;
-  }
-  $("f-universe").disabled = fake;
-  $("f-hint").textContent = fake ? "Scripted run on fake data: offline and free." : "Real model calls: this spends from the OpenRouter budget.";
+  const fake = isFake();
+  const select = $("f-universe");
+  const keep = select.value;
+  const choices = state.universes.filter((u) => (u.topic === "fake") === fake);
+  select.replaceChildren(
+    ...choices.map((u) => h("option", { value: u.file, dataset: { topic: u.topic } }, `${u.topic_label} · ${u.rows} repos`)),
+  );
+  if (choices.some((u) => u.file === keep)) select.value = keep;
+  select.disabled = fake || !choices.length;
+  $("f-budget").disabled = fake;
+  $("f-hint").textContent = fake
+    ? "Offline test: a scripted run on fake data. Free, no network."
+    : choices.length
+      ? "Real model calls on a prebuilt universe. This spends from the OpenRouter budget."
+      : "No real universe is built yet (sleeper build-universe).";
+  cancelConfirm();
+  syncCost();
 }
 
-async function startRun(e) {
-  e.preventDefault();
+// Updates the cost text only; a changed setting cancels a pending confirm in its own handler.
+function syncCost() {
+  const cost = worstCase();
+  $("f-start").textContent = isFake() ? "Start offline test (free)" : `Start live run · up to ${fmtUsd(cost)}`;
+  $("f-start").disabled = !isFake() && !state.universes.some((u) => u.topic !== "fake");
+  const s = state.spend;
+  if (isFake() || !s) {
+    $("f-spend").textContent = "";
+    return;
+  }
+  const over = s.spent_usd + cost > s.guard_usd;
+  $("f-spend").textContent =
+    `Spent so far: ${fmtUsd(s.spent_usd)} of the ${fmtUsd(s.guard_usd)} guard` +
+    (s.source === "local" ? " (local records; OpenRouter unreachable)" : "") +
+    (over ? ". This run would go past the guard and will be refused." : ".");
+  $("f-spend").classList.toggle("error", over);
+}
+
+async function loadSpend() {
+  try {
+    state.spend = await api("/api/spend");
+  } catch {
+    state.spend = null;
+  }
+  syncCost();
+}
+
+function liveSettings() {
   const select = $("f-universe");
-  const settings = {
+  return {
     topic: select.selectedOptions[0]?.dataset.topic,
     universe_file: select.value,
     model: $("f-model").value,
-    stars_min: Number($("f-stars-min").value),
-    stars_max: Number($("f-stars-max").value),
     max_picks: Number($("f-max-picks").value),
+    ...(isFake() ? {} : { token_budget: Number($("f-budget").value) }),
   };
-  const button = $("f-start");
-  button.disabled = true;
-  $("launch-error").hidden = true;
+}
+
+// Step 1: a live run asks first; the free offline test starts at once.
+function askToStart(e) {
+  e.preventDefault();
+  hideRefusal();
+  if (isFake()) return postRun();
+  const s = liveSettings();
+  $("f-confirm-text").textContent =
+    `Start a live run of ${s.model} on ${s.topic}? It makes real model calls and can cost up to ` +
+    `${fmtUsd(worstCase())} (token budget ${fmtInt(s.token_budget)}).`;
+  $("f-start").hidden = true;
+  $("f-confirm").hidden = false;
+  $("f-go").focus();
+}
+
+function cancelConfirm() {
+  $("f-confirm").hidden = true;
+  $("f-start").hidden = false;
+}
+
+// Step 2: POST. A refusal (spend guard, offline, ...) shows as a titled box; no run exists.
+async function postRun() {
+  // A paid run only ever starts from the confirm box (askToStart shows it first).
+  if (!isFake() && $("f-confirm").hidden) return;
+  const buttons = [$("f-start"), $("f-go")];
+  for (const b of buttons) b.disabled = true;
   try {
     const { run_id } = await api("/api/runs", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(settings),
+      body: JSON.stringify(liveSettings()),
     });
+    cancelConfirm();
     await loadRuns();
     openRun(run_id);
   } catch (err) {
-    $("launch-error").textContent = err.message;
-    $("launch-error").hidden = false;
+    cancelConfirm();
+    showRefusal(err);
   } finally {
-    button.disabled = false;
+    for (const b of buttons) b.disabled = false;
+    syncCost();
   }
+}
+
+function startReplay(e) {
+  e.preventDefault();
+  const runId = $("r-run").value;
+  if (runId) openRun(runId, "replay", $("r-speed").value);
 }
 
 // ---- Run list ------------------------------------------------------------------
@@ -99,6 +253,7 @@ async function loadRuns() {
     ),
   );
   if (!state.runs.length) list.append(h("li", { class: "muted" }, "No runs yet."));
+  fillReplay();
 }
 
 // ---- Budget meter ----------------------------------------------------------------
@@ -135,10 +290,11 @@ function setStatus(status) {
   pill.className = `pill status-${status}`;
 }
 
-async function openRun(runId, mode = "events") {
+async function openRun(runId, mode = "events", speed = null) {
   if (state.source) state.source.close();
   closeDrawer();
   Object.assign(state, { runId, source: null, lastSeq: -1, outputs: {} });
+  if (speed != null) $("speed").value = speed;
   history.replaceState(null, "", `#run=${encodeURIComponent(runId)}${state.tab ? `&tab=${state.tab}` : ""}`);
   $("empty").hidden = true;
   $("run").hidden = false;
@@ -245,8 +401,19 @@ function closeDrawer() {
 // ---- Start-up --------------------------------------------------------------------------
 
 async function init() {
-  $("launcher").addEventListener("submit", startRun);
+  $("mode-replay").addEventListener("click", () => setMode("replay"));
+  $("mode-live").addEventListener("click", () => setMode("live"));
+  $("replay-form").addEventListener("submit", startReplay);
+  $("launcher").addEventListener("submit", askToStart);
+  $("f-go").addEventListener("click", postRun);
+  $("f-cancel").addEventListener("click", cancelConfirm);
   $("f-model").addEventListener("change", syncModel);
+  $("f-universe").addEventListener("change", cancelConfirm);
+  $("f-budget").addEventListener("input", () => {
+    cancelConfirm();
+    syncCost();
+  });
+  $("f-max-picks").addEventListener("input", cancelConfirm);
   $("replay").addEventListener("click", () => state.runId && openRun(state.runId, "replay"));
   $("drawer-close").addEventListener("click", closeDrawer);
   document.addEventListener("keydown", (e) => e.key === "Escape" && closeDrawer());
@@ -262,7 +429,8 @@ async function init() {
     fillLauncher();
     await loadRuns();
   } catch (err) {
-    $("launch-error").textContent = `Can't reach the server: ${err.message}`;
+    $("launch-error-title").textContent = "Can't reach the server";
+    $("launch-error-msg").textContent = err.message;
     $("launch-error").hidden = false;
     return;
   }
