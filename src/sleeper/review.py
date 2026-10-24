@@ -81,11 +81,12 @@ class Research:
     details: list[str]  # repos with a successful repo_details, in call order (deduped)
     readmes: list[tuple[str, int | None]]  # (repo, max_chars) with a successful readme
     descriptions: dict[str, str]  # lower-case repo -> description, from repo_details or browse rows
+    seen: set[str]  # lower-case repos that appeared in any browse row
 
 
 def research(events: list[dict[str, Any]]) -> Research:
     calls: dict[str, dict[str, Any]] = {}
-    r = Research([], [], [], {})
+    r = Research([], [], [], {}, set())
     for e in events:
         if e.get("type") == "tool_call":
             calls[e["call_id"]] = e
@@ -99,6 +100,7 @@ def research(events: list[dict[str, Any]]) -> Research:
             if tool == "browse":
                 r.browses.append(args)
                 for row in out.get("rows", []):
+                    r.seen.add(row["repo"].lower())
                     if row.get("description"):
                         r.descriptions.setdefault(row["repo"].lower(), row["description"])
             elif tool == "repo_details":
@@ -244,7 +246,8 @@ def render(run: Run) -> str:
         + (f" ({100 * used / budget:.0f}%)" if budget else "")
         + f" · cost ${usage.get('cost_usd', 0):.4f}",
         "",
-        f"Research: {len(rs.browses)} browse, {len(rs.details)} repo_details, {len(rs.readmes)} readme",
+        f"Research: {len(rs.browses)} browse ({len(rs.seen)} distinct repos seen"
+        + (f" of {rows}" if rows else "") + f"), {len(rs.details)} repo_details, {len(rs.readmes)} readme",
     ]
     for b in rs.browses:
         lines.append(f"  browse: {_browse_label(b)}")
