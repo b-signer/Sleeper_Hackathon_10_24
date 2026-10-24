@@ -43,6 +43,38 @@
         <label>Topic
           <select id="f-universe" required></select>
         </label>
+        <details id="nt" class="new-topic">
+          <summary>Research a new topic</summary>
+          <div class="nt-body">
+            <p id="nt-off" class="hint" hidden></p>
+            <label>Describe it
+              <input id="nt-text" type="text" maxlength="300" placeholder="e.g. Python static site generators">
+            </label>
+            <button id="nt-draft" type="button" class="secondary">Suggest searches</button>
+            <p class="hint">A model turns this into GitHub searches you can edit (under $0.01).</p>
+            <div id="nt-plan" class="nt-plan" hidden>
+              <label>Name <input id="nt-label" type="text" maxlength="60" required></label>
+              <div class="nt-head"><span>GitHub searches</span><span>matches</span></div>
+              <div id="nt-queries" class="nt-queries"></div>
+              <button id="nt-add" type="button" class="link">+ add a search</button>
+              <p id="nt-summary" class="hint"></p>
+              <p id="nt-warning" class="hint warn" hidden></p>
+              <div class="confirm-actions">
+                <button id="nt-recount" type="button">Recount</button>
+                <button id="nt-build" type="button" class="primary">Build topic</button>
+              </div>
+            </div>
+            <div id="nt-progress" class="nt-progress" hidden>
+              <progress id="nt-bar" max="1" value="0"></progress>
+              <p id="nt-status" class="hint"></p>
+              <pre id="nt-log" class="nt-log"></pre>
+            </div>
+            <div id="nt-error" class="refusal" role="alert" hidden>
+              <strong id="nt-error-title"></strong>
+              <p id="nt-error-msg"></p>
+            </div>
+          </div>
+        </details>
         <label>Model
           <select id="f-model" required></select>
         </label>

@@ -84,6 +84,23 @@ button:disabled { cursor: default; opacity: .55; }
 .refusal strong { color: var(--bad); display: block; }
 .refusal p { margin: 4px 0 0; overflow-wrap: anywhere; }
 
+/* ---- New topic ---- */
+.new-topic { border: 1px dashed var(--line); border-radius: 8px; padding: 8px 10px; font-size: 13px; }
+.new-topic summary { cursor: pointer; color: var(--accent); font-weight: 600; }
+.new-topic[open] summary { margin-bottom: 8px; }
+.nt-body, .nt-plan, .nt-progress { display: grid; gap: 8px; }
+.secondary { padding: 7px 10px; border: 1px solid var(--accent); border-radius: 6px; background: var(--panel); color: var(--accent); font-weight: 600; }
+.link { justify-self: start; padding: 0; border: 0; background: none; color: var(--accent); font-size: 13px; }
+.nt-head { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); }
+.nt-queries { display: grid; gap: 6px; }
+.nt-q { display: grid; grid-template-columns: 1fr auto auto; gap: 6px; align-items: center; }
+.nt-q input { font-family: var(--mono); font-size: 12px; }
+.nt-count { min-width: 3.5ch; text-align: right; font-variant-numeric: tabular-nums; color: var(--muted); }
+.nt-remove { padding: 2px 6px; border: 1px solid var(--line); border-radius: 6px; background: var(--panel); color: var(--muted); }
+.hint.warn { color: var(--warn); }
+.nt-progress progress { width: 100%; accent-color: var(--accent); }
+.nt-log { margin: 0; max-height: 9em; overflow: auto; padding: 6px 8px; border-radius: 6px; background: var(--bg); font: 11px/1.4 var(--mono); color: var(--muted); white-space: pre-wrap; overflow-wrap: anywhere; }
+
 /* ---- Run list ---- */
 .run-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; max-height: 50vh; overflow: auto; }
 .run-item { width: 100%; text-align: left; padding: 8px 10px; border: 1px solid transparent; border-radius: 8px; background: transparent; display: grid; gap: 2px; }

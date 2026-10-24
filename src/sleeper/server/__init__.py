@@ -12,6 +12,7 @@ from sleeper.contracts import RunSettings
 from sleeper.server.app import FAKE_MODEL, create_app, refusal_for
 from sleeper.server.runner import FAKE_RUN_DIR, FakeRunner, Runner, RunRefused
 from sleeper.server.store import ModelInfo, Refusal, RunInfo, RunStore, ServerConfig, SpendInfo, UniverseInfo
+from sleeper.server.topics import TopicService, topic_service_from_settings
 
 FAKE_DIR = Path("fixtures/fake")
 FAKE_TOPIC = "fake"
@@ -27,6 +28,7 @@ __all__ = [
     "Runner",
     "ServerConfig",
     "SpendInfo",
+    "TopicService",
     "UniverseInfo",
     "agent_runner",
     "app_from_settings",
@@ -34,10 +36,12 @@ __all__ = [
     "refusal_for",
     "server_config",
     "spend_info",
+    "topic_service_from_settings",
 ]
 
 OFFLINE_REASON = "Offline mode (SLEEPER_OFFLINE=1): live runs are off. Replay works."
 NO_KEY_REASON = "OPENROUTER_API_KEY is not set, so live runs can't call a model. Replay works."
+NO_GITHUB_REASON = "GITHUB_TOKEN is not set, so new topics can't be built."
 
 
 def agent_runner(cfg: Settings) -> Runner:
@@ -92,6 +96,7 @@ def server_config(cfg: Settings) -> ServerConfig:
         fake_model=FAKE_MODEL,
         default_token_budget=default_budget,
         live_disabled_reason=live_disabled,
+        custom_topics_reason=live_disabled or (None if cfg.github_token else NO_GITHUB_REASON),
     )
 
 
@@ -109,13 +114,16 @@ def spend_info(cfg: Settings) -> SpendInfo | None:
     return SpendInfo(spent_usd=spend.local_spend(cfg.runs_dir), source="local")
 
 
-def app_from_settings(settings: Settings, runner: Runner | None = None) -> FastAPI:
-    """The app `sleeper serve` runs: runs in SLEEPER_RUNS_DIR plus the recorded fake run, started with T10."""
+def app_from_settings(settings: Settings, runner: Runner | None = None, topics: TopicService | None = None) -> FastAPI:
+    """The app `sleeper serve` runs: runs in SLEEPER_RUNS_DIR plus the recorded fake run, started with T10.
+    Universes: the prebuilt ones, custom topics built from the launcher (under the cache), and the fake one."""
     store = RunStore(settings.runs_dir, extra_dirs=[FAKE_RUN_DIR.parent])
+    topics = topics or topic_service_from_settings(settings)
     return create_app(
         store,
-        universe_dirs=[settings.universes_dir, FAKE_DIR],
+        universe_dirs=[settings.universes_dir, topics.out_dir, FAKE_DIR],
         runner=runner or agent_runner(settings),
         config=server_config(settings),
         spend=lambda: spend_info(settings),
+        topics=topics,
     )
