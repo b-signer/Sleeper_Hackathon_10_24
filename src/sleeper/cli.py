@@ -22,6 +22,9 @@ def build_parser() -> argparse.ArgumentParser:
     schema.add_argument("--out", default="schemas", help="output directory (default: schemas)")
     fakes = sub.add_parser("fakes", help="regenerate the fake universe, tool outputs and recorded run (T03)")
     fakes.add_argument("--out", default="fixtures/fake", help="output directory (default: fixtures/fake)")
+    serve = sub.add_parser("serve", help="start the local web UI and API (T14)")
+    serve.add_argument("--host", default="127.0.0.1", help="interface to bind (default: 127.0.0.1)")
+    serve.add_argument("--port", type=int, default=8000, help="port (default: 8000)")
     return parser
 
 
@@ -38,6 +41,7 @@ def _cmd_config() -> int:
     print(f"SLEEPER_OFFLINE     {int(s.offline)}")
     print(f"SLEEPER_CACHE_DIR   {s.cache_dir}")
     print(f"SLEEPER_RUNS_DIR    {s.runs_dir}")
+    print(f"SLEEPER_UNIVERSES_DIR {s.universes_dir}")
     return 0
 
 
@@ -65,6 +69,16 @@ def _cmd_fakes(out: str) -> int:
     return 0
 
 
+def _cmd_serve(host: str, port: int) -> int:
+    import uvicorn
+
+    from sleeper.server import app_from_settings
+
+    print(f"Sleeper UI on http://{host}:{port}")
+    uvicorn.run(app_from_settings(load_settings()), host=host, port=port)
+    return 0
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
@@ -74,6 +88,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         return _cmd_schema(args.out)
     if args.command == "fakes":
         return _cmd_fakes(args.out)
+    if args.command == "serve":
+        return _cmd_serve(args.host, args.port)
     parser.print_help()
     return 0
 
