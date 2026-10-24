@@ -89,6 +89,7 @@ function fillLauncher() {
   );
   $("f-model").value = config.default_model;
   $("f-budget").value = config.default_token_budget;
+  fillNewTopic();
   syncModel();
   setMode("replay");
 }
@@ -132,10 +133,14 @@ function syncModel() {
   const keep = select.value;
   const choices = state.universes.filter((u) => (u.topic === "fake") === fake);
   select.replaceChildren(
-    ...choices.map((u) => h("option", { value: u.file, dataset: { topic: u.topic } }, `${u.topic_label} · ${u.rows} repos`)),
+    ...choices.map((u) =>
+      h("option", { value: u.file, dataset: { topic: u.topic } },
+        `${u.topic_label} · ${u.rows} repos${u.topic.startsWith("custom-") ? " · custom" : ""}`),
+    ),
   );
   if (choices.some((u) => u.file === keep)) select.value = keep;
   select.disabled = fake || !choices.length;
+  $("nt").hidden = fake;
   $("f-budget").disabled = fake;
   $("f-hint").textContent = fake
     ? "Offline test: a scripted run on fake data. Free, no network."
@@ -231,6 +236,136 @@ function startReplay(e) {
   e.preventDefault();
   const runId = $("r-run").value;
   if (runId) openRun(runId, "replay", $("r-speed").value);
+}
+
+// ---- New topic: describe it -> suggested GitHub searches with match counts -> build -------
+// Building is free (GitHub's API), takes a minute or two, and adds the topic to the Topic list.
+
+const NT_TITLES = {
+  offline: "Offline mode",
+  no_api_key: "No API key",
+  spend_guard: "Spend limit reached",
+  other: "Couldn't do that",
+};
+
+function ntError(err) {
+  $("nt-error-title").textContent = err ? NT_TITLES[err.reason] ?? (err.status === 409 ? "Busy" : "Couldn't do that") : "";
+  $("nt-error-msg").textContent = err ? err.message : "";
+  $("nt-error").hidden = !err;
+}
+
+function ntQueryRow(query = "", total = null) {
+  const count = h("span", { class: "nt-count", title: "Repos this search matches" }, total == null ? "–" : fmtInt(total));
+  const input = h("input", {
+    type: "text", value: query, maxlength: 150, "aria-label": "GitHub search",
+    oninput: () => {
+      count.textContent = "–";
+      $("nt-summary").textContent = "Edited: recount to see how many repos match.";
+    },
+  });
+  const row = h("div", { class: "nt-q" }, input, count);
+  row.append(h("button", {
+    type: "button", class: "nt-remove", title: "Remove this search", "aria-label": "Remove this search",
+    onclick: () => row.remove(),
+  }, "×"));
+  return row;
+}
+
+function ntDraftFromForm() {
+  return {
+    label: $("nt-label").value.trim(),
+    queries: [...document.querySelectorAll("#nt-queries input")].map((i) => i.value.trim()).filter(Boolean),
+  };
+}
+
+function ntShowPlan(plan) {
+  $("nt-label").value = plan.label;
+  $("nt-queries").replaceChildren(...plan.queries.map((q) => ntQueryRow(q.query, q.total)));
+  const cost = plan.cost_usd ? ` Suggestion cost ${fmtUsd(plan.cost_usd)}.` : "";
+  $("nt-summary").textContent =
+    `${fmtInt(plan.total)} matching repos (50–2,000 stars, created since 2025). Builds a topic of up to ` +
+    `${plan.max_size}: about ${fmtInt(plan.est_requests)} GitHub requests, usually under a minute.${cost}`;
+  $("nt-warning").textContent = plan.warning ?? "";
+  $("nt-warning").hidden = !plan.warning;
+  $("nt-plan").hidden = false;
+}
+
+// Runs one API call with `button` disabled; errors land in the new-topic error box.
+async function ntCall(button, path, body) {
+  ntError(null);
+  button.disabled = true;
+  try {
+    return await api(path, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+  } catch (err) {
+    ntError(err);
+    return null;
+  } finally {
+    button.disabled = false;
+  }
+}
+
+async function ntSuggest() {
+  const text = $("nt-text").value.trim();
+  if (!text) return $("nt-text").focus();
+  const plan = await ntCall($("nt-draft"), "/api/topics/draft", { text });
+  if (plan) ntShowPlan(plan);
+}
+
+async function ntRecount() {
+  const plan = await ntCall($("nt-recount"), "/api/topics/count", ntDraftFromForm());
+  if (plan) ntShowPlan(plan);
+}
+
+async function ntBuild() {
+  const job = await ntCall($("nt-build"), "/api/topics/build", ntDraftFromForm());
+  if (!job) return;
+  $("nt-plan").hidden = true;
+  $("nt-progress").hidden = false;
+  for (const b of [$("nt-draft"), $("nt-text")]) b.disabled = true;
+  await ntFollow(job.id);
+  for (const b of [$("nt-draft"), $("nt-text")]) b.disabled = false;
+}
+
+async function ntFollow(jobId) {
+  for (;;) {
+    let job;
+    try {
+      job = await api(`/api/topics/build/${jobId}`);
+    } catch (err) {
+      ntError(err);
+      return;
+    }
+    $("nt-bar").max = Math.max(job.to_fetch, 1);
+    $("nt-bar").value = job.state === "done" ? $("nt-bar").max : job.fetched;
+    $("nt-log").textContent = job.lines.slice(-8).join("\n");
+    $("nt-log").scrollTop = $("nt-log").scrollHeight;
+    if (job.state === "running") {
+      $("nt-status").textContent = job.to_fetch
+        ? `Building “${job.label}”: metrics for ${job.fetched} of ${job.to_fetch} repos…`
+        : `Building “${job.label}”: searching GitHub…`;
+      await new Promise((r) => setTimeout(r, 1000));
+      continue;
+    }
+    if (job.state === "error") {
+      $("nt-status").textContent = "";
+      $("nt-plan").hidden = false;
+      ntError({ reason: "other", message: job.error });
+      return;
+    }
+    state.universes = await api("/api/universes");
+    syncModel();
+    $("f-universe").value = job.universe.file;
+    $("nt-status").textContent =
+      `Built “${job.universe.topic_label}” with ${job.universe.rows} repos. It's selected above: start a live run when ready.`;
+    return;
+  }
+}
+
+function fillNewTopic() {
+  const reason = state.config.custom_topics_reason;
+  $("nt-off").textContent = reason ?? "";
+  $("nt-off").hidden = !reason;
+  for (const id of ["nt-text", "nt-draft", "nt-recount", "nt-build", "nt-add"]) $(id).disabled = Boolean(reason);
 }
 
 // ---- Run list ------------------------------------------------------------------
@@ -414,6 +549,16 @@ async function init() {
     syncCost();
   });
   $("f-max-picks").addEventListener("input", cancelConfirm);
+  $("nt-draft").addEventListener("click", ntSuggest);
+  // Enter inside the new-topic panel must never submit the live-run form around it.
+  $("nt").addEventListener("keydown", (e) => {
+    if (e.key !== "Enter" || e.target.tagName !== "INPUT") return;
+    e.preventDefault();
+    if (e.target.id === "nt-text") ntSuggest();
+  });
+  $("nt-recount").addEventListener("click", ntRecount);
+  $("nt-build").addEventListener("click", ntBuild);
+  $("nt-add").addEventListener("click", () => $("nt-queries").append(ntQueryRow()));
   $("replay").addEventListener("click", () => state.runId && openRun(state.runId, "replay"));
   $("drawer-close").addEventListener("click", closeDrawer);
   document.addEventListener("keydown", (e) => e.key === "Escape" && closeDrawer());

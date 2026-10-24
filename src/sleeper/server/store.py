@@ -62,6 +62,7 @@ class ServerConfig(BaseModel):
     default_token_budget: int = RunSettings.model_fields["token_budget"].default
     output_share: float = OUTPUT_SHARE
     live_disabled_reason: str | None = None  # set when this server can't start live runs (offline, no key)
+    custom_topics_reason: str | None = "Not available on this server."  # None = the launcher can build new topics
 
 
 RefusalReason = Literal["spend_guard", "offline", "no_universe", "no_api_key", "web_model", "other"]
