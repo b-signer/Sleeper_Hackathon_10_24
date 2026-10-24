@@ -26,6 +26,7 @@ from sleeper.contracts import (
     BrowseOutput,
     Card,
     ErrorOutput,
+    PapersOutput,
     ReadmeOutput,
     RepoDetailsOutput,
     Submission,
@@ -148,7 +149,7 @@ def _check_key_figure(where: str, card: Card, criterion: str, ctx: SubmitContext
     if isinstance(source, bool) or not isinstance(source, int | float):
         return [f"{field}: no number at {path or '(empty path)'} in {cid} (a {type(source).__name__})"]
     # The number must belong to the card's repo.
-    if isinstance(out, RepoDetailsOutput | ReadmeOutput):
+    if isinstance(out, RepoDetailsOutput | ReadmeOutput | PapersOutput):
         if out.repo.lower() != card.repo.lower():
             return [f"{field}: {cid} is {out.tool} for {out.repo}, not {card.repo}; cite this repo's own number"]
     elif isinstance(out, BrowseOutput):
