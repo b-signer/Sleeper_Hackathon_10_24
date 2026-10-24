@@ -18,6 +18,8 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--version", action="version", version=f"sleeper {__version__}")
     sub = parser.add_subparsers(dest="command", metavar="<command>")
     sub.add_parser("config", help="show the loaded settings (secrets masked)")
+    schema = sub.add_parser("schema", help="write the JSON Schema of every shared contract")
+    schema.add_argument("--out", default="schemas", help="output directory (default: schemas)")
     return parser
 
 
@@ -37,11 +39,27 @@ def _cmd_config() -> int:
     return 0
 
 
+def _cmd_schema(out: str) -> int:
+    import json
+    from pathlib import Path
+
+    from sleeper.contracts import json_schemas
+
+    out_dir = Path(out)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    for name, schema in json_schemas().items():
+        (out_dir / f"{name}.schema.json").write_text(json.dumps(schema, indent=2) + "\n")
+        print(out_dir / f"{name}.schema.json")
+    return 0
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
     if args.command == "config":
         return _cmd_config()
+    if args.command == "schema":
+        return _cmd_schema(args.out)
     parser.print_help()
     return 0
 
