@@ -20,8 +20,9 @@ from dataclasses import dataclass
 from datetime import UTC, datetime
 from typing import Any
 
-from sleeper.agent.budget import Budget
+from sleeper.agent.budget import Budget, add_usage
 from sleeper.agent.prompt import system_prompt as default_system_prompt
+from sleeper.agent.skeptic import SKEPTIC_TIMEOUT_S, review_card
 from sleeper.agent.types import ChatModel, EventSink, ModelError, ModelReply, ToolCallRequest, ToolExecutor
 from sleeper.contracts import (
     TOOL_ARGS,
@@ -36,6 +37,8 @@ from sleeper.contracts import (
     RunSettings,
     RunStarted,
     RunStatus,
+    SkepticEvent,
+    SkepticReview,
     StatusEvent,
     Submission,
     SubmitOutput,
@@ -99,11 +102,12 @@ def run_agent(
     system_prompt: str | None = None,
     git_sha: str | None = None,
     spend_headroom_usd: float | None = None,
+    skeptic: ChatModel | None = None,
     now: Callable[[], float] = time.monotonic,
 ) -> RunResult:
     """Run the agent to a status. Emits run_started ... run_finished through `sink`; never raises for
-    model or tool failures."""
-    return _Run(settings, universe, model, tools, sink, system_prompt, git_sha, spend_headroom_usd, now).run()
+    model or tool failures. With `skeptic`, each accepted card gets a T12 review on that model."""
+    return _Run(settings, universe, model, tools, sink, system_prompt, git_sha, spend_headroom_usd, skeptic, now).run()
 
 
 class _Run:
@@ -117,6 +121,7 @@ class _Run:
         system_prompt: str | None,
         git_sha: str | None,
         spend_headroom_usd: float | None,
+        skeptic: ChatModel | None,
         now: Callable[[], float],
     ) -> None:
         self.settings = settings
@@ -126,6 +131,7 @@ class _Run:
         self.sink = sink
         self.prompt = system_prompt if system_prompt is not None else default_system_prompt(settings, universe.header)
         self.git_sha = git_sha
+        self.skeptic = skeptic
         self.now = now
         self.budget = Budget(settings.token_budget, settings.max_turns, spend_headroom_usd)
         self.phase = "researching"
@@ -137,6 +143,7 @@ class _Run:
         self.end_reason: str | None = None  # why an invalid / budget_exhausted run ended
         self.outputs: dict[str, ToolOutput] = {}  # call_id -> output, for the fact check
         self.fact_flags: dict[str, list[FactCheckFlag]] = {}  # card repo -> T13 flags
+        self.reviews: dict[str, SkepticReview] = {}  # card repo -> T12 review
 
     # ---- events ----
 
@@ -173,6 +180,7 @@ class _Run:
             self.emit(StatusEvent, phase="researching")
             status, error = self.loop()
             if self.accepted is not None:
+                self.review()
                 self.fact_check()
         except Exception as e:  # a bug or a failing sink: still end the run cleanly
             log.exception("agent loop failed")
@@ -194,7 +202,12 @@ class _Run:
             finished_at=datetime.now(UTC),
             turns=self.budget.turns,
             usage=self.budget.usage,
-            cards=[ResultCard(**c.model_dump(), fact_flags=self.fact_flags.get(c.repo, [])) for c in sub.cards] if sub else [],
+            cards=[
+                ResultCard(**c.model_dump(), skeptic=self.reviews.get(c.repo), fact_flags=self.fact_flags.get(c.repo, []))
+                for c in sub.cards
+            ]
+            if sub
+            else [],
             ranking=sub.ranking if sub else [],
             summary=sub.summary if sub else None,
             ranking_below_min=bool(sub) and len(sub.ranking) < self.settings.min_ranked,
@@ -351,6 +364,32 @@ class _Run:
             log.warning("tool %s (%s) raised: %s", c.req.name, c.call_id, e)
             out = self.error(c, "UPSTREAM", f"tool failed: {type(e).__name__}: {e}")
         return out, int((time.monotonic() - t0) * 1000)
+
+    def review(self) -> None:
+        """T12: one skeptic call per card, concurrently. Usage counts toward the run; never fails the run."""
+        if self.skeptic is None:
+            return
+        self.emit(StatusEvent, phase="reviewing")
+        remaining = self.settings.max_wall_clock_s - (self.now() - self.start)
+        if remaining < 1 or self.budget.spend_reached:
+            why = "wall clock" if remaining < 1 else "spend limit"
+            self.emit(StatusEvent, phase="reviewing", message=f"skeptic review skipped: {why} reached")
+            return
+        cards = self.accepted.cards
+        with ThreadPoolExecutor(max_workers=len(cards)) as pool:
+            futures = [
+                pool.submit(review_card, self.skeptic, c, self.outputs, self.universe.header, timeout_s=min(SKEPTIC_TIMEOUT_S, remaining))
+                for c in cards
+            ]
+            for f in as_completed(futures):
+                o = f.result()
+                self.budget.usage = add_usage(self.budget.usage, o.usage)
+                if o.review is None:
+                    self.emit(StatusEvent, phase="reviewing", message=f"no skeptic review for {o.repo}: {o.error}")
+                    continue
+                self.reviews[o.repo] = o.review
+                self.emit(SkepticEvent, repo=o.repo, review=o.review)
+        self.emit_usage()
 
     def fact_check(self) -> None:
         """T13: flag card numbers that don't match the outputs they cite. Never fails the run."""

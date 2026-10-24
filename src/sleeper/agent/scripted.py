@@ -220,3 +220,45 @@ def fake_script(universe: Universe) -> list[ScriptStep]:
     steps.append(lambda msgs: reply(FAKE_NARRATION[4], ("submit", _submission(msgs, picks, cite_failed=True)), **submit_tokens[0]))
     steps.append(lambda msgs: reply(FAKE_NARRATION[5], ("submit", _submission(msgs, picks, cite_failed=False)), **submit_tokens[1]))
     return steps
+
+
+# ---- Fake skeptic (T12) -----------------------------------------------------
+
+
+class FakeSkeptic:
+    """Offline ChatModel for the skeptic pass: a verdict from the card's own scores, quoting its key figures.
+
+    Quality below 65 -> killed; quality below momentum -> weakened; else survives. On the fake universe's
+    three picks this gives one of each verdict, so the UI shows all three.
+    Thread-safe (no state), so the loop can review cards concurrently.
+    """
+
+    model_id = "scripted/fake-skeptic"
+
+    def complete(
+        self,
+        messages: list[dict[str, Any]],
+        tools: list[dict[str, Any]],
+        *,
+        tool_choice: str | dict[str, Any] = "auto",
+        timeout_s: float = 120.0,
+    ) -> ModelReply:
+        text = messages[-1]["content"]
+        card = Card.model_validate_json(text.split("## Card\n", 1)[1].split("\n\n## Cited tool outputs", 1)[0])
+        q, m = card.criteria.quality, card.criteria.momentum
+        if q.score < 65:
+            verdict = "killed"
+        elif q.score < m.score:
+            verdict = "weakened"
+        else:
+            verdict = "survives"
+        argument = (
+            f"Quality scores {q.score:g} ({q.key_figure.label.lower()}: {q.key_figure.value:g}) against momentum {m.score:g}. "
+            + {
+                "killed": "The quality evidence is too thin to call this underrated rather than just new.",
+                "weakened": "Attention is running ahead of the work: the momentum is real, the quality less so.",
+                "survives": "The quality evidence holds up against the momentum; the case stands.",
+            }[verdict]
+        )
+        cited = sorted({q.score_call_id, q.key_figure.source_call_id, m.score_call_id})
+        return reply(None, ("verdict", {"verdict": verdict, "argument": argument, "cited_call_ids": cited}), prompt_tokens=2500, completion_tokens=120)

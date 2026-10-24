@@ -73,6 +73,7 @@ def execute_run(
     fake: bool = False,
     cfg: Settings | None = None,
     model: ChatModel | None = None,
+    skeptic: ChatModel | None = None,
     tools: ToolExecutor | None = None,
     universe: Universe | None = None,
     on_start: Callable[[str], None] | None = None,
@@ -81,6 +82,8 @@ def execute_run(
     """Run the agent once and record it under cfg.runs_dir/<run_id>/.
 
     fake=True: scripted model + the real tools on the fake universe; no network, no spend check.
+    The skeptic (T12) is built here only when the model is: FakeSkeptic for fake runs, else the cheap
+    dev model (cfg.dev_model). A caller that passes `model` passes `skeptic` too, or gets no review.
     Raises WebAccessRefused / FileNotFoundError / SpendGuardError / ModelError("auth") before
     any run folder exists. Model and tool failures during the run become the result's status.
     """
@@ -100,6 +103,14 @@ def execute_run(
             model = ScriptedModel(fake_script(universe))
         else:
             model = OpenRouterModel(settings.model, cfg.openrouter_api_key)
+    own_skeptic = own_model and skeptic is None
+    if own_skeptic:
+        if fake:
+            from sleeper.agent.scripted import FakeSkeptic
+
+            skeptic = FakeSkeptic()
+        else:
+            skeptic = OpenRouterModel(cfg.dev_model, cfg.openrouter_api_key)
     if tools is None:  # the real tools (T09): fake READMEs on the fake universe, GitHub (cached) otherwise
         from sleeper.agent.data_tools import DataTools
         from sleeper.agent.toolbox import Toolbox
@@ -113,7 +124,9 @@ def execute_run(
         if on_start is not None:
             on_start(rec.run_id)
         try:
-            result = run_agent(settings, universe, model, tools, rec, git_sha=git_sha(), spend_headroom_usd=headroom)
+            result = run_agent(
+                settings, universe, model, tools, rec, git_sha=git_sha(), spend_headroom_usd=headroom, skeptic=skeptic
+            )
         except Exception as e:  # run_agent shouldn't raise; if it does, still leave a valid record
             log.exception("run %s crashed", rec.run_id)
             msg = f"{type(e).__name__}: {e}"
@@ -138,6 +151,7 @@ def execute_run(
         return result
     finally:
         rec.close()
-        close = getattr(model, "close", None)
-        if own_model and callable(close):
-            close()
+        for m, own in ((model, own_model), (skeptic, own_skeptic)):
+            close = getattr(m, "close", None)
+            if own and callable(close):
+                close()
