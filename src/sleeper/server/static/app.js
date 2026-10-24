@@ -142,11 +142,12 @@ function syncModel() {
     : choices.length
       ? "Real model calls on a prebuilt universe. This spends from the OpenRouter budget."
       : "No real universe is built yet (sleeper build-universe).";
+  cancelConfirm();
   syncCost();
 }
 
+// Updates the cost text only; a changed setting cancels a pending confirm in its own handler.
 function syncCost() {
-  cancelConfirm();
   const cost = worstCase();
   $("f-start").textContent = isFake() ? "Start offline test (free)" : `Start live run · up to ${fmtUsd(cost)}`;
   $("f-start").disabled = !isFake() && !state.universes.some((u) => u.topic !== "fake");
@@ -204,6 +205,8 @@ function cancelConfirm() {
 
 // Step 2: POST. A refusal (spend guard, offline, ...) shows as a titled box; no run exists.
 async function postRun() {
+  // A paid run only ever starts from the confirm box (askToStart shows it first).
+  if (!isFake() && $("f-confirm").hidden) return;
   const buttons = [$("f-start"), $("f-go")];
   for (const b of buttons) b.disabled = true;
   try {
@@ -406,7 +409,10 @@ async function init() {
   $("f-cancel").addEventListener("click", cancelConfirm);
   $("f-model").addEventListener("change", syncModel);
   $("f-universe").addEventListener("change", cancelConfirm);
-  $("f-budget").addEventListener("input", syncCost);
+  $("f-budget").addEventListener("input", () => {
+    cancelConfirm();
+    syncCost();
+  });
   $("f-max-picks").addEventListener("input", cancelConfirm);
   $("replay").addEventListener("click", () => state.runId && openRun(state.runId, "replay"));
   $("drawer-close").addEventListener("click", closeDrawer);

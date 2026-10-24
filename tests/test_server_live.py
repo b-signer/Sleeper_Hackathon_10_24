@@ -151,6 +151,8 @@ def test_config_online(online):
     assert config["offline"] is False and config["live_disabled_reason"] is None
     assert config["default_model"] == LUNA and config["spend_guard_usd"] == spend.SPEND_GUARD_USD
     assert config["output_share"] == spend.OUTPUT_SHARE
+    luna = next(m for m in config["models"] if m["id"] == LUNA)
+    assert luna["max_run_usd"] < 0.25  # team budget rule: the default luna run stays cheap
     priced = [m for m in config["models"] if m["input_per_m"] is not None]
     assert priced and all(m["max_run_usd"] > 0 for m in priced)
     # The launcher's formula gives the same number as the server's guard.
