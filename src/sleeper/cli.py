@@ -20,6 +20,9 @@ def build_parser() -> argparse.ArgumentParser:
     sub.add_parser("config", help="show the loaded settings (secrets masked)")
     schema = sub.add_parser("schema", help="write the JSON Schema of every shared contract")
     schema.add_argument("--out", default="schemas", help="output directory (default: schemas)")
+    metrics = sub.add_parser("metrics", help="print one repo's T06 metrics as JSON")
+    metrics.add_argument("repo", help="owner/name")
+    metrics.add_argument("--as-of", help="ISO time for the 30/90-day windows (default: now)")
     return parser
 
 
@@ -53,6 +56,31 @@ def _cmd_schema(out: str) -> int:
     return 0
 
 
+def _cmd_metrics(repo: str, as_of: str | None) -> int:
+    import json
+    from datetime import datetime, timezone
+
+    from sleeper.github import GitHubClient
+    from sleeper.metrics import fetch_repo_metrics
+
+    when = datetime.fromisoformat(as_of) if as_of else None
+    if when is not None and when.tzinfo is None:
+        when = when.replace(tzinfo=timezone.utc)
+    with GitHubClient() as gh:
+        r = fetch_repo_metrics(gh, repo, as_of=when)
+        out = {
+            "repo": r.repo,
+            "repo_id": r.repo_id,
+            "url": r.url,
+            "is_fork": r.is_fork,
+            "is_archived": r.is_archived,
+            "metrics": r.metrics.model_dump(mode="json"),
+            "requests": {"network": gh.stats.network_requests, "cache_hits": gh.stats.cache_hits},
+        }
+    print(json.dumps(out, indent=2))
+    return 0
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
@@ -60,6 +88,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         return _cmd_config()
     if args.command == "schema":
         return _cmd_schema(args.out)
+    if args.command == "metrics":
+        return _cmd_metrics(args.repo, args.as_of)
     parser.print_help()
     return 0
 
