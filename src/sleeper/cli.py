@@ -57,6 +57,9 @@ def build_parser() -> argparse.ArgumentParser:
     run.add_argument("--max-wall-clock", type=int, metavar="S", help="wall-clock limit in seconds (default 600)")
     run.add_argument("--fake", action="store_true", help="scripted model and the real tools on fake data: offline, free")
     run.add_argument("--quiet", action="store_true", help="don't print the live trace")
+    from sleeper.backtest import cli as backtest_cli
+
+    backtest_cli.add_parser(sub)
     return parser
 
 
@@ -277,6 +280,10 @@ def main(argv: Sequence[str] | None = None) -> int:
         return _cmd_serve(args.host, args.port)
     if args.command == "run":
         return _cmd_run(args)
+    if args.command == "backtest":
+        from sleeper.backtest import cli as backtest_cli
+
+        return backtest_cli.main(args)
     parser.print_help()
     return 0
 
