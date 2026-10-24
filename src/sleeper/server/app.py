@@ -3,6 +3,7 @@
 | Method | Path                            | Returns                                                       |
 |--------|---------------------------------|---------------------------------------------------------------|
 | GET    | /                               | The page (static/index.html; no external assets)              |
+| GET    | /api/config                     | ServerConfig: offline flag and the models the launcher offers |
 | GET    | /api/universes                  | [UniverseInfo] for the launcher                               |
 | GET    | /api/runs                       | [RunInfo], newest first                                       |
 | POST   | /api/runs                       | Body: RunSettings. 202 {"run_id"}; 409 if a run is in progress; |
@@ -30,9 +31,20 @@ from fastapi.staticfiles import StaticFiles
 
 from sleeper.contracts import RunEvent, RunResult, RunSettings, dump_event
 from sleeper.server.runner import Launch, Runner, launch
-from sleeper.server.store import RunInfo, RunStore, UniverseInfo, follow_events, list_universes, read_result, replay_events
+from sleeper.server.store import (
+    ModelInfo,
+    RunInfo,
+    RunStore,
+    ServerConfig,
+    UniverseInfo,
+    follow_events,
+    list_universes,
+    read_result,
+    replay_events,
+)
 
 STATIC_DIR = Path(__file__).parent / "static"
+FAKE_MODEL = "scripted/fake"  # T10's ScriptedModel: offline, free, fake universe only
 
 
 def _sse(events: AsyncIterator[RunEvent]) -> StreamingResponse:
@@ -44,7 +56,19 @@ def _sse(events: AsyncIterator[RunEvent]) -> StreamingResponse:
     return StreamingResponse(body(), media_type="text/event-stream", headers={"Cache-Control": "no-cache"})
 
 
-def create_app(store: RunStore, universe_dirs: Sequence[Path], runner: Runner, start_timeout_s: float = 30) -> FastAPI:
+def create_app(
+    store: RunStore,
+    universe_dirs: Sequence[Path],
+    runner: Runner,
+    start_timeout_s: float = 30,
+    config: ServerConfig | None = None,
+) -> FastAPI:
+    config = config or ServerConfig(
+        offline=True,
+        models=[ModelInfo(id=FAKE_MODEL, label="Scripted fake (offline, free)", offline_ok=True)],
+        default_model=FAKE_MODEL,
+        fake_model=FAKE_MODEL,
+    )
     app = FastAPI(title="Sleeper", docs_url="/api/docs", redoc_url=None)
     app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
     current: list[Launch] = []  # the latest run started from this server
@@ -59,6 +83,10 @@ def create_app(store: RunStore, universe_dirs: Sequence[Path], runner: Runner, s
     @app.get("/", include_in_schema=False)
     def index() -> FileResponse:
         return FileResponse(STATIC_DIR / "index.html")
+
+    @app.get("/api/config")
+    def server_config() -> ServerConfig:
+        return config
 
     @app.get("/api/universes")
     def universes() -> list[UniverseInfo]:
