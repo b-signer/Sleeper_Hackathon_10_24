@@ -42,5 +42,5 @@ def load_settings(env_file: str | os.PathLike[str] | None = None) -> Settings:
         offline=_flag(env.get("SLEEPER_OFFLINE")),
         cache_dir=Path(env.get("SLEEPER_CACHE_DIR") or ".cache"),
         runs_dir=Path(env.get("SLEEPER_RUNS_DIR") or "runs"),
-        universes_dir=Path(env.get("SLEEPER_UNIVERSES_DIR") or "data/universes"),
+        universes_dir=Path(env.get("SLEEPER_UNIVERSES_DIR") or "universes"),
     )
