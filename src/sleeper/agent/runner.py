@@ -24,7 +24,7 @@ log = logging.getLogger(__name__)
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
 FAKE_UNIVERSE = Path("fixtures/fake/universe.json")
-UNIVERSES_DIR = Path("universes")
+UNIVERSES_DIR = Path("data/universes")
 
 
 def _find(path: Path) -> Path | None:
