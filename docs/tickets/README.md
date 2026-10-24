@@ -13,7 +13,7 @@ Sizes are time budgets: **S** is about 30 minutes, **M** about 45, **L** about 9
 
 ## Index
 
-**Status as of 2026-10-24, after T10 was merged.** Update this column when you start or finish a ticket. T10 build notes are in [T10-plan.md](T10-plan.md).
+**Status as of 2026-10-24, after T14 was merged.** Update this column when you start or finish a ticket. T10 build notes are in [T10-plan.md](T10-plan.md).
 
 | ID | Status | Title | Track | Pri | Size | Depends on | File |
 |---|---|---|---|---|---|---|---|
@@ -30,9 +30,9 @@ Sizes are time budgets: **S** is about 30 minutes, **M** about 45, **L** about 9
 | T11 | ⏳ Waiting | Prompt and tuning (Checkpoint B) | Agent | P0 | M | T09, T10, T08 | [agent](agent.md) |
 | T12 | ▶ Ready (P1) | Skeptic review | Agent | P1 | S | T10 | [agent](agent.md) |
 | T13 | ▶ Ready (P1) | Fact check | Agent | P1 | S | T03 | [agent](agent.md) |
-| T14 | 🔨 In progress | Server, event stream, replay | UI | P0 | M | T02 (T03 for tests) | [ui](ui.md) |
-| T15 | ⏳ Waiting | Launcher, live trace, budget meter | UI | P0 | M | T14 | [ui](ui.md) |
-| T16 | ⏳ Waiting | Pick cards view | UI | P0 | M | T14 | [ui](ui.md) |
+| T14 | ✅ Done | Server, event stream, replay | UI | P0 | M | T02 (T03 for tests) | [ui](ui.md) |
+| T15 | 🔨 In progress | Launcher, live trace, budget meter | UI | P0 | M | T14 | [ui](ui.md) |
+| T16 | 🔨 In progress | Pick cards view | UI | P0 | M | T14 | [ui](ui.md) |
 | T17 👤 | ⏳ Waiting | Demo runs, picks on record, rehearsal | Demo | P0 | M | all P0 | [demo](demo.md) |
 | S1 | ⏳ Stretch | Rough backtest | Stretch | | L | T07, T10 | [demo](demo.md) |
 | S2 | ⏳ Stretch | Linked papers | Stretch | | M | T09 | [demo](demo.md) |
