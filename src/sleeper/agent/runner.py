@@ -102,7 +102,7 @@ def execute_run(
     if tools is None:
         from sleeper.agent.stub_tools import StubTools  # until T09's executor lands
 
-        tools = StubTools(universe)
+        tools = StubTools(universe, max_picks=settings.max_picks)
     from sleeper.agent.loop import run_agent  # W1's engine; imported lazily
 
     rec = RunRecorder.create(cfg.runs_dir, settings, echo=echo)
