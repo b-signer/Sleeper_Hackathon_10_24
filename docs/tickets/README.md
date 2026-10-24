@@ -22,15 +22,15 @@ Sizes are time budgets: **S** is about 30 minutes, **M** about 45, **L** about 9
 | T03 | ✅ Done | Fake data | Foundations | P0 | S | T02 | [foundations](foundations.md) |
 | T04 👤 | ✅ Done | Keys and spend limit | Foundations | P0 | S | none | [foundations](foundations.md) |
 | T05 | ✅ Done | GitHub access layer | Data | P0 | M | T01 | [data](data.md) |
-| T06 | ▶ Ready | Repo metrics | Data | P0 | M | T05 | [data](data.md) |
-| T07 | ⏳ Waiting | Universe builder and criteria scores | Data | P0 | M | T02, T06 | [data](data.md) |
-| T08 👤 | ⏳ Waiting | Build the demo universes | Data | P0 | S (waiting) | T07 | [data](data.md) |
+| T06 | 🔨 In progress | Repo metrics | Data | P0 | M | T05 | [data](data.md) |
+| T07 | 🔨 In progress | Universe builder and criteria scores | Data | P0 | M | T02, T06 | [data](data.md) |
+| T08 👤 | 🔨 In progress | Build the demo universes | Data | P0 | S (waiting) | T07 | [data](data.md) |
 | T09 | ▶ Ready | Agent tools | Agent | P0 | M | T02, T03 | [agent](agent.md) |
 | T10 | ✅ Done | Agent loop, budget, run records | Agent | P0 | L | T02, T03, T04 | [agent](agent.md) |
 | T11 | ⏳ Waiting | Prompt and tuning (Checkpoint B) | Agent | P0 | M | T09, T10, T08 | [agent](agent.md) |
 | T12 | ▶ Ready (P1) | Skeptic review | Agent | P1 | S | T10 | [agent](agent.md) |
 | T13 | ▶ Ready (P1) | Fact check | Agent | P1 | S | T03 | [agent](agent.md) |
-| T14 | ▶ Ready | Server, event stream, replay | UI | P0 | M | T02 (T03 for tests) | [ui](ui.md) |
+| T14 | 🔨 In progress | Server, event stream, replay | UI | P0 | M | T02 (T03 for tests) | [ui](ui.md) |
 | T15 | ⏳ Waiting | Launcher, live trace, budget meter | UI | P0 | M | T14 | [ui](ui.md) |
 | T16 | ⏳ Waiting | Pick cards view | UI | P0 | M | T14 | [ui](ui.md) |
 | T17 👤 | ⏳ Waiting | Demo runs, picks on record, rehearsal | Demo | P0 | M | all P0 | [demo](demo.md) |
