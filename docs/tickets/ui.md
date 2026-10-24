@@ -41,3 +41,16 @@ The UI reads only run records (C3), so all of it can be built on the recorded fa
 - The skeptic verdict appears as a badge, with killed cards struck through (when T12 ships).
 - Fact-check flags appear next to the number concerned (when T13 ships).
 - **(P1)** Clicking a number opens its cited tool output with the value highlighted.
+
+---
+
+### T19 Real runs from the UI
+**Goal:** The launcher can start a real agent run on a real universe, not only replay the recorded fake run.
+**Implements:** F7.1, F7.2 · **Depends on:** T15, T09 · **P0 · S** · *From the [findings](../findings/2026-10-24-real-data-baseline.md) (problem 7)*
+
+**Done when:**
+- The launcher has a clear choice between **Replay** (free, offline) and **Live run** (real model, costs money), with replay as the default.
+- A live run from the UI streams its trace and shows its cards, using `execute_run(settings, on_start=...)`.
+- The spend guard's refusal shows as a readable message in the UI.
+- The team has watched one real run end to end in the UI (Checkpoint B).
+

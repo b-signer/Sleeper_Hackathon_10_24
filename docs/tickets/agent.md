@@ -48,8 +48,16 @@
 - The prompt explains the task, the four criteria, the definition of underrated, the citation rule, "your memory is not a source", and how the budget works.
 - **Checkpoint B:** on the cheap model with a real universe, 2 consecutive runs end `ok`, with 3–5 cards, at least 10 repos ranked, and every card number traceable to a cited output.
 - One run on the demo model also ends `ok`.
+- **Beats the real-data baseline** ([findings](../findings/2026-10-24-real-data-baseline.md)) on the same universe, with each item checked by a person reading the cards:
+  - **On topic:** off-topic repos (e.g. a DJ tool in "Rust developer tools") are skipped and never picked.
+  - **Depth:** the agent screens broadly before deciding, and looks closely at clearly more than the baseline's 10 repos when the universe is large.
+  - **Honest quality case:** README length and raw commit counts aren't presented as quality on their own.
+  - **Observable "wrong if":** each one is a concrete, checkable event in the coming months, stated as failure, not success.
+  - **Confidence varies** between picks and is explained.
+  - **No backtest wording** ("as-of date").
+- READMEs are read at about 2,500–3,000 characters by default, so a 200-repo run fits the budget (T09 token estimate).
 
-**Hints:** `archive/prd-v0.2-signer.md` Appendix A has a draft prompt.
+**Hints:** `archive/prd-v0.2-signer.md` Appendix A has a draft prompt. The baseline run's prompt is `src/sleeper/agent/prompt.py` (a placeholder).
 
 ---
 

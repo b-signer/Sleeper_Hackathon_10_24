@@ -8,6 +8,7 @@ An agent that finds underrated GitHub repos and rates them on popularity, moment
 - [Scoring](docs/scoring.md): how the four criteria scores are computed (T07). Build a universe with `uv run sleeper build-universe <topic>` (topics in [`topics.toml`](topics.toml))
 - [Tickets](docs/tickets/README.md): 17 MVP tickets, schedule and checkpoints ([dependency graph](docs/tickets/dependency-graph.html))
 - [Setup](docs/setup.md): keys and secrets. Do this first
+- [Findings](docs/findings/2026-10-24-real-data-baseline.md): the first real-data run, what works, what doesn't, and the baseline to beat
 - [Archive](docs/archive/): earlier plans. `v0.3-full-plan/` covers the backtest and the full grounding suite (stretch material)
 
 ## Setup

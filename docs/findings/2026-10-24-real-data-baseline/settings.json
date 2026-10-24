@@ -1,0 +1,14 @@
+{
+  "topic": "rust-devtools",
+  "universe_file": "/private/tmp/claude-502/-Users-roee-workspace-compiled-16-hackathon-Sleeper-Hackathon-10-24/abab5628-333e-4d4a-b0d6-88445e8563f0/scratchpad/rust-smoke.json",
+  "stars_min": 50,
+  "stars_max": 2000,
+  "created_after": "2025-01-01",
+  "max_picks": 5,
+  "min_ranked": 8,
+  "model": "openai/gpt-5.6-luna",
+  "token_budget": 120000,
+  "max_turns": 12,
+  "max_wall_clock_s": 600,
+  "seed": 7
+}
