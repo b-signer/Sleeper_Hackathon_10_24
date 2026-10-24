@@ -179,9 +179,12 @@ def test_changed_input_or_missing_readme_forces_a_recheck(tmp_path):
     c2.check(readme_gh(tmp_path / "c", {"own2/repo2": "A linter. Now a game too."})[0], item(2))  # README changed
     c2.check(readme_gh(tmp_path / "d", readmes)[0], item(2, description="new description"))  # description changed
     assert len(m.calls) == 3
-    for sub in ("e", "f"):  # no README: checked but never saved, so never reused
+    for sub in ("e", "f"):  # no README and the model says on: checked but never saved, so never reused
         checker(tmp_path, m).check(readme_gh(tmp_path / sub, readmes)[0], item(4))
-    assert len(m.calls) == 5 and checker(tmp_path, m).cached(4, "x") is None
+    assert len(m.calls) == 5 and 4 not in checker(tmp_path, m)._verdicts
+    for sub in ("g", "h"):  # no README and off: excluding can't be gamed, so it is saved and reused
+        checker(tmp_path, m).check(readme_gh(tmp_path / sub, {"own5/repo5": None})[0], item(5))
+    assert len(m.calls) == 6
 
 
 # ---- the check -----------------------------------------------------------------

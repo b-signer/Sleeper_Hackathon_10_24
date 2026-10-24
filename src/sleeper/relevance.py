@@ -23,8 +23,9 @@ to the topic before fetching its metrics. Use::
 - Verdicts are saved in ``data/relevance/<topic>.json`` (committed) and reused
   only when ``repo_id``, ``model``, ``prompt_sha256`` and ``input_sha256`` (a
   hash of the exact name, description, topics and README excerpt) all match, so
-  a rebuild makes no model calls and works offline. A verdict is never saved
-  when the README was missing or could not be fetched (re-checked next time).
+  a rebuild makes no model calls and works offline. Without a real README
+  (missing or not fetched) only an excluding verdict (off/unsure) is saved and
+  reused; an "on" made without the README is never cached (re-checked next time).
   Verdicts made with the first (pre-hardening) prompt are reused only when they
   exclude the repo (``off``/``unsure``): that direction can't be gamed into
   inclusion. Every first-prompt "on" is re-checked.
@@ -378,7 +379,9 @@ class RelevanceChecker:
         readme, readme_ok = _readme_excerpt(gh, repo)
         in_sha = input_sha256(repo, desc, topics, readme)
         suspicious = suspicious_text(repo, desc, topics, readme)
-        v = self.cached(repo_id, in_sha) if readme_ok else None
+        v = self.cached(repo_id, in_sha)
+        if v is not None and not readme_ok and v.verdict == "on":
+            v = None  # fail closed: an "on" needs the real README
         if v is not None and v.suspicious != suspicious:
             v = replace(v, suspicious=suspicious)  # the flag follows the current SUSPICIOUS pattern
         if v is None:
@@ -405,7 +408,7 @@ class RelevanceChecker:
             v = Verdict(repo_id, repo, verdict, reason, self.model_id, self.sha, cost, in_sha, suspicious)
             self.stats.new += 1
             self.stats.new_cost_usd += cost
-            if readme_ok:  # never cache a verdict made without the real README
+            if readme_ok or verdict != "on":  # never cache an "on" made without the real README
                 self._verdicts[repo_id] = v
                 self.save()
         elif self._verdicts.get(repo_id) is not v:
