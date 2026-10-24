@@ -2,8 +2,12 @@
 
 Phases, for the next turn (thresholds are W1's call, plan §4):
 - researching: normal.
-- wrapping_up: <= 25% of tokens left, or <= 3 turns left. The model is told to wrap up.
-- submit_only: <= 10% of tokens left, the last turn, or spend headroom reached. Only submit is offered.
+- wrapping_up: <= 25% of tokens left, <= 3 turns left, or fewer tokens left than ~3 turns the size of the
+  last one. The model is told to wrap up.
+- submit_only: <= 10% of tokens left, the last turn, fewer tokens left than ~1.5 turns the size of the last
+  one, or spend headroom reached. Only submit is offered.
+The last-turn projection matters because every turn re-sends the whole history: with a small budget one
+turn can be far more than 10% of it, and the run must still get a submit-only turn before it runs out.
 `exhausted`: tokens used >= budget or turns >= max_turns: the loop stops.
 """
 
@@ -21,6 +25,8 @@ WRAP_UP_TOKEN_FRACTION = 0.25
 WRAP_UP_TURNS_LEFT = 3
 SUBMIT_ONLY_TOKEN_FRACTION = 0.10
 SUBMIT_ONLY_TURNS_LEFT = 1
+WRAP_UP_NEXT_TURNS = 3.0  # tokens left < this many turns the size of the last one -> wrapping_up
+SUBMIT_ONLY_NEXT_TURNS = 1.5  # ... -> submit_only (the next turn is at least as big: the history grows)
 
 _ADVICE: dict[BudgetPhase, str] = {
     "researching": "Research, then submit.",
@@ -46,11 +52,13 @@ class Budget:
     spend_headroom_usd: float | None = None
     usage: Usage = field(default_factory=Usage)
     turns: int = 0  # completed model turns
+    last_turn_tokens: int = 0
     _phase: BudgetPhase = "researching"
 
     def add(self, usage: Usage) -> None:
         """Count one model turn and its usage."""
         self.turns += 1
+        self.last_turn_tokens = usage.total_tokens
         self.usage = add_usage(self.usage, usage)
 
     @property
@@ -73,9 +81,19 @@ class Budget:
     def phase(self) -> BudgetPhase:
         """Phase for the next turn. Never moves backwards."""
         left = self.tokens_remaining / self.token_budget
-        if left <= SUBMIT_ONLY_TOKEN_FRACTION or self.turns_left <= SUBMIT_ONLY_TURNS_LEFT or self.spend_reached:
+        last = self.last_turn_tokens
+        if (
+            left <= SUBMIT_ONLY_TOKEN_FRACTION
+            or self.tokens_remaining < SUBMIT_ONLY_NEXT_TURNS * last
+            or self.turns_left <= SUBMIT_ONLY_TURNS_LEFT
+            or self.spend_reached
+        ):
             now: BudgetPhase = "submit_only"
-        elif left <= WRAP_UP_TOKEN_FRACTION or self.turns_left <= WRAP_UP_TURNS_LEFT:
+        elif (
+            left <= WRAP_UP_TOKEN_FRACTION
+            or self.tokens_remaining < WRAP_UP_NEXT_TURNS * last
+            or self.turns_left <= WRAP_UP_TURNS_LEFT
+        ):
             now = "wrapping_up"
         else:
             now = "researching"

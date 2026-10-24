@@ -15,6 +15,7 @@ import logging
 import time
 from collections.abc import Callable
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import TimeoutError as FuturesTimeout
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from typing import Any
@@ -51,6 +52,10 @@ MAX_EMPTY_TURNS = 3  # consecutive replies without tool calls before the run cou
 NUDGE = "You did not call a tool. Call a tool; to finish, call submit."
 KICKOFF = "Begin. Research the universe with the tools, then submit your picks."
 FORCE_SUBMIT = {"type": "function", "function": {"name": "submit"}}
+
+
+class _WallClockExceeded(Exception):
+    """Tool calls were still running when the wall-clock limit passed."""
 
 
 @dataclass
@@ -241,7 +246,11 @@ class _Run:
             nudge = ""
             if reply.tool_calls:
                 empty_turns = 0
-                messages.extend(self.run_tools(turn, reply.tool_calls, submit_only))
+                try:
+                    messages.extend(self.run_tools(turn, reply.tool_calls, submit_only))
+                except _WallClockExceeded:
+                    self.emit_usage()
+                    return "timeout", f"wall clock limit reached ({s.max_wall_clock_s}s) while tools were running"
             else:
                 empty_turns += 1
                 nudge = NUDGE + "\n"
@@ -288,11 +297,18 @@ class _Run:
                 parallel.append(c)
 
         if parallel:
-            with ThreadPoolExecutor(max_workers=len(parallel)) as pool:
+            # Bounded by the wall clock: a hung tool must not hold the run past max_wall_clock_s.
+            remaining = self.settings.max_wall_clock_s - (self.now() - self.start)
+            pool = ThreadPoolExecutor(max_workers=len(parallel))
+            try:
                 futures = {pool.submit(self.execute, c): c for c in parallel}
-                for f in as_completed(futures):
+                for f in as_completed(futures, timeout=max(remaining, 0.1)):
                     out, ms = f.result()
                     self.finish(turn, futures[f], out, ms)
+            except FuturesTimeout:
+                raise _WallClockExceeded from None
+            finally:
+                pool.shutdown(wait=False, cancel_futures=True)
         for c in later:
             if self.accepted is not None or self.out_of_attempts:
                 out = self.error(c, "BAD_ARGS", "the run is over: a submission was already accepted or no attempts are left")

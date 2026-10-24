@@ -297,3 +297,21 @@ def test_unexpected_model_exception_is_error():
 def test_single_turn_run_is_submit_only_from_start(turns):
     _, sink, model = run([reply(None), reply(None)], s=settings(max_turns=turns))
     assert [t["function"]["name"] for t in model.calls[0]["tools"]] == ["submit"]
+
+
+def test_hung_tool_is_bounded_by_wall_clock():
+    """A tool that outlives the wall clock ends the run as timeout instead of hanging it."""
+    import time as _time
+
+    u = fake_universe()
+
+    class Hung(StubTools):
+        def execute(self, name, args, call_id):
+            _time.sleep(3)
+            return super().execute(name, args, call_id)
+
+    t0 = _time.monotonic()
+    result, sink, _ = run([reply("look", BROWSE), reply("never", BROWSE)], s=settings(max_wall_clock_s=1), tools=Hung(u))
+    assert result.status == "timeout" and "tools were running" in result.error
+    assert _time.monotonic() - t0 < 2.5
+    assert sink.of("tool_call") and not sink.of("tool_result")
