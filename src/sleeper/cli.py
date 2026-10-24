@@ -20,6 +20,8 @@ def build_parser() -> argparse.ArgumentParser:
     sub.add_parser("config", help="show the loaded settings (secrets masked)")
     schema = sub.add_parser("schema", help="write the JSON Schema of every shared contract")
     schema.add_argument("--out", default="schemas", help="output directory (default: schemas)")
+    fakes = sub.add_parser("fakes", help="regenerate the fake universe, tool outputs and recorded run (T03)")
+    fakes.add_argument("--out", default="fixtures/fake", help="output directory (default: fixtures/fake)")
     return parser
 
 
@@ -53,6 +55,16 @@ def _cmd_schema(out: str) -> int:
     return 0
 
 
+def _cmd_fakes(out: str) -> int:
+    from pathlib import Path
+
+    from sleeper.fakes import write_fakes
+
+    for path in write_fakes(Path(out)):
+        print(path)
+    return 0
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
@@ -60,6 +72,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         return _cmd_config()
     if args.command == "schema":
         return _cmd_schema(args.out)
+    if args.command == "fakes":
+        return _cmd_fakes(args.out)
     parser.print_help()
     return 0
 
