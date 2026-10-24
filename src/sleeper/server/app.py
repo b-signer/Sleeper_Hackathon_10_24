@@ -13,11 +13,18 @@
 | GET    | /api/runs/{run_id}/result       | RunResult; 409 while the run is in progress                   |
 | GET    | /api/runs/{run_id}/events       | SSE: every event so far, then new ones live, then `end`       |
 | GET    | /api/runs/{run_id}/replay       | SSE: a finished run at ?speed= (default 4, 0 = instant)       |
+| POST   | /api/topics/draft               | Body {"text"}. TopicPlan: a model's label and queries, counted |
+| POST   | /api/topics/count               | Body TopicDraft {label, queries}. TopicPlan for edited queries |
+| POST   | /api/topics/build               | Body TopicDraft. 202 BuildJob; 409 if a build is running      |
+| GET    | /api/topics/build/{job_id}      | BuildJob: state, progress lines, the new UniverseInfo when done |
 
 SSE messages: `id` is the event's seq, `event` its type, `data` the event as JSON (the RunEvent
 contract). Every stream ends with an `end` message: close the EventSource on it, or the browser
 reconnects. When `end` arrives the result is ready to fetch. A reconnect sends Last-Event-ID, and
 the live stream resumes after that seq.
+
+The topic endpoints answer 400 {"detail": Refusal} the same way when they refuse before any request
+(offline, no key, spend guard) or the input is unusable, and 404 when the server has no TopicService.
 
 A refused run (400) never creates a run folder. Its `detail` is a Refusal object,
 `{"reason": "spend_guard" | "offline" | "no_universe" | "no_api_key" | "web_model" | "other",
@@ -36,7 +43,10 @@ from fastapi import FastAPI, Header, HTTPException, Query
 from fastapi.responses import FileResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 
+from pydantic import BaseModel
+
 from sleeper.contracts import RunEvent, RunResult, RunSettings, dump_event
+from sleeper.custom_topic import TopicDraft
 from sleeper.agent.openrouter import WebAccessRefused
 from sleeper.agent.spend import SpendGuardError
 from sleeper.agent.types import ModelError
@@ -55,6 +65,7 @@ from sleeper.server.store import (
     read_result,
     replay_events,
 )
+from sleeper.server.topics import BuildJob, TopicPlan, TopicService
 
 STATIC_DIR = Path(__file__).parent / "static"
 FAKE_MODEL = "scripted/fake"  # T10's ScriptedModel: offline, free, fake universe only
@@ -80,6 +91,10 @@ def refusal_for(e: Exception) -> Refusal:
     return Refusal(reason=reason, message=message)
 
 
+class DraftRequest(BaseModel):
+    text: str
+
+
 def _sse(events: AsyncIterator[RunEvent]) -> StreamingResponse:
     async def body() -> AsyncIterator[str]:
         async for e in events:
@@ -96,6 +111,7 @@ def create_app(
     start_timeout_s: float = 30,
     config: ServerConfig | None = None,
     spend: Callable[[], SpendInfo | None] | None = None,
+    topics: TopicService | None = None,
 ) -> FastAPI:
     config = config or ServerConfig(
         offline=True,
@@ -181,5 +197,48 @@ def create_app(
         if not (run_dir / "result.json").exists():
             raise HTTPException(409, f"run {run_id!r} is still in progress; stream /events instead")
         return _sse(replay_events(run_dir, speed=speed))
+
+    def topic_service() -> TopicService:
+        if topics is None:
+            raise HTTPException(404, "this server can't build new topics")
+        return topics
+
+    def refused(e: Exception) -> HTTPException:
+        if type(e) is ValueError:  # unusable input or model reply: the message is already for the user
+            return HTTPException(400, Refusal(reason="other", message=str(e)).model_dump())
+        return HTTPException(400, refusal_for(e).model_dump())
+
+    @app.post("/api/topics/draft")
+    def draft_topic(body: DraftRequest) -> TopicPlan:
+        service = topic_service()
+        try:
+            return service.draft(body.text)
+        except Exception as e:  # refusals, unusable input or reply, GitHub or model errors: all shown in the launcher
+            raise refused(e) from e
+
+    @app.post("/api/topics/count")
+    def count_topic(draft: TopicDraft) -> TopicPlan:
+        service = topic_service()
+        try:
+            return service.count(draft)
+        except Exception as e:
+            raise refused(e) from e
+
+    @app.post("/api/topics/build", status_code=202)
+    def build_topic(draft: TopicDraft) -> BuildJob:
+        service = topic_service()
+        try:
+            return service.start_build(draft)
+        except RuntimeError as e:
+            raise HTTPException(409, str(e)) from e
+        except Exception as e:
+            raise refused(e) from e
+
+    @app.get("/api/topics/build/{job_id}")
+    def build_job(job_id: str) -> BuildJob:
+        job = topic_service().job(job_id)
+        if job is None:
+            raise HTTPException(404, f"no build {job_id!r}")
+        return job
 
     return app
