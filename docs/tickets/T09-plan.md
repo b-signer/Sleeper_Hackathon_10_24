@@ -9,18 +9,20 @@ The coordinator then merges them and makes the real tools the default. Contracts
 
 ## 1. Done-when checklist (T09)
 
-| # | Item | Owner | Test |
-|---|---|---|---|
-| 1 | Browse filters and sorts by any criterion score or metric; ≤ 50 rows plus a total count (delegates to `fakes.browse_output`, which works on any universe) | W1 | `test_browse_*` |
-| 2 | Repo details: full metrics and scores for one repo | W1 | `test_repo_details_*` |
-| 3 | README: text capped at `max_chars` (500–12000, default 6000); real universes fetch through the T05 cached client; fake universe uses T03's fake READMEs; no README -> `NOT_FOUND` | W1 | `test_readme_*` |
-| 4 | Deep tools reject repos outside the universe (`NOT_IN_UNIVERSE`) | W1 | `test_*_not_in_universe` |
-| 5 | Submit rejects, with a specific message: contract failure; repo outside the universe; citation to a missing, failed or submit call; key figure or score not matching its cited output; ranking missing a card repo or a repo researched in depth; too many picks | W2 | `test_check_*` |
-| 6 | Unique output ids that cards cite: the loop assigns `c_NNN` (T10); the toolbox records every output by id | W2 | `test_toolbox_records_outputs` |
-| 7 | Retries: 3 submit attempts, with `attempts_left` counting down | W2 | `test_toolbox_submit_attempts` |
-| 8 | Outputs are compact; approximate token sizes stated (target: research ~15 repos within 300k) | W1 measures, coordinator logs | `test_output_sizes` |
-| 9 | Tests run on fake data; the same code works on real universes with no change | W1, W2, coordinator | all; integration step 5 |
-| 10 | Real tools are the default in `execute_run`; `sleeper run --fake` and the T14 server still work | coordinator | integration |
+| # | Item | Owner | Test | Done |
+|---|---|---|---|---|
+| 1 | Browse filters and sorts by any criterion score or metric; ≤ 50 rows plus a total count (delegates to `fakes.browse_output`, which works on any universe) | W1 | `test_browse_*` | ✅ |
+| 2 | Repo details: full metrics and scores for one repo | W1 | `test_repo_details_*` | ✅ |
+| 3 | README: text capped at `max_chars` (500–12000, default 6000); real universes fetch through the T05 cached client; fake universe uses T03's fake READMEs; no README -> `NOT_FOUND` | W1 | `test_readme_*` | ✅ |
+| 4 | Deep tools reject repos outside the universe (`NOT_IN_UNIVERSE`) | W1 | `test_*_not_in_universe` | ✅ |
+| 5 | Submit rejects, with a specific message: contract failure; repo outside the universe; citation to a missing, failed or submit call; key figure or score not matching its cited output; ranking missing a card repo or a repo researched in depth; too many picks | W2 | `test_check_*` | ✅ |
+| 6 | Unique output ids that cards cite: the loop assigns `c_NNN` (T10); the toolbox records every output by id | W2 | `test_toolbox_records_outputs` | ✅ |
+| 7 | Retries: 3 submit attempts, with `attempts_left` counting down | W2 | `test_toolbox_submit_attempts` | ✅ |
+| 8 | Outputs are compact; approximate token sizes stated (target: research ~15 repos within 300k) | W1 measures, coordinator logs | `test_output_sizes` | ✅ |
+| 9 | Tests run on fake data; the same code works on real universes with no change | W1, W2, coordinator | all; integration step 5 | ✅ |
+| 10 | Real tools are the default in `execute_run`; `sleeper run --fake` and the T14 server still work | coordinator | integration | ✅ |
+
+Integrated on `feat/t09-agent-tools` (W1 + W2 merged cleanly; 242 offline tests pass). `execute_run` now defaults to `Toolbox(universe, DataTools(universe), max_picks=...)`. The fake run, the T14 server (in-process, with `execute_run` as its runner) and a live luna run all end `ok`, and luna's submit was accepted first time. The token estimate and the T11 advice are in the decisions learnings log.
 
 ## 2. Shared interface (decided by the coordinator)
 
@@ -118,16 +120,16 @@ Workers touch nothing else, including `contracts/*`, `agent/types.py`, `agent/to
 **Goal:** browse, repo_details and readme over any `Universe`. READMEs come from GitHub (cached, offline-capable) for real universes and from T03's fake READMEs for the fake universe.
 
 **Steps:**
-- [ ] **browse / repo_details (scope cut):** delegate to `sleeper.fakes.browse_output` / `repo_details_output`. They already work on any `Universe` (filters, `between`, keyword, language, unknowns sorted last, seeded `random`, offset/limit, `extra`, ~120-char descriptions; case-insensitive lookup, canonical name, `NOT_IN_UNIVERSE`). Don't port them now.
-- [ ] **readme:**
+- [x] **browse / repo_details (scope cut):** delegate to `sleeper.fakes.browse_output` / `repo_details_output`. They already work on any `Universe` (filters, `between`, keyword, language, unknowns sorted last, seeded `random`, offset/limit, `extra`, ~120-char descriptions; case-insensitive lookup, canonical name, `NOT_IN_UNIVERSE`). Don't port them now.
+- [x] **readme:**
   - not in the universe -> `NOT_IN_UNIVERSE`
   - `metrics.readme_chars == 0` -> `NOT_FOUND` without a request
   - the source returns None (404) -> `NOT_FOUND`; a 2xx with an empty body is `""`, a valid empty README, not `NOT_FOUND`
   - `ReadmeUnavailable` -> `UPSTREAM` with a short reason (e.g. "README not in the offline cache")
   - otherwise `text = full[:max_chars]`, `truncated`, `total_chars = len(full)`
   - the text is served raw, with no cleaning
-- [ ] **github_readme_source:** `client.get(README_PATH.format(repo=row.repo), accept=README_ACCEPT)` returns the text (`None` body on a 2xx -> `""`). `NotFound` -> None. Any other `GitHubError` (`OfflineCacheMiss`, `MissingTokenError`, `RateLimitExceeded`, HTTP) -> `ReadmeUnavailable`. The default client is `GitHubClient(max_wait=30, max_attempts=2, timeout=10)`, so a rate limit or slow GitHub can't hang a run (it reads token, offline flag and cache dir from env as usual). Serialize calls with a lock: the client builds its httpx client lazily and is not obviously thread-safe. Cache hits are fast anyway.
-- [ ] Measure output sizes and state approximate tokens (chars/4) in your report: browse with 10/25/50 rows on a 200-row synthetic universe, repo_details, readme at default `max_chars`.
+- [x] **github_readme_source:** `client.get(README_PATH.format(repo=row.repo), accept=README_ACCEPT)` returns the text (`None` body on a 2xx -> `""`). `NotFound` -> None. Any other `GitHubError` (`OfflineCacheMiss`, `MissingTokenError`, `RateLimitExceeded`, HTTP) -> `ReadmeUnavailable`. The default client is `GitHubClient(max_wait=30, max_attempts=2, timeout=10)`, so a rate limit or slow GitHub can't hang a run (it reads token, offline flag and cache dir from env as usual). Serialize calls with a lock: the client builds its httpx client lazily and is not obviously thread-safe. Cache hits are fast anyway.
+- [x] Measure output sizes and state approximate tokens (chars/4) in your report: browse with 10/25/50 rows on a 200-row synthetic universe, repo_details, readme at default `max_chars`.
 
 **Acceptance tests (`tests/test_data_tools.py`, offline):**
 - `test_browse_and_details_delegate`: one equality check each: `DataTools(u).browse(args, "c_001") == fakes.browse_output(u, args, "c_001")` for a filtered+sorted args set, and `repo_details` for `ACME/Quiver` equals `fakes.repo_details_output` (canonical name). An outside repo -> `NOT_IN_UNIVERSE`.
@@ -160,9 +162,9 @@ Workers touch nothing else, including `contracts/*`, `agent/types.py`, `agent/to
 Claim and risk citations are checked only by rule 4: a claim may cite another repo's output (comparisons). Numbers inside claim text are T13's job, not T09's.
 
 **Steps:**
-- [ ] `submit_check.py`: `SubmitContext`, `resolve_pointer`, `check_submission`, constants.
-- [ ] `toolbox.py`: `Toolbox` per §2.2. Record into `researched` only for successful `RepoDetailsOutput`/`ReadmeOutput`: `(output.repo, call_id)`, keeping the numerically smallest call_id when calls finish out of order.
-- [ ] Until W1 lands, test against an in-test `FakesData` adapter whose three methods call `sleeper.fakes.browse_output`/`repo_details_output`/`readme_output`.
+- [x] `submit_check.py`: `SubmitContext`, `resolve_pointer`, `check_submission`, constants.
+- [x] `toolbox.py`: `Toolbox` per §2.2. Record into `researched` only for successful `RepoDetailsOutput`/`ReadmeOutput`: `(output.repo, call_id)`, keeping the numerically smallest call_id when calls finish out of order.
+- [x] Until W1 lands, test against an in-test `FakesData` adapter whose three methods call `sleeper.fakes.browse_output`/`repo_details_output`/`readme_output`.
 
 **Acceptance tests (offline):**
 - `tests/test_toolbox.py`:

@@ -79,7 +79,7 @@ def execute_run(
 ) -> RunResult:
     """Run the agent once and record it under cfg.runs_dir/<run_id>/.
 
-    fake=True: scripted model + stub tools on the fake universe; no network, no spend check.
+    fake=True: scripted model + the real tools on the fake universe; no network, no spend check.
     Raises WebAccessRefused / FileNotFoundError / SpendGuardError / ModelError("auth") before
     any run folder exists. Model and tool failures during the run become the result's status.
     """
@@ -99,10 +99,11 @@ def execute_run(
             model = ScriptedModel(fake_script(universe))
         else:
             model = OpenRouterModel(settings.model, cfg.openrouter_api_key)
-    if tools is None:
-        from sleeper.agent.stub_tools import StubTools  # until T09's executor lands
+    if tools is None:  # the real tools (T09): fake READMEs on the fake universe, GitHub (cached) otherwise
+        from sleeper.agent.data_tools import DataTools
+        from sleeper.agent.toolbox import Toolbox
 
-        tools = StubTools(universe, max_picks=settings.max_picks)
+        tools = Toolbox(universe, DataTools(universe), max_picks=settings.max_picks)
     from sleeper.agent.loop import run_agent  # W1's engine; imported lazily
 
     rec = RunRecorder.create(cfg.runs_dir, settings, echo=echo)

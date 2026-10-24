@@ -39,7 +39,7 @@ def build_parser() -> argparse.ArgumentParser:
     run.add_argument("--token-budget", type=int, metavar="N", help="token budget (default 300000)")
     run.add_argument("--max-turns", type=int, metavar="N", help="turn limit (default 25)")
     run.add_argument("--max-wall-clock", type=int, metavar="S", help="wall-clock limit in seconds (default 600)")
-    run.add_argument("--fake", action="store_true", help="scripted model and stub tools on fake data: offline, free")
+    run.add_argument("--fake", action="store_true", help="scripted model and the real tools on fake data: offline, free")
     run.add_argument("--quiet", action="store_true", help="don't print the live trace")
     return parser
 

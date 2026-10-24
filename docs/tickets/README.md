@@ -13,7 +13,7 @@ Sizes are time budgets: **S** is about 30 minutes, **M** about 45, **L** about 9
 
 ## Index
 
-**Status as of 2026-10-24, after T14 was merged.** Update this column when you start or finish a ticket. T10 build notes are in [T10-plan.md](T10-plan.md).
+**Status as of 2026-10-24, after T09 was merged.** Update this column when you start or finish a ticket. Build notes: [T09-plan.md](T09-plan.md), [T10-plan.md](T10-plan.md).
 
 | ID | Status | Title | Track | Pri | Size | Depends on | File |
 |---|---|---|---|---|---|---|---|
@@ -25,7 +25,7 @@ Sizes are time budgets: **S** is about 30 minutes, **M** about 45, **L** about 9
 | T06 | 🔨 In progress | Repo metrics | Data | P0 | M | T05 | [data](data.md) |
 | T07 | 🔨 In progress | Universe builder and criteria scores | Data | P0 | M | T02, T06 | [data](data.md) |
 | T08 👤 | 🔨 In progress | Build the demo universes | Data | P0 | S (waiting) | T07 | [data](data.md) |
-| T09 | ▶ Ready | Agent tools | Agent | P0 | M | T02, T03 | [agent](agent.md) |
+| T09 | ✅ Done | Agent tools | Agent | P0 | M | T02, T03 | [agent](agent.md) |
 | T10 | ✅ Done | Agent loop, budget, run records | Agent | P0 | L | T02, T03, T04 | [agent](agent.md) |
 | T11 | ⏳ Waiting | Prompt and tuning (Checkpoint B) | Agent | P0 | M | T09, T10, T08 | [agent](agent.md) |
 | T12 | ▶ Ready (P1) | Skeptic review | Agent | P1 | S | T10 | [agent](agent.md) |
