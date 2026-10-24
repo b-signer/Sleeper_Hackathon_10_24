@@ -2,12 +2,12 @@
 
 Typical use::
 
-    from sleeper.github import GitHubClient, STAR_ACCEPT
+    from sleeper.github import GitHubClient
 
     gh = GitHubClient()  # reads GITHUB_TOKEN, SLEEPER_OFFLINE, SLEEPER_CACHE_DIR
     repo = gh.get("/repos/astral-sh/uv")
-    for star in gh.paginate("/repos/o/r/stargazers", accept=STAR_ACCEPT, max_pages=2):
-        print(star["starred_at"])
+    for fork in gh.paginate("/repos/o/r/forks", params={"sort": "newest"}, max_pages=2):
+        print(fork["created_at"])
     data = gh.graphql("query($o:String!,$n:String!){repository(owner:$o,name:$n){stargazerCount}}",
                       {"o": "astral-sh", "n": "uv"})
 """

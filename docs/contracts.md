@@ -20,7 +20,7 @@ One JSON file: `Universe = {header, rows}`. Checks: no duplicate repos, `header.
 - `UniverseHeader`: `schema_version` (1), `topic`, `topic_label`, `queries` (GitHub searches used), `stars_min`, `stars_max`, `created_after`, `created_before`?, `built_at` (metrics are as of this time), `builder` (version and git SHA), `seed`, `max_size` (200), `github_requests`?, `build_seconds`?, `scoring` (one paragraph on how the scores are computed), `counts`.
 - `UniverseCounts`: `search_total`, `excluded` (reason → count, e.g. `fork`, `archived`, `awesome_list`), `eligible`, `sampled`, `rows`.
 - `UniverseRow`: `repo`, `repo_id`, `url`, `metrics`, `scores`.
-- `RepoMetrics` (T06): `stars`, `stars_gained_30d`, `commits_90d`, `authors_90d`, `releases`, `last_release_at`, `last_commit_at`, `readme_chars`, `created_at`, `age_days`, `description`, `language`, `license`. Only `stars`, `created_at` and `age_days` are required.
+- `RepoMetrics` (T06): `stars`, `stars_per_day`, `forks`, `forks_30d`, `star_events_30d`, `star_events_capped`, `commits_90d`, `authors_90d`, `releases`, `last_release_at`, `last_commit_at`, `readme_chars`, `created_at`, `age_days`, `description`, `language`, `license`. Only `stars`, `created_at` and `age_days` are required. There is no `stars_gained_30d`: GitHub no longer lists stargazers (decisions.md).
 - `CriteriaScores`: `popularity`, `momentum`, `quality`, `newness`, each 0–100. Higher is better, computed by code (D8).
 
 ## Agent tools (`tools.py`)
@@ -34,7 +34,7 @@ Every output starts with `call_id` and `tool`. `TOOL_ARGS` maps each tool name t
 | `readme` | `repo`, `max_chars` (500–12000, 6000) | `ReadmeOutput`: `repo`, `text`, `truncated`, `total_chars` |
 | `submit` | a `Submission` (below) | `SubmitOutput`: `ok`, `errors` (specific messages, non-empty iff not ok), `attempts_left` |
 
-Filter and sort fields (`ScreenField`): `stars`, `stars_gained_30d`, `commits_90d`, `authors_90d`, `releases`, `readme_chars`, `age_days`, `popularity`, `momentum`, `quality`, `newness`.
+Filter and sort fields (`ScreenField`): `stars`, `stars_per_day`, `forks_30d`, `star_events_30d`, `commits_90d`, `authors_90d`, `releases`, `readme_chars`, `age_days`, `popularity`, `momentum`, `quality`, `newness`.
 
 **Errors:** `ErrorOutput` = {`call_id`, `tool`, `error`: {`code`, `message`}}. Codes: `BAD_ARGS`, `NOT_IN_UNIVERSE`, `NOT_FOUND`, `UPSTREAM`, `BUDGET_EXHAUSTED`. Error outputs can't be cited.
 

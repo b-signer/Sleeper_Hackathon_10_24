@@ -10,11 +10,11 @@ from sleeper.contracts.common import CallId, Contract, JsonPointer, Repo, Score
 class KeyFigure(Contract):
     """One number on a card and exactly where it came from (C1)."""
 
-    label: str = Field(min_length=1, description="e.g. 'Stars gained, last 30 days'")
+    label: str = Field(min_length=1, description="e.g. 'Forks, last 30 days'")
     value: float
     unit: str | None = Field(None, description="e.g. 'stars', 'commits', 'days'")
     source_call_id: CallId
-    source_path: JsonPointer = Field(description="Pointer into the cited output, e.g. '/metrics/stars_gained_30d'")
+    source_path: JsonPointer = Field(description="Pointer into the cited output, e.g. '/metrics/forks_30d'")
 
 
 class CriterionRating(Contract):

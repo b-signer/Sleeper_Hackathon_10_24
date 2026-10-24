@@ -5,11 +5,11 @@ You need two keys in a `.env` file in the project root. Copy `.env.example` to `
 | Key | What it's for | Cost | Who has it |
 |---|---|---|---|
 | `OPENROUTER_API_KEY` | Calls the AI models: luna for development, terra for the demo | Paid from prepaid credits | **One shared team key.** Ask Roee for it by direct message or password manager |
-| `GITHUB_TOKEN` | Reads **other people's public repos** (the ones Sleeper analyzes): stars, stargazers, commits, READMEs. It isn't used for our own repo; pushing and pulling use your normal git login | Free | Anyone whose code calls GitHub: the data track and the agent track. Everyone uses their own, because rate limits are per token |
+| `GITHUB_TOKEN` | Reads **other people's public repos** (the ones Sleeper analyzes): stars, forks, commits, releases, activity, READMEs. It isn't used for our own repo; pushing and pulling use your normal git login | Free | Anyone whose code calls GitHub: the data track and the agent track. Everyone uses their own, because rate limits are per token |
 
 ## Make your GitHub token (2 minutes)
 
-Use a **classic** token with **no scopes**. Fine-grained tokens can't read stargazer lists (GitHub returns `403 Resource not accessible by personal access token`), and the momentum metric depends on them. A classic token with no scopes can only read public data.
+Use a **classic** token with **no scopes**. It can only read public data, and it's the type we've tested. Fine-grained tokens returned `403` on some endpoints.
 
 1. Go to github.com → Settings → Developer settings → Personal access tokens → **Tokens (classic)** → Generate new token (classic).
 2. Name it `sleeper-hackathon` and set it to expire in 7 days.

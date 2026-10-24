@@ -45,7 +45,7 @@ Every repo in a universe is rated on these criteria, and every card shows them.
 | Criterion | Meaning | Example evidence |
 |---|---|---|
 | **Popularity** | How much attention the repo has now | Stars |
-| **Momentum** | How fast attention is growing relative to its size | Stars gained in the last 30 days compared with total stars |
+| **Momentum** | How fast attention is growing | Star velocity (stars per day since creation) and forks in the last 30 days. Recent star events are shown when available |
 | **Quality** | Signs of a healthy, well-run project | Recent commits, number of active contributors, releases, a substantial README |
 | **Newness** | How young the repo is | Days since creation |
 
@@ -103,7 +103,7 @@ Each card contains:
 - **F8.1** Final picks from demo runs are saved with a timestamp and committed, so they can be checked months later.
 
 ### Stretch (only after the demo is safe)
-- **S1 Rough backtest:** rebuild stars at a past date from stargazer timestamps, rank the universe as of then, and compare the agent's picks with simple baselines on growth since. The full design is in `archive/v0.3-full-plan/`.
+- **S1 Rough backtest:** judge picks made as of a past date against what happened since. **This is now much harder:** GitHub no longer lists stargazers, so past star counts can't be rebuilt from the API (see `decisions.md`). It would need an outside source such as GH Archive. Treat it as post-hackathon. The full design is in `archive/v0.3-full-plan/`.
 - **S2 Linked papers:** arXiv papers referenced in a repo's README, used as evidence.
 
 ## 6. Constraints

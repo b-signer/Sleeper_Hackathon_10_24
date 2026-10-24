@@ -70,7 +70,11 @@ def settings() -> RunSettings:
 def metrics() -> RepoMetrics:
     return RepoMetrics(
         stars=340,
-        stars_gained_30d=61,
+        stars_per_day=0.67,
+        forks=22,
+        forks_30d=9,
+        star_events_30d=61,
+        star_events_capped=False,
         commits_90d=81,
         authors_90d=4,
         releases=6,
@@ -126,7 +130,7 @@ def card(repo: str = "acme/quiver") -> Card:
         pitch="Incremental Rust linter: 81 commits in 90 days, only 340 stars.",
         criteria=CardCriteria(
             popularity=rating("stars", 340),
-            momentum=rating("stars_gained_30d", 61),
+            momentum=rating("forks_30d", 9),
             quality=rating("commits_90d", 81),
             newness=rating("age_days", 509),
         ),
@@ -258,7 +262,7 @@ def test_universe_lookup_is_case_insensitive():
 
 def test_unknown_metrics_are_none():
     m = RepoMetrics(stars=10, created_at=TS, age_days=0)
-    assert m.stars_gained_30d is None and m.commits_90d is None
+    assert m.stars_per_day is None and m.forks_30d is None and m.commits_90d is None
 
 
 def test_card_cited_call_ids():

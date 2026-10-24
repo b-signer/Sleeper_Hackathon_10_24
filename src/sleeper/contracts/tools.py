@@ -18,7 +18,9 @@ ToolName = Literal["browse", "repo_details", "readme", "submit"]
 # Fields browse can filter and sort on: the numeric metrics and the four criteria scores.
 ScreenField = Literal[
     "stars",
-    "stars_gained_30d",
+    "stars_per_day",
+    "forks_30d",
+    "star_events_30d",
     "commits_90d",
     "authors_90d",
     "releases",
