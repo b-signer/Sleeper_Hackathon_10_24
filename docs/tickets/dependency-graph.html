@@ -1,0 +1,354 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sleeper Build Graph</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+Condensed:wght@400;500;600&family=IBM+Plex+Sans:wght@400;600;700&display=swap">
+<style>
+/* Layout: swimlane schedule. Columns = time windows (parallel work), rows = tracks, arrows = dependencies. */
+:root {
+  --bg: #f4f5f2;
+  --surface: #ffffff;
+  --fg: #1c2220;
+  --muted: #69716d;
+  --rule: #d5dad6;
+  --lane: #eceee9;
+  --core: #1f5f5a;
+  --core-fg: #ffffff;
+  --p0: #1f5f5a;
+  --opt: #8a928e;
+  --crit: #c4521a;
+  --check: #6a4fb3;
+  --edge: #9aa39f;
+  --font-display: "IBM Plex Sans", system-ui, sans-serif;
+  --font-node: "IBM Plex Sans Condensed", "Arial Narrow", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121615; --surface: #1a1f1e; --fg: #e3e8e5; --muted: #949d99; --rule: #2e3533; --lane: #171c1b;
+    --core: #4fa59c; --core-fg: #0d1211; --p0: #4fa59c; --opt: #7b8480; --crit: #f0814a; --check: #a891f0; --edge: #56605c;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121615; --surface: #1a1f1e; --fg: #e3e8e5; --muted: #949d99; --rule: #2e3533; --lane: #171c1b;
+  --core: #4fa59c; --core-fg: #0d1211; --p0: #4fa59c; --opt: #7b8480; --crit: #f0814a; --check: #a891f0; --edge: #56605c;
+  color-scheme: dark;
+}
+body {
+  background: var(--bg); color: var(--fg); font-family: var(--font-display);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 24px 40px;
+}
+.wrap { max-width: 1640px; margin: 0 auto; display: grid; gap: 18px; }
+header { display: grid; gap: 6px; }
+h1 { font-size: 1.6rem; margin: 0; letter-spacing: -0.01em; text-wrap: balance; }
+.sub { color: var(--muted); margin: 0; max-width: 72ch; line-height: 1.5; }
+.bar { display: flex; flex-wrap: wrap; gap: 10px 22px; align-items: center; font-size: 13px; }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; color: var(--muted); }
+.key { display: inline-flex; align-items: center; gap: 6px; }
+.sw { width: 22px; height: 12px; border-radius: 3px; display: inline-block; }
+.sw.core { background: var(--core); }
+.sw.p0 { border: 1.5px solid var(--p0); background: var(--surface); }
+.sw.opt { border: 1.5px dashed var(--opt); background: var(--surface); }
+.sw.crit { border: 2.5px solid var(--crit); background: var(--surface); }
+.sw.hum { width: 10px; height: 10px; border-radius: 50%; background: var(--crit); }
+.ln { width: 2px; height: 14px; background: var(--check); display: inline-block; }
+label.tog { display: inline-flex; gap: 6px; align-items: center; cursor: pointer; }
+.stage { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 16px; align-items: start; }
+@media (max-width: 980px) { .stage { grid-template-columns: minmax(0, 1fr); } }
+.scroller { overflow-x: auto; background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; }
+svg { display: block; }
+.lane-bg { fill: var(--lane); }
+.lane-bg.alt { fill: transparent; }
+.lane-label { fill: var(--fg); font: 600 12px var(--font-display); }
+.lane-note { fill: var(--muted); font: 400 10.5px var(--font-display); }
+.col-head { fill: var(--fg); font: 600 12px var(--font-mono); font-variant-numeric: tabular-nums; }
+.col-sub { fill: var(--muted); font: 400 10.5px var(--font-display); }
+.col-rule { stroke: var(--rule); stroke-width: 1; }
+.check-line { stroke: var(--check); stroke-width: 2; stroke-dasharray: 5 4; }
+.check-tag { fill: var(--check); font: 600 11px var(--font-display); }
+.edge { fill: none; stroke: var(--edge); stroke-width: 1.1; opacity: .55; transition: opacity .15s; }
+.edge.soft { stroke-dasharray: 3 3; }
+.edge.crit { stroke: var(--crit); stroke-width: 2.2; opacity: .95; }
+.node rect.box { fill: var(--surface); stroke: var(--p0); stroke-width: 1.4; transition: opacity .15s; }
+.node.core rect.box { fill: var(--core); stroke: var(--core); }
+.node.opt rect.box { stroke: var(--opt); stroke-dasharray: 4 3; }
+.node.crit rect.box { stroke: var(--crit); stroke-width: 3; }
+.node .id { font: 600 10.5px var(--font-mono); fill: var(--muted); }
+.node .tt { font: 500 12px var(--font-node); fill: var(--fg); }
+.node.core .id { fill: var(--core-fg); opacity: .8; }
+.node.core .tt { fill: var(--core-fg); }
+.node .hum { fill: var(--crit); }
+.node { cursor: pointer; outline: none; }
+.node:focus-visible rect.box { stroke: var(--check); stroke-width: 3; }
+svg.focus .node, svg.focus .edge { opacity: .14; }
+svg.focus .node.on, svg.focus .edge.on { opacity: 1; }
+svg.focus .edge.on { stroke: var(--fg); stroke-width: 1.8; }
+svg.focus .edge.on.crit { stroke: var(--crit); }
+svg.focus .node.sel rect.box { stroke: var(--check); stroke-width: 3.2; }
+svg.coreonly .node:not(.core) { opacity: .16; }
+svg.coreonly .edge.noncore { opacity: .06; }
+aside { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 16px; display: grid; gap: 12px; font-size: 13.5px; line-height: 1.45; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 12px); }
+aside h2 { margin: 0; font-size: 1rem; }
+aside .idl { font-family: var(--font-mono); color: var(--muted); font-size: 12px; }
+aside dl { margin: 0; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 6px 12px; }
+aside dt { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .05em; padding-top: 2px; }
+aside dd { margin: 0; }
+.chips { display: flex; flex-wrap: wrap; gap: 4px; }
+.chip { font: 600 11.5px var(--font-mono); border: 1px solid var(--rule); border-radius: 4px; padding: 1px 6px; cursor: pointer; background: var(--bg); color: var(--fg); }
+.chip:hover, .chip:focus-visible { border-color: var(--fg); }
+.none { color: var(--muted); }
+.crit-path { font-family: var(--font-mono); font-size: 12px; line-height: 1.7; color: var(--crit); }
+.hint { color: var(--muted); font-size: 12.5px; }
+@media (prefers-reduced-motion: reduce) { .edge, .node rect.box { transition: none; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Sleeper build graph</h1>
+    <p class="sub">Each column is a time window: tickets in the same column can run in parallel. Each row is a track. Arrows point from a ticket to the tickets that need it. Hover or click a ticket to see everything it waits on and everything it unblocks.</p>
+  </header>
+
+  <div class="bar">
+    <div class="legend">
+      <span class="key"><span class="sw core"></span>Core (demo needs it)</span>
+      <span class="key"><span class="sw p0"></span>P0, after Core</span>
+      <span class="key"><span class="sw opt"></span>P1 / P2 / extension</span>
+      <span class="key"><span class="sw crit"></span>Critical path</span>
+      <span class="key"><span class="sw hum"></span>Needs a person</span>
+      <span class="key"><span class="ln"></span>Checkpoint</span>
+    </div>
+    <label class="tog"><input type="checkbox" id="coreonly"> Show Core only</label>
+  </div>
+
+  <div class="stage">
+    <div class="scroller"><svg id="g" role="img" aria-label="Dependency graph of Sleeper tickets by time window and track"></svg></div>
+    <aside id="panel" aria-live="polite">
+      <div>
+        <h2>Critical path</h2>
+        <p class="crit-path" id="critText"></p>
+        <p class="hint">The rate-limited universe build sits in the middle of it. If a checkpoint slips more than 20 minutes, apply the cut order.</p>
+      </div>
+      <div id="detail"><p class="hint">Select a ticket to see its dependencies.</p></div>
+    </aside>
+  </div>
+</div>
+
+<script>
+const COLS = [
+  ["0:00–0:20", "kickoff"],
+  ["0:20–0:50", "contracts, stage 1"],
+  ["0:50–1:30", "build on fakes"],
+  ["1:30–2:15", "builds start ~2:00"],
+  ["2:15–3:15", "integration"],
+  ["3:15–4:00", "real runs, scoring"],
+  ["4:00–4:50", "campaign"],
+  ["4:50–5:30", "rehearsal"],
+];
+const LANES = [
+  ["found", "Foundations", "WP0"],
+  ["data", "GitHub data", "WP1"],
+  ["uni", "Universe", "WP2"],
+  ["tools", "Agent tools", "WP3"],
+  ["agent", "Agent runtime", "WP4"],
+  ["ground", "Grounding", "WP5"],
+  ["bt", "Backtest", "WP6"],
+  ["ui", "Web UI", "WP7"],
+  ["rel", "Release", "WP8 · WP9"],
+];
+// pri: core | p0 | opt ; h = needs a person ; d = hard deps ; s = soft deps
+const N = [
+  {id:"T0.5", t:"Keys + spend limit", f:"Accounts, keys and spend limit", lane:"found", col:0, pri:"core", h:1, d:[]},
+  {id:"T0.1", t:"Project skeleton", f:"Project skeleton", lane:"found", col:0, pri:"core", d:[]},
+  {id:"T0.2", t:"Shared contracts", f:"Shared contracts (two-stage freeze)", lane:"found", col:1, pri:"core", d:["T0.1"]},
+  {id:"T0.4", t:"Verify assumptions", f:"Verify external assumptions (A1 first)", lane:"found", col:1, pri:"core", d:["T0.1","T0.5"]},
+  {id:"T0.3", t:"Fake data", f:"Fake data (fixtures), target ~1:15", lane:"found", col:2, pri:"core", d:["T0.2"]},
+  {id:"T0.6", t:"Runtime core", f:"Runtime core: tool registry, run context, metered LLM client, fake model", lane:"found", col:2, pri:"core", d:["T0.2"]},
+
+  {id:"T1.1", t:"GitHub access layer", f:"GitHub access layer", lane:"data", col:1, pri:"core", d:["T0.1"]},
+  {id:"T1.2", t:"Stars as of T", f:"Stars as of T", lane:"data", col:2, pri:"core", d:["T1.1","T0.4"]},
+  {id:"T1.3", t:"Activity as of T", f:"Activity as of T", lane:"data", col:2, pri:"core", d:["T1.1"]},
+  {id:"T1.4", t:"README as of T", f:"README and description as of T", lane:"data", col:2, pri:"core", d:["T1.1"]},
+  {id:"T1.5", t:"Future-data guard", f:"Future-data guard", lane:"data", col:2, pri:"core", d:["T0.2"]},
+  {id:"T1.6", t:"Live-mode data", f:"Live-mode data", lane:"data", col:4, pri:"p0", d:["T1.2","T1.3","T1.4"]},
+  {id:"T1.7", t:"Contributors as of T", f:"Contributors as of T", lane:"data", col:4, pri:"opt", d:["T1.1"]},
+
+  {id:"T2.1", t:"Topic definitions", f:"Topic definitions", lane:"uni", col:0, pri:"core", d:[]},
+  {id:"T2.2a", t:"Universe candidates", f:"Universe candidates (code against a stubbed stars-at-T; real build needs T1.2)", lane:"uni", col:3, pri:"core", d:["T1.1","T1.2","T1.5","T2.1"]},
+  {id:"T2.2b", t:"Universe metrics", f:"Universe metrics", lane:"uni", col:4, pri:"core", d:["T2.2a","T1.3","T1.4"]},
+  {id:"T2.3", t:"Build backtest universes", f:"Build and commit backtest universes (builds start ~2:00; first final universe ~3:15, rest by ~3:45)", lane:"uni", col:4, pri:"core", h:1, d:["T1.2","T2.2a","T2.2b"]},
+  {id:"T2.4", t:"Build live universes", f:"Build live universes (2 topics)", lane:"uni", col:4, pri:"p0", d:["T1.6","T2.2b"]},
+
+  {id:"T3.3", t:"Calculator tool", f:"Calculator tool", lane:"tools", col:2, pri:"core", d:["T0.2"]},
+  {id:"T3.4", t:"Submit + validation", f:"Submit tool and validation", lane:"tools", col:3, pri:"core", d:["T0.2","T0.6"]},
+  {id:"T3.1", t:"Browse + screen tools", f:"Browse and screen tools", lane:"tools", col:3, pri:"core", d:["T0.3","T0.6"]},
+  {id:"T3.2", t:"Deep-dive + README", f:"Deep-dive and README tools (fakes first, then real data)", lane:"tools", col:3, pri:"core", d:["T0.3","T0.6","T1.2","T1.3","T1.4"]},
+  {id:"T3.5", t:"Planted-repo injection", f:"Planted-repo injection", lane:"tools", col:4, pri:"opt", d:["T0.3","T3.2"]},
+  {id:"T3.6", t:"Contributors tool", f:"Contributors tool", lane:"tools", col:4, pri:"opt", d:["T1.7","T3.2"]},
+
+  {id:"T4.4", t:"Run records", f:"Run records", lane:"agent", col:2, pri:"core", d:["T0.2"]},
+  {id:"T4.1", t:"Agent loop", f:"Agent loop (stub tools first, then T3.1 and T3.4)", lane:"agent", col:3, pri:"core", d:["T0.3","T0.6"], s:["T3.1","T3.4"]},
+  {id:"T4.7", t:"Bear pass", f:"Bear pass", lane:"agent", col:3, pri:"p0", d:["T0.6","T4.4"]},
+  {id:"T4.2", t:"Budget + spend", f:"Budget and spend control", lane:"agent", col:4, pri:"core", d:["T4.1"]},
+  {id:"T4.5", t:"CLI + run command", f:"Command-line entry and run command", lane:"agent", col:4, pri:"core", d:["T4.1"]},
+  {id:"T4.8", t:"Pipeline · Checkpoint A", f:"Run pipeline integration (Checkpoint A ~2:45)", lane:"agent", col:4, pri:"core", d:["T4.1","T4.4","T5.1","T7.1","T7.3"], s:["T4.7"]},
+  {id:"T4.3", t:"Bounded context", f:"Bounded context", lane:"agent", col:4, pri:"core", d:["T4.1"]},
+  {id:"T4.6", t:"Prompt · Checkpoint B", f:"System prompt and tuning (Checkpoint B ~3:30: real runs on luna)", lane:"agent", col:5, pri:"core", d:["T4.1","T4.3","T3.2"], s:["T2.3","T2.4"]},
+
+  {id:"T5.1", t:"Grounding checks", f:"Deterministic grounding checks and scorecard", lane:"ground", col:3, pri:"core", d:["T0.3"]},
+  {id:"T5.2", t:"Claim judge", f:"Claim judge and labeled set", lane:"ground", col:3, pri:"p0", d:["T0.3","T0.6"]},
+  {id:"T5.3", t:"Planted-repo test", f:"Planted-repo test", lane:"ground", col:5, pri:"opt", d:["T3.5","T5.1"]},
+  {id:"T5.4", t:"Perturbation test", f:"Perturbation test (P2)", lane:"ground", col:5, pri:"opt", d:["T4.1","T5.1"]},
+  {id:"T5.5", t:"Tool spot-check", f:"Tool accuracy spot-check", lane:"ground", col:5, pri:"opt", h:1, d:["T2.3"]},
+
+  {id:"T6.3", t:"Statistics", f:"Statistics", lane:"bt", col:3, pri:"core", d:["T0.2","T0.3"]},
+  {id:"T6.4", t:"Contamination canary", f:"Contamination controls", lane:"bt", col:3, pri:"p0", d:["T0.5","T0.6"]},
+  {id:"T6.1", t:"Outcome snapshot", f:"Outcome snapshot", lane:"bt", col:5, pri:"core", d:["T2.3"]},
+  {id:"T6.2", t:"Baselines · Checkpoint C", f:"Baselines and scoring command (Checkpoint C ~4:15: one scored run)", lane:"bt", col:5, pri:"core", d:["T6.1","T0.6","T6.3","T4.8"]},
+  {id:"T6.5", t:"Backtest campaign", f:"Backtest campaign", lane:"bt", col:6, pri:"core", h:1, d:["T2.3","T4.8","T5.1","T6.1","T6.2","T6.3","T6.4"]},
+
+  {id:"T7.1", t:"Server + event stream", f:"Server and event stream", lane:"ui", col:3, pri:"core", d:["T4.4"]},
+  {id:"T7.2", t:"Launcher + trace", f:"Launcher, live trace, budget meter", lane:"ui", col:3, pri:"core", d:["T7.1"]},
+  {id:"T7.3", t:"Cards + drill-down", f:"Cards with source drill-down", lane:"ui", col:3, pri:"core", d:["T7.1"]},
+  {id:"T7.5", t:"Runs list + replay", f:"Runs list and offline replay", lane:"ui", col:3, pri:"core", d:["T7.1"]},
+  {id:"T7.4", t:"Grounding + backtest UI", f:"Grounding and backtest panels", lane:"ui", col:5, pri:"core", d:["T7.1","T0.3"]},
+
+  {id:"T9.1", t:"Linked papers", f:"Linked papers as signals (extension, only after Checkpoint B)", lane:"rel", col:6, pri:"opt", d:["T3.2"]},
+  {id:"T8.1", t:"Live picks on record", f:"Live picks on the record", lane:"rel", col:6, pri:"opt", d:["T4.5","T2.4"]},
+  {id:"T9.2", t:"Paper discovery mode", f:"Paper discovery mode (stretch)", lane:"rel", col:7, pri:"opt", d:["T9.1"]},
+  {id:"T8.2", t:"Demo rehearsal", f:"Demo rehearsal and backup", lane:"rel", col:7, pri:"core", h:1, d:["T6.5","T7.2","T7.3","T7.4","T7.5"]},
+];
+const CRIT = ["T0.1","T1.1","T1.2","T2.2a","T2.2b","T2.3","T6.1","T6.2","T6.5","T8.2"];
+const CHECKS = [[4, "A · ~2:45 fake run end to end"], [5, "B ~3:30 · C ~4:15 scored backtest"]];
+const PRI_LABEL = {core: "Core", p0: "P0 (after Core)", opt: "P1 / P2 / extension"};
+
+const byId = Object.fromEntries(N.map(n => [n.id, n]));
+const kids = Object.fromEntries(N.map(n => [n.id, []]));
+N.forEach(n => [...n.d, ...(n.s || [])].forEach(p => kids[p].push(n.id)));
+const critSet = new Set(CRIT);
+const critEdges = new Set(CRIT.slice(1).map((id, i) => CRIT[i] + ">" + id));
+
+// depth for ordering inside a cell
+const depth = {};
+function dep(id) { if (depth[id] != null) return depth[id]; const n = byId[id]; const ps = [...n.d, ...(n.s || [])]; return depth[id] = ps.length ? 1 + Math.max(...ps.map(dep)) : 0; }
+N.forEach(n => dep(n.id));
+
+const LX = 128, CW = 176, NW = 148, NH = 40, GAP = 10, PAD = 14, HEAD = 62;
+const W = LX + COLS.length * CW + 16;
+const pos = {};
+let y = HEAD; const laneY = {};
+LANES.forEach(([key]) => {
+  const cells = COLS.map((_, c) => N.filter(n => n.lane === key && n.col === c).sort((a, b) => depth[a.id] - depth[b.id] || a.id.localeCompare(b.id)));
+  const max = Math.max(1, ...cells.map(c => c.length));
+  const h = PAD * 2 + max * NH + (max - 1) * GAP;
+  laneY[key] = [y, h];
+  cells.forEach((cell, c) => cell.forEach((n, i) => { pos[n.id] = {x: LX + c * CW + (CW - NW) / 2, y: y + PAD + i * (NH + GAP)}; }));
+  y += h;
+});
+const H = y + 12;
+
+const svg = document.getElementById("g");
+const NS = "http://www.w3.org/2000/svg";
+svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+svg.setAttribute("width", W); svg.setAttribute("height", H);
+const el = (tag, attrs, parent = svg) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; };
+
+LANES.forEach(([key, name, wp], i) => {
+  const [ly, lh] = laneY[key];
+  el("rect", {x: 0, y: ly, width: W, height: lh, class: "lane-bg" + (i % 2 ? " alt" : "")});
+  el("text", {x: 14, y: ly + 22, class: "lane-label"}).textContent = name;
+  el("text", {x: 14, y: ly + 37, class: "lane-note"}).textContent = wp;
+});
+COLS.forEach(([t, s], c) => {
+  const x = LX + c * CW;
+  el("line", {x1: x, x2: x, y1: 8, y2: H, class: "col-rule"});
+  const count = N.filter(n => n.col === c).length;
+  el("text", {x: x + 12, y: 24, class: "col-head"}).textContent = t;
+  el("text", {x: x + 12, y: 42, class: "col-sub"}).textContent = `${s} · ${count} tickets`;
+});
+CHECKS.forEach(([c, label]) => {
+  const x = LX + (c + 1) * CW;
+  el("line", {x1: x, x2: x, y1: HEAD - 6, y2: H, class: "check-line"});
+  el("text", {x: x - 6, y: H - 4, "text-anchor": "end", class: "check-tag"}).textContent = label;
+});
+
+const edgeG = el("g", {});
+const edges = [];
+N.forEach(n => {
+  const add = (p, soft) => {
+    const a = pos[p], b = pos[n.id];
+    let d;
+    if (byId[p].col === n.col) {
+      const sx = a.x + NW, tx = b.x + NW, bend = 16 + Math.min(30, Math.abs(b.y - a.y) / 6);
+      d = `M${sx},${a.y + NH / 2} C${sx + bend},${a.y + NH / 2} ${tx + bend},${b.y + NH / 2} ${tx},${b.y + NH / 2}`;
+    } else {
+      const sx = a.x + NW, sy = a.y + NH / 2, tx = b.x, ty = b.y + NH / 2, mx = (sx + tx) / 2;
+      d = `M${sx},${sy} C${mx},${sy} ${mx},${ty} ${tx},${ty}`;
+    }
+    const key = p + ">" + n.id;
+    const cls = ["edge"]; if (soft) cls.push("soft"); if (critEdges.has(key)) cls.push("crit");
+    if (byId[p].pri !== "core" || n.pri !== "core") cls.push("noncore");
+    const e = el("path", {d, class: cls.join(" ")}, edgeG);
+    edges.push({s: p, t: n.id, e});
+  };
+  n.d.forEach(p => add(p, false));
+  (n.s || []).forEach(p => add(p, true));
+});
+// draw critical edges last so they sit on top
+edges.filter(x => x.e.classList.contains("crit")).forEach(x => edgeG.appendChild(x.e));
+
+const nodeEls = {};
+N.forEach(n => {
+  const p = pos[n.id];
+  const cls = ["node", n.pri === "core" ? "core" : n.pri === "p0" ? "p0" : "opt"]; if (critSet.has(n.id)) cls.push("crit");
+  const g = el("g", {class: cls.join(" "), transform: `translate(${p.x},${p.y})`, tabindex: 0, role: "button", "aria-label": `${n.id} ${n.f}`});
+  el("rect", {class: "box", width: NW, height: NH, rx: 5}, g);
+  el("text", {x: 9, y: 15, class: "id"}, g).textContent = n.id;
+  el("text", {x: 9, y: 31, class: "tt"}, g).textContent = n.t;
+  if (n.h) el("circle", {cx: NW - 10, cy: 11, r: 4, class: "hum"}, g);
+  nodeEls[n.id] = g;
+  g.addEventListener("pointerenter", () => { if (!pinned) show(n.id); });
+  g.addEventListener("pointerleave", () => { if (!pinned) clear(); });
+  g.addEventListener("click", ev => { ev.stopPropagation(); pinned = n.id; show(n.id); });
+  g.addEventListener("keydown", ev => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); pinned = n.id; show(n.id); } });
+});
+
+function walk(id, next) { const out = new Set(); const st = [id]; while (st.length) { const c = st.pop(); for (const x of next(c)) if (!out.has(x)) { out.add(x); st.push(x); } } return out; }
+const parents = id => [...byId[id].d, ...(byId[id].s || [])];
+let pinned = null;
+
+function show(id) {
+  const up = walk(id, parents), down = walk(id, c => kids[c]);
+  const upS = new Set([...up, id]), downS = new Set([...down, id]);
+  svg.classList.add("focus");
+  N.forEach(n => { nodeEls[n.id].classList.toggle("on", upS.has(n.id) || downS.has(n.id)); nodeEls[n.id].classList.toggle("sel", n.id === id); });
+  edges.forEach(({s, t, e}) => e.classList.toggle("on", (upS.has(s) && upS.has(t)) || (downS.has(s) && downS.has(t))));
+  const n = byId[id];
+  const chips = list => list.length ? `<div class="chips">${list.map(x => `<button class="chip" data-id="${x}" title="${byId[x].f}">${x}</button>`).join("")}</div>` : `<span class="none">none</span>`;
+  document.getElementById("detail").innerHTML = `
+    <div><div class="idl">${n.id}${n.h ? " · needs a person" : ""}${critSet.has(id) ? " · critical path" : ""}</div><h2>${n.f}</h2></div>
+    <dl>
+      <dt>When</dt><dd>${COLS[n.col][0]}</dd>
+      <dt>Priority</dt><dd>${PRI_LABEL[n.pri]}</dd>
+      <dt>Waits on</dt><dd>${chips(n.d)}${n.s ? `<div class="hint">Optional: ${n.s.join(", ")}</div>` : ""}</dd>
+      <dt>Unblocks</dt><dd>${chips(kids[id])}</dd>
+      <dt>Upstream</dt><dd>${up.size} tickets in total</dd>
+      <dt>Downstream</dt><dd>${down.size} tickets in total</dd>
+    </dl>
+    <p class="hint">Click empty space in the graph to clear.</p>`;
+  document.querySelectorAll("#detail .chip").forEach(b => b.addEventListener("click", () => { pinned = b.dataset.id; show(b.dataset.id); }));
+}
+function clear() {
+  svg.classList.remove("focus");
+  N.forEach(n => nodeEls[n.id].classList.remove("on", "sel"));
+  edges.forEach(({e}) => e.classList.remove("on"));
+  document.getElementById("detail").innerHTML = `<p class="hint">Select a ticket to see its dependencies.</p>`;
+}
+svg.addEventListener("click", () => { pinned = null; clear(); });
+document.getElementById("critText").textContent = CRIT.join(" → ");
+document.getElementById("coreonly").addEventListener("change", e => svg.classList.toggle("coreonly", e.target.checked));
+</script>
