@@ -84,6 +84,7 @@ def test_good_cards_have_no_flags():
     result = {"status": "ok", "settings": {"min_ranked": 2}, "summary": "Three picks.",
               "cards": [_good_card("a/b", 0.8), _good_card("c/d", 0.65), _good_card("e/f", 0.5)],
               "ranking": [{"rank": i, "repo": r} for i, r in enumerate(["a/b", "c/d", "e/f"], 1)]}
+    result["cards"][2]["proven_wrong_if"] = ["Fewer than 2 commit authors in the 90 days before 2027-04-24 (now 3)."]
     assert run_flags(result) == []
 
 
@@ -160,6 +161,7 @@ def test_prompt_covers_the_t11_rules(universe):
         "is below <threshold> by <date> (now <current>)",
         "Never above 0.85",
         "Do not submit early",
+        "Choose the metric that tests that card's main claim",
         universe.header.scoring,
     ):
         assert text in p, text
@@ -172,6 +174,7 @@ def test_prompt_research_targets_scale_with_universe(universe):
     settings = RunSettings(topic="rust-devtools", model="m")
     big = system_prompt(settings, big_header, today=date(2026, 10, 24))
     assert "Shortlist about 18 on-topic" in big and "best 10 or so" in big
+    assert "at least 120 distinct repos" in big and "at least 15 distinct repos" in small
 
 
 def test_topic_scopes_are_principles_and_examples_are_synthetic(universe):
@@ -214,3 +217,24 @@ def test_copy_does_not_mutate():
 )
 def test_wrong_if_direction(text, ok):
     assert (wrong_if_direction(text) is None) == ok
+
+
+def test_wrong_if_repetitive_and_varied():
+    cards = [_good_card("a/b", 0.8), _good_card("c/d", 0.65), _good_card("e/f", 0.5)]
+    result = {"status": "ok", "cards": cards, "ranking": []}
+    assert "wrong-if-repetitive" in _kinds(run_flags(result))
+    cards[1]["proven_wrong_if"] = ["Still only 1 commit author by 2027-04-24 (now 1)."]
+    assert "wrong-if-repetitive" not in _kinds(run_flags(result))
+
+
+def test_coverage_low_flag(tmp_path):
+    (tmp_path / "result.json").write_text((BASELINE / "result.json").read_text())
+    browse_results = {"c_001", "c_002", "c_003"}
+    kept = []
+    for line in (BASELINE / "events.jsonl").read_text().splitlines():
+        e = json.loads(line)
+        if not (e["type"] == "tool_result" and e["call_id"] in browse_results):
+            kept.append(line)
+    (tmp_path / "events.jsonl").write_text("\n".join(kept) + "\n")
+    assert "[coverage-low] browse showed 0 of 25" in review(tmp_path)
+    assert "coverage-low" not in review(BASELINE)

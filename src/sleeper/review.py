@@ -16,6 +16,14 @@ from typing import Any
 
 CRITERIA = ("popularity", "momentum", "quality", "newness")
 MIN_CONFIDENCE_SPREAD = 0.1
+MIN_BROWSE_COVERAGE = 0.6  # share of the universe seen in browse rows
+_WRONG_IF_METRICS = {
+    "stars": r"\bstars?\b",
+    "releases": r"\breleases?\b",
+    "commits": r"\bcommits?\b",
+    "authors": r"\b(?:authors?|contributors?|maintainers?)\b",
+    "forks": r"\bforks?\b",
+}
 
 _BACKTEST = re.compile(r"(?i:\bas-of\b|\bas of the\b|\bresearch date\b)|\bat T\b")
 _MONTHS = r"(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\.?"
@@ -206,6 +214,15 @@ def run_flags(result: dict[str, Any]) -> list[Flag]:
             Flag("confidence-flat", f"confidence spread {max(confidences) - min(confidences):.2f} < {MIN_CONFIDENCE_SPREAD}"
                  f" ({min(confidences):.2f}-{max(confidences):.2f})")
         )
+    used = [
+        frozenset(
+            k for k, rx in _WRONG_IF_METRICS.items() if any(re.search(rx, t, re.I) for t in c.get("proven_wrong_if") or [])
+        )
+        for c in cards
+    ]
+    if len(cards) >= 3 and len(set(used)) == 1:
+        metrics = ", ".join(sorted(used[0])) or "none"
+        flags.append(Flag("wrong-if-repetitive", f"every card's wrong-if uses the same metrics ({metrics})"))
     summary = result.get("summary") or ""
     m = _BACKTEST.search(summary)
     if m:
@@ -285,6 +302,8 @@ def render(run: Run) -> str:
             lines.append(f"  {e.get('rank')}. {e.get('repo')}" + (f" - {e['note']}" if e.get("note") else ""))
 
     flags = run_flags(res)
+    if rows and run.events and len(rs.seen) < MIN_BROWSE_COVERAGE * rows:
+        flags.append(Flag("coverage-low", f"browse showed {len(rs.seen)} of {rows} repos (< {MIN_BROWSE_COVERAGE:.0%})"))
     lines += ["", f"Flags: {len(flags)}" + ("" if flags else " (none)")]
     lines += [f"  {f}" for f in flags]
     lines += ["", "Human check: is each pick on topic (see descriptions)? Would a developer agree it is good and underrated?"]
