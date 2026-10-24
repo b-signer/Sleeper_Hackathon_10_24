@@ -60,6 +60,7 @@ def test_baseline_research_counts():
     rs = research(load_run(BASELINE).events)
     assert len(rs.browses) == 3 and len(rs.details) == 10 and len(rs.readmes) == 8
     assert {m for _, m in rs.readmes} == {5000}
+    assert len(rs.seen) == 25  # three browses of the whole 25-repo universe
     assert "rekordbox" in rs.descriptions["m-igashi/baken"]
 
 
@@ -124,7 +125,7 @@ def test_review_handles_run_without_events(tmp_path):
     result = json.loads((BASELINE / "result.json").read_text())
     (tmp_path / "result.json").write_text(json.dumps(result))
     sheet = review(tmp_path)
-    assert "(not seen in this run)" in sheet and "Research: 0 browse" in sheet
+    assert "(not seen in this run)" in sheet and "Research: 0 browse (0 distinct" in sheet
 
 
 # ---- prompt and tool descriptions ----
