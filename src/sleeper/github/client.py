@@ -1,6 +1,7 @@
 """GitHubClient: the one way Sleeper talks to GitHub (REST and GraphQL).
 
-- Uses the token from GITHUB_TOKEN (or the ``token`` argument).
+- Uses the token from GITHUB_TOKEN (or the ``token`` argument). A local .env is
+  loaded first, without overriding variables already set.
 - Every cacheable response (200, 404) is stored on disk and reused; a repeated
   request never touches the network. Pass ``refresh=True`` to refetch.
 - Offline mode (SLEEPER_OFFLINE=1) serves only from the cache and raises
@@ -21,6 +22,7 @@ from pathlib import Path
 from typing import Any, Callable, Iterator
 
 import httpx
+from dotenv import load_dotenv
 
 from .cache import ResponseCache, request_key
 from .errors import (
@@ -97,6 +99,8 @@ class GitHubClient:
         clock: Callable[[], float] = time.time,
         timeout: float = 30.0,
     ) -> None:
+        if token is None or offline is None or cache_dir is None:
+            load_dotenv(override=False)  # same rule as load_settings: real env vars win over .env
         self.token = token if token is not None else os.environ.get("GITHUB_TOKEN", "").strip()
         self.offline = env_offline() if offline is None else offline
         self.cache = ResponseCache(cache_dir if cache_dir is not None else env_cache_dir())
