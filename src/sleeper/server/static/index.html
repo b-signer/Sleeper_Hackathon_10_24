@@ -4,103 +4,99 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sleeper</title>
-<!-- T14 placeholder: proves the API, streaming and replay work. T15/T16 build the real UI.
-     No external assets, so it loads with no network (C4). -->
-<style>
-  :root { --bg: #fafaf8; --fg: #1d1d1b; --muted: #6b6b66; --line: #e2e1dc; --accent: #2f6f62; }
-  @media (prefers-color-scheme: dark) {
-    :root { --bg: #151614; --fg: #e8e8e3; --muted: #9a9a93; --line: #2c2d2a; --accent: #6cc3b0; }
-  }
-  * { box-sizing: border-box; }
-  body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.5 system-ui, sans-serif; }
-  main { max-width: 960px; margin: 0 auto; padding: 24px 16px; }
-  h1 { font-size: 22px; margin: 0 0 4px; }
-  p.sub { color: var(--muted); margin: 0 0 20px; }
-  table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-  th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); font-size: 14px; }
-  th { color: var(--muted); font-weight: 500; }
-  button { font: inherit; font-size: 13px; padding: 3px 10px; border: 1px solid var(--line); border-radius: 6px;
-           background: transparent; color: var(--accent); cursor: pointer; }
-  button:hover { border-color: var(--accent); }
-  #log { font: 12px/1.45 ui-monospace, monospace; border: 1px solid var(--line); border-radius: 8px;
-         padding: 10px; height: 420px; overflow: auto; white-space: pre-wrap; }
-  .t { color: var(--accent); }
-  .wide { overflow-x: auto; }
-</style>
+<!-- No external assets: the page must load with no network (C4). -->
+<link rel="stylesheet" href="/static/app.css">
 </head>
 <body>
-<main>
-  <h1>Sleeper</h1>
-  <p class="sub">Server check page (T14). <button id="start">Start a test run</button></p>
-  <div class="wide">
-    <table>
-      <thead><tr><th>Run</th><th>Model</th><th>Status</th><th>Cards</th><th></th></tr></thead>
-      <tbody id="runs"><tr><td colspan="5">Loading…</td></tr></tbody>
-    </table>
+<header class="top">
+  <span class="brand"><span class="logo" aria-hidden="true"></span>Sleeper</span>
+  <span class="tagline">finds GitHub repos that are good but not yet discovered</span>
+  <span id="offline-pill" class="pill" hidden>offline</span>
+</header>
+
+<div class="layout">
+  <aside class="side">
+    <section class="panel">
+      <h2>New run</h2>
+      <form id="launcher">
+        <label>Topic
+          <select id="f-universe" required></select>
+        </label>
+        <label>Model
+          <select id="f-model" required></select>
+        </label>
+        <div class="row">
+          <label>Stars from <input id="f-stars-min" type="number" min="0" value="50" required></label>
+          <label>to <input id="f-stars-max" type="number" min="0" value="2000" required></label>
+        </div>
+        <label>Max picks <input id="f-max-picks" type="number" min="1" max="5" value="5" required></label>
+        <p id="f-hint" class="hint"></p>
+        <button id="f-start" class="primary" type="submit">Start run</button>
+        <p id="launch-error" class="error" role="alert" hidden></p>
+      </form>
+    </section>
+    <section class="panel">
+      <h2>Runs</h2>
+      <ul id="run-list" class="run-list"></ul>
+    </section>
+  </aside>
+
+  <main class="main">
+    <div id="empty" class="empty">
+      <p>Start a run, or pick one from the list to watch it again.</p>
+    </div>
+
+    <section id="run" hidden>
+      <div class="run-head">
+        <div>
+          <h1 id="run-title"></h1>
+          <p class="meta"><span id="run-status" class="pill"></span> <span id="run-meta"></span></p>
+        </div>
+        <div class="replay-box">
+          <select id="speed" aria-label="Replay speed">
+            <option value="1">1×</option>
+            <option value="4" selected>4×</option>
+            <option value="16">16×</option>
+          </select>
+          <button id="replay" type="button" disabled>Replay</button>
+        </div>
+      </div>
+
+      <div id="meter" class="meter">
+        <div class="meter-stats">
+          <span><span class="muted">Tokens</span> <span id="m-tokens">—</span></span>
+          <span><span class="muted">Turn</span> <span id="m-turns">—</span></span>
+          <span><span class="muted">Cost</span> <span id="m-cost">—</span></span>
+        </div>
+        <div class="meter-track"><div id="m-bar" class="meter-bar"></div></div>
+      </div>
+
+      <nav class="tabs">
+        <button type="button" data-tab="trace" class="active">Trace</button>
+        <button type="button" data-tab="picks">Picks <span id="picks-count" class="count"></span></button>
+      </nav>
+
+      <div id="tab-trace">
+        <ol id="trace" class="trace" aria-live="polite"></ol>
+      </div>
+      <div id="tab-picks" hidden>
+        <p id="summary" class="summary" hidden></p>
+        <div id="cards" class="cards"></div>
+        <h3>Ranking</h3>
+        <div class="wide"><table id="ranking" class="ranking"></table></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<aside id="drawer" class="drawer" hidden>
+  <div class="drawer-head">
+    <span id="drawer-title"></span>
+    <button id="drawer-close" type="button" aria-label="Close">×</button>
   </div>
-  <div id="log">Pick a run to watch or replay its events.</div>
-</main>
-<script>
-const $ = (id) => document.getElementById(id);
-let source = null;
+  <div id="drawer-body" class="drawer-body"></div>
+</aside>
 
-async function loadRuns() {
-  const runs = await (await fetch("/api/runs")).json();
-  $("runs").innerHTML = runs.length ? "" : '<tr><td colspan="5">No runs yet.</td></tr>';
-  for (const r of runs) {
-    const tr = document.createElement("tr");
-    for (const v of [r.run_id, r.model, r.status, r.cards, ""]) {
-      const td = document.createElement("td");
-      td.textContent = v;
-      tr.appendChild(td);
-    }
-    const live = r.status === "running";
-    const btn = document.createElement("button");
-    btn.textContent = live ? "Watch live" : "Replay 4×";
-    btn.onclick = () => stream(`/api/runs/${r.run_id}/${live ? "events" : "replay?speed=4"}`);
-    tr.lastChild.appendChild(btn);
-    $("runs").appendChild(tr);
-  }
-}
-
-function stream(url) {
-  if (source) source.close();
-  $("log").textContent = "";
-  source = new EventSource(url);
-  const show = (e) => {
-    const ev = JSON.parse(e.data);
-    const text = ev.text || (ev.tool && `${ev.tool} ${JSON.stringify(ev.args || {})}`)
-      || (ev.output && (ev.output.error ? `error ${ev.output.error.code}` : `ok ${ev.call_id}`))
-      || ev.phase || ev.status || (ev.usage && `${ev.usage.total_tokens} tokens, $${ev.usage.cost_usd}`) || "";
-    const line = document.createElement("div");
-    const tag = document.createElement("span");
-    tag.className = "t";
-    tag.textContent = `${ev.seq} ${ev.type} `;
-    line.append(tag, text);
-    $("log").appendChild(line);
-    $("log").scrollTop = $("log").scrollHeight;
-  };
-  for (const t of ["run_started", "status", "narration", "reasoning", "tool_call", "tool_result",
-                   "usage", "skeptic_review", "fact_check", "run_finished"]) {
-    source.addEventListener(t, show);
-  }
-  source.addEventListener("end", () => { source.close(); loadRuns(); });
-}
-
-$("start").onclick = async () => {
-  const universes = await (await fetch("/api/universes")).json();
-  const u = universes[0];
-  const res = await fetch("/api/runs", {
-    method: "POST", headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ topic: u ? u.topic : "fake", universe_file: u ? u.file : null, model: "openai/gpt-5.6-luna" }),
-  });
-  const body = await res.json();
-  if (!res.ok) { alert(body.detail); return; }
-  await loadRuns();
-  stream(`/api/runs/${body.run_id}/events`);
-};
-
-loadRuns();
-</script>
+<script type="module" src="/static/app.js"></script>
 </body>
 </html>
