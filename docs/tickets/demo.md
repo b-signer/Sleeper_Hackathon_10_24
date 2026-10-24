@@ -23,6 +23,14 @@
 
 **Hints:** the full design and its traps are in `archive/v0.3-full-plan/` and `archive/prd-v0.2-signer.md` §9 and §18.
 
+**Framework (built, `src/sleeper/backtest/`):** what's left is the real star history.
+1. `sleeper backtest sql --universe data/universes/<topic>.json --as-of YYYY-MM-DD` prints BigQuery SQL for the public `githubarchive` dataset. Save its result as CSV.
+2. `sleeper backtest prepare --universe ... --as-of ... --history <csv> [--refetch]` writes `data/universes/backtest/<topic>@<date>.json` plus a report of what couldn't be rebuilt.
+3. `sleeper backtest run --past <that file> [--model ...]` is a normal run (`execute_run`) with the live prompt plus an as-of block, and READMEs as of the date.
+4. `sleeper backtest score <run_id> --github` writes `backtest.json` in the run folder (agent vs universe average, momentum and popularity baselines, random-portfolio percentiles, ranking Spearman, caveats).
+
+It doesn't copy anything from T11, T18 or T19: the live prompt (`sleeper.agent.prompt.system_prompt`) and the scorer (`sleeper.scoring.score_universe`, `SCORING`) are looked up at call time, the repo set comes from the current universe (so T18's relevance filter carries over), and runs go through `execute_run` like the UI. Rerun `prepare` after T18 rebuilds the universes. Offline demo: `tests/test_backtest_run.py`.
+
 ---
 
 ### S2 Linked papers (stretch)

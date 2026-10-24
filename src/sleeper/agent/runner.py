@@ -76,6 +76,7 @@ def execute_run(
     skeptic: ChatModel | None = None,
     tools: ToolExecutor | None = None,
     universe: Universe | None = None,
+    system_prompt: str | None = None,
     on_start: Callable[[str], None] | None = None,
     echo: Callable[[RunEvent], None] | None = None,
 ) -> RunResult:
@@ -86,6 +87,7 @@ def execute_run(
     dev model (cfg.dev_model). A caller that passes `model` passes `skeptic` too, or gets no review.
     Raises WebAccessRefused / FileNotFoundError / SpendGuardError / ModelError("auth") before
     any run folder exists. Model and tool failures during the run become the result's status.
+    system_prompt overrides the default prompt (the S1 backtest adds its as-of rules this way).
     """
     cfg = cfg or load_settings()
     assert_no_web(settings.model)
@@ -125,7 +127,15 @@ def execute_run(
             on_start(rec.run_id)
         try:
             result = run_agent(
-                settings, universe, model, tools, rec, git_sha=git_sha(), spend_headroom_usd=headroom, skeptic=skeptic
+                settings,
+                universe,
+                model,
+                tools,
+                rec,
+                system_prompt=system_prompt,
+                git_sha=git_sha(),
+                spend_headroom_usd=headroom,
+                skeptic=skeptic,
             )
         except Exception as e:  # run_agent shouldn't raise; if it does, still leave a valid record
             log.exception("run %s crashed", rec.run_id)
