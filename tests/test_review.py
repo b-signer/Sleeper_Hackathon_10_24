@@ -13,7 +13,7 @@ from sleeper.agent.prompt import TOPIC_SCOPE, system_prompt
 from sleeper.agent.tool_specs import DESCRIPTIONS
 from sleeper.cli import main
 from sleeper.contracts import RunSettings, Universe
-from sleeper.review import card_flags, load_run, research, review, run_flags, wrong_if_problems
+from sleeper.review import card_flags, load_run, research, review, run_flags, wrong_if_direction, wrong_if_problems
 
 ROOT = Path(__file__).resolve().parents[1]
 BASELINE = ROOT / "docs/findings/2026-10-24-real-data-baseline"
@@ -52,6 +52,8 @@ def test_baseline_flags_the_known_problems():
     assert "readme-length-as-quality" in kinds  # problem 2: "53,762 README characters"
     assert kinds.count("wrong-if-vague") >= 10  # problem 4: no number, no time frame
     assert "commits-as-quality" in kinds
+    baken = [f for f in run_flags(run.result) if f.kind == "wrong-if-direction" and f.repo == "M-Igashi/baken"]
+    assert len(baken) == 2  # "Usage expands beyond a niche DJ audience..." is success, not failure
 
 
 def test_baseline_research_counts():
@@ -153,7 +155,8 @@ def test_prompt_covers_the_t11_rules(universe):
         "Your memory is not a source",
         "max_chars 2500",
         "Never present README length",
-        "describes FAILURE",
+        "If this happens, was the pick wrong?",
+        "is below <threshold> by <date> (now <current>)",
         "Never above 0.85",
         "Do not submit early",
         universe.header.scoring,
@@ -170,10 +173,16 @@ def test_prompt_research_targets_scale_with_universe(universe):
     assert "Shortlist about 18 on-topic" in big and "best 10 or so" in big
 
 
+def test_topic_scopes_are_principles_and_examples_are_synthetic(universe):
+    assert all(text.startswith("Principle:") and "not exhaustive" in text for text in TOPIC_SCOPE.values())
+    p = _prompt(universe)
+    assert "(now 600)" in p and "175" not in p  # no real repo's numbers (holon had 175 stars)
+
+
 def test_prompt_unknown_topic_falls_back(universe):
     header = universe.header.model_copy(update={"topic": "zz", "topic_label": "Zig build tools"})
     p = system_prompt(RunSettings(topic="zz", model="m"), header, today=date(2026, 10, 24))
-    assert '"Zig build tools"' in p
+    assert '"Zig build tools"' in p and "Principle:" in p
 
 
 def test_tool_descriptions_steer_budget():
@@ -186,3 +195,21 @@ def test_copy_does_not_mutate():
     before = copy.deepcopy(card)
     card_flags(card)
     assert card == before
+
+
+@pytest.mark.parametrize(
+    "text, ok",
+    [
+        ("Usage expands beyond a niche DJ audience into a durable general music-library tool.", False),
+        ("Stars grow past 2,000 by 2027-04-24.", False),
+        ("It gains more than 500 stars by 2027-04-24 (now 120).", False),
+        ("Real-world CDJ compatibility and release cadence continue without serious regressions.", False),
+        ("Stars below 1,000 by 2027-04-24 (now 600).", True),
+        ("No new release by 2027-01-23.", True),
+        ("Commits in the 90 days before 2027-01-23 drop under 20 (now 140).", True),
+        ("Gains fewer than 100 stars by 2027-04-24.", True),
+        ("At most 1 commit author by 2027-04-24.", True),
+    ],
+)
+def test_wrong_if_direction(text, ok):
+    assert (wrong_if_direction(text) is None) == ok
