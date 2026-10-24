@@ -1,0 +1,412 @@
+{
+  "acme/quiver": {
+    "repo_details": {
+      "call_id": "c_000",
+      "tool": "repo_details",
+      "repo": "acme/quiver",
+      "url": "https://github.com/acme/quiver",
+      "metrics": {
+        "stars": 340,
+        "stars_per_day": 2.43,
+        "forks": 38,
+        "forks_30d": 12,
+        "star_events_30d": 95,
+        "star_events_capped": false,
+        "commits_90d": 81,
+        "authors_90d": 4,
+        "releases": 6,
+        "last_release_at": "2026-10-01T12:00:00Z",
+        "last_commit_at": "2026-10-18T12:00:00Z",
+        "readme_chars": 5400,
+        "created_at": "2026-06-02T12:00:00Z",
+        "age_days": 140,
+        "description": "Incremental linter for Rust workspaces that only re-checks what changed",
+        "language": "Rust",
+        "license": "MIT"
+      },
+      "scores": {
+        "popularity": 55.6,
+        "momentum": 81.2,
+        "quality": 75.0,
+        "newness": 55.6
+      }
+    },
+    "readme": {
+      "call_id": "c_000",
+      "tool": "readme",
+      "repo": "acme/quiver",
+      "text": "# quiver\n\nIncremental linter for Rust workspaces that only re-checks what changed\n\n## Install\n\n    cargo install quiver\n\n## Usage\n\nPlaceholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used",
+      "truncated": false,
+      "total_chars": 5400
+    }
+  },
+  "lumen-dev/tidepool": {
+    "repo_details": {
+      "call_id": "c_000",
+      "tool": "repo_details",
+      "repo": "lumen-dev/tidepool",
+      "url": "https://github.com/lumen-dev/tidepool",
+      "metrics": {
+        "stars": 180,
+        "stars_per_day": 1.89,
+        "forks": 22,
+        "forks_30d": 9,
+        "star_events_30d": 62,
+        "star_events_capped": false,
+        "commits_90d": 120,
+        "authors_90d": 6,
+        "releases": 3,
+        "last_release_at": "2026-10-08T12:00:00Z",
+        "last_commit_at": "2026-10-19T12:00:00Z",
+        "readme_chars": 3900,
+        "created_at": "2026-07-17T12:00:00Z",
+        "age_days": 95,
+        "description": "Connection-pool debugger: a live view of every pooled connection in a Rust service",
+        "language": "Rust",
+        "license": "MIT"
+      },
+      "scores": {
+        "popularity": 33.3,
+        "momentum": 62.5,
+        "quality": 87.5,
+        "newness": 77.8
+      }
+    },
+    "readme": {
+      "call_id": "c_000",
+      "tool": "readme",
+      "repo": "lumen-dev/tidepool",
+      "text": "# tidepool\n\nConnection-pool debugger: a live view of every pooled connection in a Rust service\n\n## Install\n\n    cargo install tidepool\n\n## Usage\n\nPlaceholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fict",
+      "truncated": false,
+      "total_chars": 3900
+    }
+  },
+  "fernwork/cargo-sprout": {
+    "repo_details": {
+      "call_id": "c_000",
+      "tool": "repo_details",
+      "repo": "fernwork/cargo-sprout",
+      "url": "https://github.com/fernwork/cargo-sprout",
+      "metrics": {
+        "stars": 75,
+        "stars_per_day": 1.67,
+        "forks": 9,
+        "forks_30d": 6,
+        "star_events_30d": 41,
+        "star_events_capped": false,
+        "commits_90d": 64,
+        "authors_90d": 2,
+        "releases": 1,
+        "last_release_at": "2026-09-30T12:00:00Z",
+        "last_commit_at": "2026-10-17T12:00:00Z",
+        "readme_chars": 2100,
+        "created_at": "2026-09-05T12:00:00Z",
+        "age_days": 45,
+        "description": "Scaffold Rust crates from templates with sensible CI defaults",
+        "language": "Rust",
+        "license": "Apache-2.0"
+      },
+      "scores": {
+        "popularity": 22.2,
+        "momentum": 50.0,
+        "quality": 50.0,
+        "newness": 100.0
+      }
+    },
+    "readme": {
+      "call_id": "c_000",
+      "tool": "readme",
+      "repo": "fernwork/cargo-sprout",
+      "text": "# cargo-sprout\n\nScaffold Rust crates from templates with sensible CI defaults\n\n## Install\n\n    cargo install cargo-sprout\n\n## Usage\n\nPlaceholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo us",
+      "truncated": false,
+      "total_chars": 2100
+    }
+  },
+  "solo-hacker/bytewise": {
+    "repo_details": {
+      "call_id": "c_000",
+      "tool": "repo_details",
+      "repo": "solo-hacker/bytewise",
+      "url": "https://github.com/solo-hacker/bytewise",
+      "metrics": {
+        "stars": 420,
+        "stars_per_day": 2.0,
+        "forks": 30,
+        "forks_30d": 5,
+        "star_events_30d": 48,
+        "star_events_capped": false,
+        "commits_90d": 150,
+        "authors_90d": 1,
+        "releases": 9,
+        "last_release_at": "2026-10-14T12:00:00Z",
+        "last_commit_at": "2026-10-19T12:00:00Z",
+        "readme_chars": 4600,
+        "created_at": "2026-03-24T12:00:00Z",
+        "age_days": 210,
+        "description": "Hex and binary diff viewer for the terminal",
+        "language": "Rust",
+        "license": "MIT"
+      },
+      "scores": {
+        "popularity": 66.7,
+        "momentum": 56.2,
+        "quality": 62.5,
+        "newness": 44.4
+      }
+    },
+    "readme": {
+      "call_id": "c_000",
+      "tool": "readme",
+      "repo": "solo-hacker/bytewise",
+      "text": "# bytewise\n\nHex and binary diff viewer for the terminal\n\n## Install\n\n    cargo install bytewise\n\n## Usage\n\nPlaceholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in ",
+      "truncated": false,
+      "total_chars": 4600
+    }
+  },
+  "oldmill/fmt-lite": {
+    "repo_details": {
+      "call_id": "c_000",
+      "tool": "repo_details",
+      "repo": "oldmill/fmt-lite",
+      "url": "https://github.com/oldmill/fmt-lite",
+      "metrics": {
+        "stars": 910,
+        "stars_per_day": 1.52,
+        "forks": 80,
+        "forks_30d": 0,
+        "star_events_30d": 2,
+        "star_events_capped": false,
+        "commits_90d": 0,
+        "authors_90d": 0,
+        "releases": 4,
+        "last_release_at": "2025-12-24T12:00:00Z",
+        "last_commit_at": "2026-03-24T12:00:00Z",
+        "readme_chars": 2800,
+        "created_at": "2025-02-27T12:00:00Z",
+        "age_days": 600,
+        "description": "Minimal, fast Rust formatter for CI pipelines",
+        "language": "Rust",
+        "license": "MIT"
+      },
+      "scores": {
+        "popularity": 77.8,
+        "momentum": 15.6,
+        "quality": 0.0,
+        "newness": 11.1
+      }
+    },
+    "readme": {
+      "call_id": "c_000",
+      "tool": "readme",
+      "repo": "oldmill/fmt-lite",
+      "text": "# fmt-lite\n\nMinimal, fast Rust formatter for CI pipelines\n\n## Install\n\n    cargo install fmt-lite\n\n## Usage\n\nPlaceholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used i",
+      "truncated": false,
+      "total_chars": 2800
+    }
+  },
+  "bigco/turbo-lint": {
+    "repo_details": {
+      "call_id": "c_000",
+      "tool": "repo_details",
+      "repo": "bigco/turbo-lint",
+      "url": "https://github.com/bigco/turbo-lint",
+      "metrics": {
+        "stars": 1950,
+        "stars_per_day": 3.9,
+        "forks": 240,
+        "forks_30d": 25,
+        "star_events_30d": 210,
+        "star_events_capped": false,
+        "commits_90d": 310,
+        "authors_90d": 25,
+        "releases": 22,
+        "last_release_at": "2026-10-16T12:00:00Z",
+        "last_commit_at": "2026-10-20T12:00:00Z",
+        "readme_chars": 9800,
+        "created_at": "2025-06-07T12:00:00Z",
+        "age_days": 500,
+        "description": "Batteries-included linter suite for large Rust codebases",
+        "language": "Rust",
+        "license": "MIT"
+      },
+      "scores": {
+        "popularity": 100.0,
+        "momentum": 93.8,
+        "quality": 100.0,
+        "newness": 22.2
+      }
+    },
+    "readme": {
+      "call_id": "c_000",
+      "tool": "readme",
+      "repo": "bigco/turbo-lint",
+      "text": "# turbo-lint\n\nBatteries-included linter suite for large Rust codebases\n\n## Install\n\n    cargo install turbo-lint\n\n## Usage\n\nPlaceholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tes",
+      "truncated": true,
+      "total_chars": 9800
+    }
+  },
+  "ghostly/phantom-build": {
+    "repo_details": {
+      "call_id": "c_000",
+      "tool": "repo_details",
+      "repo": "ghostly/phantom-build",
+      "url": "https://github.com/ghostly/phantom-build",
+      "metrics": {
+        "stars": 1200,
+        "stars_per_day": 20.0,
+        "forks": 4,
+        "forks_30d": 1,
+        "star_events_30d": 300,
+        "star_events_capped": true,
+        "commits_90d": 3,
+        "authors_90d": 1,
+        "releases": 0,
+        "last_release_at": null,
+        "last_commit_at": "2026-09-10T12:00:00Z",
+        "readme_chars": 420,
+        "created_at": "2026-08-21T12:00:00Z",
+        "age_days": 60,
+        "description": "The fastest Rust build tool ever made",
+        "language": "Rust",
+        "license": "MIT"
+      },
+      "scores": {
+        "popularity": 88.9,
+        "momentum": 62.5,
+        "quality": 25.0,
+        "newness": 88.9
+      }
+    },
+    "readme": {
+      "call_id": "c_000",
+      "tool": "readme",
+      "repo": "ghostly/phantom-build",
+      "text": "# phantom-build\n\nThe fastest Rust build tool ever made\n\n## Install\n\n    cargo install phantom-build\n\n## Usage\n\nPlaceholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placehold",
+      "truncated": false,
+      "total_chars": 420
+    }
+  },
+  "docsfirst/manpage-rs": {
+    "repo_details": {
+      "call_id": "c_000",
+      "tool": "repo_details",
+      "repo": "docsfirst/manpage-rs",
+      "url": "https://github.com/docsfirst/manpage-rs",
+      "metrics": {
+        "stars": 260,
+        "stars_per_day": 0.79,
+        "forks": 15,
+        "forks_30d": 2,
+        "star_events_30d": 19,
+        "star_events_capped": false,
+        "commits_90d": 30,
+        "authors_90d": 3,
+        "releases": 2,
+        "last_release_at": "2026-09-05T12:00:00Z",
+        "last_commit_at": "2026-10-14T12:00:00Z",
+        "readme_chars": 11200,
+        "created_at": "2025-11-24T12:00:00Z",
+        "age_days": 330,
+        "description": "Generate man pages from clap definitions",
+        "language": "Rust",
+        "license": "MIT"
+      },
+      "scores": {
+        "popularity": 44.4,
+        "momentum": 25.0,
+        "quality": 37.5,
+        "newness": 33.3
+      }
+    },
+    "readme": {
+      "call_id": "c_000",
+      "tool": "readme",
+      "repo": "docsfirst/manpage-rs",
+      "text": "# manpage-rs\n\nGenerate man pages from clap definitions\n\n## Install\n\n    cargo install manpage-rs\n\n## Usage\n\nPlaceholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder ",
+      "truncated": true,
+      "total_chars": 11200
+    }
+  },
+  "weekend/todo-term": {
+    "repo_details": {
+      "call_id": "c_000",
+      "tool": "repo_details",
+      "repo": "weekend/todo-term",
+      "url": "https://github.com/weekend/todo-term",
+      "metrics": {
+        "stars": 55,
+        "stars_per_day": 0.09,
+        "forks": 3,
+        "forks_30d": 0,
+        "star_events_30d": 0,
+        "star_events_capped": false,
+        "commits_90d": 2,
+        "authors_90d": 1,
+        "releases": 0,
+        "last_release_at": null,
+        "last_commit_at": "2026-08-01T12:00:00Z",
+        "readme_chars": 600,
+        "created_at": "2025-01-18T12:00:00Z",
+        "age_days": 640,
+        "description": "A todo list in your terminal",
+        "language": "Rust",
+        "license": null
+      },
+      "scores": {
+        "popularity": 0.0,
+        "momentum": 3.1,
+        "quality": 12.5,
+        "newness": 0.0
+      }
+    },
+    "readme": {
+      "call_id": "c_000",
+      "tool": "readme",
+      "repo": "weekend/todo-term",
+      "text": "# todo-term\n\nA todo list in your terminal\n\n## Install\n\n    cargo install todo-term\n\n## Usage\n\nPlaceholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text fo",
+      "truncated": false,
+      "total_chars": 600
+    }
+  },
+  "mystery/unknown-cli": {
+    "repo_details": {
+      "call_id": "c_000",
+      "tool": "repo_details",
+      "repo": "mystery/unknown-cli",
+      "url": "https://github.com/mystery/unknown-cli",
+      "metrics": {
+        "stars": 60,
+        "stars_per_day": null,
+        "forks": null,
+        "forks_30d": null,
+        "star_events_30d": null,
+        "star_events_capped": null,
+        "commits_90d": null,
+        "authors_90d": null,
+        "releases": null,
+        "last_release_at": null,
+        "last_commit_at": null,
+        "readme_chars": null,
+        "created_at": "2026-06-22T12:00:00Z",
+        "age_days": 120,
+        "description": null,
+        "language": null,
+        "license": null
+      },
+      "scores": {
+        "popularity": 11.1,
+        "momentum": 0.0,
+        "quality": 0.0,
+        "newness": 66.7
+      }
+    },
+    "readme": {
+      "call_id": "c_000",
+      "tool": "readme",
+      "error": {
+        "code": "NOT_FOUND",
+        "message": "mystery/unknown-cli has no README"
+      }
+    }
+  }
+}
