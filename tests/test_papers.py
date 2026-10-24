@@ -7,6 +7,10 @@ import json
 import httpx
 import pytest
 
+from sleeper import fakes
+from sleeper.agent.data_tools import DataTools, ReadmeUnavailable
+from sleeper.agent.submit_check import SubmitContext, check_submission
+from sleeper.contracts import ErrorOutput, PapersArgs, PapersOutput
 from sleeper.papers import MAX_PAPERS, PapersClient, PapersUnavailable, find_arxiv_ids, linked_papers, parse_arxiv_feed
 
 ARXIV = {
@@ -171,3 +175,87 @@ def test_live_lookup(tmp_path):
     assert not ghost.found
     # Citation count is best effort (Semantic Scholar's free pool often answers 429).
     assert lora.citation_count is None or lora.citation_count > 1000
+
+
+# ---- papers tool (DataTools) -----------------------------------------------
+
+PAPER_README = "Based on [LoRA](https://arxiv.org/abs/2106.09685) and arXiv:9999.99999 (a typo)."
+
+
+def papers_tools(tmp_path, readme=PAPER_README, apis=None) -> tuple[DataTools, FakeApis]:
+    apis = apis or FakeApis()
+
+    def source(row):
+        if isinstance(readme, Exception):
+            raise readme
+        return readme
+
+    tools = DataTools(fakes.fake_universe(), readme_source=source, papers_client=make_client(tmp_path, apis))
+    return tools, apis
+
+
+def test_papers_tool_output(tmp_path):
+    tools, _ = papers_tools(tmp_path)
+    out = tools.papers(PapersArgs(repo="ACME/Quiver"), "c_004")
+    assert isinstance(out, PapersOutput) and out.repo == "acme/quiver" and out.total_linked == 2
+    assert [(p.arxiv_id, p.found, p.citation_count) for p in out.papers] == [("2106.09685", True, 9000), ("9999.99999", False, None)]
+
+
+def test_papers_tool_no_links_makes_no_lookup(tmp_path):
+    tools, apis = papers_tools(tmp_path, readme="Just a CLI. Version 2106.09685 of nothing.")
+    out = tools.papers(PapersArgs(repo="acme/quiver"), "c_004")
+    assert isinstance(out, PapersOutput) and out.papers == [] and out.total_linked == 0
+    assert apis.requests == []
+
+
+def test_papers_tool_caps_lookups(tmp_path):
+    readme = " ".join(f"arXiv:2401.{n:05d}" for n in range(MAX_PAPERS + 3))
+    tools, _ = papers_tools(tmp_path, readme=readme)
+    out = tools.papers(PapersArgs(repo="acme/quiver"), "c_004")
+    assert len(out.papers) == MAX_PAPERS and out.total_linked == MAX_PAPERS + 3
+
+
+@pytest.mark.parametrize(
+    ("repo", "readme", "apis", "code"),
+    [
+        ("rust-lang/cargo", PAPER_README, None, "NOT_IN_UNIVERSE"),
+        ("acme/quiver", None, None, "NOT_FOUND"),
+        ("acme/quiver", ReadmeUnavailable("README not in the offline cache"), None, "UPSTREAM"),
+        ("acme/quiver", PAPER_README, FakeApis(fail={"export.arxiv.org": [503] * 3}), "UPSTREAM"),
+    ],
+)
+def test_papers_tool_errors(tmp_path, repo, readme, apis, code):
+    tools, _ = papers_tools(tmp_path, readme=readme, apis=apis)
+    out = tools.papers(PapersArgs(repo=repo), "c_009")
+    assert isinstance(out, ErrorOutput) and out.tool == "papers" and out.error.code == code, out
+
+
+def test_submit_accepts_key_figure_from_papers_and_checks_repo(tmp_path):
+    u = fakes.fake_universe()
+    tools, _ = papers_tools(tmp_path)
+    details = {r: fakes.repo_details_output(u, r, cid) for r, cid in [("acme/quiver", "c_001"), ("lumen-dev/tidepool", "c_002")]}
+    outputs = {"c_001": details["acme/quiver"], "c_002": details["lumen-dev/tidepool"]}
+    outputs["c_003"] = tools.papers(PapersArgs(repo="acme/quiver"), "c_003")
+
+    def card(d, paper_cid):
+        crit = {
+            c: {"score": getattr(d.scores, c), "score_call_id": d.call_id,
+                "key_figure": {"label": "stars", "value": d.metrics.stars, "source_call_id": d.call_id, "source_path": "/metrics/stars"}}
+            for c in ("popularity", "momentum", "quality", "newness")
+        }
+        crit["quality"]["key_figure"] = {
+            "label": "Citations of the linked paper", "value": 9000, "source_call_id": paper_cid,
+            "source_path": "/papers/0/citation_count",
+        }
+        return {"repo": d.repo, "pitch": "A pick", "criteria": crit, "case": [{"text": "Cited 9,000 times", "source_call_ids": [paper_cid]}],
+                "proven_wrong_if": ["No commits"], "confidence": 0.5}
+
+    ranking = [{"rank": 1, "repo": "acme/quiver"}, {"rank": 2, "repo": "lumen-dev/tidepool"}]
+    ctx = SubmitContext(universe=u, max_picks=5, outputs=outputs, researched={})
+    _, errors = check_submission({"cards": [card(details["acme/quiver"], "c_003")], "ranking": ranking, "summary": "s"}, ctx)
+    assert errors == []
+    _, errors = check_submission({"cards": [card(details["lumen-dev/tidepool"], "c_003")], "ranking": ranking, "summary": "s"}, ctx)
+    assert errors == [
+        "cards[0] (lumen-dev/tidepool) criteria.quality.key_figure: c_003 is papers for acme/quiver, not lumen-dev/tidepool; "
+        "cite this repo's own number"
+    ]
