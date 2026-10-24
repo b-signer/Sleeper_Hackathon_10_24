@@ -1,0 +1,14 @@
+{
+  "topic": "fake",
+  "universe_file": "fixtures\\fake\\universe.json",
+  "stars_min": 50,
+  "stars_max": 2000,
+  "created_after": "2025-01-01",
+  "max_picks": 5,
+  "min_ranked": 5,
+  "model": "openai/gpt-5.6-luna",
+  "token_budget": 300000,
+  "max_turns": 25,
+  "max_wall_clock_s": 600,
+  "seed": 7
+}

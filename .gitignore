@@ -5,7 +5,7 @@
 
 # Response cache and scratch run output
 .cache/
-runs/
+/runs/
 
 # Python
 __pycache__/
