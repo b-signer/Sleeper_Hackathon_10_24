@@ -27,6 +27,7 @@ function describeCall(tool, args = {}) {
   }
   if (tool === "repo_details") return ["repo details", args.repo];
   if (tool === "readme") return ["readme", args.repo];
+  if (tool === "papers") return ["papers", args.repo];
   if (tool === "submit") {
     return ["submit", `${(args.cards || []).length} picks, ${(args.ranking || []).length} ranked`];
   }
@@ -51,6 +52,14 @@ function describeResult(out) {
     return { text: bits.filter(Boolean).join(" · ") };
   }
   if (out.tool === "readme") return { text: `${fmtInt(out.total_chars)} chars${out.truncated ? " (truncated)" : ""}` };
+  if (out.tool === "papers") {
+    if (!out.papers.length) return { text: "no arXiv papers linked" };
+    const first = out.papers.find((p) => p.found);
+    const cites = first?.citation_count != null ? ` (${fmtInt(first.citation_count)} citations)` : "";
+    const lead = first ? `: ${first.title}${cites}` : "";
+    const more = out.total_linked > 1 ? `${out.total_linked} papers` : "1 paper";
+    return { text: `${more}${lead}${out.total_linked > 1 && first ? ", …" : ""}` };
+  }
   if (out.tool === "submit") {
     return out.ok ? { text: "accepted", kind: "ok" } : { text: `rejected: ${out.errors.join("; ")}`, kind: "err" };
   }

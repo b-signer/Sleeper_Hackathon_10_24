@@ -105,7 +105,8 @@ then add different sorts and filters (momentum desc or quality desc with popular
 keyword searches for core topic words. Use limit <= 25. Note which rows are off-topic as you go.
 b. Shortlist about {details} on-topic candidates and call repo_details on each.
 c. Read the README of the best {readmes} or so with readme max_chars 2500 (never more than 3000), to learn what \
-each project actually does, how mature it is, and whether it fits the topic.
+each project actually does, how mature it is, and whether it fits the topic. Call papers on your finalists too \
+(same turn; it is cheap and usually empty).
 d. Then decide, write the cards and submit.
 Do not submit early: if the budget line still says "researching" and you have not done a-c, keep researching. \
 Call many tools in one turn (they run in parallel). When the budget line says wrap up, stop exploring and submit.
@@ -132,6 +133,9 @@ numbers that matter: more than one active author, regular releases, recent commi
 - Never present a raw commit count as quality on its own. Hundreds of commits from one author in a young repo can \
 be churn or generated code: say so as a risk, not a strength.
 - Be specific: name a concrete capability the README describes, not "polished and feature-rich".
+- If papers shows the project implements a published paper, that is evidence the approach is sound: name the \
+paper, its year and its citation count, citing the papers output. The citations belong to the paper, not the repo, \
+and a paper only linked as related reading proves nothing. Never call a paper with found=false real.
 
 6. PROVEN WRONG IF (1-2 per card)
 Each item is a concrete event, checkable on GitHub, that is true only if the pick was a mistake. Use one of these \
@@ -167,7 +171,7 @@ was on <date>"). Never use backtest terms such as "as-of date", "as of the", "at
 words, no hype.
 
 9. SUBMIT
-One call with the cards (strongest first), the ranking (every repo you called repo_details or readme on, best \
+One call with the cards (strongest first), the ranking (every repo you called repo_details, readme or papers on, best \
 first, off-topic ones last) and a summary. If submit is rejected, fix exactly the listed errors and submit again; \
 you have 3 attempts.
 """
