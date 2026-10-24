@@ -10,7 +10,7 @@ The few decisions every ticket depends on. Everything else is the ticket owner's
 | D2 | Language | Python 3.12, one package manager for the repo (suggested: `uv`) | Fastest for data and LLM glue |
 | D3 | LLM access | OpenRouter, through an OpenAI-compatible client | One key, many models, usage and cost reporting |
 | D4 | Development model | `openai/gpt-5.6-luna` ($0.20 / $1.20 per M input/output tokens) | Cheap; same family as the demo model |
-| D5 | Demo model | `openai/gpt-5.6-terra` ($2 / $12 per M input/output tokens) | Better research quality for the demo |
+| D5 | Demo model | `openai/gpt-5.6-luna`, the same as development. **Changed 2026-10-24:** terra was skipped; the prompt was tuned on luna and luna passes Checkpoint B. Terra (`openai/gpt-5.6-terra`, $2 / $12 per M tokens, about $0.20 per run) remains an optional upgrade for the final recorded demo run | Cost: the whole team has $50 for the day. Luna's picks already pass review |
 | D6 | Data source | GitHub REST and GraphQL APIs, with a classic no-scope token. Responses are cached locally | Higher rate limits. Stargazer lists are **not** available (see learnings) |
 | D7 | Universe size | About 200 repos per topic, filtered by stars (default 50–2,000) and creation date (default 2025-01-01 or later) | Small enough to build quickly and screen cheaply |
 | D8 | Criteria | Popularity, momentum, quality, newness (PRD §4). Code computes the scores from the metrics, for example as a percentile within the universe | Reproducible, and the model never invents scores |
