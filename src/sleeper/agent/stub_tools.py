@@ -1,4 +1,5 @@
-"""StubTools: a small ToolExecutor for any Universe, standing in for the real tools (T09).
+"""StubTools: a small ToolExecutor for any Universe. Test double for the loop tests; production uses
+sleeper.agent.toolbox.Toolbox with DataTools (T09).
 
 browse / repo_details / readme delegate to the sleeper.fakes helpers. submit checks the submission's shape
 (contract), card and ranking repos are in the universe, citations point at earlier successful calls, and
