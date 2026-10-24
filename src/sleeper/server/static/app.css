@@ -43,6 +43,7 @@ h1, h2, h3, h4 { margin: 0; font-weight: 600; }
 .muted { color: var(--muted); }
 .error { color: var(--bad); margin: 8px 0 0; }
 .hint { color: var(--muted); font-size: 13px; margin: 0; }
+.hint.error { color: var(--bad); }
 [hidden] { display: none !important; }
 
 /* ---- Top bar and layout ---- */
@@ -59,13 +60,29 @@ h1, h2, h3, h4 { margin: 0; font-weight: 600; }
 .panel h2 { font-size: 14px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin-bottom: 12px; }
 
 /* ---- Launcher ---- */
-#launcher { display: grid; gap: 10px; }
-#launcher label { display: grid; gap: 4px; font-size: 13px; color: var(--muted); }
-#launcher .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-#launcher select, #launcher input { width: 100%; padding: 7px 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--fg); }
+.launcher { display: grid; gap: 10px; }
+.launcher label { display: grid; gap: 4px; font-size: 13px; color: var(--muted); }
+.launcher .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.launcher select, .launcher input { width: 100%; padding: 7px 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--fg); }
+.launcher select:disabled, .launcher input:disabled { opacity: .6; }
 button { cursor: pointer; }
 button:disabled { cursor: default; opacity: .55; }
 .primary { padding: 9px 12px; border: 0; border-radius: 6px; background: var(--accent); color: var(--panel); font-weight: 600; }
+.primary.live { background: var(--warn); }
+
+.mode { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 3px; border-radius: 8px; background: var(--bg); border: 1px solid var(--line); margin-bottom: 14px; }
+.mode button { display: grid; gap: 0; padding: 6px 8px; border: 0; border-radius: 6px; background: none; color: var(--muted); font-weight: 600; text-align: center; }
+.mode button.active { background: var(--panel); color: var(--fg); box-shadow: 0 1px 2px rgba(0, 0, 0, .12); }
+#mode-live.active { color: var(--warn); }
+.mode-sub { font-size: 11px; font-weight: 400; color: var(--muted); }
+.notice { margin: 0; padding: 8px 10px; border-radius: 6px; background: var(--bg); border: 1px solid var(--line); font-size: 13px; color: var(--muted); }
+.confirm { padding: 10px 12px; border-radius: 8px; background: var(--warn-soft); border: 1px solid var(--warn); font-size: 13px; }
+.confirm p { margin: 0 0 8px; }
+.confirm-actions { display: flex; gap: 8px; }
+.confirm-actions button:not(.primary) { padding: 8px 12px; border: 1px solid var(--line); border-radius: 6px; background: var(--panel); }
+.refusal { margin-top: 12px; padding: 10px 12px; border-radius: 8px; background: var(--bad-soft); border-left: 3px solid var(--bad); font-size: 13px; }
+.refusal strong { color: var(--bad); display: block; }
+.refusal p { margin: 4px 0 0; overflow-wrap: anywhere; }
 
 /* ---- Run list ---- */
 .run-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; max-height: 50vh; overflow: auto; }

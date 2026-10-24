@@ -13,6 +13,7 @@ from typing import Literal
 
 from pydantic import AwareDatetime, BaseModel, ValidationError
 
+from sleeper.agent.spend import OUTPUT_SHARE, SPEND_GUARD_USD
 from sleeper.contracts import RunEvent, RunResult, RunSettings, RunStatus, Universe, parse_event
 
 log = logging.getLogger(__name__)
@@ -42,15 +43,43 @@ class ModelInfo(BaseModel):
     input_per_m: float | None = None  # USD per million tokens; None if unknown
     output_per_m: float | None = None
     offline_ok: bool = False  # True only for the scripted fake model
+    max_run_usd: float | None = None  # worst case at ServerConfig.default_token_budget (spend.estimate_max_cost)
 
 
 class ServerConfig(BaseModel):
-    """What the launcher needs to know about this server."""
+    """What the launcher needs to know about this server.
+
+    The launcher shows a live run's worst case as
+    `token_budget * (input_per_m + output_share * output_per_m) / 1e6`, the formula of
+    `sleeper.agent.spend.estimate_max_cost`, which the server applies again when the run starts.
+    """
 
     offline: bool
     models: list[ModelInfo]
-    default_model: str
+    default_model: str  # the launcher's default for a live run (never the fake model when online)
     fake_model: str
+    spend_guard_usd: float = SPEND_GUARD_USD  # D10: runs that could push total spend past this are refused
+    default_token_budget: int = RunSettings.model_fields["token_budget"].default
+    output_share: float = OUTPUT_SHARE
+    live_disabled_reason: str | None = None  # set when this server can't start live runs (offline, no key)
+
+
+RefusalReason = Literal["spend_guard", "offline", "no_universe", "no_api_key", "web_model", "other"]
+
+
+class Refusal(BaseModel):
+    """`detail` of the 400 that POST /api/runs returns when a run is refused before it starts."""
+
+    reason: RefusalReason
+    message: str
+
+
+class SpendInfo(BaseModel):
+    """GET /api/spend: what this OpenRouter key has spent so far, against the D10 guard."""
+
+    spent_usd: float
+    guard_usd: float = SPEND_GUARD_USD
+    source: Literal["openrouter", "local"]  # "local" = sum of this machine's run records (OpenRouter unreachable)
 
 
 class UniverseInfo(BaseModel):
