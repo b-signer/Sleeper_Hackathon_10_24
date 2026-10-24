@@ -74,17 +74,19 @@ def run_backtest(
     """One agent run on a past universe. ``base_prompt`` defaults to the live prompt (T11).
 
     ``readme_as_of`` (real runs): READMEs as they were at the date, so the agent can't read later
-    text. Fake runs use the fake READMEs.
+    text. Fake runs use the fake READMEs. Linked papers (S2) never show today's citation counts.
     """
     from sleeper.agent.data_tools import DataTools
     from sleeper.agent.runner import execute_run
     from sleeper.agent.toolbox import Toolbox
+    from sleeper.backtest.papers import AsOfPapers
 
     past, _ = load_past(past_path)
     as_of = outcomes.as_of_date(past)
     settings = settings.model_copy(update={"topic": past.header.topic, "universe_file": str(past_path)})
     readme_source = asof_readme_source(as_of_end(as_of)) if readme_as_of and not fake else None
-    tools = Toolbox(past, DataTools(past, readme_source=readme_source), max_picks=settings.max_picks)
+    data = DataTools(past, readme_source=readme_source, papers_client=AsOfPapers(as_of))
+    tools = Toolbox(past, data, max_picks=settings.max_picks)
     return execute_run(
         settings,
         fake=fake,

@@ -23,6 +23,8 @@ scored later against what happened after it.
 adoption. Your memory still isn't a source, and anything it adds from after that date is contamination.
 - Some metrics can't be rebuilt for a past date, so they show as unknown (null). Treat unknown as unknown, not as \
 zero or as bad.
+- Paper citation counts are always unknown here (today's counts would include later citations). Cite a paper's \
+title and year only, never a citation count.
 - Write as if {as_of} is the present, with "proven wrong if" signals for the months after it. The language rules \
 above still apply.
 """
