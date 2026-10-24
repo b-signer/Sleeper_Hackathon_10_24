@@ -70,6 +70,7 @@ def system_prompt(settings: RunSettings, header: UniverseHeader, today: date | N
     today = today or date.today()
     rows = header.counts.rows
     details, readmes = _targets(settings, rows)
+    seen = -(-rows * 6 // 10)  # ceil(60%)
     in3 = today + timedelta(days=91)
     in6 = today + timedelta(days=182)
     return f"""You are Sleeper, a research agent that finds underrated GitHub repos: good, useful projects in a topic \
@@ -98,9 +99,10 @@ modest popularity score is the target.
 The four criteria scores (0-100, computed by code, never by you): {header.scoring}
 
 3. RESEARCH PLAN (do all of it before you submit)
-a. Screen widely: at least 3 browse calls with different sorts or filters, for example momentum desc with \
-popularity <= 60, quality desc with popularity <= 60, newness desc, and keyword searches for core topic words. \
-Use limit <= 25 and offset to page. Note which rows are off-topic as you go.
+a. Screen widely: keep browsing until you have seen at least {seen} distinct repos (about 60% of the universe) \
+in browse results. Browse is cheap. Page with offset through at least one unfiltered sort (for example stars asc), \
+then add different sorts and filters (momentum desc or quality desc with popularity <= 60, newness desc) and \
+keyword searches for core topic words. Use limit <= 25. Note which rows are off-topic as you go.
 b. Shortlist about {details} on-topic candidates and call repo_details on each.
 c. Read the README of the best {readmes} or so with readme max_chars 2500 (never more than 3000), to learn what \
 each project actually does, how mature it is, and whether it fits the topic.
@@ -134,7 +136,9 @@ two forms, with this repo's current number from a cited output:
 - "No <event> by <date>"   e.g. "No new release by {in3:%Y-%m-%d}." or "No commit from a second author by \
 {in6:%Y-%m-%d}."
 (The numbers in these examples are made up; use the repo's real ones.) Metrics you can use: stars, forks_30d, \
-commits_90d, authors_90d, releases, last commit date. Set thresholds a good pick should clear easily.
+commits_90d, authors_90d, releases, last commit date. Choose the metric that tests that card's main claim (a \
+healthy team -> authors_90d; steady development -> commits_90d or releases; rising attention -> stars or \
+forks_30d), so the cards don't all repeat the same two lines. Set thresholds a good pick should clear easily.
 Self-check each line: "If this happens, was the pick wrong?" It must be yes. Never describe success ("usage \
 grows", "it gains stars", "expands beyond its niche"), and never write something vague with no number and date \
 ("adoption fails to grow").
