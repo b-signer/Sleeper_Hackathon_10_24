@@ -13,20 +13,21 @@
     "stars_max": 2000,
     "created_after": "2025-01-01",
     "created_before": null,
-    "built_at": "2026-10-24T22:22:06Z",
-    "builder": "sleeper 0.1.0 @ 54659af",
+    "built_at": "2026-10-24T23:09:34Z",
+    "builder": "sleeper 0.1.0 @ 1267fd2-dirty; relevance openai/gpt-5.6-luna 263 checked, 63 off-topic, $0.06 (prompt 03486bbb)",
     "seed": 7,
     "max_size": 200,
-    "github_requests": 1037,
-    "build_seconds": 639.4,
-    "scoring": "Scores are percentiles within this universe (0 = lowest repo, 100 = highest; ties share the average rank), and a criterion built from several metrics is the mean of their percentiles, rounded to 0.1. Higher always means more of the criterion. Popularity: stars. Momentum: lifetime star velocity (stars_per_day) and forks created in the last 30 days (forks_30d), equally weighted (D13; star_events_30d is not used because the events feed caps it). Quality: commits in the last 90 days, distinct commit authors in the last 90 days, number of releases, recency of the last commit, and README length, equally weighted, so an active, multi-author, released and documented repo scores high. Newness: creation date, so the newest repo scores 100. A metric that is unknown (None) for a repo counts as the median (50) for that repo, neither rewarded nor penalised; the other repos' percentiles are computed among the known values only.",
+    "github_requests": 0,
+    "build_seconds": 2.5,
+    "scoring": "Scores are percentiles within this universe (0 = lowest repo, 100 = highest; ties share the average rank), rounded to 0.1. Higher always means more of the criterion. Popularity: stars. Momentum: lifetime star velocity (stars_per_day) and forks created in the last 30 days (forks_30d), equally weighted (D13; star_events_30d is not used because the events feed caps it). Quality: a weighted mean of commits in the last 90 days capped at 150 (25%), distinct commit authors in the last 90 days capped at 3 (25%), number of releases capped at 25 (20%), recency of the last commit (20%), and has-a-real-README (10%: 100 if the README has at least 500 characters, 0 if shorter or missing, 50 if unknown). Each capped metric is clipped before its percentile, so every repo at or above the cap ties: volume beyond the cap earns nothing more, and README length beyond the threshold does not count. Newness: creation date, so the newest repo scores 100. A metric that is unknown (None) for a repo counts as the median (50) for that repo, neither rewarded nor penalised; the other repos' percentiles are computed among the known values only.",
     "counts": {
       "search_total": 586,
       "excluded": {
         "archived": 4,
-        "fork": 4
+        "fork": 4,
+        "off_topic": 63
       },
-      "eligible": 578,
+      "eligible": 515,
       "sampled": true,
       "rows": 200
     }
@@ -56,40 +57,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 74.9,
-        "momentum": 31.3,
-        "quality": 31.3,
-        "newness": 14.1
-      }
-    },
-    {
-      "repo": "42futures/firm",
-      "repo_id": 1073628211,
-      "url": "https://github.com/42futures/firm",
-      "metrics": {
-        "stars": 830,
-        "stars_per_day": 2.19,
-        "forks": 50,
-        "forks_30d": 1,
-        "star_events_30d": 2,
-        "star_events_capped": false,
-        "commits_90d": 1,
-        "authors_90d": 1,
-        "releases": 3,
-        "last_release_at": "2026-02-06T14:47:26Z",
-        "last_commit_at": "2026-10-19T13:16:56Z",
-        "readme_chars": 2052,
-        "created_at": "2025-10-10T11:42:37Z",
-        "age_days": 379,
-        "description": "A text-based work management system for technologists.",
-        "language": "Rust",
-        "license": "MIT"
-      },
-      "scores": {
-        "popularity": 94.0,
-        "momentum": 66.1,
-        "quality": 26.1,
-        "newness": 17.6
+        "popularity": 72.9,
+        "momentum": 30.0,
+        "quality": 26.8,
+        "newness": 9.0
       }
     },
     {
@@ -116,10 +87,70 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 53.5,
-        "momentum": 30.3,
-        "quality": 84.3,
-        "newness": 45.7
+        "popularity": 50.8,
+        "momentum": 29.3,
+        "quality": 84.9,
+        "newness": 44.7
+      }
+    },
+    {
+      "repo": "afshinm/zerobox",
+      "repo_id": 1184465882,
+      "url": "https://github.com/afshinm/zerobox",
+      "metrics": {
+        "stars": 724,
+        "stars_per_day": 3.276,
+        "forks": 42,
+        "forks_30d": 0,
+        "star_events_30d": 8,
+        "star_events_capped": false,
+        "commits_90d": 0,
+        "authors_90d": 0,
+        "releases": 22,
+        "last_release_at": "2026-05-17T22:06:15Z",
+        "last_commit_at": "2026-05-17T22:01:05Z",
+        "readme_chars": 13795,
+        "created_at": "2026-03-17T16:02:51Z",
+        "age_days": 221,
+        "description": "Lightweight, cross-platform process sandboxing powered by OpenAI Codex's runtime. Sandbox any command with file, network, and credential controls.",
+        "language": "Rust",
+        "license": "Apache-2.0"
+      },
+      "scores": {
+        "popularity": 93.0,
+        "momentum": 53.9,
+        "quality": 26.8,
+        "newness": 50.3
+      }
+    },
+    {
+      "repo": "agent-sh/agnix",
+      "repo_id": 1146336156,
+      "url": "https://github.com/agent-sh/agnix",
+      "metrics": {
+        "stars": 457,
+        "stars_per_day": 1.718,
+        "forks": 35,
+        "forks_30d": 4,
+        "star_events_30d": 3,
+        "star_events_capped": true,
+        "commits_90d": 289,
+        "authors_90d": 4,
+        "releases": 107,
+        "last_release_at": "2026-10-24T01:11:29Z",
+        "last_commit_at": "2026-10-24T09:57:49Z",
+        "readme_chars": 12267,
+        "created_at": "2026-01-30T23:54:10Z",
+        "age_days": 266,
+        "description": "The missing linter and lsp for AI coding assistants. Validate CLAUDE.md, AGENTS.md, SKILL.md, hooks, MCP. Plugin for all major IDEs included, with autofixes.",
+        "language": "Rust",
+        "license": "Apache-2.0"
+      },
+      "scores": {
+        "popularity": 85.9,
+        "momentum": 79.3,
+        "quality": 83.5,
+        "newness": 31.7
       }
     },
     {
@@ -146,10 +177,10 @@
         "license": null
       },
       "scores": {
-        "popularity": 56.0,
-        "momentum": 39.3,
-        "quality": 22.2,
-        "newness": 67.8
+        "popularity": 54.0,
+        "momentum": 38.1,
+        "quality": 19.3,
+        "newness": 66.3
       }
     },
     {
@@ -176,10 +207,10 @@
         "license": "AGPL-3.0"
       },
       "scores": {
-        "popularity": 16.1,
-        "momentum": 20.2,
-        "quality": 29.2,
-        "newness": 55.3
+        "popularity": 15.6,
+        "momentum": 19.2,
+        "quality": 33.2,
+        "newness": 52.3
       }
     },
     {
@@ -206,10 +237,40 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 25.4,
+        "popularity": 26.4,
         "momentum": 28.4,
-        "quality": 31.6,
-        "newness": 11.1
+        "quality": 44.1,
+        "newness": 6.5
+      }
+    },
+    {
+      "repo": "alpcanaydin/tusk",
+      "repo_id": 1393634228,
+      "url": "https://github.com/alpcanaydin/tusk",
+      "metrics": {
+        "stars": 410,
+        "stars_per_day": 15.7692,
+        "forks": 24,
+        "forks_30d": 24,
+        "star_events_30d": 243,
+        "star_events_capped": false,
+        "commits_90d": 27,
+        "authors_90d": 2,
+        "releases": 4,
+        "last_release_at": "2026-09-30T16:24:41Z",
+        "last_commit_at": "2026-09-30T15:56:33Z",
+        "readme_chars": 16183,
+        "created_at": "2026-09-28T18:47:06Z",
+        "age_days": 26,
+        "description": "A fast, native, keyboard-driven database client for macOS. 20 databases, an AI assistant that shows its work, free and open source.",
+        "language": "Rust",
+        "license": "MIT"
+      },
+      "scores": {
+        "popularity": 84.4,
+        "momentum": 97.2,
+        "quality": 43.1,
+        "newness": 97.5
       }
     },
     {
@@ -236,10 +297,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 60.8,
-        "momentum": 46.0,
-        "quality": 78.9,
-        "newness": 30.7
+        "popularity": 57.3,
+        "momentum": 45.0,
+        "quality": 80.0,
+        "newness": 24.6
       }
     },
     {
@@ -266,10 +327,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 6.5,
-        "momentum": 31.5,
-        "quality": 51.9,
-        "newness": 87.9
+        "popularity": 6.3,
+        "momentum": 30.3,
+        "quality": 55.3,
+        "newness": 86.9
       }
     },
     {
@@ -296,10 +357,40 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 64.8,
-        "momentum": 68.6,
-        "quality": 58.2,
-        "newness": 26.1
+        "popularity": 61.3,
+        "momentum": 65.6,
+        "quality": 69.8,
+        "newness": 20.1
+      }
+    },
+    {
+      "repo": "anistark/feluda",
+      "repo_id": 911737357,
+      "url": "https://github.com/anistark/feluda",
+      "metrics": {
+        "stars": 482,
+        "stars_per_day": 0.7314,
+        "forks": 35,
+        "forks_30d": 6,
+        "star_events_30d": 5,
+        "star_events_capped": false,
+        "commits_90d": 40,
+        "authors_90d": 8,
+        "releases": 30,
+        "last_release_at": "2026-09-25T08:26:50Z",
+        "last_commit_at": "2026-10-22T20:50:57Z",
+        "readme_chars": 43194,
+        "created_at": "2025-01-03T18:15:30Z",
+        "age_days": 659,
+        "description": "Detect license usage restrictions in your project!",
+        "language": "Rust",
+        "license": null
+      },
+      "scores": {
+        "popularity": 87.9,
+        "momentum": 70.6,
+        "quality": 71.5,
+        "newness": 0.0
       }
     },
     {
@@ -326,10 +417,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 0.0,
-        "momentum": 9.4,
-        "quality": 49.2,
-        "newness": 9.0
+        "popularity": 0.3,
+        "momentum": 10.4,
+        "quality": 55.0,
+        "newness": 5.0
       }
     },
     {
@@ -356,10 +447,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 70.4,
-        "momentum": 89.6,
-        "quality": 63.4,
-        "newness": 92.5
+        "popularity": 67.3,
+        "momentum": 88.3,
+        "quality": 73.7,
+        "newness": 91.5
       }
     },
     {
@@ -386,10 +477,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 14.8,
-        "momentum": 25.3,
-        "quality": 23.3,
-        "newness": 73.4
+        "popularity": 14.6,
+        "momentum": 24.5,
+        "quality": 24.7,
+        "newness": 71.9
       }
     },
     {
@@ -416,10 +507,40 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 77.4,
-        "momentum": 70.0,
-        "quality": 54.2,
-        "newness": 42.2
+        "popularity": 75.4,
+        "momentum": 69.1,
+        "quality": 51.4,
+        "newness": 40.7
+      }
+    },
+    {
+      "repo": "AppachiTech/suvadu",
+      "repo_id": 1157353950,
+      "url": "https://github.com/AppachiTech/suvadu",
+      "metrics": {
+        "stars": 121,
+        "stars_per_day": 0.4783,
+        "forks": 13,
+        "forks_30d": 1,
+        "star_events_30d": 15,
+        "star_events_capped": false,
+        "commits_90d": 362,
+        "authors_90d": 3,
+        "releases": 24,
+        "last_release_at": "2026-10-20T13:40:00Z",
+        "last_commit_at": "2026-10-20T13:11:45Z",
+        "readme_chars": 55916,
+        "created_at": "2026-02-13T18:11:58Z",
+        "age_days": 253,
+        "description": "Shell history replacement with AI agent tracking and MCP server. Built in Rust, 100% local.",
+        "language": "Rust",
+        "license": "MIT"
+      },
+      "scores": {
+        "popularity": 45.5,
+        "momentum": 43.2,
+        "quality": 74.7,
+        "newness": 38.2
       }
     },
     {
@@ -446,10 +567,70 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 73.1,
-        "momentum": 41.3,
-        "quality": 26.2,
-        "newness": 37.7
+        "popularity": 70.1,
+        "momentum": 40.6,
+        "quality": 21.5,
+        "newness": 32.2
+      }
+    },
+    {
+      "repo": "arnica/depsguard",
+      "repo_id": 1198037858,
+      "url": "https://github.com/arnica/depsguard",
+      "metrics": {
+        "stars": 384,
+        "stars_per_day": 1.8641,
+        "forks": 19,
+        "forks_30d": 2,
+        "star_events_30d": 5,
+        "star_events_capped": false,
+        "commits_90d": 0,
+        "authors_90d": 0,
+        "releases": 30,
+        "last_release_at": "2026-06-30T18:42:36Z",
+        "last_commit_at": "2026-07-07T19:56:14Z",
+        "readme_chars": 20530,
+        "created_at": "2026-04-01T04:25:48Z",
+        "age_days": 206,
+        "description": "Harden your package manager configs against supply chain attacks.",
+        "language": "Rust",
+        "license": "MIT"
+      },
+      "scores": {
+        "popularity": 83.2,
+        "momentum": 74.4,
+        "quality": 33.4,
+        "newness": 56.8
+      }
+    },
+    {
+      "repo": "asdecided/core",
+      "repo_id": 1255866572,
+      "url": "https://github.com/asdecided/core",
+      "metrics": {
+        "stars": 299,
+        "stars_per_day": 2.0621,
+        "forks": 9,
+        "forks_30d": 0,
+        "star_events_30d": 5,
+        "star_events_capped": false,
+        "commits_90d": 137,
+        "authors_90d": 2,
+        "releases": 43,
+        "last_release_at": "2026-10-05T14:04:34Z",
+        "last_commit_at": "2026-10-05T13:27:27Z",
+        "readme_chars": 4667,
+        "created_at": "2026-06-01T08:42:02Z",
+        "age_days": 145,
+        "description": "Native deterministic engine and read-only MCP server for engineering decisions.",
+        "language": "Rust",
+        "license": "Apache-2.0"
+      },
+      "scores": {
+        "popularity": 77.9,
+        "momentum": 50.1,
+        "quality": 62.9,
+        "newness": 75.4
       }
     },
     {
@@ -476,10 +657,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 41.2,
-        "momentum": 26.3,
-        "quality": 42.0,
-        "newness": 53.3
+        "popularity": 40.2,
+        "momentum": 25.3,
+        "quality": 33.0,
+        "newness": 49.2
       }
     },
     {
@@ -488,7 +669,7 @@
       "url": "https://github.com/atelico/gdstyle",
       "metrics": {
         "stars": 74,
-        "stars_per_day": 0.5,
+        "stars_per_day": 0.4966,
         "forks": 6,
         "forks_30d": 3,
         "star_events_30d": 11,
@@ -500,106 +681,46 @@
         "last_commit_at": "2026-10-17T19:38:47Z",
         "readme_chars": 33061,
         "created_at": "2026-05-28T22:47:22Z",
-        "age_days": 148,
+        "age_days": 149,
         "description": "A fast, opinionated linter and formatter for GDScript (Godot 4.x), in Rust.",
         "language": "Rust",
         "license": "MIT"
       },
       "scores": {
-        "popularity": 24.4,
-        "momentum": 57.4,
-        "quality": 58.9,
-        "newness": 75.4
+        "popularity": 24.9,
+        "momentum": 55.7,
+        "quality": 52.6,
+        "newness": 74.4
       }
     },
     {
-      "repo": "bahdotsh/blogr",
-      "repo_id": 1060532847,
-      "url": "https://github.com/bahdotsh/blogr",
+      "repo": "baseballyama/rsvelte",
+      "repo_id": 1127473187,
+      "url": "https://github.com/baseballyama/rsvelte",
       "metrics": {
-        "stars": 344,
-        "stars_per_day": 0.8622,
-        "forks": 20,
-        "forks_30d": 0,
-        "star_events_30d": 0,
-        "star_events_capped": false,
-        "commits_90d": 0,
-        "authors_90d": 0,
-        "releases": 10,
-        "last_release_at": "2026-04-03T02:40:25Z",
-        "last_commit_at": "2026-04-03T02:31:29Z",
-        "readme_chars": 11833,
-        "created_at": "2025-09-20T04:59:23Z",
-        "age_days": 399,
-        "description": "Write, edit, and publish your blog without ever leaving your terminal!",
+        "stars": 246,
+        "stars_per_day": 0.8396,
+        "forks": 14,
+        "forks_30d": 2,
+        "star_events_30d": 19,
+        "star_events_capped": true,
+        "commits_90d": 1919,
+        "authors_90d": null,
+        "releases": 590,
+        "last_release_at": "2026-09-28T08:30:09Z",
+        "last_commit_at": "2026-09-28T09:59:10Z",
+        "readme_chars": 4997,
+        "created_at": "2026-01-04T00:35:25Z",
+        "age_days": 293,
+        "description": "Rust-powered Svelte ecosystem",
         "language": "Rust",
         "license": "MIT"
       },
       "scores": {
-        "popularity": 80.9,
-        "momentum": 41.1,
-        "quality": 23.5,
-        "newness": 16.1
-      }
-    },
-    {
-      "repo": "bahdotsh/feedr",
-      "repo_id": 959219384,
-      "url": "https://github.com/bahdotsh/feedr",
-      "metrics": {
-        "stars": 448,
-        "stars_per_day": 0.786,
-        "forks": 18,
-        "forks_30d": 1,
-        "star_events_30d": 14,
-        "star_events_capped": false,
-        "commits_90d": 0,
-        "authors_90d": 0,
-        "releases": 6,
-        "last_release_at": "2026-05-15T16:59:59Z",
-        "last_commit_at": "2026-06-11T17:34:33Z",
-        "readme_chars": 23307,
-        "created_at": "2025-04-02T12:55:32Z",
-        "age_days": 570,
-        "description": "A feature-rich terminal-based RSS/Atom feed reader written in Rust.",
-        "language": "Rust",
-        "license": "MIT"
-      },
-      "scores": {
-        "popularity": 84.9,
-        "momentum": 55.5,
-        "quality": 27.7,
-        "newness": 8.0
-      }
-    },
-    {
-      "repo": "bananaofhappiness/soundscope",
-      "repo_id": 1033259976,
-      "url": "https://github.com/bananaofhappiness/soundscope",
-      "metrics": {
-        "stars": 187,
-        "stars_per_day": 0.4212,
-        "forks": 5,
-        "forks_30d": 1,
-        "star_events_30d": 2,
-        "star_events_capped": false,
-        "commits_90d": 33,
-        "authors_90d": 1,
-        "releases": 19,
-        "last_release_at": "2026-09-07T11:31:32Z",
-        "last_commit_at": "2026-09-07T11:27:41Z",
-        "readme_chars": 6415,
-        "created_at": "2025-08-06T14:37:31Z",
-        "age_days": 444,
-        "description": "A TUI for real-time analysis of audio files, system audio, and microphone input",
-        "language": "Rust",
-        "license": "MIT"
-      },
-      "scores": {
-        "popularity": 65.8,
-        "momentum": 42.2,
-        "quality": 37.3,
-        "newness": 13.1
+        "popularity": 72.1,
+        "momentum": 65.1,
+        "quality": 66.6,
+        "newness": 24.1
       }
     },
     {
@@ -627,9 +748,9 @@
       },
       "scores": {
         "popularity": 12.6,
-        "momentum": 32.9,
-        "quality": 43.5,
-        "newness": 43.7
+        "momentum": 33.2,
+        "quality": 43.4,
+        "newness": 42.7
       }
     },
     {
@@ -656,10 +777,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 98.5,
-        "momentum": 78.3,
-        "quality": 40.1,
-        "newness": 10.1
+        "popularity": 99.5,
+        "momentum": 77.9,
+        "quality": 39.5,
+        "newness": 6.0
       }
     },
     {
@@ -686,10 +807,10 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 74.4,
-        "momentum": 59.3,
-        "quality": 26.8,
-        "newness": 47.7
+        "popularity": 71.4,
+        "momentum": 59.0,
+        "quality": 27.6,
+        "newness": 46.2
       }
     },
     {
@@ -716,10 +837,40 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 83.4,
-        "momentum": 89.7,
-        "quality": 54.9,
-        "newness": 91.5
+        "popularity": 82.4,
+        "momentum": 89.1,
+        "quality": 55.5,
+        "newness": 91.0
+      }
+    },
+    {
+      "repo": "bnomei/tmux-mcp",
+      "repo_id": 1140534220,
+      "url": "https://github.com/bnomei/tmux-mcp",
+      "metrics": {
+        "stars": 57,
+        "stars_per_day": 0.208,
+        "forks": 12,
+        "forks_30d": 0,
+        "star_events_30d": 3,
+        "star_events_capped": false,
+        "commits_90d": 0,
+        "authors_90d": 0,
+        "releases": 9,
+        "last_release_at": "2026-07-11T21:49:21Z",
+        "last_commit_at": "2026-07-11T22:02:46Z",
+        "readme_chars": 29921,
+        "created_at": "2026-01-23T12:10:50Z",
+        "age_days": 274,
+        "description": "Lets agents create sessions, split panes, run commands, and capture output with TMUX.",
+        "language": "Rust",
+        "license": "MIT"
+      },
+      "scores": {
+        "popularity": 7.8,
+        "momentum": 14.2,
+        "quality": 23.4,
+        "newness": 30.2
       }
     },
     {
@@ -731,7 +882,7 @@
         "stars_per_day": 2.7544,
         "forks": 9,
         "forks_30d": 1,
-        "star_events_30d": 6,
+        "star_events_30d": 7,
         "star_events_capped": false,
         "commits_90d": 10,
         "authors_90d": 1,
@@ -746,10 +897,10 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 79.4,
-        "momentum": 67.6,
-        "quality": 46.4,
-        "newness": 83.4
+        "popularity": 78.4,
+        "momentum": 68.1,
+        "quality": 44.4,
+        "newness": 81.9
       }
     },
     {
@@ -776,10 +927,10 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 73.9,
-        "momentum": 42.6,
-        "quality": 25.9,
-        "newness": 44.2
+        "popularity": 70.9,
+        "momentum": 42.1,
+        "quality": 33.5,
+        "newness": 43.2
       }
     },
     {
@@ -806,10 +957,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 73.1,
-        "momentum": 84.7,
-        "quality": 69.1,
-        "newness": 79.9
+        "popularity": 70.1,
+        "momentum": 83.2,
+        "quality": 78.3,
+        "newness": 78.9
       }
     },
     {
@@ -837,9 +988,9 @@
       },
       "scores": {
         "popularity": 32.7,
-        "momentum": 33.2,
-        "quality": 63.3,
-        "newness": 19.6
+        "momentum": 33.4,
+        "quality": 65.2,
+        "newness": 12.1
       }
     },
     {
@@ -866,40 +1017,10 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 27.4,
-        "momentum": 17.8,
-        "quality": 64.1,
-        "newness": 27.6
-      }
-    },
-    {
-      "repo": "bug-ops/zeph",
-      "repo_id": 1150904280,
-      "url": "https://github.com/bug-ops/zeph",
-      "metrics": {
-        "stars": 65,
-        "stars_per_day": 0.249,
-        "forks": 7,
-        "forks_30d": 3,
-        "star_events_30d": 0,
-        "star_events_capped": true,
-        "commits_90d": 107,
-        "authors_90d": 1,
-        "releases": 77,
-        "last_release_at": "2026-09-18T09:45:49Z",
-        "last_commit_at": "2026-10-22T16:26:37Z",
-        "readme_chars": 22392,
-        "created_at": "2026-02-05T20:35:40Z",
-        "age_days": 261,
-        "description": "A memory-first AI agent that remembers why decisions were made — not just the last message. Runs local (Ollama), cloud (Claude · OpenAI · Gemini), or decentralized TEE. Graph memory, self-learning skills, multi-model routing, sandboxed tools. MCP · ACP · A2A. One Rust binary.",
-        "language": "Rust",
-        "license": "MIT"
-      },
-      "scores": {
-        "popularity": 17.1,
-        "momentum": 46.1,
-        "quality": 66.8,
-        "newness": 39.7
+        "popularity": 27.9,
+        "momentum": 18.0,
+        "quality": 78.0,
+        "newness": 21.6
       }
     },
     {
@@ -926,70 +1047,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 52.5,
-        "momentum": 68.6,
-        "quality": 54.0,
-        "newness": 55.8
-      }
-    },
-    {
-      "repo": "BurntSushi/bttf",
-      "repo_id": 945094389,
-      "url": "https://github.com/BurntSushi/bttf",
-      "metrics": {
-        "stars": 764,
-        "stars_per_day": 1.284,
-        "forks": 13,
-        "forks_30d": 1,
-        "star_events_30d": 0,
-        "star_events_capped": false,
-        "commits_90d": 1,
-        "authors_90d": 1,
-        "releases": 4,
-        "last_release_at": "2026-05-28T15:23:55Z",
-        "last_commit_at": "2026-08-03T11:39:10Z",
-        "readme_chars": 10431,
-        "created_at": "2025-03-08T16:41:33Z",
-        "age_days": 595,
-        "description": "A command line tool for datetime arithmetic, parsing, formatting and more.",
-        "language": "Rust",
-        "license": "Unlicense"
-      },
-      "scores": {
-        "popularity": 93.0,
-        "momentum": 62.8,
-        "quality": 27.1,
-        "newness": 5.0
-      }
-    },
-    {
-      "repo": "cerul-ai/cerul",
-      "repo_id": 1176971972,
-      "url": "https://github.com/cerul-ai/cerul",
-      "metrics": {
-        "stars": 164,
-        "stars_per_day": 0.7162,
-        "forks": 9,
-        "forks_30d": 1,
-        "star_events_30d": 5,
-        "star_events_capped": false,
-        "commits_90d": 52,
-        "authors_90d": 2,
-        "releases": 21,
-        "last_release_at": "2026-10-22T04:24:05Z",
-        "last_commit_at": "2026-10-22T03:44:38Z",
-        "readme_chars": 8921,
-        "created_at": "2026-03-09T15:07:19Z",
-        "age_days": 229,
-        "description": "Open-source video processing core and CLI. Search and annotate local videos with your own model endpoints.",
-        "language": "Rust",
-        "license": "Apache-2.0"
-      },
-      "scores": {
-        "popularity": 61.8,
-        "momentum": 53.3,
-        "quality": 53.4,
-        "newness": 50.8
+        "popularity": 50.0,
+        "momentum": 65.5,
+        "quality": 66.4,
+        "newness": 53.3
       }
     },
     {
@@ -1016,10 +1077,10 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 3.0,
-        "momentum": 15.2,
-        "quality": 62.5,
-        "newness": 48.7
+        "popularity": 3.8,
+        "momentum": 15.5,
+        "quality": 63.0,
+        "newness": 47.2
       }
     },
     {
@@ -1046,70 +1107,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 25.4,
-        "momentum": 65.1,
-        "quality": 14.2,
-        "newness": 80.4
-      }
-    },
-    {
-      "repo": "chojs23/concord",
-      "repo_id": 1233111215,
-      "url": "https://github.com/chojs23/concord",
-      "metrics": {
-        "stars": 1627,
-        "stars_per_day": 9.6272,
-        "forks": 89,
-        "forks_30d": 10,
-        "star_events_30d": 98,
-        "star_events_capped": false,
-        "commits_90d": 219,
-        "authors_90d": 17,
-        "releases": 90,
-        "last_release_at": "2026-10-18T14:14:30Z",
-        "last_commit_at": "2026-10-23T15:53:21Z",
-        "readme_chars": 34283,
-        "created_at": "2026-05-08T15:51:03Z",
-        "age_days": 169,
-        "description": "A feature-rich TUI client for Discord",
-        "language": "Rust",
-        "license": null
-      },
-      "scores": {
-        "popularity": 99.0,
-        "momentum": 95.7,
-        "quality": 88.2,
-        "newness": 72.9
-      }
-    },
-    {
-      "repo": "cioffivictor/ssp-protocol",
-      "repo_id": 1215521324,
-      "url": "https://github.com/cioffivictor/ssp-protocol",
-      "metrics": {
-        "stars": 110,
-        "stars_per_day": 0.5882,
-        "forks": 18,
-        "forks_30d": 18,
-        "star_events_30d": 184,
-        "star_events_capped": false,
-        "commits_90d": 84,
-        "authors_90d": 5,
-        "releases": 5,
-        "last_release_at": "2026-10-22T11:42:35Z",
-        "last_commit_at": "2026-10-19T16:10:00Z",
-        "readme_chars": 16396,
-        "created_at": "2026-04-20T02:05:50Z",
-        "age_days": 187,
-        "description": "STABLE - Stability protocol for Solana memecoins. A council of liquidity agents attests to pool state; a dependency-free Rust risk kernel turns those attestations into a liquidity regime — expand, watch, hedge, backstop — plus digest-stamped stability attestations. TypeScript ops console included.",
-        "language": "Rust",
-        "license": "MIT"
-      },
-      "scores": {
-        "popularity": 43.7,
-        "momentum": 70.7,
-        "quality": 59.9,
-        "newness": 65.8
+        "popularity": 26.4,
+        "momentum": 62.2,
+        "quality": 19.4,
+        "newness": 79.4
       }
     },
     {
@@ -1136,10 +1137,40 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 16.1,
-        "momentum": 11.2,
-        "quality": 51.6,
-        "newness": 11.6
+        "popularity": 15.6,
+        "momentum": 11.4,
+        "quality": 42.2,
+        "newness": 7.0
+      }
+    },
+    {
+      "repo": "clash-sh/clash",
+      "repo_id": 1149268015,
+      "url": "https://github.com/clash-sh/clash",
+      "metrics": {
+        "stars": 65,
+        "stars_per_day": 0.2481,
+        "forks": 2,
+        "forks_30d": 1,
+        "star_events_30d": 1,
+        "star_events_capped": false,
+        "commits_90d": 0,
+        "authors_90d": 0,
+        "releases": 2,
+        "last_release_at": "2026-02-08T11:18:19Z",
+        "last_commit_at": "2026-02-24T13:54:53Z",
+        "readme_chars": 13491,
+        "created_at": "2026-02-03T23:16:31Z",
+        "age_days": 262,
+        "description": "Avoid merge conflicts across git worktrees for parallel AI coding agents",
+        "language": "Rust",
+        "license": "MIT"
+      },
+      "scores": {
+        "popularity": 16.6,
+        "momentum": 33.7,
+        "quality": 16.9,
+        "newness": 34.2
       }
     },
     {
@@ -1166,10 +1197,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 94.5,
-        "momentum": 52.9,
-        "quality": 42.9,
-        "newness": 33.7
+        "popularity": 95.5,
+        "momentum": 53.1,
+        "quality": 51.1,
+        "newness": 27.1
       }
     },
     {
@@ -1196,10 +1227,10 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 29.1,
-        "momentum": 43.7,
-        "quality": 22.3,
-        "newness": 70.4
+        "popularity": 29.6,
+        "momentum": 42.5,
+        "quality": 32.9,
+        "newness": 69.3
       }
     },
     {
@@ -1226,10 +1257,40 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 63.3,
-        "momentum": 62.4,
-        "quality": 21.8,
-        "newness": 31.2
+        "popularity": 60.3,
+        "momentum": 59.9,
+        "quality": 23.6,
+        "newness": 25.1
+      }
+    },
+    {
+      "repo": "crabbuild/compass",
+      "repo_id": 1308528382,
+      "url": "https://github.com/crabbuild/compass",
+      "metrics": {
+        "stars": 175,
+        "stars_per_day": 1.8617,
+        "forks": 8,
+        "forks_30d": 0,
+        "star_events_30d": 3,
+        "star_events_capped": false,
+        "commits_90d": 1162,
+        "authors_90d": null,
+        "releases": 47,
+        "last_release_at": "2026-10-03T02:41:56Z",
+        "last_commit_at": "2026-10-03T01:41:37Z",
+        "readme_chars": 24704,
+        "created_at": "2026-07-22T07:38:59Z",
+        "age_days": 94,
+        "description": "Native, local-first knowledge graph engine for code and project artifacts—inspired by Graphify, built in Rust, and evolving beyond it.",
+        "language": "Rust",
+        "license": null
+      },
+      "scores": {
+        "popularity": 59.5,
+        "momentum": 49.1,
+        "quality": 67.3,
+        "newness": 87.9
       }
     },
     {
@@ -1256,10 +1317,40 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 56.0,
-        "momentum": 65.8,
-        "quality": 50.9,
-        "newness": 94.0
+        "popularity": 54.0,
+        "momentum": 66.8,
+        "quality": 65.3,
+        "newness": 93.5
+      }
+    },
+    {
+      "repo": "cristeigabriela/bb",
+      "repo_id": 1149385021,
+      "url": "https://github.com/cristeigabriela/bb",
+      "metrics": {
+        "stars": 56,
+        "stars_per_day": 0.2137,
+        "forks": 1,
+        "forks_30d": 0,
+        "star_events_30d": 0,
+        "star_events_capped": false,
+        "commits_90d": 0,
+        "authors_90d": 0,
+        "releases": 10,
+        "last_release_at": "2026-05-16T03:20:55Z",
+        "last_commit_at": "2026-05-16T03:11:25Z",
+        "readme_chars": 19395,
+        "created_at": "2026-02-04T03:46:05Z",
+        "age_days": 262,
+        "description": "Benowin Blanc — Windows through a detective's lens.",
+        "language": "Rust",
+        "license": null
+      },
+      "scores": {
+        "popularity": 6.3,
+        "momentum": 14.4,
+        "quality": 22.6,
+        "newness": 34.7
       }
     },
     {
@@ -1286,10 +1377,10 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 1.8,
-        "momentum": 70.1,
-        "quality": 78.2,
-        "newness": 93.5
+        "popularity": 2.5,
+        "momentum": 68.0,
+        "quality": 84.7,
+        "newness": 93.0
       }
     },
     {
@@ -1316,10 +1407,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 21.1,
-        "momentum": 33.7,
-        "quality": 88.2,
-        "newness": 33.2
+        "popularity": 20.6,
+        "momentum": 33.9,
+        "quality": 85.3,
+        "newness": 26.6
       }
     },
     {
@@ -1346,10 +1437,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 52.5,
-        "momentum": 52.3,
-        "quality": 50.7,
-        "newness": 59.3
+        "popularity": 50.0,
+        "momentum": 50.8,
+        "quality": 50.4,
+        "newness": 58.3
       }
     },
     {
@@ -1363,11 +1454,11 @@
         "forks_30d": 18,
         "star_events_30d": 27,
         "star_events_capped": true,
-        "commits_90d": 1924,
+        "commits_90d": 1927,
         "authors_90d": null,
         "releases": 35,
         "last_release_at": "2026-10-23T08:12:18Z",
-        "last_commit_at": "2026-10-24T22:06:20Z",
+        "last_commit_at": "2026-10-24T22:56:06Z",
         "readme_chars": 5504,
         "created_at": "2026-09-21T11:34:42Z",
         "age_days": 33,
@@ -1376,10 +1467,10 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 39.4,
-        "momentum": 91.2,
-        "quality": 66.2,
-        "newness": 96.5
+        "popularity": 38.7,
+        "momentum": 90.2,
+        "quality": 79.0,
+        "newness": 97.0
       }
     },
     {
@@ -1406,10 +1497,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 20.1,
-        "momentum": 42.5,
-        "quality": 81.1,
-        "newness": 6.5
+        "popularity": 19.3,
+        "momentum": 41.8,
+        "quality": 73.0,
+        "newness": 4.0
       }
     },
     {
@@ -1436,10 +1527,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 82.9,
-        "momentum": 81.9,
-        "quality": 65.7,
-        "newness": 51.8
+        "popularity": 81.9,
+        "momentum": 80.3,
+        "quality": 71.1,
+        "newness": 48.7
       }
     },
     {
@@ -1467,9 +1558,9 @@
       },
       "scores": {
         "popularity": 96.5,
-        "momentum": 90.7,
-        "quality": 84.6,
-        "newness": 35.2
+        "momentum": 90.5,
+        "quality": 77.4,
+        "newness": 28.6
       }
     },
     {
@@ -1481,7 +1572,7 @@
         "stars_per_day": 3.5312,
         "forks": 141,
         "forks_30d": 2,
-        "star_events_30d": 10,
+        "star_events_30d": 9,
         "star_events_capped": false,
         "commits_90d": 2719,
         "authors_90d": null,
@@ -1497,9 +1588,9 @@
       },
       "scores": {
         "popularity": 97.5,
-        "momentum": 79.8,
-        "quality": 84.9,
-        "newness": 21.6
+        "momentum": 79.6,
+        "quality": 77.9,
+        "newness": 14.6
       }
     },
     {
@@ -1526,10 +1617,10 @@
         "license": null
       },
       "scores": {
-        "popularity": 35.7,
-        "momentum": 40.7,
-        "quality": 75.5,
-        "newness": 45.2
+        "popularity": 35.2,
+        "momentum": 40.2,
+        "quality": 68.1,
+        "newness": 44.2
       }
     },
     {
@@ -1538,7 +1629,7 @@
       "url": "https://github.com/Dicklesworthstone/meta_skill",
       "metrics": {
         "stars": 207,
-        "stars_per_day": 0.7314,
+        "stars_per_day": 0.7289,
         "forks": 39,
         "forks_30d": 1,
         "star_events_30d": 9,
@@ -1550,16 +1641,16 @@
         "last_commit_at": "2026-10-23T19:26:15Z",
         "readme_chars": 28761,
         "created_at": "2026-01-13T22:33:32Z",
-        "age_days": 283,
+        "age_days": 284,
         "description": "Local-first skill management platform for AI coding agents: dual SQLite+Git persistence, semantic search, bandit-optimized suggestions, and MCP integration",
         "language": "Rust",
         "license": null
       },
       "scores": {
-        "popularity": 69.6,
-        "momentum": 53.8,
-        "quality": 68.5,
-        "newness": 32.7
+        "popularity": 66.6,
+        "momentum": 52.3,
+        "quality": 66.3,
+        "newness": 26.1
       }
     },
     {
@@ -1586,10 +1677,40 @@
         "license": null
       },
       "scores": {
-        "popularity": 33.4,
-        "momentum": 21.7,
-        "quality": 53.7,
-        "newness": 34.7
+        "popularity": 33.2,
+        "momentum": 20.7,
+        "quality": 52.5,
+        "newness": 28.1
+      }
+    },
+    {
+      "repo": "Dicklesworthstone/skillranker",
+      "repo_id": 1374059973,
+      "url": "https://github.com/Dicklesworthstone/skillranker",
+      "metrics": {
+        "stars": 137,
+        "stars_per_day": 3.7027,
+        "forks": 11,
+        "forks_30d": 3,
+        "star_events_30d": 20,
+        "star_events_capped": false,
+        "commits_90d": 1119,
+        "authors_90d": null,
+        "releases": 0,
+        "last_release_at": null,
+        "last_commit_at": "2026-10-19T19:05:25Z",
+        "readme_chars": 123416,
+        "created_at": "2026-09-17T06:58:19Z",
+        "age_days": 37,
+        "description": "Rust CLI powered by Jev from TypeSafe.ai that ranks agent skills for the next step using live session context. Includes Claude Code hooks, structured JSON, abstention, and local feedback. Requires a TypeSafe API key.",
+        "language": "Rust",
+        "license": null
+      },
+      "scores": {
+        "popularity": 51.3,
+        "momentum": 83.8,
+        "quality": 56.3,
+        "newness": 95.5
       }
     },
     {
@@ -1616,10 +1737,40 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 44.7,
-        "momentum": 37.6,
-        "quality": 56.8,
-        "newness": 74.9
+        "popularity": 42.2,
+        "momentum": 36.3,
+        "quality": 59.4,
+        "newness": 73.9
+      }
+    },
+    {
+      "repo": "dinakars777/git-time-machine",
+      "repo_id": 1189242342,
+      "url": "https://github.com/dinakars777/git-time-machine",
+      "metrics": {
+        "stars": 72,
+        "stars_per_day": 0.3349,
+        "forks": 7,
+        "forks_30d": 0,
+        "star_events_30d": 1,
+        "star_events_capped": false,
+        "commits_90d": 0,
+        "authors_90d": 0,
+        "releases": 3,
+        "last_release_at": "2026-05-20T23:06:49Z",
+        "last_commit_at": "2026-05-31T09:14:14Z",
+        "readme_chars": 9070,
+        "created_at": "2026-03-23T05:47:56Z",
+        "age_days": 215,
+        "description": "🕰️ Browse Git reflog visually and recover reachable local history with a TUI",
+        "language": "Rust",
+        "license": "MIT"
+      },
+      "scores": {
+        "popularity": 21.9,
+        "momentum": 21.2,
+        "quality": 18.9,
+        "newness": 52.8
       }
     },
     {
@@ -1646,40 +1797,40 @@
         "license": "MPL-2.0"
       },
       "scores": {
-        "popularity": 42.7,
-        "momentum": 46.5,
-        "quality": 44.1,
-        "newness": 64.3
+        "popularity": 40.7,
+        "momentum": 45.5,
+        "quality": 57.8,
+        "newness": 63.3
       }
     },
     {
-      "repo": "Drackrath/Aurelia",
-      "repo_id": 1264493600,
-      "url": "https://github.com/Drackrath/Aurelia",
+      "repo": "dragonked2/alphacode",
+      "repo_id": 1353408336,
+      "url": "https://github.com/dragonked2/alphacode",
       "metrics": {
-        "stars": 95,
-        "stars_per_day": 0.6985,
-        "forks": 1,
-        "forks_30d": 1,
-        "star_events_30d": 31,
+        "stars": 446,
+        "stars_per_day": 8.4151,
+        "forks": 24,
+        "forks_30d": 17,
+        "star_events_30d": 222,
         "star_events_capped": false,
-        "commits_90d": 178,
-        "authors_90d": 1,
-        "releases": 37,
-        "last_release_at": "2026-10-18T01:55:04Z",
-        "last_commit_at": "2026-10-21T18:12:11Z",
-        "readme_chars": 33622,
-        "created_at": "2026-06-09T23:52:43Z",
-        "age_days": 136,
-        "description": "Headless command-line Steam client for Linux and Windows, written in Rust. Install, update and launch Steam games (native or Proton/Wine) from the terminal, plus Steam Cloud saves, Workshop, DLC, collections and friends & chat. An open-source SteamCMD and OpenSteamClient alternative, scriptable with --json.",
+        "commits_90d": 64,
+        "authors_90d": 2,
+        "releases": 85,
+        "last_release_at": "2026-10-24T03:49:15Z",
+        "last_commit_at": "2026-10-24T03:28:36Z",
+        "readme_chars": 42762,
+        "created_at": "2026-09-01T09:57:03Z",
+        "age_days": 53,
+        "description": "Free MIT AI coding agent — no API key needed. Built-in free model, or bring Claude, GPT, Gemini, DeepSeek, Ollama +50 more. Swarm mode, 40+ tools, browser & desktop automation, built in Rust.",
         "language": "Rust",
-        "license": null
+        "license": "MIT"
       },
       "scores": {
-        "popularity": 36.9,
-        "momentum": 53.0,
-        "quality": 66.9,
-        "newness": 77.9
+        "popularity": 84.9,
+        "momentum": 95.5,
+        "quality": 67.1,
+        "newness": 95.0
       }
     },
     {
@@ -1708,68 +1859,8 @@
       "scores": {
         "popularity": 23.1,
         "momentum": 13.7,
-        "quality": 36.2,
-        "newness": 19.1
-      }
-    },
-    {
-      "repo": "dtDhruv/ytkew",
-      "repo_id": 1357866714,
-      "url": "https://github.com/dtDhruv/ytkew",
-      "metrics": {
-        "stars": 116,
-        "stars_per_day": 2.3673,
-        "forks": 10,
-        "forks_30d": 2,
-        "star_events_30d": 15,
-        "star_events_capped": false,
-        "commits_90d": 57,
-        "authors_90d": 2,
-        "releases": 1,
-        "last_release_at": "2026-09-05T18:45:23Z",
-        "last_commit_at": "2026-10-14T18:16:08Z",
-        "readme_chars": 3116,
-        "created_at": "2026-09-05T05:46:20Z",
-        "age_days": 49,
-        "description": "A terminal YouTube Music player inspired by kew.",
-        "language": "Rust",
-        "license": "GPL-3.0"
-      },
-      "scores": {
-        "popularity": 46.0,
-        "momentum": 76.0,
-        "quality": 33.7,
-        "newness": 95.0
-      }
-    },
-    {
-      "repo": "e-tho/bzmenu",
-      "repo_id": 955510503,
-      "url": "https://github.com/e-tho/bzmenu",
-      "metrics": {
-        "stars": 267,
-        "stars_per_day": 0.4627,
-        "forks": 10,
-        "forks_30d": 0,
-        "star_events_30d": 1,
-        "star_events_capped": false,
-        "commits_90d": 0,
-        "authors_90d": 0,
-        "releases": 4,
-        "last_release_at": "2026-02-28T22:52:28Z",
-        "last_commit_at": "2026-04-08T21:58:32Z",
-        "readme_chars": 7340,
-        "created_at": "2025-03-26T18:49:48Z",
-        "age_days": 577,
-        "description": "Launcher-driven Bluetooth manager for Linux",
-        "language": "Rust",
-        "license": "GPL-3.0"
-      },
-      "scores": {
-        "popularity": 76.9,
-        "momentum": 26.8,
-        "quality": 15.1,
-        "newness": 7.5
+        "quality": 42.2,
+        "newness": 11.6
       }
     },
     {
@@ -1796,10 +1887,10 @@
         "license": "AGPL-3.0"
       },
       "scores": {
-        "popularity": 69.6,
-        "momentum": 72.7,
-        "quality": 87.4,
-        "newness": 60.3
+        "popularity": 66.6,
+        "momentum": 71.7,
+        "quality": 84.4,
+        "newness": 59.3
       }
     },
     {
@@ -1826,100 +1917,10 @@
         "license": null
       },
       "scores": {
-        "popularity": 1.8,
-        "momentum": 55.0,
-        "quality": 39.6,
-        "newness": 67.3
-      }
-    },
-    {
-      "repo": "elevenlabs/cli",
-      "repo_id": 1080679975,
-      "url": "https://github.com/elevenlabs/cli",
-      "metrics": {
-        "stars": 102,
-        "stars_per_day": 0.2772,
-        "forks": 21,
-        "forks_30d": 4,
-        "star_events_30d": 12,
-        "star_events_capped": false,
-        "commits_90d": 32,
-        "authors_90d": 5,
-        "releases": 39,
-        "last_release_at": "2026-10-22T17:25:01Z",
-        "last_commit_at": "2026-10-22T16:52:31Z",
-        "readme_chars": 19764,
-        "created_at": "2025-10-21T17:59:36Z",
-        "age_days": 368,
-        "description": "Command Line Interface to interact with ElevenLabs voice agents",
-        "language": "Rust",
-        "license": "MIT"
-      },
-      "scores": {
-        "popularity": 41.7,
-        "momentum": 51.0,
-        "quality": 70.5,
-        "newness": 18.6
-      }
-    },
-    {
-      "repo": "elgar328/nfd2nfc",
-      "repo_id": 927143838,
-      "url": "https://github.com/elgar328/nfd2nfc",
-      "metrics": {
-        "stars": 178,
-        "stars_per_day": 0.2839,
-        "forks": 12,
-        "forks_30d": 0,
-        "star_events_30d": 2,
-        "star_events_capped": false,
-        "commits_90d": 0,
-        "authors_90d": 0,
-        "releases": 11,
-        "last_release_at": "2026-03-27T08:44:41Z",
-        "last_commit_at": "2026-03-27T15:54:02Z",
-        "readme_chars": 6214,
-        "created_at": "2025-02-04T13:32:26Z",
-        "age_days": 627,
-        "description": "macOS NFD/NFC filename converter with TUI, CLI, and background watcher",
-        "language": "Rust",
-        "license": "MIT"
-      },
-      "scores": {
-        "popularity": 63.8,
-        "momentum": 19.5,
-        "quality": 17.3,
-        "newness": 1.0
-      }
-    },
-    {
-      "repo": "elio-fm/elio",
-      "repo_id": 1177113373,
-      "url": "https://github.com/elio-fm/elio",
-      "metrics": {
-        "stars": 903,
-        "stars_per_day": 3.9432,
-        "forks": 31,
-        "forks_30d": 6,
-        "star_events_30d": 28,
-        "star_events_capped": true,
-        "commits_90d": 180,
-        "authors_90d": 3,
-        "releases": 19,
-        "last_release_at": "2026-10-19T12:36:38Z",
-        "last_commit_at": "2026-10-20T18:12:35Z",
-        "readme_chars": 10813,
-        "created_at": "2026-03-09T17:53:05Z",
-        "age_days": 229,
-        "description": "Snappy, batteries-included terminal file manager.",
-        "language": "Rust",
-        "license": "MIT"
-      },
-      "scores": {
-        "popularity": 95.0,
-        "momentum": 90.5,
-        "quality": 61.8,
-        "newness": 51.3
+        "popularity": 2.5,
+        "momentum": 53.3,
+        "quality": 45.9,
+        "newness": 65.8
       }
     },
     {
@@ -1946,10 +1947,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 48.2,
-        "momentum": 64.4,
-        "quality": 24.4,
-        "newness": 74.4
+        "popularity": 45.5,
+        "momentum": 62.8,
+        "quality": 32.7,
+        "newness": 72.9
       }
     },
     {
@@ -1976,10 +1977,40 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 47.5,
-        "momentum": 57.7,
-        "quality": 31.8,
-        "newness": 58.8
+        "popularity": 44.5,
+        "momentum": 55.5,
+        "quality": 37.6,
+        "newness": 57.8
+      }
+    },
+    {
+      "repo": "erickochen/purple",
+      "repo_id": 1161891767,
+      "url": "https://github.com/erickochen/purple",
+      "metrics": {
+        "stars": 758,
+        "stars_per_day": 3.0688,
+        "forks": 38,
+        "forks_30d": 2,
+        "star_events_30d": 58,
+        "star_events_capped": false,
+        "commits_90d": 76,
+        "authors_90d": 5,
+        "releases": 222,
+        "last_release_at": "2026-10-24T18:33:40Z",
+        "last_commit_at": "2026-10-24T18:20:26Z",
+        "readme_chars": 10064,
+        "created_at": "2026-02-19T16:30:18Z",
+        "age_days": 247,
+        "description": "Free, open-source terminal SSH manager and SSH config editor in Rust for macOS and Linux that keeps ~/.ssh/config in sync with 18 cloud providers, monitors live SSH tunnels and manages Docker and Podman containers fleet-wide. Plus scp, Vault SSH certs and an MCP server for AI agents.",
+        "language": "Rust",
+        "license": "MIT"
+      },
+      "scores": {
+        "popularity": 94.5,
+        "momentum": 78.4,
+        "quality": 77.9,
+        "newness": 42.2
       }
     },
     {
@@ -2006,10 +2037,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 24.4,
+        "popularity": 24.9,
         "momentum": 12.7,
-        "quality": 31.0,
-        "newness": 16.6
+        "quality": 36.1,
+        "newness": 10.1
       }
     },
     {
@@ -2036,10 +2067,10 @@
         "license": "AGPL-3.0"
       },
       "scores": {
-        "popularity": 44.2,
-        "momentum": 26.5,
-        "quality": 22.7,
-        "newness": 44.7
+        "popularity": 41.7,
+        "momentum": 25.5,
+        "quality": 25.0,
+        "newness": 43.7
       }
     },
     {
@@ -2066,10 +2097,10 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 6.5,
-        "momentum": 39.6,
-        "quality": 52.9,
-        "newness": 93.0
+        "popularity": 6.3,
+        "momentum": 38.3,
+        "quality": 52.1,
+        "newness": 92.5
       }
     },
     {
@@ -2096,10 +2127,10 @@
         "license": "MPL-2.0"
       },
       "scores": {
-        "popularity": 75.9,
-        "momentum": 65.6,
-        "quality": 73.2,
-        "newness": 77.4
+        "popularity": 73.6,
+        "momentum": 65.3,
+        "quality": 69.0,
+        "newness": 76.9
       }
     },
     {
@@ -2126,10 +2157,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 40.5,
-        "momentum": 39.7,
-        "quality": 51.3,
-        "newness": 38.7
+        "popularity": 39.4,
+        "momentum": 38.9,
+        "quality": 42.9,
+        "newness": 33.2
       }
     },
     {
@@ -2156,10 +2187,10 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 36.9,
-        "momentum": 39.2,
-        "quality": 84.4,
-        "newness": 40.2
+        "popularity": 36.4,
+        "momentum": 38.4,
+        "quality": 78.5,
+        "newness": 35.2
       }
     },
     {
@@ -2186,10 +2217,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 50.0,
-        "momentum": 38.9,
-        "quality": 17.8,
-        "newness": 20.6
+        "popularity": 47.0,
+        "momentum": 38.2,
+        "quality": 25.6,
+        "newness": 12.6
       }
     },
     {
@@ -2216,40 +2247,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 22.1,
-        "momentum": 23.0,
-        "quality": 24.0,
-        "newness": 61.3
-      }
-    },
-    {
-      "repo": "fzn0x/idx",
-      "repo_id": 1422491888,
-      "url": "https://github.com/fzn0x/idx",
-      "metrics": {
-        "stars": 188,
-        "stars_per_day": 23.5,
-        "forks": 15,
-        "forks_30d": 15,
-        "star_events_30d": 178,
-        "star_events_capped": true,
-        "commits_90d": 116,
-        "authors_90d": 2,
-        "releases": 13,
-        "last_release_at": "2026-10-18T15:04:16Z",
-        "last_commit_at": "2026-10-18T14:57:22Z",
-        "readme_chars": 27496,
-        "created_at": "2026-10-16T17:51:21Z",
-        "age_days": 8,
-        "description": "Analyze the Indonesian stock market (IDX/IHSG) from web terminal, CLI, or any AI agents via MCP server. IHSG Prices, Fundamentals, and Screening. Free and No API keys required. Changelog: https://github.com/fzn0x/idx/blob/main/CHANGELOG.md",
-        "language": "Rust",
-        "license": "MIT"
-      },
-      "scores": {
-        "popularity": 66.3,
-        "momentum": 97.0,
-        "quality": 60.1,
-        "newness": 99.5
+        "popularity": 21.9,
+        "momentum": 22.2,
+        "quality": 21.1,
+        "newness": 60.8
       }
     },
     {
@@ -2276,40 +2277,10 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 95.5,
-        "momentum": 73.9,
-        "quality": 40.8,
-        "newness": 81.9
-      }
-    },
-    {
-      "repo": "giacomopiccinini/scriptor",
-      "repo_id": 1072014634,
-      "url": "https://github.com/giacomopiccinini/scriptor",
-      "metrics": {
-        "stars": 63,
-        "stars_per_day": 0.1654,
-        "forks": 1,
-        "forks_30d": 0,
-        "star_events_30d": 0,
-        "star_events_capped": false,
-        "commits_90d": 0,
-        "authors_90d": 0,
-        "releases": 2,
-        "last_release_at": "2026-05-14T14:21:30Z",
-        "last_commit_at": "2026-05-14T14:23:43Z",
-        "readme_chars": 6119,
-        "created_at": "2025-10-08T06:24:36Z",
-        "age_days": 381,
-        "description": "Local speech-to-text CLI & TUI",
-        "language": "Rust",
-        "license": "MIT"
-      },
-      "scores": {
-        "popularity": 14.8,
-        "momentum": 12.2,
-        "quality": 12.2,
-        "newness": 17.1
+        "popularity": 96.0,
+        "momentum": 74.4,
+        "quality": 40.3,
+        "newness": 80.4
       }
     },
     {
@@ -2336,10 +2307,40 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 0.8,
+        "popularity": 1.3,
         "momentum": 28.9,
-        "quality": 29.7,
-        "newness": 32.2
+        "quality": 37.5,
+        "newness": 25.6
+      }
+    },
+    {
+      "repo": "Goldziher/uncomment",
+      "repo_id": 943078746,
+      "url": "https://github.com/Goldziher/uncomment",
+      "metrics": {
+        "stars": 139,
+        "stars_per_day": 0.2324,
+        "forks": 13,
+        "forks_30d": 1,
+        "star_events_30d": 12,
+        "star_events_capped": false,
+        "commits_90d": 119,
+        "authors_90d": 4,
+        "releases": 49,
+        "last_release_at": "2026-10-10T19:13:13Z",
+        "last_commit_at": "2026-10-15T11:16:19Z",
+        "readme_chars": 39734,
+        "created_at": "2025-03-05T06:11:12Z",
+        "age_days": 598,
+        "description": "Blazingly fast CLI to remove comments from code using tree-sitter grammers",
+        "language": "Rust",
+        "license": "MIT"
+      },
+      "scores": {
+        "popularity": 52.3,
+        "momentum": 32.4,
+        "quality": 71.4,
+        "newness": 1.5
       }
     },
     {
@@ -2366,10 +2367,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 77.9,
-        "momentum": 68.0,
-        "quality": 59.6,
-        "newness": 34.2
+        "popularity": 75.9,
+        "momentum": 66.8,
+        "quality": 61.9,
+        "newness": 27.6
       }
     },
     {
@@ -2396,40 +2397,10 @@
         "license": null
       },
       "scores": {
-        "popularity": 8.8,
-        "momentum": 21.5,
-        "quality": 21.7,
-        "newness": 69.3
-      }
-    },
-    {
-      "repo": "hako/oeis-tui",
-      "repo_id": 1089837450,
-      "url": "https://github.com/hako/oeis-tui",
-      "metrics": {
-        "stars": 92,
-        "stars_per_day": 0.2599,
-        "forks": 4,
-        "forks_30d": 0,
-        "star_events_30d": 0,
-        "star_events_capped": false,
-        "commits_90d": 0,
-        "authors_90d": 0,
-        "releases": 1,
-        "last_release_at": "2025-11-29T11:00:47Z",
-        "last_commit_at": "2026-02-03T13:08:52Z",
-        "readme_chars": 9998,
-        "created_at": "2025-11-04T22:04:56Z",
-        "age_days": 354,
-        "description": "A TUI and CLI for browsing the On-Line Encyclopedia of Integer Sequences (OEIS) in the terminal.",
-        "language": "Rust",
-        "license": "MIT"
-      },
-      "scores": {
-        "popularity": 34.9,
-        "momentum": 17.8,
-        "quality": 13.8,
-        "newness": 20.1
+        "popularity": 9.3,
+        "momentum": 20.2,
+        "quality": 22.3,
+        "newness": 68.3
       }
     },
     {
@@ -2456,70 +2427,70 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 34.2,
-        "momentum": 68.7,
-        "quality": 60.5,
-        "newness": 90.5
+        "popularity": 33.7,
+        "momentum": 67.8,
+        "quality": 71.1,
+        "newness": 89.9
       }
     },
     {
-      "repo": "Harry-kp/vortix",
-      "repo_id": 1126657148,
-      "url": "https://github.com/Harry-kp/vortix",
+      "repo": "HaochengLu/contextvc",
+      "repo_id": 1290039961,
+      "url": "https://github.com/HaochengLu/contextvc",
       "metrics": {
-        "stars": 724,
-        "stars_per_day": 2.4542,
-        "forks": 34,
-        "forks_30d": 6,
-        "star_events_30d": 27,
+        "stars": 58,
+        "stars_per_day": 0.5225,
+        "forks": 5,
+        "forks_30d": 0,
+        "star_events_30d": 0,
         "star_events_capped": false,
-        "commits_90d": 350,
-        "authors_90d": 6,
-        "releases": 24,
-        "last_release_at": "2026-10-24T19:44:36Z",
-        "last_commit_at": "2026-10-24T19:33:33Z",
-        "readme_chars": 10329,
-        "created_at": "2026-01-02T10:43:16Z",
-        "age_days": 295,
-        "description": "Terminal UI for WireGuard and OpenVPN with multi-tunnel control, real-time telemetry, and leak guarding.",
+        "commits_90d": 0,
+        "authors_90d": 0,
+        "releases": 1,
+        "last_release_at": "2026-07-05T15:14:25Z",
+        "last_commit_at": "2026-07-05T15:26:46Z",
+        "readme_chars": 10204,
+        "created_at": "2026-07-05T14:06:39Z",
+        "age_days": 111,
+        "description": "Git-native context control plane for AI coding agents",
         "language": "Rust",
-        "license": "MIT"
+        "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 91.5,
-        "momentum": 86.7,
-        "quality": 74.4,
-        "newness": 30.2
+        "popularity": 9.3,
+        "momentum": 28.0,
+        "quality": 18.4,
+        "newness": 82.4
       }
     },
     {
-      "repo": "HaseebKhalid1507/Myx",
-      "repo_id": 1309453043,
-      "url": "https://github.com/HaseebKhalid1507/Myx",
+      "repo": "HaseebKhalid1507/SynapsCLI",
+      "repo_id": 1206624833,
+      "url": "https://github.com/HaseebKhalid1507/SynapsCLI",
       "metrics": {
-        "stars": 257,
-        "stars_per_day": 2.7634,
-        "forks": 21,
-        "forks_30d": 4,
-        "star_events_30d": 17,
+        "stars": 52,
+        "stars_per_day": 0.264,
+        "forks": 6,
+        "forks_30d": 1,
+        "star_events_30d": 1,
         "star_events_capped": false,
-        "commits_90d": 108,
-        "authors_90d": 9,
-        "releases": 15,
-        "last_release_at": "2026-09-09T10:06:11Z",
-        "last_commit_at": "2026-10-07T14:45:44Z",
-        "readme_chars": 6223,
-        "created_at": "2026-07-23T02:49:52Z",
-        "age_days": 93,
-        "description": "Spotify player for the terminal. With reactive themes.",
+        "commits_90d": 773,
+        "authors_90d": 5,
+        "releases": 33,
+        "last_release_at": "2026-10-12T23:32:11Z",
+        "last_commit_at": "2026-10-12T23:06:20Z",
+        "readme_chars": 12526,
+        "created_at": "2026-04-10T05:11:13Z",
+        "age_days": 197,
+        "description": "A terminal-native AI agent runtime built in Rust. Interactive chat, parallel agent orchestration, and autonomous supervision.",
         "language": "Rust",
-        "license": "MIT"
+        "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 75.9,
-        "momentum": 83.4,
-        "quality": 54.5,
-        "newness": 88.9
+        "popularity": 2.5,
+        "momentum": 34.9,
+        "quality": 76.6,
+        "newness": 60.3
       }
     },
     {
@@ -2546,10 +2517,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 21.1,
-        "momentum": 56.3,
-        "quality": 31.3,
-        "newness": 89.9
+        "popularity": 20.6,
+        "momentum": 55.0,
+        "quality": 40.6,
+        "newness": 89.4
       }
     },
     {
@@ -2576,40 +2547,10 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 62.8,
-        "momentum": 62.6,
-        "quality": 79.0,
-        "newness": 25.6
-      }
-    },
-    {
-      "repo": "Hybirdss/Hycli",
-      "repo_id": 1412178580,
-      "url": "https://github.com/Hybirdss/Hycli",
-      "metrics": {
-        "stars": 424,
-        "stars_per_day": 28.2667,
-        "forks": 102,
-        "forks_30d": 102,
-        "star_events_30d": 81,
-        "star_events_capped": true,
-        "commits_90d": 178,
-        "authors_90d": 5,
-        "releases": 1,
-        "last_release_at": "2026-10-18T19:40:54Z",
-        "last_commit_at": "2026-10-22T03:02:02Z",
-        "readme_chars": 20585,
-        "created_at": "2026-10-09T16:57:27Z",
-        "age_days": 15,
-        "description": "Websites, ready for AI. Turn website tasks into verified CLI and MCP actions, with a local dashboard and 20 languages.",
-        "language": "Rust",
-        "license": "Apache-2.0"
-      },
-      "scores": {
-        "popularity": 84.4,
-        "momentum": 99.2,
-        "quality": 61.9,
-        "newness": 98.0
+        "popularity": 59.5,
+        "momentum": 60.4,
+        "quality": 86.0,
+        "newness": 19.6
       }
     },
     {
@@ -2637,9 +2578,39 @@
       },
       "scores": {
         "popularity": 97.0,
-        "momentum": 56.2,
-        "quality": 55.0,
-        "newness": 62.8
+        "momentum": 56.9,
+        "quality": 49.9,
+        "newness": 61.8
+      }
+    },
+    {
+      "repo": "jarvislee90s-dot/tuvis",
+      "repo_id": 1293352967,
+      "url": "https://github.com/jarvislee90s-dot/tuvis",
+      "metrics": {
+        "stars": 95,
+        "stars_per_day": 0.8796,
+        "forks": 0,
+        "forks_30d": 0,
+        "star_events_30d": 85,
+        "star_events_capped": true,
+        "commits_90d": 1450,
+        "authors_90d": null,
+        "releases": 15,
+        "last_release_at": "2026-10-22T16:22:10Z",
+        "last_commit_at": "2026-10-24T14:26:40Z",
+        "readme_chars": 13338,
+        "created_at": "2026-07-08T09:08:22Z",
+        "age_days": 108,
+        "description": "Tuvis — desktop mission control for AI coding agents: live session monitoring, remote injection, Skill/MCP management & usage ledger. One hub for Claude Code, Codex, OpenCode & more.",
+        "language": "Rust",
+        "license": "MIT"
+      },
+      "scores": {
+        "popularity": 36.4,
+        "momentum": 40.3,
+        "quality": 69.3,
+        "newness": 84.4
       }
     },
     {
@@ -2666,10 +2637,10 @@
         "license": "GPL-3.0"
       },
       "scores": {
-        "popularity": 21.1,
-        "momentum": 35.3,
-        "quality": 55.3,
-        "newness": 84.4
+        "popularity": 20.6,
+        "momentum": 33.5,
+        "quality": 60.8,
+        "newness": 83.9
       }
     },
     {
@@ -2696,10 +2667,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 48.7,
-        "momentum": 36.1,
-        "quality": 46.6,
-        "newness": 70.9
+        "popularity": 46.2,
+        "momentum": 34.5,
+        "quality": 62.5,
+        "newness": 69.8
       }
     },
     {
@@ -2726,100 +2697,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 30.9,
-        "momentum": 21.0,
-        "quality": 18.9,
-        "newness": 35.7
-      }
-    },
-    {
-      "repo": "JungHoonGhae/openkakao-cli",
-      "repo_id": 1167495423,
-      "url": "https://github.com/JungHoonGhae/openkakao-cli",
-      "metrics": {
-        "stars": 136,
-        "stars_per_day": 0.5667,
-        "forks": 41,
-        "forks_30d": 4,
-        "star_events_30d": 10,
-        "star_events_capped": false,
-        "commits_90d": 60,
-        "authors_90d": 4,
-        "releases": 36,
-        "last_release_at": "2026-10-11T02:19:28Z",
-        "last_commit_at": "2026-10-11T02:13:47Z",
-        "readme_chars": 13154,
-        "created_at": "2026-02-26T11:01:54Z",
-        "age_days": 240,
-        "description": "Unofficial KakaoTalk CLI for macOS — send/read without server login via macOS Accessibility automation (local-send/ax-read); server login is broken on recent builds.",
-        "language": "Rust",
-        "license": "MIT"
-      },
-      "scores": {
-        "popularity": 53.5,
-        "momentum": 62.8,
-        "quality": 62.6,
-        "newness": 47.2
-      }
-    },
-    {
-      "repo": "JustRoccat/rs-pug",
-      "repo_id": 1207968230,
-      "url": "https://github.com/JustRoccat/rs-pug",
-      "metrics": {
-        "stars": 76,
-        "stars_per_day": 0.3878,
-        "forks": 1,
-        "forks_30d": 0,
-        "star_events_30d": 7,
-        "star_events_capped": false,
-        "commits_90d": 34,
-        "authors_90d": 1,
-        "releases": 0,
-        "last_release_at": null,
-        "last_commit_at": "2026-10-16T16:32:00Z",
-        "readme_chars": 4024,
-        "created_at": "2026-04-11T16:35:57Z",
-        "age_days": 196,
-        "description": "Blazing fast, terminal music player (TUI) written in Rust. Extensible via Lua plugins, built on Ratatui, MPV, and YT-DLP. Listen to YouTube, SoundCloud, and local files directly from your terminal. Lightweight, headless, ads-free.",
-        "language": "Rust",
-        "license": "GPL-2.0"
-      },
-      "scores": {
-        "popularity": 26.1,
-        "momentum": 24.5,
-        "quality": 29.2,
-        "newness": 61.8
-      }
-    },
-    {
-      "repo": "kantord/blogtato",
-      "repo_id": 1163532080,
-      "url": "https://github.com/kantord/blogtato",
-      "metrics": {
-        "stars": 232,
-        "stars_per_day": 0.9469,
-        "forks": 6,
-        "forks_30d": 0,
-        "star_events_30d": 2,
-        "star_events_capped": false,
-        "commits_90d": 22,
-        "authors_90d": 4,
-        "releases": 30,
-        "last_release_at": "2026-09-13T23:10:46Z",
-        "last_commit_at": "2026-09-13T23:09:35Z",
-        "readme_chars": 11744,
-        "created_at": "2026-02-21T19:18:37Z",
-        "age_days": 245,
-        "description": "A CLI RSS/Atom feed reader inspired by Taskwarrior",
-        "language": "Rust",
-        "license": "Apache-2.0"
-      },
-      "scores": {
-        "popularity": 72.4,
-        "momentum": 42.1,
-        "quality": 54.9,
-        "newness": 43.2
+        "popularity": 31.2,
+        "momentum": 19.7,
+        "quality": 21.6,
+        "newness": 29.1
       }
     },
     {
@@ -2846,40 +2727,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 75.9,
-        "momentum": 61.9,
-        "quality": 56.4,
-        "newness": 18.1
-      }
-    },
-    {
-      "repo": "kb019/sprout",
-      "repo_id": 1308626668,
-      "url": "https://github.com/kb019/sprout",
-      "metrics": {
-        "stars": 62,
-        "stars_per_day": 0.6596,
-        "forks": 4,
-        "forks_30d": 3,
-        "star_events_30d": 33,
-        "star_events_capped": false,
-        "commits_90d": 131,
-        "authors_90d": 3,
-        "releases": 4,
-        "last_release_at": "2026-09-21T01:28:33Z",
-        "last_commit_at": "2026-09-30T17:47:27Z",
-        "readme_chars": 2318,
-        "created_at": "2026-07-22T09:24:11Z",
-        "age_days": 94,
-        "description": "A habit tracker that lives in your terminal",
-        "language": "Rust",
-        "license": "MIT"
-      },
-      "scores": {
-        "popularity": 13.8,
-        "momentum": 64.7,
-        "quality": 40.2,
-        "newness": 88.4
+        "popularity": 73.6,
+        "momentum": 59.8,
+        "quality": 49.7,
+        "newness": 10.6
       }
     },
     {
@@ -2906,10 +2757,40 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 18.1,
-        "momentum": 97.5,
-        "quality": 48.1,
+        "popularity": 17.6,
+        "momentum": 97.7,
+        "quality": 53.5,
         "newness": 100.0
+      }
+    },
+    {
+      "repo": "KingDasWinx/Dexo",
+      "repo_id": 1333731265,
+      "url": "https://github.com/KingDasWinx/Dexo",
+      "metrics": {
+        "stars": 50,
+        "stars_per_day": 0.7042,
+        "forks": 4,
+        "forks_30d": 4,
+        "star_events_30d": 47,
+        "star_events_capped": false,
+        "commits_90d": 1152,
+        "authors_90d": null,
+        "releases": 13,
+        "last_release_at": "2026-10-13T00:13:28Z",
+        "last_commit_at": "2026-10-12T23:25:56Z",
+        "readme_chars": 8304,
+        "created_at": "2026-08-14T02:55:58Z",
+        "age_days": 71,
+        "description": "A terminal database workbench for PostgreSQL, MySQL, MariaDB and SQLite, with guardrails for AI agents. Written in Rust.",
+        "language": "Rust",
+        "license": "Apache-2.0"
+      },
+      "scores": {
+        "popularity": 0.3,
+        "momentum": 66.0,
+        "quality": 60.4,
+        "newness": 92.0
       }
     },
     {
@@ -2936,10 +2817,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 92.0,
-        "momentum": 99.5,
-        "quality": 82.1,
-        "newness": 98.5
+        "popularity": 93.5,
+        "momentum": 99.7,
+        "quality": 74.8,
+        "newness": 99.5
       }
     },
     {
@@ -2966,40 +2847,100 @@
         "license": "GPL-3.0"
       },
       "scores": {
-        "popularity": 86.4,
-        "momentum": 73.2,
-        "quality": 52.1,
-        "newness": 14.6
+        "popularity": 86.9,
+        "momentum": 72.2,
+        "quality": 52.2,
+        "newness": 9.5
       }
     },
     {
-      "repo": "L4z3x/mal-cli",
-      "repo_id": 945460711,
-      "url": "https://github.com/L4z3x/mal-cli",
+      "repo": "kuberstar/qartez-mcp",
+      "repo_id": 1210187878,
+      "url": "https://github.com/kuberstar/qartez-mcp",
       "metrics": {
-        "stars": 163,
-        "stars_per_day": 0.2744,
-        "forks": 3,
-        "forks_30d": 0,
+        "stars": 74,
+        "stars_per_day": 0.3834,
+        "forks": 6,
+        "forks_30d": 1,
         "star_events_30d": 1,
         "star_events_capped": false,
         "commits_90d": 0,
         "authors_90d": 0,
-        "releases": 4,
-        "last_release_at": "2025-06-11T13:42:55Z",
-        "last_commit_at": "2025-07-17T15:40:25Z",
-        "readme_chars": 1865,
-        "created_at": "2025-03-09T13:33:18Z",
-        "age_days": 594,
-        "description": "Terminal Interface for the official MyAnimeList api.",
+        "releases": 31,
+        "last_release_at": "2026-07-03T18:01:17Z",
+        "last_commit_at": "2026-07-03T16:19:45Z",
+        "readme_chars": 44903,
+        "created_at": "2026-04-14T07:04:23Z",
+        "age_days": 193,
+        "description": "Semantic code intelligence MCP server for Claude Code - project maps, symbol search, impact analysis, and more",
         "language": "Rust",
-        "license": "MIT"
+        "license": null
       },
       "scores": {
-        "popularity": 61.3,
-        "momentum": 18.7,
-        "quality": 7.6,
-        "newness": 5.5
+        "popularity": 24.9,
+        "momentum": 39.7,
+        "quality": 33.2,
+        "newness": 62.3
+      }
+    },
+    {
+      "repo": "kunobi-ninja/kache",
+      "repo_id": 1158705125,
+      "url": "https://github.com/kunobi-ninja/kache",
+      "metrics": {
+        "stars": 1261,
+        "stars_per_day": 5.0239,
+        "forks": 68,
+        "forks_30d": 18,
+        "star_events_30d": 20,
+        "star_events_capped": true,
+        "commits_90d": 770,
+        "authors_90d": 22,
+        "releases": 94,
+        "last_release_at": "2026-10-15T17:53:33Z",
+        "last_commit_at": "2026-10-24T22:00:39Z",
+        "readme_chars": 8150,
+        "created_at": "2026-02-15T19:43:57Z",
+        "age_days": 251,
+        "description": "Zero-copy, content-addressed Rust build cache for Rust, C/C++ and more. No copies, no wasted disk",
+        "language": "Rust",
+        "license": "Apache-2.0"
+      },
+      "scores": {
+        "popularity": 98.5,
+        "momentum": 94.1,
+        "quality": 86.3,
+        "newness": 39.2
+      }
+    },
+    {
+      "repo": "l0ng-ai/tty7",
+      "repo_id": 1291034571,
+      "url": "https://github.com/l0ng-ai/tty7",
+      "metrics": {
+        "stars": 1322,
+        "stars_per_day": 12.0182,
+        "forks": 116,
+        "forks_30d": 36,
+        "star_events_30d": 76,
+        "star_events_capped": false,
+        "commits_90d": 1286,
+        "authors_90d": null,
+        "releases": 40,
+        "last_release_at": "2026-08-13T12:45:14Z",
+        "last_commit_at": "2026-10-24T10:28:08Z",
+        "readme_chars": 7289,
+        "created_at": "2026-07-06T12:51:10Z",
+        "age_days": 110,
+        "description": "The terminal that outlives its window. Shells survive quitting the app, agents can drive other agents, and remote machines work the same way. Pure Rust, GPU-rendered.",
+        "language": "Rust",
+        "license": "Apache-2.0"
+      },
+      "scores": {
+        "popularity": 99.0,
+        "momentum": 97.7,
+        "quality": 76.0,
+        "newness": 82.9
       }
     },
     {
@@ -3026,40 +2967,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 51.0,
-        "momentum": 93.1,
-        "quality": 52.0,
-        "newness": 97.0
-      }
-    },
-    {
-      "repo": "Limatura/tessera",
-      "repo_id": 1422138666,
-      "url": "https://github.com/Limatura/tessera",
-      "metrics": {
-        "stars": 53,
-        "stars_per_day": 6.625,
-        "forks": 1,
-        "forks_30d": 1,
-        "star_events_30d": 17,
-        "star_events_capped": false,
-        "commits_90d": 90,
-        "authors_90d": 4,
-        "releases": 8,
-        "last_release_at": "2026-10-22T23:23:30Z",
-        "last_commit_at": "2026-10-24T19:03:45Z",
-        "readme_chars": 8560,
-        "created_at": "2026-10-16T12:34:01Z",
-        "age_days": 8,
-        "description": "Self-hosted file and note sharing that cleans up after itself.",
-        "language": "Rust",
-        "license": "AGPL-3.0"
-      },
-      "scores": {
-        "popularity": 3.0,
-        "momentum": 73.4,
-        "quality": 60.1,
-        "newness": 99.0
+        "popularity": 48.0,
+        "momentum": 92.3,
+        "quality": 45.6,
+        "newness": 98.0
       }
     },
     {
@@ -3086,10 +2997,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 51.0,
-        "momentum": 58.3,
-        "quality": 46.8,
-        "newness": 76.4
+        "popularity": 48.0,
+        "momentum": 57.5,
+        "quality": 38.9,
+        "newness": 75.9
       }
     },
     {
@@ -3116,130 +3027,70 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 82.4,
-        "momentum": 98.2,
-        "quality": 75.4,
-        "newness": 97.5
+        "popularity": 80.9,
+        "momentum": 99.0,
+        "quality": 68.5,
+        "newness": 99.0
       }
     },
     {
-      "repo": "M-Igashi/baken",
-      "repo_id": 1130719878,
-      "url": "https://github.com/M-Igashi/baken",
+      "repo": "mag123c/toktrack",
+      "repo_id": 1142477582,
+      "url": "https://github.com/mag123c/toktrack",
       "metrics": {
-        "stars": 60,
-        "stars_per_day": 0.2083,
-        "forks": 6,
-        "forks_30d": 3,
+        "stars": 196,
+        "stars_per_day": 0.7232,
+        "forks": 21,
+        "forks_30d": 1,
         "star_events_30d": 3,
-        "star_events_capped": true,
-        "commits_90d": 140,
-        "authors_90d": 3,
-        "releases": 65,
-        "last_release_at": "2026-10-22T02:07:28Z",
-        "last_commit_at": "2026-10-24T01:52:18Z",
-        "readme_chars": 53762,
-        "created_at": "2026-01-08T23:03:14Z",
-        "age_days": 288,
-        "description": "Bake'n Deck: rekordbox → CDJ prep toolkit built for rekordbox, not instead of it. Loudness gain, key + BPM playlist order, CDJ-safe MP3 and USB export, baked into your files",
+        "star_events_capped": false,
+        "commits_90d": 55,
+        "authors_90d": 8,
+        "releases": 98,
+        "last_release_at": "2026-10-21T06:52:45Z",
+        "last_commit_at": "2026-10-21T06:52:32Z",
+        "readme_chars": 14653,
+        "created_at": "2026-01-26T13:17:10Z",
+        "age_days": 271,
+        "description": "Ultra-fast token & cost tracker for LLM Token Usage (e.g. Claude Code)",
         "language": "Rust",
         "license": "MIT"
       },
       "scores": {
-        "popularity": 12.6,
-        "momentum": 43.3,
-        "quality": 81.4,
-        "newness": 31.7
+        "popularity": 63.8,
+        "momentum": 51.8,
+        "quality": 71.1,
+        "newness": 31.2
       }
     },
     {
-      "repo": "machlit/cutler",
-      "repo_id": 945059592,
-      "url": "https://github.com/machlit/cutler",
+      "repo": "Mapika/portview",
+      "repo_id": 1151843967,
+      "url": "https://github.com/Mapika/portview",
       "metrics": {
-        "stars": 59,
-        "stars_per_day": 0.0992,
+        "stars": 61,
+        "stars_per_day": 0.2355,
         "forks": 2,
         "forks_30d": 0,
-        "star_events_30d": 0,
+        "star_events_30d": 2,
         "star_events_capped": false,
-        "commits_90d": 1,
-        "authors_90d": 1,
-        "releases": 139,
-        "last_release_at": "2026-06-20T09:24:14Z",
-        "last_commit_at": "2026-08-01T16:56:05Z",
-        "readme_chars": 2829,
-        "created_at": "2025-03-08T15:08:49Z",
-        "age_days": 595,
-        "description": "Declaratively setup your Mac using a single file and command.",
-        "language": "Rust",
-        "license": "GPL-3.0"
-      },
-      "scores": {
-        "popularity": 10.8,
-        "momentum": 9.7,
-        "quality": 35.1,
-        "newness": 4.5
-      }
-    },
-    {
-      "repo": "makeev/alphai-tui",
-      "repo_id": 1296668674,
-      "url": "https://github.com/makeev/alphai-tui",
-      "metrics": {
-        "stars": 86,
-        "stars_per_day": 0.8113,
-        "forks": 5,
-        "forks_30d": 2,
-        "star_events_30d": 38,
-        "star_events_capped": false,
-        "commits_90d": 63,
-        "authors_90d": 1,
-        "releases": 35,
-        "last_release_at": "2026-10-19T13:09:04Z",
-        "last_commit_at": "2026-10-19T12:59:30Z",
-        "readme_chars": 70400,
-        "created_at": "2026-07-10T15:55:57Z",
-        "age_days": 106,
-        "description": "Open-source, Bloomberg-style stock dashboard for the terminal: live quotes and candlestick charts next to AI-scored news, SEC Form 4 insider filings and earnings reads from AlphAI. One Rust binary on ratatui.",
-        "language": "Rust",
-        "license": "MIT"
-      },
-      "scores": {
-        "popularity": 30.9,
-        "momentum": 66.0,
-        "quality": 63.2,
-        "newness": 84.9
-      }
-    },
-    {
-      "repo": "mhyrzt/xrat",
-      "repo_id": 1224850322,
-      "url": "https://github.com/mhyrzt/xrat",
-      "metrics": {
-        "stars": 54,
-        "stars_per_day": 0.3034,
-        "forks": 12,
-        "forks_30d": 6,
-        "star_events_30d": 3,
-        "star_events_capped": false,
-        "commits_90d": 436,
+        "commits_90d": 75,
         "authors_90d": 4,
-        "releases": 64,
-        "last_release_at": "2026-10-24T01:54:20Z",
-        "last_commit_at": "2026-10-24T00:46:33Z",
-        "readme_chars": 21756,
-        "created_at": "2026-04-29T17:35:44Z",
-        "age_days": 178,
-        "description": "Rust CLI/TUI proxy manager for Xray-core, V2Ray-core, and sing-box: import subscriptions,   test latency, rotate proxies, scan edge IPs, and run managed local proxy sessions.",
+        "releases": 23,
+        "last_release_at": "2026-08-01T07:48:00Z",
+        "last_commit_at": "2026-10-13T02:32:04Z",
+        "readme_chars": 13474,
+        "created_at": "2026-02-07T01:10:42Z",
+        "age_days": 259,
+        "description": "List ports and their processes on Linux, macOS, and Windows.",
         "language": "Rust",
         "license": "MIT"
       },
       "scores": {
-        "popularity": 4.5,
-        "momentum": 56.5,
-        "quality": 82.0,
-        "newness": 71.4
+        "popularity": 13.6,
+        "momentum": 16.2,
+        "quality": 64.2,
+        "newness": 35.7
       }
     },
     {
@@ -3266,40 +3117,40 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 91.0,
-        "momentum": 47.1,
-        "quality": 49.4,
-        "newness": 13.6
+        "popularity": 92.5,
+        "momentum": 46.6,
+        "quality": 48.4,
+        "newness": 8.5
       }
     },
     {
-      "repo": "michel/soulseek-rs",
-      "repo_id": 912470080,
-      "url": "https://github.com/michel/soulseek-rs",
+      "repo": "mikalv/mcdu",
+      "repo_id": 1092591708,
+      "url": "https://github.com/mikalv/mcdu",
       "metrics": {
-        "stars": 85,
-        "stars_per_day": 0.1294,
-        "forks": 4,
-        "forks_30d": 1,
-        "star_events_30d": 32,
+        "stars": 70,
+        "stars_per_day": 0.2,
+        "forks": 2,
+        "forks_30d": 0,
+        "star_events_30d": 3,
         "star_events_capped": false,
-        "commits_90d": 283,
-        "authors_90d": 2,
-        "releases": 24,
-        "last_release_at": "2026-10-24T07:18:23Z",
-        "last_commit_at": "2026-10-22T12:19:42Z",
-        "readme_chars": 38351,
-        "created_at": "2025-01-05T17:00:13Z",
-        "age_days": 657,
-        "description": "A Soulseek client and lib built in Rust 🦀 for the terminal: TUI, CLI and daemon. Built for agents and people who live there.",
+        "commits_90d": 11,
+        "authors_90d": 1,
+        "releases": 2,
+        "last_release_at": "2026-08-27T09:43:32Z",
+        "last_commit_at": "2026-08-19T06:47:17Z",
+        "readme_chars": 7299,
+        "created_at": "2025-11-08T23:02:54Z",
+        "age_days": 350,
+        "description": "\"ncdu\" + \"ccleaner\" for linux/macos in TUI.",
         "language": "Rust",
         "license": "MIT"
       },
       "scores": {
-        "popularity": 29.6,
-        "momentum": 27.1,
-        "quality": 71.9,
-        "newness": 0.0
+        "popularity": 19.3,
+        "momentum": 13.4,
+        "quality": 31.3,
+        "newness": 13.1
       }
     },
     {
@@ -3326,40 +3177,10 @@
         "license": null
       },
       "scores": {
-        "popularity": 87.9,
-        "momentum": 88.2,
-        "quality": 54.0,
-        "newness": 42.7
-      }
-    },
-    {
-      "repo": "Mjoyufull/Setrixtui",
-      "repo_id": 1153467649,
-      "url": "https://github.com/Mjoyufull/Setrixtui",
-      "metrics": {
-        "stars": 152,
-        "stars_per_day": 0.5914,
-        "forks": 5,
-        "forks_30d": 0,
-        "star_events_30d": 1,
-        "star_events_capped": false,
-        "commits_90d": 0,
-        "authors_90d": 0,
-        "releases": 2,
-        "last_release_at": "2026-02-26T05:20:38Z",
-        "last_commit_at": "2026-03-13T16:55:37Z",
-        "readme_chars": 5528,
-        "created_at": "2026-02-09T10:34:47Z",
-        "age_days": 257,
-        "description": "Tetris Sand game in Ratatui ",
-        "language": "Rust",
-        "license": "GPL-3.0"
-      },
-      "scores": {
-        "popularity": 57.8,
-        "momentum": 32.3,
-        "quality": 10.4,
-        "newness": 41.2
+        "popularity": 89.4,
+        "momentum": 87.7,
+        "quality": 64.2,
+        "newness": 41.7
       }
     },
     {
@@ -3386,10 +3207,10 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 85.9,
-        "momentum": 53.9,
-        "quality": 37.0,
-        "newness": 78.9
+        "popularity": 86.4,
+        "momentum": 54.4,
+        "quality": 31.0,
+        "newness": 77.9
       }
     },
     {
@@ -3416,10 +3237,70 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 46.7,
-        "momentum": 38.7,
-        "quality": 42.0,
-        "newness": 21.1
+        "popularity": 43.7,
+        "momentum": 37.9,
+        "quality": 44.9,
+        "newness": 14.1
+      }
+    },
+    {
+      "repo": "mpecan/tokf",
+      "repo_id": 1160693006,
+      "url": "https://github.com/mpecan/tokf",
+      "metrics": {
+        "stars": 199,
+        "stars_per_day": 0.8024,
+        "forks": 19,
+        "forks_30d": 0,
+        "star_events_30d": 0,
+        "star_events_capped": false,
+        "commits_90d": 13,
+        "authors_90d": 3,
+        "releases": 263,
+        "last_release_at": "2026-09-06T22:03:00Z",
+        "last_commit_at": "2026-09-06T22:02:44Z",
+        "readme_chars": 133307,
+        "created_at": "2026-02-18T09:00:44Z",
+        "age_days": 248,
+        "description": "Config-driven CLI tool that compresses command output before it reaches an LLM context",
+        "language": "Rust",
+        "license": "MIT"
+      },
+      "scores": {
+        "popularity": 64.3,
+        "momentum": 39.1,
+        "quality": 59.8,
+        "newness": 41.2
+      }
+    },
+    {
+      "repo": "mrjones2014/jj-gh",
+      "repo_id": 1246162006,
+      "url": "https://github.com/mrjones2014/jj-gh",
+      "metrics": {
+        "stars": 51,
+        "stars_per_day": 0.329,
+        "forks": 7,
+        "forks_30d": 2,
+        "star_events_30d": 0,
+        "star_events_capped": false,
+        "commits_90d": 144,
+        "authors_90d": 7,
+        "releases": 21,
+        "last_release_at": "2026-10-15T13:53:23Z",
+        "last_commit_at": "2026-10-23T21:02:22Z",
+        "readme_chars": 19533,
+        "created_at": "2026-05-21T23:54:26Z",
+        "age_days": 155,
+        "description": "Manage GitHub PR Stacks natively with `jj`",
+        "language": "Rust",
+        "license": "MIT"
+      },
+      "scores": {
+        "popularity": 1.3,
+        "momentum": 46.0,
+        "quality": 72.5,
+        "newness": 73.4
       }
     },
     {
@@ -3447,39 +3328,69 @@
       },
       "scores": {
         "popularity": 32.2,
-        "momentum": 43.3,
-        "quality": 74.4,
-        "newness": 91.0
+        "momentum": 43.1,
+        "quality": 79.1,
+        "newness": 90.5
       }
     },
     {
-      "repo": "neneodonkor/asciigraph-rs",
-      "repo_id": 1215202378,
-      "url": "https://github.com/neneodonkor/asciigraph-rs",
+      "repo": "NayJi7/gitoui",
+      "repo_id": 1227505419,
+      "url": "https://github.com/NayJi7/gitoui",
       "metrics": {
-        "stars": 140,
-        "stars_per_day": 0.7447,
-        "forks": 7,
-        "forks_30d": 1,
-        "star_events_30d": 0,
-        "star_events_capped": false,
-        "commits_90d": 0,
-        "authors_90d": 0,
-        "releases": 4,
-        "last_release_at": "2026-05-03T16:54:58Z",
-        "last_commit_at": "2026-05-14T09:12:34Z",
-        "readme_chars": 10844,
-        "created_at": "2026-04-19T16:03:59Z",
-        "age_days": 188,
-        "description": "Rust Library to make lightweight ASCII line graph ╭┈╯ in command line apps.",
+        "stars": 134,
+        "stars_per_day": 0.7657,
+        "forks": 4,
+        "forks_30d": 4,
+        "star_events_30d": 135,
+        "star_events_capped": true,
+        "commits_90d": 47,
+        "authors_90d": 2,
+        "releases": 20,
+        "last_release_at": "2026-10-13T11:59:03Z",
+        "last_commit_at": "2026-10-15T13:12:28Z",
+        "readme_chars": 7396,
+        "created_at": "2026-05-02T19:24:35Z",
+        "age_days": 175,
+        "description": "Say oui to the smoothest git terminal youser interface.",
         "language": "Rust",
-        "license": "BSD-3-Clause"
+        "license": "MIT"
       },
       "scores": {
-        "popularity": 54.8,
-        "momentum": 54.8,
-        "quality": 19.2,
-        "newness": 64.8
+        "popularity": 49.2,
+        "momentum": 68.5,
+        "quality": 54.1,
+        "newness": 71.4
+      }
+    },
+    {
+      "repo": "nhtera/OxiMux",
+      "repo_id": 1312600841,
+      "url": "https://github.com/nhtera/OxiMux",
+      "metrics": {
+        "stars": 60,
+        "stars_per_day": 0.6667,
+        "forks": 4,
+        "forks_30d": 1,
+        "star_events_30d": 3,
+        "star_events_capped": true,
+        "commits_90d": 803,
+        "authors_90d": 1,
+        "releases": 44,
+        "last_release_at": "2026-10-23T23:58:40Z",
+        "last_commit_at": "2026-10-23T22:09:59Z",
+        "readme_chars": 16087,
+        "created_at": "2026-07-26T07:43:26Z",
+        "age_days": 90,
+        "description": "A Rust-native, multi-agent development cockpit for macOS — spawn isolated worktrees, run CLI coding agents in parallel, and review every change through a GitLens-grade Git UX.",
+        "language": "Rust",
+        "license": "Apache-2.0"
+      },
+      "scores": {
+        "popularity": 12.6,
+        "momentum": 50.4,
+        "quality": 69.8,
+        "newness": 88.9
       }
     },
     {
@@ -3506,40 +3417,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 10.8,
+        "popularity": 11.1,
         "momentum": 29.4,
-        "quality": 60.7,
-        "newness": 27.1
-      }
-    },
-    {
-      "repo": "nostacks/ekphos",
-      "repo_id": 1116772709,
-      "url": "https://github.com/nostacks/ekphos",
-      "metrics": {
-        "stars": 1073,
-        "stars_per_day": 3.4281,
-        "forks": 47,
-        "forks_30d": 2,
-        "star_events_30d": 29,
-        "star_events_capped": false,
-        "commits_90d": 60,
-        "authors_90d": 3,
-        "releases": 28,
-        "last_release_at": "2026-10-06T15:44:50Z",
-        "last_commit_at": "2026-10-06T15:42:11Z",
-        "readme_chars": 1878,
-        "created_at": "2025-12-15T11:06:31Z",
-        "age_days": 313,
-        "description": "A lightweight, fast, terminal-based markdown research tool inspired by Obsidian",
-        "language": "Rust",
-        "license": "MIT"
-      },
-      "scores": {
-        "popularity": 96.0,
-        "momentum": 79.3,
-        "quality": 46.5,
-        "newness": 24.6
+        "quality": 68.8,
+        "newness": 21.1
       }
     },
     {
@@ -3566,10 +3447,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 18.1,
-        "momentum": 35.1,
-        "quality": 22.9,
-        "newness": 86.4
+        "popularity": 17.6,
+        "momentum": 33.3,
+        "quality": 27.9,
+        "newness": 85.4
       }
     },
     {
@@ -3596,40 +3477,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 45.2,
-        "momentum": 64.6,
-        "quality": 55.3,
-        "newness": 94.5
-      }
-    },
-    {
-      "repo": "objz/rmcl",
-      "repo_id": 921685617,
-      "url": "https://github.com/objz/rmcl",
-      "metrics": {
-        "stars": 95,
-        "stars_per_day": 0.1489,
-        "forks": 10,
-        "forks_30d": 4,
-        "star_events_30d": 8,
-        "star_events_capped": false,
-        "commits_90d": 228,
-        "authors_90d": 4,
-        "releases": 17,
-        "last_release_at": "2026-10-10T16:59:24Z",
-        "last_commit_at": "2026-10-23T11:03:25Z",
-        "readme_chars": 10869,
-        "created_at": "2025-01-24T12:23:42Z",
-        "age_days": 638,
-        "description": "A minecraft TUI/CLI launcher written in Rust",
-        "language": "Rust",
-        "license": "GPL-3.0"
-      },
-      "scores": {
-        "popularity": 36.9,
-        "momentum": 43.7,
-        "quality": 66.6,
-        "newness": 0.5
+        "popularity": 42.7,
+        "momentum": 64.1,
+        "quality": 59.1,
+        "newness": 94.0
       }
     },
     {
@@ -3656,40 +3507,10 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 90.5,
-        "momentum": 53.4,
-        "quality": 71.9,
-        "newness": 62.3
-      }
-    },
-    {
-      "repo": "omacom/ttfx",
-      "repo_id": 1329255615,
-      "url": "https://github.com/omacom/ttfx",
-      "metrics": {
-        "stars": 353,
-        "stars_per_day": 4.7067,
-        "forks": 40,
-        "forks_30d": 20,
-        "star_events_30d": 0,
-        "star_events_capped": false,
-        "commits_90d": 356,
-        "authors_90d": 8,
-        "releases": 11,
-        "last_release_at": "2026-09-27T21:42:35Z",
-        "last_commit_at": "2026-09-28T13:06:04Z",
-        "readme_chars": 14348,
-        "created_at": "2026-08-09T23:01:29Z",
-        "age_days": 75,
-        "description": "Terminal text effects as a single static binary — a parity-exact Rust port of terminaltexteffects",
-        "language": "Rust",
-        "license": "MIT"
-      },
-      "scores": {
-        "popularity": 81.4,
-        "momentum": 94.7,
-        "quality": 63.5,
-        "newness": 92.0
+        "popularity": 92.0,
+        "momentum": 54.1,
+        "quality": 73.0,
+        "newness": 61.3
       }
     },
     {
@@ -3703,7 +3524,7 @@
         "forks_30d": 1,
         "star_events_30d": 0,
         "star_events_capped": true,
-        "commits_90d": 1039,
+        "commits_90d": 1038,
         "authors_90d": null,
         "releases": 51,
         "last_release_at": "2026-10-14T18:31:06Z",
@@ -3717,39 +3538,9 @@
       },
       "scores": {
         "popularity": 23.1,
-        "momentum": 42.0,
-        "quality": 69.5,
-        "newness": 69.8
-      }
-    },
-    {
-      "repo": "osodevops/ms-teams-cli",
-      "repo_id": 1179573200,
-      "url": "https://github.com/osodevops/ms-teams-cli",
-      "metrics": {
-        "stars": 51,
-        "stars_per_day": 0.2257,
-        "forks": 9,
-        "forks_30d": 1,
-        "star_events_30d": 10,
-        "star_events_capped": false,
-        "commits_90d": 65,
-        "authors_90d": 6,
-        "releases": 17,
-        "last_release_at": "2026-10-15T18:47:43Z",
-        "last_commit_at": "2026-10-15T18:40:25Z",
-        "readme_chars": 33074,
-        "created_at": "2026-03-12T06:47:47Z",
-        "age_days": 226,
-        "description": "A fast, single-binary Microsoft Teams CLI built in Rust — agent-first design, structured JSON output, real-time webhooks, and full Graph API coverage",
-        "language": "Rust",
-        "license": null
-      },
-      "scores": {
-        "popularity": 0.8,
-        "momentum": 31.9,
-        "quality": 67.9,
-        "newness": 52.3
+        "momentum": 41.2,
+        "quality": 76.3,
+        "newness": 68.8
       }
     },
     {
@@ -3776,10 +3567,10 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 28.4,
-        "momentum": 23.7,
-        "quality": 73.3,
-        "newness": 54.3
+        "popularity": 28.9,
+        "momentum": 23.0,
+        "quality": 67.0,
+        "newness": 51.3
       }
     },
     {
@@ -3806,10 +3597,10 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 88.9,
-        "momentum": 72.2,
-        "quality": 49.8,
-        "newness": 12.6
+        "popularity": 90.5,
+        "momentum": 71.1,
+        "quality": 61.2,
+        "newness": 8.0
       }
     },
     {
@@ -3836,40 +3627,40 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 67.8,
-        "momentum": 65.1,
-        "quality": 34.1,
-        "newness": 82.4
+        "popularity": 64.8,
+        "momentum": 64.6,
+        "quality": 43.4,
+        "newness": 80.9
       }
     },
     {
-      "repo": "PABannier/WSIStreamer",
-      "repo_id": 1125258116,
-      "url": "https://github.com/PABannier/WSIStreamer",
+      "repo": "ox01024/cmirror",
+      "repo_id": 1112425241,
+      "url": "https://github.com/ox01024/cmirror",
       "metrics": {
-        "stars": 182,
-        "stars_per_day": 0.6107,
-        "forks": 6,
+        "stars": 265,
+        "stars_per_day": 0.8281,
+        "forks": 11,
         "forks_30d": 0,
         "star_events_30d": 1,
         "star_events_capped": false,
         "commits_90d": 0,
         "authors_90d": 0,
-        "releases": 4,
-        "last_release_at": "2026-01-14T17:52:50Z",
-        "last_commit_at": "2026-01-17T15:41:40Z",
-        "readme_chars": 5350,
-        "created_at": "2025-12-30T12:07:39Z",
-        "age_days": 298,
-        "description": "A tile server for WSI stored in S3-compatible object storage.",
+        "releases": 3,
+        "last_release_at": "2025-12-16T16:52:05Z",
+        "last_commit_at": "2025-12-16T16:50:45Z",
+        "readme_chars": 4986,
+        "created_at": "2025-12-08T15:54:50Z",
+        "age_days": 320,
+        "description": "🇨🇳 Cmirror: 专为中国大陆开发者打造的一键换源工具 (A unified CLI for managing mirrors: Pip, NPM, Docker, Cargo, Apt, Go, Brew).",
         "language": "Rust",
         "license": "MIT"
       },
       "scores": {
-        "popularity": 64.3,
-        "momentum": 34.3,
-        "quality": 10.9,
-        "newness": 28.6
+        "popularity": 74.4,
+        "momentum": 39.6,
+        "quality": 16.9,
+        "newness": 17.6
       }
     },
     {
@@ -3878,7 +3669,7 @@
       "url": "https://github.com/pamburus/termframe",
       "metrics": {
         "stars": 143,
-        "stars_per_day": 0.2399,
+        "stars_per_day": 0.2395,
         "forks": 3,
         "forks_30d": 0,
         "star_events_30d": 1,
@@ -3890,46 +3681,16 @@
         "last_commit_at": "2026-10-24T16:39:27Z",
         "readme_chars": 9704,
         "created_at": "2025-03-06T23:06:50Z",
-        "age_days": 596,
+        "age_days": 597,
         "description": "📸 Terminal output SVG screenshot tool",
         "language": "Rust",
         "license": "MIT"
       },
       "scores": {
-        "popularity": 55.3,
-        "momentum": 16.0,
-        "quality": 69.2,
-        "newness": 4.0
-      }
-    },
-    {
-      "repo": "PantherApex/Panther",
-      "repo_id": 1173693948,
-      "url": "https://github.com/PantherApex/Panther",
-      "metrics": {
-        "stars": 67,
-        "stars_per_day": 0.2876,
-        "forks": 11,
-        "forks_30d": 0,
-        "star_events_30d": 2,
-        "star_events_capped": false,
-        "commits_90d": 0,
-        "authors_90d": 0,
-        "releases": 0,
-        "last_release_at": null,
-        "last_commit_at": "2026-03-08T17:49:07Z",
-        "readme_chars": 33524,
-        "created_at": "2026-03-05T16:41:57Z",
-        "age_days": 233,
-        "description": "A self-hosted AI agent daemon built in Rust. Runs on your machine, talks through Telegram, Discord, Slack, Email and Matrix. Fully local with Ollama or powered by any of 12 cloud providers. Execute commands, capture media, schedule tasks, browse the web , all from a chat message.",
-        "language": "Rust",
-        "license": "MIT"
-      },
-      "scores": {
-        "popularity": 19.1,
-        "momentum": 19.7,
-        "quality": 23.3,
-        "newness": 49.7
+        "popularity": 53.3,
+        "momentum": 16.5,
+        "quality": 78.2,
+        "newness": 3.0
       }
     },
     {
@@ -3956,10 +3717,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 71.4,
-        "momentum": 66.6,
-        "quality": 71.5,
-        "newness": 86.9
+        "popularity": 68.8,
+        "momentum": 67.6,
+        "quality": 78.3,
+        "newness": 85.9
       }
     },
     {
@@ -3987,9 +3748,9 @@
       },
       "scores": {
         "popularity": 23.1,
-        "momentum": 40.1,
-        "quality": 46.9,
-        "newness": 89.4
+        "momentum": 38.8,
+        "quality": 54.1,
+        "newness": 88.4
       }
     },
     {
@@ -4001,7 +3762,7 @@
         "stars_per_day": 49.0,
         "forks": 137,
         "forks_30d": 125,
-        "star_events_30d": 33,
+        "star_events_30d": 30,
         "star_events_capped": true,
         "commits_90d": 2801,
         "authors_90d": null,
@@ -4016,40 +3777,10 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 99.5,
+        "popularity": 100.0,
         "momentum": 99.7,
-        "quality": 80.7,
-        "newness": 96.0
-      }
-    },
-    {
-      "repo": "petipoua/petiglyph",
-      "repo_id": 1210798325,
-      "url": "https://github.com/petipoua/petiglyph",
-      "metrics": {
-        "stars": 206,
-        "stars_per_day": 1.0674,
-        "forks": 11,
-        "forks_30d": 0,
-        "star_events_30d": 3,
-        "star_events_capped": false,
-        "commits_90d": 0,
-        "authors_90d": 0,
-        "releases": 6,
-        "last_release_at": "2026-06-09T17:09:56Z",
-        "last_commit_at": "2026-06-10T14:12:36Z",
-        "readme_chars": 18993,
-        "created_at": "2026-04-14T19:10:20Z",
-        "age_days": 193,
-        "description": "petiglyph is a TUI and CLI tool for turning images and videos into custom font glyphs",
-        "language": "Rust",
-        "license": "MIT"
-      },
-      "scores": {
-        "popularity": 68.8,
-        "momentum": 43.8,
-        "quality": 26.2,
-        "newness": 63.8
+        "quality": 78.6,
+        "newness": 96.5
       }
     },
     {
@@ -4076,10 +3807,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 46.0,
-        "momentum": 51.3,
-        "quality": 46.7,
-        "newness": 68.3
+        "popularity": 43.2,
+        "momentum": 49.2,
+        "quality": 57.6,
+        "newness": 66.8
       }
     },
     {
@@ -4106,10 +3837,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 86.9,
-        "momentum": 87.2,
-        "quality": 76.4,
-        "newness": 73.9
+        "popularity": 88.4,
+        "momentum": 86.6,
+        "quality": 85.4,
+        "newness": 72.4
       }
     },
     {
@@ -4136,10 +3867,40 @@
         "license": null
       },
       "scores": {
-        "popularity": 38.4,
-        "momentum": 54.6,
-        "quality": 70.5,
-        "newness": 66.8
+        "popularity": 37.9,
+        "momentum": 52.8,
+        "quality": 77.5,
+        "newness": 65.3
+      }
+    },
+    {
+      "repo": "plannotator/plannotator-tui",
+      "repo_id": 1349828911,
+      "url": "https://github.com/plannotator/plannotator-tui",
+      "metrics": {
+        "stars": 203,
+        "stars_per_day": 3.5614,
+        "forks": 27,
+        "forks_30d": 10,
+        "star_events_30d": 75,
+        "star_events_capped": false,
+        "commits_90d": 128,
+        "authors_90d": 13,
+        "releases": 16,
+        "last_release_at": "2026-09-25T00:41:53Z",
+        "last_commit_at": "2026-10-23T18:48:56Z",
+        "readme_chars": 16831,
+        "created_at": "2026-08-28T16:41:58Z",
+        "age_days": 57,
+        "description": "Annotate Markdown in the terminal: select, comment, looks-good, delete; send the review to your agent.",
+        "language": "Rust",
+        "license": "MIT"
+      },
+      "scores": {
+        "popularity": 65.3,
+        "momentum": 91.6,
+        "quality": 69.7,
+        "newness": 94.5
       }
     },
     {
@@ -4166,10 +3927,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 62.3,
-        "momentum": 28.8,
-        "quality": 6.5,
-        "newness": 22.1
+        "popularity": 58.8,
+        "momentum": 27.5,
+        "quality": 15.4,
+        "newness": 15.1
       }
     },
     {
@@ -4196,10 +3957,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 56.8,
-        "momentum": 40.8,
-        "quality": 22.7,
-        "newness": 71.9
+        "popularity": 54.8,
+        "momentum": 39.8,
+        "quality": 27.6,
+        "newness": 70.9
       }
     },
     {
@@ -4226,10 +3987,10 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 92.5,
-        "momentum": 62.1,
-        "quality": 75.0,
-        "newness": 3.0
+        "popularity": 94.0,
+        "momentum": 61.8,
+        "quality": 74.7,
+        "newness": 2.5
       }
     },
     {
@@ -4256,10 +4017,10 @@
         "license": null
       },
       "scores": {
-        "popularity": 50.0,
-        "momentum": 24.0,
-        "quality": 22.2,
-        "newness": 22.6
+        "popularity": 47.0,
+        "momentum": 23.5,
+        "quality": 31.6,
+        "newness": 16.6
       }
     },
     {
@@ -4286,10 +4047,40 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 40.5,
-        "momentum": 37.1,
-        "quality": 35.9,
-        "newness": 78.4
+        "popularity": 39.4,
+        "momentum": 35.6,
+        "quality": 37.5,
+        "newness": 77.4
+      }
+    },
+    {
+      "repo": "RealZST/HarnessKit",
+      "repo_id": 1193798478,
+      "url": "https://github.com/RealZST/HarnessKit",
+      "metrics": {
+        "stars": 470,
+        "stars_per_day": 2.2275,
+        "forks": 48,
+        "forks_30d": 10,
+        "star_events_30d": 32,
+        "star_events_capped": false,
+        "commits_90d": 63,
+        "authors_90d": 12,
+        "releases": 35,
+        "last_release_at": "2026-10-24T14:15:10Z",
+        "last_commit_at": "2026-10-24T14:15:18Z",
+        "readme_chars": 18042,
+        "created_at": "2026-03-27T15:37:08Z",
+        "age_days": 211,
+        "description": "More than a skill manager — manage skills, MCP servers, plugins, hooks, CLIs, configs, memory & rules across every AI coding agent. 🌟 Star if you like it!",
+        "language": "Rust",
+        "license": "Apache-2.0"
+      },
+      "scores": {
+        "popularity": 87.4,
+        "momentum": 87.6,
+        "quality": 76.3,
+        "newness": 53.8
       }
     },
     {
@@ -4301,7 +4092,7 @@
         "stars_per_day": 6.1143,
         "forks": 2,
         "forks_30d": 1,
-        "star_events_30d": 123,
+        "star_events_30d": 122,
         "star_events_capped": false,
         "commits_90d": 1,
         "authors_90d": 1,
@@ -4316,10 +4107,40 @@
         "license": "AGPL-3.0"
       },
       "scores": {
-        "popularity": 70.9,
-        "momentum": 73.1,
-        "quality": 21.1,
-        "newness": 95.5
+        "popularity": 68.3,
+        "momentum": 73.9,
+        "quality": 29.2,
+        "newness": 96.0
+      }
+    },
+    {
+      "repo": "recranvvi5c/ContextCrucible",
+      "repo_id": 1195423391,
+      "url": "https://github.com/recranvvi5c/ContextCrucible",
+      "metrics": {
+        "stars": 212,
+        "stars_per_day": 1.0144,
+        "forks": 41,
+        "forks_30d": 41,
+        "star_events_30d": 211,
+        "star_events_capped": true,
+        "commits_90d": 35,
+        "authors_90d": 2,
+        "releases": 9,
+        "last_release_at": "2026-10-21T19:09:05Z",
+        "last_commit_at": "2026-10-19T13:00:32Z",
+        "readme_chars": 14145,
+        "created_at": "2026-03-29T16:53:54Z",
+        "age_days": 209,
+        "description": "Budget-aware context compiler for coding agents - scan, grade, spark-test and pour a hard-budget context pack",
+        "language": "Rust",
+        "license": "MIT"
+      },
+      "scores": {
+        "popularity": 67.8,
+        "momentum": 81.7,
+        "quality": 50.9,
+        "newness": 55.8
       }
     },
     {
@@ -4346,10 +4167,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 58.5,
-        "momentum": 69.8,
-        "quality": 82.7,
-        "newness": 57.3
+        "popularity": 55.8,
+        "momentum": 67.7,
+        "quality": 84.3,
+        "newness": 55.3
       }
     },
     {
@@ -4376,10 +4197,40 @@
         "license": "GPL-3.0"
       },
       "scores": {
-        "popularity": 26.6,
-        "momentum": 11.4,
-        "quality": 62.6,
-        "newness": 8.5
+        "popularity": 27.1,
+        "momentum": 11.7,
+        "quality": 59.2,
+        "newness": 4.5
+      }
+    },
+    {
+      "repo": "rengwu/chartr",
+      "repo_id": 1307350189,
+      "url": "https://github.com/rengwu/chartr",
+      "metrics": {
+        "stars": 349,
+        "stars_per_day": 3.6737,
+        "forks": 19,
+        "forks_30d": 1,
+        "star_events_30d": 10,
+        "star_events_capped": false,
+        "commits_90d": 496,
+        "authors_90d": 3,
+        "releases": 11,
+        "last_release_at": "2026-10-21T10:47:41Z",
+        "last_commit_at": "2026-10-21T20:11:38Z",
+        "readme_chars": 3040,
+        "created_at": "2026-07-21T06:22:36Z",
+        "age_days": 95,
+        "description": "An organizable, terminal-first agentic workspace with plugins",
+        "language": "Rust",
+        "license": "GPL-3.0"
+      },
+      "scores": {
+        "popularity": 79.9,
+        "momentum": 71.6,
+        "quality": 70.9,
+        "newness": 87.4
       }
     },
     {
@@ -4406,10 +4257,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 78.4,
-        "momentum": 83.7,
-        "quality": 52.6,
-        "newness": 85.9
+        "popularity": 76.4,
+        "momentum": 82.8,
+        "quality": 64.0,
+        "newness": 84.9
       }
     },
     {
@@ -4436,40 +4287,40 @@
         "license": "BSD-3-Clause"
       },
       "scores": {
-        "popularity": 5.5,
-        "momentum": 10.2,
-        "quality": 22.0,
-        "newness": 9.5
+        "popularity": 5.0,
+        "momentum": 10.7,
+        "quality": 20.0,
+        "newness": 5.5
       }
     },
     {
-      "repo": "rhoopr/kei",
-      "repo_id": 1146984886,
-      "url": "https://github.com/rhoopr/kei",
+      "repo": "robcholz/vibebox",
+      "repo_id": 1151937255,
+      "url": "https://github.com/robcholz/vibebox",
       "metrics": {
-        "stars": 160,
-        "stars_per_day": 0.6038,
-        "forks": 13,
-        "forks_30d": 3,
-        "star_events_30d": 2,
-        "star_events_capped": true,
-        "commits_90d": 202,
-        "authors_90d": 5,
-        "releases": 82,
-        "last_release_at": "2026-10-23T17:30:45Z",
-        "last_commit_at": "2026-10-23T20:34:46Z",
-        "readme_chars": 11873,
-        "created_at": "2026-02-01T01:59:53Z",
-        "age_days": 265,
-        "description": "Fast, parallel backups for cloud-hosted photos and videos - one-time exports, local mirrors, and unattended Docker runs.",
+        "stars": 191,
+        "stars_per_day": 0.7375,
+        "forks": 14,
+        "forks_30d": 0,
+        "star_events_30d": 3,
+        "star_events_capped": false,
+        "commits_90d": 0,
+        "authors_90d": 0,
+        "releases": 11,
+        "last_release_at": "2026-02-18T17:32:11Z",
+        "last_commit_at": "2026-02-18T17:28:21Z",
+        "readme_chars": 8281,
+        "created_at": "2026-02-07T05:24:02Z",
+        "age_days": 259,
+        "description": "Ultrafast CLI on Apple Silicon macOS for fast, sandboxed development and LLM agents.",
         "language": "Rust",
         "license": "MIT"
       },
       "scores": {
-        "popularity": 59.8,
-        "momentum": 62.9,
-        "quality": 78.1,
-        "newness": 37.2
+        "popularity": 63.1,
+        "momentum": 36.6,
+        "quality": 21.5,
+        "newness": 36.2
       }
     },
     {
@@ -4478,7 +4329,7 @@
       "url": "https://github.com/rocal-dev/rocal",
       "metrics": {
         "stars": 54,
-        "stars_per_day": 0.0865,
+        "stars_per_day": 0.0864,
         "forks": 0,
         "forks_30d": 0,
         "star_events_30d": 0,
@@ -4490,16 +4341,16 @@
         "last_commit_at": "2025-07-27T05:20:02Z",
         "readme_chars": 4429,
         "created_at": "2025-02-06T22:30:22Z",
-        "age_days": 624,
+        "age_days": 625,
         "description": "A full-stack WebAssembly framework in Rust",
         "language": "Rust",
         "license": "MIT"
       },
       "scores": {
         "popularity": 4.5,
-        "momentum": 9.2,
-        "quality": 7.4,
-        "newness": 1.5
+        "momentum": 9.9,
+        "quality": 15.5,
+        "newness": 1.0
       }
     },
     {
@@ -4526,100 +4377,40 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 34.9,
-        "momentum": 23.5,
-        "quality": 42.9,
-        "newness": 46.2
+        "popularity": 34.4,
+        "momentum": 22.7,
+        "quality": 41.5,
+        "newness": 45.2
       }
     },
     {
-      "repo": "run-llama/semtools",
-      "repo_id": 1043448231,
-      "url": "https://github.com/run-llama/semtools",
+      "repo": "rust-codegen-group/openapi-nexus",
+      "repo_id": 1083311382,
+      "url": "https://github.com/rust-codegen-group/openapi-nexus",
       "metrics": {
-        "stars": 1877,
-        "stars_per_day": 4.3958,
-        "forks": 144,
-        "forks_30d": 2,
-        "star_events_30d": 13,
-        "star_events_capped": false,
-        "commits_90d": 0,
-        "authors_90d": 0,
-        "releases": 17,
-        "last_release_at": "2026-03-11T14:31:01Z",
-        "last_commit_at": "2026-03-11T14:29:17Z",
-        "readme_chars": 11438,
-        "created_at": "2025-08-23T21:56:09Z",
-        "age_days": 427,
-        "description": "Semantic search and document parsing tools for the command line",
-        "language": "Rust",
-        "license": "MIT"
-      },
-      "scores": {
-        "popularity": 100.0,
-        "momentum": 80.8,
-        "quality": 25.0,
-        "newness": 15.1
-      }
-    },
-    {
-      "repo": "sammwyy/listnr",
-      "repo_id": 1049122682,
-      "url": "https://github.com/sammwyy/listnr",
-      "metrics": {
-        "stars": 90,
-        "stars_per_day": 0.2158,
-        "forks": 11,
-        "forks_30d": 1,
+        "stars": 92,
+        "stars_per_day": 0.2527,
+        "forks": 0,
+        "forks_30d": 0,
         "star_events_30d": 0,
         "star_events_capped": false,
-        "commits_90d": 2,
+        "commits_90d": 31,
         "authors_90d": 1,
-        "releases": 4,
-        "last_release_at": "2025-09-03T18:54:51Z",
-        "last_commit_at": "2026-09-18T07:03:47Z",
-        "readme_chars": 3700,
-        "created_at": "2025-09-02T14:15:29Z",
-        "age_days": 417,
-        "description": "TUI/Terminal interactive music player",
+        "releases": 14,
+        "last_release_at": "2026-10-17T22:13:12Z",
+        "last_commit_at": "2026-10-20T08:13:46Z",
+        "readme_chars": 4299,
+        "created_at": "2025-10-25T19:00:33Z",
+        "age_days": 364,
+        "description": "OpenAPI 3.x code generator for deterministic, type-safe SDKs and API tooling across languages and runtimes.",
         "language": "Rust",
-        "license": null
+        "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 33.4,
-        "momentum": 31.2,
-        "quality": 23.6,
-        "newness": 15.6
-      }
-    },
-    {
-      "repo": "SamuNatsu/mihomosh",
-      "repo_id": 934898479,
-      "url": "https://github.com/SamuNatsu/mihomosh",
-      "metrics": {
-        "stars": 155,
-        "stars_per_day": 0.2529,
-        "forks": 10,
-        "forks_30d": 0,
-        "star_events_30d": 3,
-        "star_events_capped": false,
-        "commits_90d": 0,
-        "authors_90d": 0,
-        "releases": 11,
-        "last_release_at": "2026-05-28T02:37:11Z",
-        "last_commit_at": "2026-05-31T14:27:12Z",
-        "readme_chars": 3096,
-        "created_at": "2025-02-18T15:27:57Z",
-        "age_days": 613,
-        "description": "A CLI Toolkit for Mihomo",
-        "language": "Rust",
-        "license": "GPL-3.0"
-      },
-      "scores": {
-        "popularity": 58.5,
-        "momentum": 17.5,
-        "quality": 15.4,
-        "newness": 2.0
+        "popularity": 34.4,
+        "momentum": 17.7,
+        "quality": 47.8,
+        "newness": 11.1
       }
     },
     {
@@ -4633,11 +4424,11 @@
         "forks_30d": 6,
         "star_events_30d": 13,
         "star_events_capped": true,
-        "commits_90d": 891,
+        "commits_90d": 895,
         "authors_90d": 12,
         "releases": 51,
         "last_release_at": "2026-10-23T22:19:01Z",
-        "last_commit_at": "2026-10-24T17:03:12Z",
+        "last_commit_at": "2026-10-24T23:08:13Z",
         "readme_chars": 4671,
         "created_at": "2026-01-25T07:31:09Z",
         "age_days": 272,
@@ -4646,10 +4437,10 @@
         "license": "AGPL-3.0"
       },
       "scores": {
-        "popularity": 89.4,
-        "momentum": 86.4,
-        "quality": 75.2,
-        "newness": 36.7
+        "popularity": 91.0,
+        "momentum": 85.9,
+        "quality": 86.7,
+        "newness": 30.7
       }
     },
     {
@@ -4676,10 +4467,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 6.5,
+        "popularity": 6.3,
         "momentum": 14.9,
-        "quality": 43.7,
-        "newness": 41.7
+        "quality": 48.6,
+        "newness": 37.7
       }
     },
     {
@@ -4688,28 +4479,28 @@
       "url": "https://github.com/ScriptedAlchemy/tracedecay",
       "metrics": {
         "stars": 83,
-        "stars_per_day": 0.5971,
+        "stars_per_day": 0.5929,
         "forks": 7,
         "forks_30d": 1,
         "star_events_30d": 0,
         "star_events_capped": true,
-        "commits_90d": 19771,
+        "commits_90d": 19752,
         "authors_90d": null,
         "releases": 166,
         "last_release_at": "2026-10-23T22:38:08Z",
         "last_commit_at": "2026-10-24T21:03:57Z",
         "readme_chars": 15387,
         "created_at": "2026-06-06T23:05:08Z",
-        "age_days": 139,
+        "age_days": 140,
         "description": "Local semantic code intelligence, project memory, and workflow context for AI coding agents.",
         "language": "Rust",
         "license": "MIT"
       },
       "scores": {
-        "popularity": 28.4,
-        "momentum": 49.0,
-        "quality": 81.6,
-        "newness": 76.9
+        "popularity": 28.9,
+        "momentum": 47.2,
+        "quality": 78.0,
+        "newness": 76.4
       }
     },
     {
@@ -4736,10 +4527,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 38.4,
-        "momentum": 42.5,
-        "quality": 63.6,
-        "newness": 56.3
+        "popularity": 37.9,
+        "momentum": 41.5,
+        "quality": 58.7,
+        "newness": 54.3
       }
     },
     {
@@ -4747,11 +4538,11 @@
       "repo_id": 1119888702,
       "url": "https://github.com/serkanyersen/dotstate",
       "metrics": {
-        "stars": 383,
-        "stars_per_day": 1.2435,
+        "stars": 384,
+        "stars_per_day": 1.2468,
         "forks": 16,
         "forks_30d": 3,
-        "star_events_30d": 7,
+        "star_events_30d": 8,
         "star_events_capped": false,
         "commits_90d": 11,
         "authors_90d": 3,
@@ -4766,10 +4557,40 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 83.9,
-        "momentum": 75.3,
-        "quality": 62.2,
-        "newness": 26.6
+        "popularity": 83.2,
+        "momentum": 74.2,
+        "quality": 63.7,
+        "newness": 20.6
+      }
+    },
+    {
+      "repo": "shirenchuang/agentbro",
+      "repo_id": 1221576836,
+      "url": "https://github.com/shirenchuang/agentbro",
+      "metrics": {
+        "stars": 165,
+        "stars_per_day": 0.9116,
+        "forks": 30,
+        "forks_30d": 0,
+        "star_events_30d": 3,
+        "star_events_capped": false,
+        "commits_90d": 17,
+        "authors_90d": 2,
+        "releases": 35,
+        "last_release_at": "2026-08-03T11:58:23Z",
+        "last_commit_at": "2026-08-03T11:12:39Z",
+        "readme_chars": 10941,
+        "created_at": "2026-04-26T12:03:15Z",
+        "age_days": 181,
+        "description": "A macOS Dynamic Island for AI coding agents: Claude Code, Codex, Gemini CLI, Cursor, hooks, skills, and local agent management.",
+        "language": "Rust",
+        "license": "Apache-2.0"
+      },
+      "scores": {
+        "popularity": 57.8,
+        "momentum": 41.3,
+        "quality": 51.1,
+        "newness": 67.8
       }
     },
     {
@@ -4796,10 +4617,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 80.4,
-        "momentum": 45.9,
+        "popularity": 79.4,
+        "momentum": 45.6,
         "quality": 76.4,
-        "newness": 39.2
+        "newness": 33.7
       }
     },
     {
@@ -4826,10 +4647,10 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 68.3,
-        "momentum": 86.1,
-        "quality": 67.1,
-        "newness": 81.4
+        "popularity": 65.8,
+        "momentum": 84.0,
+        "quality": 71.7,
+        "newness": 79.9
       }
     },
     {
@@ -4856,70 +4677,130 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 43.2,
-        "momentum": 44.2,
-        "quality": 70.9,
-        "newness": 50.3
+        "popularity": 41.2,
+        "momentum": 42.7,
+        "quality": 81.2,
+        "newness": 48.2
       }
     },
     {
-      "repo": "sohamw03/wifui",
-      "repo_id": 1115409973,
-      "url": "https://github.com/sohamw03/wifui",
+      "repo": "sleepinginsummer/agent-ssh-cli",
+      "repo_id": 1223139487,
+      "url": "https://github.com/sleepinginsummer/agent-ssh-cli",
       "metrics": {
-        "stars": 160,
-        "stars_per_day": 0.5063,
+        "stars": 85,
+        "stars_per_day": 0.4749,
         "forks": 9,
         "forks_30d": 0,
-        "star_events_30d": 11,
+        "star_events_30d": 3,
         "star_events_capped": false,
-        "commits_90d": 24,
+        "commits_90d": 34,
         "authors_90d": 1,
-        "releases": 7,
-        "last_release_at": "2026-10-04T14:28:41Z",
-        "last_commit_at": "2026-10-08T19:56:04Z",
-        "readme_chars": 4593,
-        "created_at": "2025-12-12T20:24:31Z",
-        "age_days": 316,
-        "description": "A lightweight, keyboard-driven Terminal User Interface (TUI) for managing Wi-Fi connections on Linux/Windows.",
+        "releases": 34,
+        "last_release_at": "2026-10-21T07:33:02Z",
+        "last_commit_at": "2026-10-21T08:17:27Z",
+        "readme_chars": 8627,
+        "created_at": "2026-04-28T03:31:11Z",
+        "age_days": 179,
+        "description": "A CLI-based SSH tool that exposes remote execution, file transfer, connection reuse and command allow/deny lists as local commands callable by agents. 基于 CLI 的 SSH 工具，把远程执行、文件传输、连接复用和命令黑白名单封装为 Agent 可调用的本地命令。",
         "language": "Rust",
         "license": "MIT"
       },
       "scores": {
-        "popularity": 59.8,
-        "momentum": 28.5,
-        "quality": 32.3,
-        "newness": 24.1
+        "popularity": 30.2,
+        "momentum": 26.5,
+        "quality": 56.8,
+        "newness": 70.4
       }
     },
     {
-      "repo": "sshwy/pku3b",
-      "repo_id": 943931578,
-      "url": "https://github.com/sshwy/pku3b",
+      "repo": "solidiquis/grits",
+      "repo_id": 915386403,
+      "url": "https://github.com/solidiquis/grits",
       "metrics": {
-        "stars": 160,
-        "stars_per_day": 0.268,
-        "forks": 20,
-        "forks_30d": 1,
-        "star_events_30d": 11,
+        "stars": 57,
+        "stars_per_day": 0.0876,
+        "forks": 2,
+        "forks_30d": 0,
+        "star_events_30d": 0,
         "star_events_capped": false,
-        "commits_90d": 7,
-        "authors_90d": 3,
-        "releases": 22,
-        "last_release_at": "2026-09-09T09:35:36Z",
-        "last_commit_at": "2026-10-20T00:47:09Z",
-        "readme_chars": 9893,
-        "created_at": "2025-03-06T14:01:45Z",
-        "age_days": 597,
-        "description": "🎓a Better BlackBoard for PKUers. 北京大学教学网命令行工具（🖥️Win/🐧Linux/🍏Mac）",
+        "commits_90d": 0,
+        "authors_90d": 0,
+        "releases": 3,
+        "last_release_at": "2025-01-21T07:30:23Z",
+        "last_commit_at": "2025-01-21T07:25:10Z",
+        "readme_chars": 3045,
+        "created_at": "2025-01-11T17:58:56Z",
+        "age_days": 651,
+        "description": "A simple line-text formatter that makes it simple to parse, filter, and format live logs turning noise into meaningful insights.",
         "language": "Rust",
         "license": "MIT"
       },
       "scores": {
-        "popularity": 59.8,
-        "momentum": 34.9,
-        "quality": 52.5,
-        "newness": 3.5
+        "popularity": 7.8,
+        "momentum": 10.2,
+        "quality": 16.6,
+        "newness": 0.5
+      }
+    },
+    {
+      "repo": "srothgan/claude-code-rust",
+      "repo_id": 1152671435,
+      "url": "https://github.com/srothgan/claude-code-rust",
+      "metrics": {
+        "stars": 271,
+        "stars_per_day": 1.0504,
+        "forks": 58,
+        "forks_30d": 5,
+        "star_events_30d": 7,
+        "star_events_capped": true,
+        "commits_90d": 152,
+        "authors_90d": 4,
+        "releases": 47,
+        "last_release_at": "2026-10-19T12:39:57Z",
+        "last_commit_at": "2026-10-23T22:44:07Z",
+        "readme_chars": 9453,
+        "created_at": "2026-02-08T08:35:24Z",
+        "age_days": 258,
+        "description": "A native Rust terminal interface for Claude Code",
+        "language": "Rust",
+        "license": "Apache-2.0"
+      },
+      "scores": {
+        "popularity": 74.9,
+        "momentum": 76.5,
+        "quality": 82.6,
+        "newness": 36.7
+      }
+    },
+    {
+      "repo": "sstraus/tuicommander",
+      "repo_id": 1160075256,
+      "url": "https://github.com/sstraus/tuicommander",
+      "metrics": {
+        "stars": 166,
+        "stars_per_day": 0.6667,
+        "forks": 33,
+        "forks_30d": 3,
+        "star_events_30d": 7,
+        "star_events_capped": false,
+        "commits_90d": 6965,
+        "authors_90d": null,
+        "releases": 29,
+        "last_release_at": "2026-10-24T21:31:20Z",
+        "last_commit_at": "2026-10-24T21:24:06Z",
+        "readme_chars": 21745,
+        "created_at": "2026-02-17T14:12:03Z",
+        "age_days": 249,
+        "description": "The IDE that understands AI agents. Run parallel agents on isolated branches with full observability. Diffs, PRs, CI, usage dashboards — one workspace, zero context loss.",
+        "language": "Rust",
+        "license": "Apache-2.0"
+      },
+      "scores": {
+        "popularity": 58.3,
+        "momentum": 62.3,
+        "quality": 78.2,
+        "newness": 40.2
       }
     },
     {
@@ -4946,40 +4827,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 79.9,
-        "momentum": 63.3,
-        "quality": 57.1,
-        "newness": 48.2
-      }
-    },
-    {
-      "repo": "StaszeKrk/plaza",
-      "repo_id": 1279589896,
-      "url": "https://github.com/StaszeKrk/plaza",
-      "metrics": {
-        "stars": 57,
-        "stars_per_day": 0.4672,
-        "forks": 2,
-        "forks_30d": 1,
-        "star_events_30d": 2,
-        "star_events_capped": false,
-        "commits_90d": 5,
-        "authors_90d": 1,
-        "releases": 22,
-        "last_release_at": "2026-08-14T07:53:41Z",
-        "last_commit_at": "2026-08-14T07:53:12Z",
-        "readme_chars": 13096,
-        "created_at": "2026-06-24T20:41:09Z",
-        "age_days": 122,
-        "description": "Cross-distro TUI package manager browser",
-        "language": "Rust",
-        "license": "GPL-3.0"
-      },
-      "scores": {
-        "popularity": 7.5,
-        "momentum": 44.0,
-        "quality": 40.2,
-        "newness": 80.9
+        "popularity": 78.9,
+        "momentum": 62.8,
+        "quality": 63.2,
+        "newness": 46.7
       }
     },
     {
@@ -4993,7 +4844,7 @@
         "forks_30d": 1,
         "star_events_30d": 10,
         "star_events_capped": true,
-        "commits_90d": 752,
+        "commits_90d": 751,
         "authors_90d": 2,
         "releases": 49,
         "last_release_at": "2026-10-24T09:51:34Z",
@@ -5007,9 +4858,69 @@
       },
       "scores": {
         "popularity": 85.4,
-        "momentum": 63.8,
-        "quality": 73.0,
-        "newness": 29.6
+        "momentum": 63.3,
+        "quality": 76.4,
+        "newness": 23.1
+      }
+    },
+    {
+      "repo": "subinium/agf",
+      "repo_id": 1159909844,
+      "url": "https://github.com/subinium/agf",
+      "metrics": {
+        "stars": 159,
+        "stars_per_day": 0.6386,
+        "forks": 18,
+        "forks_30d": 0,
+        "star_events_30d": 6,
+        "star_events_capped": false,
+        "commits_90d": 21,
+        "authors_90d": 4,
+        "releases": 45,
+        "last_release_at": "2026-09-08T15:08:04Z",
+        "last_commit_at": "2026-10-01T07:22:47Z",
+        "readme_chars": 21769,
+        "created_at": "2026-02-17T10:08:53Z",
+        "age_days": 249,
+        "description": "Find, search, and resume local AI coding-agent sessions across Muse Code, Claude Code, Codex, Antigravity, Grok, Kimi, Qwen, Gemini, Cursor, and more.",
+        "language": "Rust",
+        "license": "MIT"
+      },
+      "scores": {
+        "popularity": 56.8,
+        "momentum": 33.0,
+        "quality": 62.8,
+        "newness": 39.7
+      }
+    },
+    {
+      "repo": "supernovae-st/nika",
+      "repo_id": 1126625946,
+      "url": "https://github.com/supernovae-st/nika",
+      "metrics": {
+        "stars": 95,
+        "stars_per_day": 0.322,
+        "forks": 5,
+        "forks_30d": 0,
+        "star_events_30d": 0,
+        "star_events_capped": false,
+        "commits_90d": 948,
+        "authors_90d": 4,
+        "releases": 49,
+        "last_release_at": "2026-10-23T22:12:05Z",
+        "last_commit_at": "2026-10-24T22:21:00Z",
+        "readme_chars": 28569,
+        "created_at": "2026-01-02T09:32:06Z",
+        "age_days": 295,
+        "description": "Intent as Code: say what you want done, keep it as a file. Checked before it runs, run with the model you choose, proven afterwards. Rust engine, CLI/TUI and TypeScript SDK. AGPL-3.0 🦋",
+        "language": "Rust",
+        "license": "AGPL-3.0"
+      },
+      "scores": {
+        "popularity": 36.4,
+        "momentum": 20.5,
+        "quality": 86.5,
+        "newness": 23.6
       }
     },
     {
@@ -5023,7 +4934,7 @@
         "forks_30d": 2,
         "star_events_30d": 7,
         "star_events_capped": false,
-        "commits_90d": 595,
+        "commits_90d": 588,
         "authors_90d": 3,
         "releases": 63,
         "last_release_at": "2026-09-30T09:49:12Z",
@@ -5036,10 +4947,40 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 8.8,
-        "momentum": 59.7,
-        "quality": 71.7,
-        "newness": 87.4
+        "popularity": 9.3,
+        "momentum": 57.0,
+        "quality": 74.5,
+        "newness": 86.4
+      }
+    },
+    {
+      "repo": "tang-vu/ContribAI",
+      "repo_id": 1184461384,
+      "url": "https://github.com/tang-vu/ContribAI",
+      "metrics": {
+        "stars": 246,
+        "stars_per_day": 1.1131,
+        "forks": 85,
+        "forks_30d": 1,
+        "star_events_30d": 3,
+        "star_events_capped": false,
+        "commits_90d": 33,
+        "authors_90d": 2,
+        "releases": 74,
+        "last_release_at": "2026-09-08T17:40:27Z",
+        "last_commit_at": "2026-10-07T06:43:27Z",
+        "readme_chars": 16498,
+        "created_at": "2026-03-17T15:57:53Z",
+        "age_days": 221,
+        "description": "Maintainer-governed agent for evidence-backed open-source contribution proposals",
+        "language": "Rust",
+        "license": "AGPL-3.0"
+      },
+      "scores": {
+        "popularity": 72.1,
+        "momentum": 60.8,
+        "quality": 57.3,
+        "newness": 49.7
       }
     },
     {
@@ -5066,10 +5007,70 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 51.8,
-        "momentum": 28.0,
-        "quality": 15.7,
-        "newness": 36.2
+        "popularity": 48.7,
+        "momentum": 27.0,
+        "quality": 16.6,
+        "newness": 29.6
+      }
+    },
+    {
+      "repo": "tassiovirginio/try-rs",
+      "repo_id": 1117923796,
+      "url": "https://github.com/tassiovirginio/try-rs",
+      "metrics": {
+        "stars": 294,
+        "stars_per_day": 0.9453,
+        "forks": 17,
+        "forks_30d": 2,
+        "star_events_30d": 4,
+        "star_events_capped": false,
+        "commits_90d": 2,
+        "authors_90d": 1,
+        "releases": 84,
+        "last_release_at": "2026-06-11T23:48:14Z",
+        "last_commit_at": "2026-08-25T14:41:26Z",
+        "readme_chars": 16241,
+        "created_at": "2025-12-17T02:34:47Z",
+        "age_days": 311,
+        "description": "A blazing fast, Rust-based workspace manager for your temporary experiments.",
+        "language": "Rust",
+        "license": "MIT"
+      },
+      "scores": {
+        "popularity": 77.4,
+        "momentum": 66.6,
+        "quality": 43.9,
+        "newness": 19.1
+      }
+    },
+    {
+      "repo": "termide/termide",
+      "repo_id": 1100623545,
+      "url": "https://github.com/termide/termide",
+      "metrics": {
+        "stars": 180,
+        "stars_per_day": 0.5325,
+        "forks": 10,
+        "forks_30d": 0,
+        "star_events_30d": 17,
+        "star_events_capped": false,
+        "commits_90d": 904,
+        "authors_90d": 3,
+        "releases": 114,
+        "last_release_at": "2026-10-21T18:22:53Z",
+        "last_commit_at": "2026-10-22T10:16:09Z",
+        "readme_chars": 28655,
+        "created_at": "2025-11-20T14:30:41Z",
+        "age_days": 338,
+        "description": "All-in-one terminal workspace for desktops and servers: editor with LSP, file manager with SFTP/FTP, terminal, git, database viewer and a coding agent in one zero-config static Rust binary.",
+        "language": "Rust",
+        "license": "MIT"
+      },
+      "scores": {
+        "popularity": 60.8,
+        "momentum": 28.3,
+        "quality": 80.6,
+        "newness": 13.6
       }
     },
     {
@@ -5097,9 +5098,9 @@
       },
       "scores": {
         "popularity": 98.0,
-        "momentum": 93.0,
-        "quality": 81.1,
-        "newness": 65.3
+        "momentum": 92.2,
+        "quality": 73.6,
+        "newness": 63.8
       }
     },
     {
@@ -5126,10 +5127,10 @@
         "license": "GPL-3.0"
       },
       "scores": {
-        "popularity": 30.9,
-        "momentum": 70.6,
-        "quality": 71.6,
-        "newness": 82.9
+        "popularity": 31.2,
+        "momentum": 68.2,
+        "quality": 69.1,
+        "newness": 81.4
       }
     },
     {
@@ -5156,10 +5157,40 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 87.4,
-        "momentum": 76.8,
-        "quality": 80.7,
-        "newness": 25.1
+        "popularity": 88.9,
+        "momentum": 75.5,
+        "quality": 74.7,
+        "newness": 18.6
+      }
+    },
+    {
+      "repo": "tony3liu/eido",
+      "repo_id": 1410338898,
+      "url": "https://github.com/tony3liu/eido",
+      "metrics": {
+        "stars": 140,
+        "stars_per_day": 8.75,
+        "forks": 0,
+        "forks_30d": 0,
+        "star_events_30d": 149,
+        "star_events_capped": false,
+        "commits_90d": 73,
+        "authors_90d": 1,
+        "releases": 4,
+        "last_release_at": "2026-10-16T19:27:00Z",
+        "last_commit_at": "2026-10-16T19:04:15Z",
+        "readme_chars": 10388,
+        "created_at": "2026-10-08T12:55:02Z",
+        "age_days": 16,
+        "description": "AI coding agent workspace for macOS, built on Zed and pi. Native code editing and review, browser use, computer use, and global agent access controls.",
+        "language": "Rust",
+        "license": "GPL-3.0"
+      },
+      "scores": {
+        "popularity": 52.8,
+        "momentum": 58.4,
+        "quality": 44.7,
+        "newness": 98.5
       }
     },
     {
@@ -5186,10 +5217,10 @@
         "license": null
       },
       "scores": {
-        "popularity": 3.0,
-        "momentum": 20.0,
-        "quality": 46.6,
-        "newness": 68.8
+        "popularity": 3.8,
+        "momentum": 19.0,
+        "quality": 48.9,
+        "newness": 67.3
       }
     },
     {
@@ -5200,7 +5231,7 @@
         "stars": 796,
         "stars_per_day": 3.8829,
         "forks": 44,
-        "forks_30d": 30,
+        "forks_30d": 29,
         "star_events_30d": 36,
         "star_events_capped": false,
         "commits_90d": 229,
@@ -5216,10 +5247,10 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 93.5,
-        "momentum": 94.2,
-        "quality": 62.7,
-        "newness": 58.3
+        "popularity": 95.0,
+        "momentum": 94.5,
+        "quality": 75.8,
+        "newness": 57.3
       }
     },
     {
@@ -5247,9 +5278,9 @@
       },
       "scores": {
         "popularity": 12.6,
-        "momentum": 57.7,
-        "quality": 37.6,
-        "newness": 59.8
+        "momentum": 55.2,
+        "quality": 44.2,
+        "newness": 58.8
       }
     },
     {
@@ -5276,10 +5307,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 27.4,
-        "momentum": 10.9,
-        "quality": 12.3,
-        "newness": 6.0
+        "popularity": 27.9,
+        "momentum": 11.2,
+        "quality": 17.7,
+        "newness": 3.5
       }
     },
     {
@@ -5306,10 +5337,10 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 16.1,
-        "momentum": 14.4,
-        "quality": 53.3,
-        "newness": 28.1
+        "popularity": 15.6,
+        "momentum": 14.7,
+        "quality": 54.8,
+        "newness": 22.1
       }
     },
     {
@@ -5336,10 +5367,10 @@
         "license": "AGPL-3.0"
       },
       "scores": {
-        "popularity": 89.9,
-        "momentum": 82.0,
-        "quality": 56.3,
-        "newness": 83.9
+        "popularity": 91.5,
+        "momentum": 82.2,
+        "quality": 58.2,
+        "newness": 83.4
       }
     },
     {
@@ -5366,10 +5397,40 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 18.1,
-        "momentum": 21.2,
-        "quality": 62.9,
-        "newness": 57.8
+        "popularity": 17.6,
+        "momentum": 20.0,
+        "quality": 74.4,
+        "newness": 56.3
+      }
+    },
+    {
+      "repo": "ultralytics/template-rust",
+      "repo_id": 1104883572,
+      "url": "https://github.com/ultralytics/template-rust",
+      "metrics": {
+        "stars": 74,
+        "stars_per_day": 0.2229,
+        "forks": 2,
+        "forks_30d": 0,
+        "star_events_30d": 3,
+        "star_events_capped": false,
+        "commits_90d": 29,
+        "authors_90d": 3,
+        "releases": 6,
+        "last_release_at": "2026-06-10T23:37:44Z",
+        "last_commit_at": "2026-10-09T15:08:31Z",
+        "readme_chars": 11031,
+        "created_at": "2025-11-26T20:34:34Z",
+        "age_days": 332,
+        "description": "Ultralytics Rust project template with library and CLI examples, tests, benchmarks, rustfmt, clippy, coverage, dependency checks, and crates.io publishing.",
+        "language": "Rust",
+        "license": "AGPL-3.0"
+      },
+      "scores": {
+        "popularity": 24.9,
+        "momentum": 15.2,
+        "quality": 53.8,
+        "newness": 16.1
       }
     },
     {
@@ -5396,10 +5457,40 @@
         "license": "ISC"
       },
       "scores": {
-        "popularity": 71.9,
-        "momentum": 45.4,
-        "quality": 52.0,
-        "newness": 66.3
+        "popularity": 69.3,
+        "momentum": 45.1,
+        "quality": 64.3,
+        "newness": 64.3
+      }
+    },
+    {
+      "repo": "universal-tool-calling-protocol/rs-utcp",
+      "repo_id": 1103697168,
+      "url": "https://github.com/universal-tool-calling-protocol/rs-utcp",
+      "metrics": {
+        "stars": 59,
+        "stars_per_day": 0.1772,
+        "forks": 5,
+        "forks_30d": 0,
+        "star_events_30d": 2,
+        "star_events_capped": false,
+        "commits_90d": 0,
+        "authors_90d": 0,
+        "releases": 19,
+        "last_release_at": "2025-12-02T08:06:44Z",
+        "last_commit_at": "2026-05-12T09:06:02Z",
+        "readme_chars": 16156,
+        "created_at": "2025-11-25T08:05:41Z",
+        "age_days": 333,
+        "description": "Official Rust implementation of the UTCP",
+        "language": "Rust",
+        "license": "MPL-2.0"
+      },
+      "scores": {
+        "popularity": 11.1,
+        "momentum": 12.2,
+        "quality": 25.9,
+        "newness": 15.6
       }
     },
     {
@@ -5426,40 +5517,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 66.8,
-        "momentum": 75.6,
-        "quality": 84.2,
-        "newness": 56.8
-      }
-    },
-    {
-      "repo": "utensils/mold",
-      "repo_id": 1180326843,
-      "url": "https://github.com/utensils/mold",
-      "metrics": {
-        "stars": 54,
-        "stars_per_day": 0.24,
-        "forks": 2,
-        "forks_30d": 1,
-        "star_events_30d": 0,
-        "star_events_capped": true,
-        "commits_90d": 1080,
-        "authors_90d": null,
-        "releases": 58,
-        "last_release_at": "2026-03-16T18:29:04Z",
-        "last_commit_at": "2026-10-24T05:00:42Z",
-        "readme_chars": 46674,
-        "created_at": "2026-03-12T23:41:47Z",
-        "age_days": 225,
-        "description": "CLI-native local AI image and video generation for people, scripts, and agents — CUDA on Linux, Metal on macOS, plus desktop, web, iPhone, REST/SSE, and MCP.",
-        "language": "Rust",
-        "license": "MIT"
-      },
-      "scores": {
-        "popularity": 4.5,
-        "momentum": 32.7,
-        "quality": 81.2,
-        "newness": 52.8
+        "popularity": 62.3,
+        "momentum": 73.7,
+        "quality": 85.2,
+        "newness": 54.8
       }
     },
     {
@@ -5486,10 +5547,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 54.3,
-        "momentum": 27.0,
-        "quality": 49.8,
-        "newness": 29.1
+        "popularity": 51.8,
+        "momentum": 25.8,
+        "quality": 44.8,
+        "newness": 22.6
       }
     },
     {
@@ -5498,7 +5559,7 @@
       "url": "https://github.com/vaibhav-mattoo/alman",
       "metrics": {
         "stars": 95,
-        "stars_per_day": 0.2026,
+        "stars_per_day": 0.2021,
         "forks": 5,
         "forks_30d": 1,
         "star_events_30d": 2,
@@ -5510,46 +5571,16 @@
         "last_commit_at": "2026-08-24T23:42:57Z",
         "readme_chars": 11912,
         "created_at": "2025-07-11T23:04:06Z",
-        "age_days": 469,
+        "age_days": 470,
         "description": "Smart alias manager with TUI for shell aliases and command-line efficiency 🚀",
         "language": "Rust",
         "license": "MIT"
       },
       "scores": {
-        "popularity": 36.9,
+        "popularity": 36.4,
         "momentum": 30.4,
-        "quality": 34.5,
-        "newness": 12.1
-      }
-    },
-    {
-      "repo": "venqoi/thundery",
-      "repo_id": 952968209,
-      "url": "https://github.com/venqoi/thundery",
-      "metrics": {
-        "stars": 59,
-        "stars_per_day": 0.1015,
-        "forks": 1,
-        "forks_30d": 0,
-        "star_events_30d": 0,
-        "star_events_capped": false,
-        "commits_90d": 0,
-        "authors_90d": 0,
-        "releases": 2,
-        "last_release_at": "2025-03-24T20:14:15Z",
-        "last_commit_at": "2025-03-30T00:09:42Z",
-        "readme_chars": 2108,
-        "created_at": "2025-03-22T09:06:20Z",
-        "age_days": 581,
-        "description": "thundery is a weather fetching cli based off rainy",
-        "language": "Rust",
-        "license": "GPL-3.0"
-      },
-      "scores": {
-        "popularity": 10.8,
-        "momentum": 9.9,
-        "quality": 6.2,
-        "newness": 7.0
+        "quality": 35.1,
+        "newness": 7.5
       }
     },
     {
@@ -5576,10 +5607,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 47.5,
-        "momentum": 46.2,
-        "quality": 80.9,
-        "newness": 54.8
+        "popularity": 44.5,
+        "momentum": 45.2,
+        "quality": 84.1,
+        "newness": 51.8
       }
     },
     {
@@ -5606,40 +5637,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 10.8,
+        "popularity": 11.1,
         "momentum": 15.7,
-        "quality": 10.1,
-        "newness": 40.7
-      }
-    },
-    {
-      "repo": "Vitruves/nail-parquet",
-      "repo_id": 1001008163,
-      "url": "https://github.com/Vitruves/nail-parquet",
-      "metrics": {
-        "stars": 97,
-        "stars_per_day": 0.1944,
-        "forks": 4,
-        "forks_30d": 0,
-        "star_events_30d": 0,
-        "star_events_capped": false,
-        "commits_90d": 2,
-        "authors_90d": 1,
-        "releases": 8,
-        "last_release_at": "2026-10-08T04:10:04Z",
-        "last_commit_at": "2026-10-08T04:09:36Z",
-        "readme_chars": 9293,
-        "created_at": "2025-06-12T17:01:01Z",
-        "age_days": 499,
-        "description": "Fast parquet command line tool with many functions, nailed it! ",
-        "language": "Rust",
-        "license": null
-      },
-      "scores": {
-        "popularity": 39.4,
-        "momentum": 13.3,
-        "quality": 34.4,
-        "newness": 10.6
+        "quality": 19.0,
+        "newness": 37.2
       }
     },
     {
@@ -5666,70 +5667,40 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 78.9,
-        "momentum": 61.6,
-        "quality": 55.0,
-        "newness": 46.7
+        "popularity": 76.9,
+        "momentum": 61.3,
+        "quality": 69.3,
+        "newness": 45.7
       }
     },
     {
-      "repo": "vyfor/animate",
-      "repo_id": 1210481465,
-      "url": "https://github.com/vyfor/animate",
+      "repo": "Wangnov/codex-threadripper",
+      "repo_id": 1210743721,
+      "url": "https://github.com/Wangnov/codex-threadripper",
       "metrics": {
-        "stars": 104,
-        "stars_per_day": 0.5389,
-        "forks": 3,
+        "stars": 397,
+        "stars_per_day": 2.057,
+        "forks": 20,
         "forks_30d": 0,
-        "star_events_30d": 5,
-        "star_events_capped": false,
-        "commits_90d": 17,
-        "authors_90d": 1,
-        "releases": 0,
-        "last_release_at": null,
-        "last_commit_at": "2026-09-19T10:01:24Z",
-        "readme_chars": 5839,
-        "created_at": "2026-04-14T13:09:23Z",
-        "age_days": 193,
-        "description": "🎞️ Animation Library for Rust",
-        "language": "Rust",
-        "license": "Apache-2.0"
-      },
-      "scores": {
-        "popularity": 42.2,
-        "momentum": 29.3,
-        "quality": 25.7,
-        "newness": 63.3
-      }
-    },
-    {
-      "repo": "Wangnov/codex-asr",
-      "repo_id": 1229613037,
-      "url": "https://github.com/Wangnov/codex-asr",
-      "metrics": {
-        "stars": 58,
-        "stars_per_day": 0.3372,
-        "forks": 8,
-        "forks_30d": 1,
-        "star_events_30d": 4,
+        "star_events_30d": 0,
         "star_events_capped": false,
         "commits_90d": 0,
         "authors_90d": 0,
-        "releases": 3,
-        "last_release_at": "2026-05-05T12:56:22Z",
-        "last_commit_at": "2026-07-03T14:39:56Z",
-        "readme_chars": 23451,
-        "created_at": "2026-05-05T08:07:41Z",
-        "age_days": 172,
-        "description": "Unofficial Rust CLI/library and local Whisper-compatible REST shim for Codex Desktop ASR using local ChatGPT auth",
+        "releases": 18,
+        "last_release_at": "2026-07-21T04:35:03Z",
+        "last_commit_at": "2026-07-26T01:23:53Z",
+        "readme_chars": 10739,
+        "created_at": "2026-04-14T18:01:02Z",
+        "age_days": 193,
+        "description": "Keep Codex thread history aligned to one provider bucket.",
         "language": "Rust",
         "license": "MIT"
       },
       "scores": {
-        "popularity": 8.8,
-        "momentum": 38.4,
-        "quality": 25.4,
-        "newness": 72.4
+        "popularity": 83.9,
+        "momentum": 49.9,
+        "quality": 27.3,
+        "newness": 62.8
       }
     },
     {
@@ -5756,10 +5727,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 65.3,
-        "momentum": 31.0,
-        "quality": 51.6,
-        "newness": 23.1
+        "popularity": 61.8,
+        "momentum": 29.8,
+        "quality": 49.5,
+        "newness": 17.1
       }
     },
     {
@@ -5786,10 +5757,10 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 30.9,
-        "momentum": 54.1,
-        "quality": 63.1,
-        "newness": 53.8
+        "popularity": 31.2,
+        "momentum": 52.6,
+        "quality": 58.3,
+        "newness": 50.8
       }
     },
     {
@@ -5816,10 +5787,40 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 57.3,
-        "momentum": 73.7,
-        "quality": 72.3,
-        "newness": 79.4
+        "popularity": 55.3,
+        "momentum": 73.0,
+        "quality": 80.4,
+        "newness": 78.4
+      }
+    },
+    {
+      "repo": "yashksaini-coder/Rustlens",
+      "repo_id": 1157425108,
+      "url": "https://github.com/yashksaini-coder/Rustlens",
+      "metrics": {
+        "stars": 157,
+        "stars_per_day": 0.6206,
+        "forks": 2,
+        "forks_30d": 0,
+        "star_events_30d": 0,
+        "star_events_capped": false,
+        "commits_90d": 0,
+        "authors_90d": 0,
+        "releases": 5,
+        "last_release_at": "2026-04-02T16:50:09Z",
+        "last_commit_at": "2026-04-02T18:37:49Z",
+        "readme_chars": 4942,
+        "created_at": "2026-02-13T20:00:51Z",
+        "age_days": 253,
+        "description": "Your Rust codebase, revealed It parses your Rust source files and provides an interactive interface to browse functions, structs, enums, traits, and more — all inside your terminal.",
+        "language": "Rust",
+        "license": "MIT"
+      },
+      "scores": {
+        "popularity": 56.3,
+        "momentum": 32.3,
+        "quality": 19.8,
+        "newness": 38.7
       }
     },
     {
@@ -5846,10 +5847,10 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 81.9,
-        "momentum": 50.0,
-        "quality": 52.1,
-        "newness": 2.5
+        "popularity": 80.4,
+        "momentum": 48.2,
+        "quality": 62.9,
+        "newness": 2.0
       }
     },
     {
@@ -5876,10 +5877,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 13.8,
-        "momentum": 13.3,
-        "quality": 61.8,
-        "newness": 23.6
+        "popularity": 14.1,
+        "momentum": 13.2,
+        "quality": 56.9,
+        "newness": 18.1
       }
     },
     {
@@ -5906,10 +5907,40 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 19.6,
+        "popularity": 18.6,
         "momentum": 34.7,
-        "quality": 28.1,
-        "newness": 38.2
+        "quality": 21.7,
+        "newness": 32.7
+      }
+    },
+    {
+      "repo": "yicheng47/runner",
+      "repo_id": 1216634387,
+      "url": "https://github.com/yicheng47/runner",
+      "metrics": {
+        "stars": 374,
+        "stars_per_day": 2.0108,
+        "forks": 26,
+        "forks_30d": 19,
+        "star_events_30d": 32,
+        "star_events_capped": true,
+        "commits_90d": 1541,
+        "authors_90d": null,
+        "releases": 146,
+        "last_release_at": "2026-10-18T14:39:04Z",
+        "last_commit_at": "2026-10-24T07:19:02Z",
+        "readme_chars": 16321,
+        "created_at": "2026-04-21T05:06:16Z",
+        "age_days": 186,
+        "description": "Where terminal agents work together. Claude Code, Codex, Copilot CLI and pi on the same task, in one mission, each keeping its own TUI in a real terminal.",
+        "language": "Rust",
+        "license": "MIT"
+      },
+      "scores": {
+        "popularity": 81.4,
+        "momentum": 87.7,
+        "quality": 75.6,
+        "newness": 64.8
       }
     },
     {
@@ -5936,10 +5967,10 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 88.4,
-        "momentum": 68.7,
-        "quality": 49.8,
-        "newness": 60.8
+        "popularity": 89.9,
+        "momentum": 69.0,
+        "quality": 53.2,
+        "newness": 59.8
       }
     },
     {
@@ -5966,40 +5997,10 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 67.3,
-        "momentum": 40.6,
-        "quality": 55.6,
-        "newness": 49.2
-      }
-    },
-    {
-      "repo": "zihanyang-dev/onmark",
-      "repo_id": 1296672011,
-      "url": "https://github.com/zihanyang-dev/onmark",
-      "metrics": {
-        "stars": 126,
-        "stars_per_day": 1.1887,
-        "forks": 6,
-        "forks_30d": 0,
-        "star_events_30d": 0,
-        "star_events_capped": false,
-        "commits_90d": 29,
-        "authors_90d": 1,
-        "releases": 9,
-        "last_release_at": "2026-08-01T12:09:19Z",
-        "last_commit_at": "2026-08-01T12:04:10Z",
-        "readme_chars": 8519,
-        "created_at": "2026-07-10T15:59:43Z",
-        "age_days": 106,
-        "description": "Write the film. Own every frame.",
-        "language": "Rust",
-        "license": "MIT"
-      },
-      "scores": {
-        "popularity": 49.2,
-        "momentum": 44.8,
-        "quality": 33.1,
-        "newness": 85.4
+        "popularity": 63.1,
+        "momentum": 39.3,
+        "quality": 60.3,
+        "newness": 47.7
       }
     },
     {
@@ -6026,10 +6027,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 8.8,
-        "momentum": 41.2,
-        "quality": 72.2,
-        "newness": 75.9
+        "popularity": 9.3,
+        "momentum": 40.5,
+        "quality": 80.5,
+        "newness": 74.9
       }
     }
   ]

@@ -1,0 +1,2387 @@
+{
+  "topic": "rust-devtools",
+  "label": "Rust developer tools",
+  "scope": "Principle: a developer tool is software that software developers use while building, testing, debugging, shipping or operating software. The test is who uses it and for what: if its main users are developers doing development work, it is on topic; if it is an app for some other audience or activity that merely happens to be written in Rust or run in a terminal, it is not. Illustrations only (not exhaustive): on topic are things like linters, build and test tooling, code search, version-control helpers, editor or language tooling, and tooling for AI coding agents; off topic are things like an end-user app for media, chat or personal finance, even with a CLI. When the description is ambiguous, read the README and apply the principle.",
+  "model": "openai/gpt-5.6-luna",
+  "prompt_sha256": "03486bbbe07e3464851c566b9e5084f2134036b33d7932c8fc225fe6e118e3f5",
+  "v1_prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+  "readme_chars": 1500,
+  "totals": {
+    "checked": 263,
+    "on": 200,
+    "off": 61,
+    "unsure": 2,
+    "suspicious_text": 1,
+    "v1_prompt": 262,
+    "cost_usd": 0.057847
+  },
+  "verdicts": [
+    {
+      "repo_id": 1038870158,
+      "repo": "3axap4eHko/prmt",
+      "verdict": "on",
+      "reason": "A Rust-based shell prompt generator for developers working in terminals, squarely fitting developer tooling.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001882
+    },
+    {
+      "repo_id": 1073628211,
+      "repo": "42futures/firm",
+      "verdict": "off",
+      "reason": "Firm is a business and work-management application for organizing organizations, contacts, projects, and tasks, not a tool primarily used by developers for software development.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001876
+    },
+    {
+      "repo_id": 1165764217,
+      "repo": "affromero/gitpane",
+      "verdict": "on",
+      "reason": "A terminal dashboard for managing multiple Git repositories and worktrees, directly serving developers' version-control workflows.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001976
+    },
+    {
+      "repo_id": 1184465882,
+      "repo": "afshinm/zerobox",
+      "verdict": "on",
+      "reason": "Zerobox is a developer-facing process sandbox for safely running commands with file, network, and credential controls.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002144
+    },
+    {
+      "repo_id": 1146336156,
+      "repo": "agent-sh/agnix",
+      "verdict": "on",
+      "reason": "agnix is a linter, LSP, and IDE plugin for validating AI coding-assistant configurations, directly serving software developers.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002242
+    },
+    {
+      "repo_id": 1219184182,
+      "repo": "Alegau03/CTX",
+      "verdict": "on",
+      "reason": "CTX is a Rust-based developer tool that manages context, caching, and workflows for AI coding agents.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.000203
+    },
+    {
+      "repo_id": 1188649228,
+      "repo": "alkoleft/v8-runner-rust",
+      "verdict": "on",
+      "reason": "A Rust CLI and MCP server for automating 1C software development workflows, including builds, checks, tests, and AI-agent tooling.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.00021
+    },
+    {
+      "repo_id": 1014557568,
+      "repo": "alordash/hotcode",
+      "verdict": "on",
+      "reason": "A Rust hot-reloading library for changing and debugging code during application development is a developer tool.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001882
+    },
+    {
+      "repo_id": 1393634228,
+      "repo": "alpcanaydin/tusk",
+      "verdict": "on",
+      "reason": "Tusk is a database client for developers to query, inspect, and manage databases during software development and operations.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002104
+    },
+    {
+      "repo_id": 1127717919,
+      "repo": "Anandb71/arbor",
+      "verdict": "on",
+      "reason": "Arbor is a developer tool for deterministic code intelligence, static analysis, and code-context tracing used by developers and coding agents.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002148
+    },
+    {
+      "repo_id": 1306494403,
+      "repo": "angleschina/angles-cli",
+      "verdict": "on",
+      "reason": "A Rust-based terminal coding agent used by software developers for agentic coding and development tasks.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002014
+    },
+    {
+      "repo_id": 1119435907,
+      "repo": "angristan/fast-resume",
+      "verdict": "on",
+      "reason": "A Rust terminal tool for full-text searching and resuming coding-agent sessions, used directly by software developers.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.00019
+    },
+    {
+      "repo_id": 911737357,
+      "repo": "anistark/feluda",
+      "verdict": "on",
+      "reason": "Feluda is a Rust CLI developer tool that analyzes project dependencies and flags license restrictions.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001902
+    },
+    {
+      "repo_id": 973175068,
+      "repo": "anistark/wasmrun",
+      "verdict": "on",
+      "reason": "Wasmrun is a WebAssembly runtime and development, compilation, deployment, and debugging tool for software developers.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001948
+    },
+    {
+      "repo_id": 1331676909,
+      "repo": "antiburn/antiburn",
+      "verdict": "on",
+      "reason": "A desktop developer tool that locally analyzes AI coding sessions for token usage, context depth, caching, models, and unused development resources.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002568
+    },
+    {
+      "repo_id": 1243687656,
+      "repo": "Antoinegtir/flutter-cli",
+      "verdict": "on",
+      "reason": "A terminal developer tool for Flutter that enhances running, testing, building, device management, hot reload, and performance inspection.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002022
+    },
+    {
+      "repo_id": 1160593325,
+      "repo": "AnyiWang/OpenCovibe",
+      "verdict": "on",
+      "reason": "A desktop developer tool that provides a local UI for managing AI coding agents, sessions, activity, and diffs.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001878
+    },
+    {
+      "repo_id": 1157353950,
+      "repo": "AppachiTech/suvadu",
+      "verdict": "on",
+      "reason": "Suvadu is a developer-focused shell history and AI agent tracking tool used to support software development workflows.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002046
+    },
+    {
+      "repo_id": 1147103920,
+      "repo": "armgabrielyan/deadbranch",
+      "verdict": "on",
+      "reason": "A Rust CLI for safely cleaning up stale Git branches, directly supporting developers' version-control workflows.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001998
+    },
+    {
+      "repo_id": 1198037858,
+      "repo": "arnica/depsguard",
+      "verdict": "on",
+      "reason": "A developer-focused CLI that hardens package manager configurations against software supply-chain attacks.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002032
+    },
+    {
+      "repo_id": 1255866572,
+      "repo": "asdecided/core",
+      "verdict": "on",
+      "reason": "A Rust CLI engine and MCP server that validates, retrieves, and serves software engineering requirements and decisions to developers and coding agents.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.000191
+    },
+    {
+      "repo_id": 1184115971,
+      "repo": "AssafWoo/homebrew-pandafilter",
+      "verdict": "on",
+      "reason": "PandaFilter is a developer tool that optimizes context, cost, and session state for AI coding agents.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002208
+    },
+    {
+      "repo_id": 1252819307,
+      "repo": "atelico/gdstyle",
+      "verdict": "on",
+      "reason": "A Rust-built linter and formatter for GDScript that directly supports software developers writing and maintaining Godot code.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001984
+    },
+    {
+      "repo_id": 1060532847,
+      "repo": "bahdotsh/blogr",
+      "verdict": "off",
+      "reason": "Blogr is an end-user static-site generator for writing and publishing blogs, not primarily a tool used by developers for software development.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002064
+    },
+    {
+      "repo_id": 959219384,
+      "repo": "bahdotsh/feedr",
+      "verdict": "off",
+      "reason": "Feedr is a terminal RSS/Atom reader for consuming news and articles, aimed at end users rather than developers doing software development work.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001904
+    },
+    {
+      "repo_id": 1033259976,
+      "repo": "bananaofhappiness/soundscope",
+      "verdict": "off",
+      "reason": "Soundscope is a TUI for analyzing and visualizing audio for media users, not a tool primarily used for software development.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001942
+    },
+    {
+      "repo_id": 1127473187,
+      "repo": "baseballyama/rsvelte",
+      "verdict": "on",
+      "reason": "A Rust port of the Svelte compiler and related language, formatting, and linting tools for software developers.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001916
+    },
+    {
+      "repo_id": 1163606463,
+      "repo": "battysh/batty",
+      "verdict": "on",
+      "reason": "Batty is a Rust developer tool that supervises AI coding agents, orchestrates software-development work, runs tests, and manages worktrees and merges.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002238
+    },
+    {
+      "repo_id": 997508788,
+      "repo": "bgreenwell/lstr",
+      "verdict": "on",
+      "reason": "A command-line directory tree viewer for exploring project structure, which is a developer tool used during software development.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002084
+    },
+    {
+      "repo_id": 1169516045,
+      "repo": "bitloops/bitloops",
+      "verdict": "on",
+      "reason": "Bitloops is a developer tool that captures codebase context and supplies it to AI coding agents for software development.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002054
+    },
+    {
+      "repo_id": 1223238655,
+      "repo": "bitplane/rars",
+      "verdict": "off",
+      "reason": "A RAR compression, decompression, and recovery library and CLI for general archive use, not primarily a developer tool.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.000242
+    },
+    {
+      "repo_id": 1327452849,
+      "repo": "bl4ckr0ss3/knife",
+      "verdict": "on",
+      "reason": "A Rust reverse-engineering toolkit for developers and security engineers to analyze, disassemble, and audit binaries.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002034
+    },
+    {
+      "repo_id": 1140534220,
+      "repo": "bnomei/tmux-mcp",
+      "verdict": "on",
+      "reason": "An MCP server that enables AI agents to run and inspect commands in tmux sessions is tooling for software development and operations.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002654
+    },
+    {
+      "repo_id": 1287125429,
+      "repo": "Brain0-ai/brain0",
+      "verdict": "on",
+      "reason": "A developer tool that audits AI-generated code by linking commits to agent prompts, reads, provenance, and risk evidence.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002226
+    },
+    {
+      "repo_id": 1163713389,
+      "repo": "brevity1swos/rgx",
+      "verdict": "on",
+      "reason": "A terminal-based regex debugger and tester designed for developers to write, inspect, and troubleshoot regular expressions.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.000201
+    },
+    {
+      "repo_id": 1274695288,
+      "repo": "btsouth/toolport",
+      "verdict": "on",
+      "reason": "Toolport is a developer-focused MCP gateway that manages tools and servers for AI coding agents across development environments.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002064
+    },
+    {
+      "repo_id": 1083798727,
+      "repo": "bug-ops/helix-trainer",
+      "verdict": "on",
+      "reason": "An interactive developer tool for learning and practicing Helix editor keybindings and workflows.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001974
+    },
+    {
+      "repo_id": 1122042547,
+      "repo": "bug-ops/mcpls",
+      "verdict": "on",
+      "reason": "mcpls is a developer tool that bridges LSP capabilities to AI coding agents for code intelligence, diagnostics, navigation, and refactoring.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002172
+    },
+    {
+      "repo_id": 1150904280,
+      "repo": "bug-ops/zeph",
+      "verdict": "unsure",
+      "reason": "Zeph is a general-purpose memory-first AI agent with code and document access, but the provided description does not establish that developers are its primary users.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0005832
+    },
+    {
+      "repo_id": 1191112044,
+      "repo": "burakdede/aisw",
+      "verdict": "on",
+      "reason": "A Rust CLI for managing accounts and profiles for AI coding agents, directly supporting developers' coding workflows.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.000211
+    },
+    {
+      "repo_id": 945094389,
+      "repo": "BurntSushi/bttf",
+      "verdict": "off",
+      "reason": "A general-purpose command-line tool for datetime arithmetic and formatting, aimed at time and date tasks rather than software development work.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0003164
+    },
+    {
+      "repo_id": 1098581892,
+      "repo": "buyukakyuz/install-nothing",
+      "verdict": "off",
+      "reason": "A novelty terminal simulation for pretending to install software, not a tool developers use for software development or operations.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001792
+    },
+    {
+      "repo_id": 1176971972,
+      "repo": "cerul-ai/cerul",
+      "verdict": "off",
+      "reason": "Cerul is an end-user video search and processing application, not primarily a tool developers use to build, test, debug, ship, or operate software.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002264
+    },
+    {
+      "repo_id": 1170172881,
+      "repo": "charannyk06/conductor-oss",
+      "verdict": "on",
+      "reason": "A developer-focused control surface for AI coding agents, terminals, worktrees, diffs, and coding workflows.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002014
+    },
+    {
+      "repo_id": 1275693650,
+      "repo": "ChenglongLi777/codex-migrate",
+      "verdict": "on",
+      "reason": "A developer-focused GUI and CLI for migrating, repairing, backing up, and exporting OpenAI Codex coding-agent sessions.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002026
+    },
+    {
+      "repo_id": 1233111215,
+      "repo": "chojs23/concord",
+      "verdict": "off",
+      "reason": "Concord is a Discord chat client for end users, not a tool primarily used by software developers for development work.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001934
+    },
+    {
+      "repo_id": 1215521324,
+      "repo": "cioffivictor/ssp-protocol",
+      "verdict": "off",
+      "reason": "It is Solana DeFi liquidity-management infrastructure for memecoin markets, not a tool primarily used by software developers for development work.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002144
+    },
+    {
+      "repo_id": 1014684893,
+      "repo": "cladam/tbdflow",
+      "verdict": "on",
+      "reason": "A CLI developer tool that safeguards Git workflows and automates Trunk-Based Development tasks for software teams.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001924
+    },
+    {
+      "repo_id": 1149268015,
+      "repo": "clash-sh/clash",
+      "verdict": "on",
+      "reason": "Clash is a Rust CLI developer tool that helps AI coding agents avoid merge conflicts across Git worktrees.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002042
+    },
+    {
+      "repo_id": 1135479670,
+      "repo": "cocojojo5213/Dev-Janitor",
+      "verdict": "on",
+      "reason": "A desktop developer utility for cleaning development artifacts, managing local tools, and diagnosing development environments, so its primary users are software developers.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001976
+    },
+    {
+      "repo_id": 1222427087,
+      "repo": "codejunkie99/brain",
+      "verdict": "on",
+      "reason": "A developer-focused memory and integration tool for AI coding agents, exposed through a CLI, TUI, and MCP server.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.000202
+    },
+    {
+      "repo_id": 1128355583,
+      "repo": "codingagentsystem/cas",
+      "verdict": "on",
+      "reason": "CAS is a developer tool that orchestrates AI coding agents, manages coding tasks, and provides persistent development context.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001998
+    },
+    {
+      "repo_id": 1308528382,
+      "repo": "crabbuild/compass",
+      "verdict": "on",
+      "reason": "Compass is a Rust developer workbench for codebase architecture maps, dependency analysis, Git history, and coding-assistant tooling.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.000215
+    },
+    {
+      "repo_id": 1335336610,
+      "repo": "crabtalk/cydonia",
+      "verdict": "on",
+      "reason": "Cydonia is a Rust-based workspace and control panel for operating AI coding agents during software development.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002064
+    },
+    {
+      "repo_id": 1149385021,
+      "repo": "cristeigabriela/bb",
+      "verdict": "on",
+      "reason": "A developer CLI that parses Windows SDK and PHNT headers to inspect types, layouts, constants, macros, and function ABIs.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001988
+    },
+    {
+      "repo_id": 1334766219,
+      "repo": "crizant/probe",
+      "verdict": "on",
+      "reason": "Probe is a developer-focused API client and testing tool with CLI, CI, and AI-agent workflows for interactive API development.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002
+    },
+    {
+      "repo_id": 1135025647,
+      "repo": "dallay/agentsync",
+      "verdict": "on",
+      "reason": "A CLI developer tool that synchronizes configurations for AI coding assistants, directly supporting software development workflows.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001978
+    },
+    {
+      "repo_id": 1201654425,
+      "repo": "DanielCardonaRojas/codemark",
+      "verdict": "on",
+      "reason": "Codemark is a semantic code-bookmarking and navigation tool for developers and coding agents, directly supporting software development workflows.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002072
+    },
+    {
+      "repo_id": 1379609263,
+      "repo": "datlechin/pitboard",
+      "verdict": "on",
+      "reason": "Pitboard is a developer-facing CLI and desktop tool for switching accounts and monitoring usage in AI coding tools such as Claude Code and Codex CLI.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002064
+    },
+    {
+      "repo_id": 950630502,
+      "repo": "dcc-mcp/dcc-mcp-core",
+      "verdict": "on",
+      "reason": "A Rust-powered MCP/REST control plane, CLI, and infrastructure for AI agents and creative-software development workflows, primarily used by developers.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002348
+    },
+    {
+      "repo_id": 1178759952,
+      "repo": "delexw/claude-code-trace",
+      "verdict": "on",
+      "reason": "A developer-focused viewer for Claude Code session logs, tool calls, and agent activity, used to inspect and analyze software development sessions.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.000222
+    },
+    {
+      "repo_id": 1137022621,
+      "repo": "Dicklesworthstone/beads_rust",
+      "verdict": "on",
+      "reason": "A developer-focused issue tracker for managing software tasks in Git repositories, clearly serving developers during development and collaboration.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002024
+    },
+    {
+      "repo_id": 1100945668,
+      "repo": "Dicklesworthstone/coding_agent_session_search",
+      "verdict": "on",
+      "reason": "A Rust TUI and CLI for indexing and searching coding-agent session history, directly supporting developers' coding workflows.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.000202
+    },
+    {
+      "repo_id": 1164301692,
+      "repo": "Dicklesworthstone/franken_whisper",
+      "verdict": "on",
+      "reason": "An agent-first Rust CLI and orchestration stack for speech transcription, designed to support AI coding agents with streaming, routing, and run-history tooling.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0003672
+    },
+    {
+      "repo_id": 1133846056,
+      "repo": "Dicklesworthstone/meta_skill",
+      "verdict": "on",
+      "reason": "A Rust CLI platform for managing reusable skills and integrating with AI coding agents, directly serving software developers' workflows.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001866
+    },
+    {
+      "repo_id": 1136654529,
+      "repo": "Dicklesworthstone/rich_rust",
+      "verdict": "on",
+      "reason": "A Rust library for rendering rich terminal output, intended for developers building command-line tools and interfaces.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001936
+    },
+    {
+      "repo_id": 1374059973,
+      "repo": "Dicklesworthstone/skillranker",
+      "verdict": "on",
+      "reason": "A Rust CLI developer tool that ranks skills for AI coding agents using session context and integrates with Claude Code hooks.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002056
+    },
+    {
+      "repo_id": 1247018809,
+      "repo": "dif-sh/dif",
+      "verdict": "on",
+      "reason": "A Rust-based CLI and build tool for managing feature flags and A/B tests in software repositories and generating typed clients for applications.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.000281
+    },
+    {
+      "repo_id": 1189242342,
+      "repo": "dinakars777/git-time-machine",
+      "verdict": "on",
+      "reason": "A Rust TUI developer tool for visually browsing Git reflogs and recovering local history.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001898
+    },
+    {
+      "repo_id": 1213244638,
+      "repo": "dpc/tau",
+      "verdict": "on",
+      "reason": "Tau is a command-line AI coding agent used by software developers for development work.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001878
+    },
+    {
+      "repo_id": 1264493600,
+      "repo": "Drackrath/Aurelia",
+      "verdict": "off",
+      "reason": "Aurelia is a terminal Steam game launcher and library manager for gamers, not a tool primarily used by software developers for development work.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002116
+    },
+    {
+      "repo_id": 1353408336,
+      "repo": "dragonked2/alphacode",
+      "verdict": "on",
+      "reason": "An open-source Rust AI coding agent that developers use to edit code, run tests, and automate development workflows.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002132
+    },
+    {
+      "repo_id": 1083773627,
+      "repo": "dsplce-co/supabase-plus",
+      "verdict": "on",
+      "reason": "A Rust CLI that extends Supabase tooling to help developers manage their projects.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001914
+    },
+    {
+      "repo_id": 1357866714,
+      "repo": "dtDhruv/ytkew",
+      "verdict": "off",
+      "reason": "ytkew is an end-user terminal YouTube Music player, not a tool primarily used by software developers.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001998
+    },
+    {
+      "repo_id": 955510503,
+      "repo": "e-tho/bzmenu",
+      "verdict": "off",
+      "reason": "bzmenu is an end-user Linux Bluetooth manager operated through launchers, not a tool primarily used by software developers.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.000208
+    },
+    {
+      "repo_id": 1205015836,
+      "repo": "edison7009/Coffee-CLI",
+      "verdict": "on",
+      "reason": "Coffee CLI is a developer-focused desktop workspace for running and managing AI coding agents such as Claude Code and Codex.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.000224
+    },
+    {
+      "repo_id": 1217860122,
+      "repo": "eisber/lox-cli",
+      "verdict": "on",
+      "reason": "It is developer tooling for AI agents to author, test, and deploy Loxone configuration as code.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001984
+    },
+    {
+      "repo_id": 1080679975,
+      "repo": "elevenlabs/cli",
+      "verdict": "off",
+      "reason": "A CLI for interacting with ElevenLabs voice and conversational AI services, primarily serving voice-agent users rather than software developers doing development work.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001976
+    },
+    {
+      "repo_id": 927143838,
+      "repo": "elgar328/nfd2nfc",
+      "verdict": "off",
+      "reason": "A macOS filename-normalization utility for cross-platform file sharing, primarily serving general file users rather than software developers.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002392
+    },
+    {
+      "repo_id": 1177113373,
+      "repo": "elio-fm/elio",
+      "verdict": "off",
+      "reason": "elio is a terminal file manager for browsing and managing personal files, not a tool primarily used by software developers for development work.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001984
+    },
+    {
+      "repo_id": 1245356640,
+      "repo": "elliotgao2/handsets",
+      "verdict": "on",
+      "reason": "A CLI for programmatically inspecting and controlling Android devices, serving as automation and testing tooling for developers and agents.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0004234
+    },
+    {
+      "repo_id": 1201577876,
+      "repo": "Ephemeral-AI-Lab/ephemeral-sandbox",
+      "verdict": "on",
+      "reason": "Rust-based infrastructure for isolating, orchestrating, observing, and controlling parallel coding agents is directly a developer tool.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002036
+    },
+    {
+      "repo_id": 1161891767,
+      "repo": "erickochen/purple",
+      "verdict": "on",
+      "reason": "A terminal SSH manager and configuration editor for developers and DevOps users, with cloud, tunnel, container, and AI-agent tooling.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002324
+    },
+    {
+      "repo_id": 1069841356,
+      "repo": "ethowitz/cargo-subspace",
+      "verdict": "on",
+      "reason": "A Rust developer tool that improves rust-analyzer performance in large Cargo workspaces.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001832
+    },
+    {
+      "repo_id": 1163755845,
+      "repo": "eunseo9311/commit-cat",
+      "verdict": "on",
+      "reason": "CommitCat is a developer-focused desktop companion that tracks Git commits, IDE activity, coding time, and focus sessions.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.000194
+    },
+    {
+      "repo_id": 1333882104,
+      "repo": "extracurricular-ai/codex-rewind",
+      "verdict": "on",
+      "reason": "A developer-focused distribution of the Codex coding-agent CLI that adds file rewind and redo functionality.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002088
+    },
+    {
+      "repo_id": 1262281362,
+      "repo": "fkiene/llmtrim",
+      "verdict": "on",
+      "reason": "A developer-facing proxy, CLI, MCP server, and library for optimizing LLM API traffic and coding-agent usage.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002314
+    },
+    {
+      "repo_id": 1147778578,
+      "repo": "FlorianBruniaux/ccboard",
+      "verdict": "on",
+      "reason": "A Rust TUI and web dashboard for monitoring Claude Code sessions, costs, configuration, and developer tooling infrastructure.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002188
+    },
+    {
+      "repo_id": 1151705939,
+      "repo": "flupkede/codesearch",
+      "verdict": "on",
+      "reason": "A Rust MCP server for semantic code search and code intelligence used by AI coding agents, clearly serving software developers.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002056
+    },
+    {
+      "repo_id": 1091091652,
+      "repo": "frankdierolf/whis",
+      "verdict": "on",
+      "reason": "A voice-to-text CLI designed to provide prompts to terminal-based AI coding assistants, making it developer tooling for AI workflows.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0003784
+    },
+    {
+      "repo_id": 1206785625,
+      "repo": "FunplayAI/EchoIsland",
+      "verdict": "on",
+      "reason": "EchoIsland is a developer-facing desktop hub for managing and monitoring AI coding sessions and workflows.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001994
+    },
+    {
+      "repo_id": 1422491888,
+      "repo": "fzn0x/idx",
+      "verdict": "off",
+      "reason": "It is primarily a stock-market analysis application for investors, not a tool used by software developers for development work.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002208
+    },
+    {
+      "repo_id": 1280955914,
+      "repo": "GaoSSR/best-claude-hud",
+      "verdict": "on",
+      "reason": "A Rust CLI HUD for Claude Code that helps developers monitor their coding-agent status during development.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002132
+    },
+    {
+      "repo_id": 1072014634,
+      "repo": "giacomopiccinini/scriptor",
+      "verdict": "off",
+      "reason": "Scriptor is a speech-to-text CLI/TUI for capturing and organizing spoken notes, primarily serving end users rather than developers doing software development.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.000193
+    },
+    {
+      "repo_id": 1133672325,
+      "repo": "glauberlima/claude-code-statusline",
+      "verdict": "on",
+      "reason": "A developer-focused statusline for the Claude Code CLI that surfaces Git state, session metrics, model information, context usage, and cost during coding work.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002168
+    },
+    {
+      "repo_id": 943078746,
+      "repo": "Goldziher/uncomment",
+      "verdict": "on",
+      "reason": "A developer CLI that uses AST parsing to remove and lint code comments, supporting commit and pull-request workflows.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001968
+    },
+    {
+      "repo_id": 1136535021,
+      "repo": "govctl-org/govctl",
+      "verdict": "on",
+      "reason": "A developer-facing governance harness for AI coding workflows, turning prompts and patches into structured work items and guarded software delivery.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.000205
+    },
+    {
+      "repo_id": 1221618870,
+      "repo": "Growth-Circle/cadis",
+      "verdict": "on",
+      "reason": "A developer-focused multi-agent runtime that orchestrates coding agents with policy controls and isolated Git worktrees.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.000215
+    },
+    {
+      "repo_id": 1089837450,
+      "repo": "hako/oeis-tui",
+      "verdict": "off",
+      "reason": "A terminal interface for browsing mathematical integer sequences, intended for math users rather than software developers doing development work.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002464
+    },
+    {
+      "repo_id": 1314471674,
+      "repo": "haksolot/ank",
+      "verdict": "on",
+      "reason": "A Rust CLI for managing repository tasks and architecture decisions for coding agents is clearly a developer coordination tool.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001908
+    },
+    {
+      "repo_id": 1290039961,
+      "repo": "HaochengLu/contextvc",
+      "verdict": "on",
+      "reason": "ContextVC is a Rust developer tool that versions, validates, and renders project context for AI coding agents.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001788
+    },
+    {
+      "repo_id": 1126657148,
+      "repo": "Harry-kp/vortix",
+      "verdict": "off",
+      "reason": "Vortix is an end-user terminal VPN client for managing WireGuard and OpenVPN connections, not a tool primarily used for software development.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002166
+    },
+    {
+      "repo_id": 1309453043,
+      "repo": "HaseebKhalid1507/Myx",
+      "verdict": "off",
+      "reason": "Myx is a terminal Spotify music player for end users, not a tool primarily used by software developers for development work.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.000215
+    },
+    {
+      "repo_id": 1206624833,
+      "repo": "HaseebKhalid1507/SynapsCLI",
+      "verdict": "on",
+      "reason": "SynapsCLI is a Rust terminal-based AI agent runtime for orchestrating coding agents, directly serving software developers' development workflows.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002286
+    },
+    {
+      "repo_id": 1313164370,
+      "repo": "hkc5/cursor-bridge",
+      "verdict": "on",
+      "reason": "A Rust CLI bridge that enables Claude Code and its coding-agent capabilities through a Cursor subscription, directly serving software developers.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001934
+    },
+    {
+      "repo_id": 1118865410,
+      "repo": "holon-run/holon",
+      "verdict": "on",
+      "reason": "Holon is an AI agent runtime for developers and teams to execute tasks in local repositories, shells, worktrees, and development toolchains.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002496
+    },
+    {
+      "repo_id": 1412178580,
+      "repo": "Hybirdss/Hycli",
+      "verdict": "off",
+      "reason": "It is primarily an AI agent tool for automating arbitrary websites, not software developers building, testing, or operating software.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0003158
+    },
+    {
+      "repo_id": 1208752688,
+      "repo": "immanuwell/dockerfile-roast",
+      "verdict": "on",
+      "reason": "A Dockerfile linter for developers that performs static analysis and catches bad practices in Dockerfiles.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.000201
+    },
+    {
+      "repo_id": 1293352967,
+      "repo": "jarvislee90s-dot/tuvis",
+      "verdict": "on",
+      "reason": "Tuvis is a developer-focused desktop tool for monitoring and managing AI coding-agent sessions, with related development workflow features.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.000218
+    },
+    {
+      "repo_id": 1293308850,
+      "repo": "Jarvvski/jjfx",
+      "verdict": "on",
+      "reason": "A Rust TUI for managing Jujutsu workspaces, version-control operations, and coding agents, primarily used by developers.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002072
+    },
+    {
+      "repo_id": 1312220956,
+      "repo": "jchultarsky/mirador",
+      "verdict": "off",
+      "reason": "A personal productivity and information dashboard for terminal users, not a tool primarily used by software developers for development work.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002064
+    },
+    {
+      "repo_id": 1223108803,
+      "repo": "JereIDE/JereIDE",
+      "verdict": "on",
+      "reason": "JereIDE is a cross-platform code editor for software developers, clearly fitting Rust developer tools.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002038
+    },
+    {
+      "repo_id": 1139978543,
+      "repo": "joemckenney/wake",
+      "verdict": "on",
+      "reason": "A Rust CLI and MCP tool that records developer terminal sessions so Claude Code can assist with coding, debugging, builds, and deployments.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001992
+    },
+    {
+      "repo_id": 1167495423,
+      "repo": "JungHoonGhae/openkakao-cli",
+      "verdict": "off",
+      "reason": "An end-user KakaoTalk messaging automation CLI for macOS, not a tool primarily used by software developers for development work.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002336
+    },
+    {
+      "repo_id": 1207968230,
+      "repo": "JustRoccat/rs-pug",
+      "verdict": "off",
+      "reason": "A terminal music player for listening to online and local audio is an end-user media application, not a developer tool.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002142
+    },
+    {
+      "repo_id": 1163532080,
+      "repo": "kantord/blogtato",
+      "verdict": "off",
+      "reason": "A CLI RSS/Atom feed reader is primarily an end-user content consumption application, not a tool used by developers for software development work.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001944
+    },
+    {
+      "repo_id": 1077804847,
+      "repo": "kantord/headson",
+      "verdict": "on",
+      "reason": "headson is a Rust-based CLI and Python library for developers to preview and summarize structured data and source code during development workflows.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.000207
+    },
+    {
+      "repo_id": 1308626668,
+      "repo": "kb019/sprout",
+      "verdict": "off",
+      "reason": "Sprout is a terminal habit-tracking app for personal productivity, not a tool primarily used by software developers for development work.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002032
+    },
+    {
+      "repo_id": 1428635091,
+      "repo": "keegan0521/CinderVM",
+      "verdict": "on",
+      "reason": "A Rust bytecode VM and toolchain for verified, replayable agent execution is developer infrastructure for building and operating software.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001902
+    },
+    {
+      "repo_id": 1333731265,
+      "repo": "KingDasWinx/Dexo",
+      "verdict": "on",
+      "reason": "Dexo is a developer-facing terminal database workbench and AI-agent coding tool for querying and managing development databases.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002054
+    },
+    {
+      "repo_id": 1419948432,
+      "repo": "kitlangton/scrawl",
+      "verdict": "on",
+      "reason": "Scrawl is a developer tool that captures annotated screen recordings and transcripts to communicate software problems to AI coding agents.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001932
+    },
+    {
+      "repo_id": 1041956524,
+      "repo": "klpod221/kerminal",
+      "verdict": "on",
+      "reason": "Kerminal is a terminal emulator and SSH manager used by developers and system administrators for development and remote software operations.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002122
+    },
+    {
+      "repo_id": 1210187878,
+      "repo": "kuberstar/qartez-mcp",
+      "verdict": "on",
+      "reason": "Qartez MCP is a Rust code-intelligence and static-analysis server providing symbol search and impact analysis for AI coding agents.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002156
+    },
+    {
+      "repo_id": 1158705125,
+      "repo": "kunobi-ninja/kache",
+      "verdict": "on",
+      "reason": "Kache is a compiler and build cache used by developers and CI to avoid redundant compilation work.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001954
+    },
+    {
+      "repo_id": 1241537755,
+      "repo": "l0ng-ai/papr",
+      "verdict": "off",
+      "reason": "Papr is primarily an end-user RSS reader, and its agent-facing CLI manages news feeds rather than supporting software development.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002684
+    },
+    {
+      "repo_id": 1291034571,
+      "repo": "l0ng-ai/tty7",
+      "verdict": "on",
+      "reason": "tty7 is a developer-focused terminal workbench with persistent shells, remote development, and coding-agent integration.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002168
+    },
+    {
+      "repo_id": 945460711,
+      "repo": "L4z3x/mal-cli",
+      "verdict": "off",
+      "reason": "A terminal client for browsing MyAnimeList anime and manga, intended for media consumers rather than software developers.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001998
+    },
+    {
+      "repo_id": 1398340780,
+      "repo": "LambdaBytes/sping",
+      "verdict": "on",
+      "reason": "A developer-facing CLI for pinging, diagnosing, and monitoring network connectivity, making it a networking operations tool.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002124
+    },
+    {
+      "repo_id": 1422138666,
+      "repo": "Limatura/tessera",
+      "verdict": "off",
+      "reason": "Tessera is a self-hosted file and note-sharing application for end users, not a tool primarily used by software developers.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.00021
+    },
+    {
+      "repo_id": 1194040156,
+      "repo": "lostf1sh/dusk",
+      "verdict": "off",
+      "reason": "Dusk is an end-user terminal disk-usage and file-management application, not a tool primarily used by developers for software development.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001964
+    },
+    {
+      "repo_id": 1259900796,
+      "repo": "lucifer1004/VeloQ",
+      "verdict": "on",
+      "reason": "VeloQ is a CLI for querying GPU profiling data, explicitly designed for coding agents and developer performance analysis.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001916
+    },
+    {
+      "repo_id": 1410747188,
+      "repo": "LumaryLabsLLC/muxin",
+      "verdict": "on",
+      "reason": "Muxin is a developer operations hub for managing AI coding agents, terminals, GitHub work, files, and development machines.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002624
+    },
+    {
+      "repo_id": 1373903231,
+      "repo": "lusingander/sauva",
+      "verdict": "off",
+      "reason": "Sauva is a terminal application for browsing and analyzing Unicode characters, primarily serving general users rather than developers doing software development.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001926
+    },
+    {
+      "repo_id": 1130719878,
+      "repo": "M-Igashi/baken",
+      "verdict": "off",
+      "reason": "A DJ music-preparation toolkit for rekordbox and CDJs serves DJs rather than software developers doing development work.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002474
+    },
+    {
+      "repo_id": 945059592,
+      "repo": "machlit/cutler",
+      "verdict": "unsure",
+      "reason": "A declarative macOS setup and automation tool that installs apps and configures system preferences, but its README does not clearly establish that software developers are its primary users.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.000602
+    },
+    {
+      "repo_id": 1142477582,
+      "repo": "mag123c/toktrack",
+      "verdict": "on",
+      "reason": "A Rust-based developer tool that tracks token usage and costs across AI coding CLIs for developers.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.000201
+    },
+    {
+      "repo_id": 1296668674,
+      "repo": "makeev/alphai-tui",
+      "verdict": "off",
+      "reason": "A terminal stock-market dashboard for investors is an end-user finance application, not a tool primarily used by software developers.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002072
+    },
+    {
+      "repo_id": 1151843967,
+      "repo": "Mapika/portview",
+      "verdict": "on",
+      "reason": "A cross-platform developer and sysadmin diagnostic tool for inspecting and managing network ports and their processes, including integrations for Docker, SSH, and coding agents.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002066
+    },
+    {
+      "repo_id": 1230547152,
+      "repo": "Meridiona/meridian",
+      "verdict": "off",
+      "reason": "Meridian is a productivity and work-journaling app for automatically tracking and summarizing users' screen activity, rather than a developer-focused tool.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002134
+    },
+    {
+      "repo_id": 1224850322,
+      "repo": "mhyrzt/xrat",
+      "verdict": "off",
+      "reason": "A terminal proxy manager for configuring and operating network proxies, primarily serving connectivity users rather than software developers doing development work.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002124
+    },
+    {
+      "repo_id": 1034729507,
+      "repo": "micahkepe/jsongrep",
+      "verdict": "on",
+      "reason": "jsongrep is a developer-facing command-line tool and Rust library for querying structured documents during software development and data inspection.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002072
+    },
+    {
+      "repo_id": 912470080,
+      "repo": "michel/soulseek-rs",
+      "verdict": "off",
+      "reason": "A terminal Soulseek music file-sharing client for end users, not a tool primarily used by software developers.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002
+    },
+    {
+      "repo_id": 1092591708,
+      "repo": "mikalv/mcdu",
+      "verdict": "on",
+      "reason": "A TUI disk usage analyzer with cleanup features specifically targeting developer build artifacts and caches, intended for software developers.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002348
+    },
+    {
+      "repo_id": 1160923315,
+      "repo": "mixpeek/amux",
+      "verdict": "on",
+      "reason": "An AI coding-agent control plane used by developers to orchestrate, monitor, and coordinate parallel software-engineering agents.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.000219
+    },
+    {
+      "repo_id": 1153467649,
+      "repo": "Mjoyufull/Setrixtui",
+      "verdict": "off",
+      "reason": "A terminal Tetris-like puzzle game for players, not a developer tool used for software development.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.000191
+    },
+    {
+      "repo_id": 1267899050,
+      "repo": "modiqo/cliare",
+      "verdict": "on",
+      "reason": "CLIARE is a developer-focused CLI auditing and CI scorecard tool that evaluates command-line interfaces for AI agent use.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001836
+    },
+    {
+      "repo_id": 1100684268,
+      "repo": "Mohamed-Badry/statui",
+      "verdict": "on",
+      "reason": "Statui is a developer-oriented terminal dashboard for monitoring API health, availability, latency, and status codes.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002082
+    },
+    {
+      "repo_id": 1160693006,
+      "repo": "mpecan/tokf",
+      "verdict": "on",
+      "reason": "tokf is a developer-focused CLI that filters command output for AI coding agents, directly supporting software development workflows.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002132
+    },
+    {
+      "repo_id": 1246162006,
+      "repo": "mrjones2014/jj-gh",
+      "verdict": "on",
+      "reason": "A terminal CLI that helps developers manage GitHub pull requests and stacked changes within the jj version-control workflow.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001754
+    },
+    {
+      "repo_id": 1318551427,
+      "repo": "msavox/cleecode",
+      "verdict": "on",
+      "reason": "CleeCode is a Rust terminal IDE and code editor with integrated development tools and AI coding agents for software developers.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001946
+    },
+    {
+      "repo_id": 1227505419,
+      "repo": "NayJi7/gitoui",
+      "verdict": "on",
+      "reason": "gitoui is a Rust terminal UI for Git operations such as conflict resolution, history viewing, pull requests, and rebasing, directly serving software developers.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.00031945
+    },
+    {
+      "repo_id": 1215202378,
+      "repo": "neneodonkor/asciigraph-rs",
+      "verdict": "off",
+      "reason": "A library and CLI for rendering ASCII line graphs is primarily a data visualization utility, not a tool used by developers for software development work.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002064
+    },
+    {
+      "repo_id": 1312600841,
+      "repo": "nhtera/OxiMux",
+      "verdict": "on",
+      "reason": "OxiMux is a developer cockpit for orchestrating coding agents, isolated Git worktrees, and code review during software development.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002124
+    },
+    {
+      "repo_id": 1161405904,
+      "repo": "nicholasraimbault/silvervine",
+      "verdict": "off",
+      "reason": "Silvervine installs and maintains Widevine DRM for Chromium browsers to enable streaming, serving browser users rather than developers doing software development work.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002444
+    },
+    {
+      "repo_id": 1121430755,
+      "repo": "nlkli/recol",
+      "verdict": "on",
+      "reason": "A CLI/TUI developer tool for switching terminal and editor color schemes across development environments.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002118
+    },
+    {
+      "repo_id": 1116772709,
+      "repo": "nostacks/ekphos",
+      "verdict": "off",
+      "reason": "Ekphos is a terminal-based markdown research and productivity app for general users, not a tool primarily used for software development.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002284
+    },
+    {
+      "repo_id": 1301435385,
+      "repo": "nvrmnd-png/undo",
+      "verdict": "on",
+      "reason": "A Rust shell developer tool that journals and reverses filesystem commands, helping developers safely manage and recover their work.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.000204
+    },
+    {
+      "repo_id": 1337383093,
+      "repo": "nwiizo/suiko",
+      "verdict": "on",
+      "reason": "A Rust CLI linter and proofreading tool that helps developers diagnose and revise Japanese documents.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.00034685
+    },
+    {
+      "repo_id": 921685617,
+      "repo": "objz/rmcl",
+      "verdict": "off",
+      "reason": "A terminal Minecraft launcher is an end-user gaming application, not a tool primarily used by software developers for development work.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001954
+    },
+    {
+      "repo_id": 1208373001,
+      "repo": "ojuschugh1/sqz",
+      "verdict": "on",
+      "reason": "A Rust developer tool that compresses context and deduplicates tool output for AI coding agents.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002378
+    },
+    {
+      "repo_id": 1329255615,
+      "repo": "omacom/ttfx",
+      "verdict": "off",
+      "reason": "A terminal animation and ASCII-art utility for displaying text effects, aimed at shell users rather than developers performing software development work.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002348
+    },
+    {
+      "repo_id": 1222160568,
+      "repo": "OpenCoven/coven",
+      "verdict": "on",
+      "reason": "A Rust runtime for launching, coordinating, and managing project-scoped AI coding-agent sessions, directly serving software developers.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002012
+    },
+    {
+      "repo_id": 1179573200,
+      "repo": "osodevops/ms-teams-cli",
+      "verdict": "off",
+      "reason": "A CLI for automating Microsoft Teams communication via Graph API, primarily serving collaboration and agent workflows rather than software development work.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002932
+    },
+    {
+      "repo_id": 1188051251,
+      "repo": "ota-run/ota",
+      "verdict": "on",
+      "reason": "ota is a Rust CLI that governs and validates software repository execution for AI agents, humans, and CI, making it a developer tool.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002156
+    },
+    {
+      "repo_id": 1020843346,
+      "repo": "ovh/shai",
+      "verdict": "on",
+      "reason": "Shai is a terminal-based AI coding agent for writing code, fixing bugs, and automating development workflows.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001896
+    },
+    {
+      "repo_id": 1282467677,
+      "repo": "owainlewis/push",
+      "verdict": "on",
+      "reason": "Push is a developer tool that bridges coding agents to messaging platforms and schedules agent work for software development workflows.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002522
+    },
+    {
+      "repo_id": 1112425241,
+      "repo": "ox01024/cmirror",
+      "verdict": "on",
+      "reason": "Cmirror is a developer-focused CLI for managing and optimizing package and dependency mirrors across tools such as Cargo, Pip, NPM, Docker, and Apt.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.00032415
+    },
+    {
+      "repo_id": 1125258116,
+      "repo": "PABannier/WSIStreamer",
+      "verdict": "off",
+      "reason": "A medical-imaging tile server and viewer for whole-slide images serves pathology users, not software developers performing development work.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001946
+    },
+    {
+      "repo_id": 944178176,
+      "repo": "pamburus/termframe",
+      "verdict": "on",
+      "reason": "A CLI tool for developers to execute commands and render terminal output as SVG screenshots.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001804
+    },
+    {
+      "repo_id": 1173693948,
+      "repo": "PantherApex/Panther",
+      "verdict": "off",
+      "reason": "Panther is a self-hosted personal AI assistant for messaging and automation, aimed at general end users rather than software developers doing development work.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002116
+    },
+    {
+      "repo_id": 1304626509,
+      "repo": "peintune/runjam",
+      "verdict": "on",
+      "reason": "RunJam is a desktop developer tool for managing and using AI coding agents across software projects.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.000212
+    },
+    {
+      "repo_id": 1311314679,
+      "repo": "pelazas/p2pmux",
+      "verdict": "on",
+      "reason": "A peer-to-peer terminal multiplexer for collaborative development, letting developers share shells, tools, and AI coding environments.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.000216
+    },
+    {
+      "repo_id": 1377952273,
+      "repo": "penso/herdr-gpui",
+      "verdict": "on",
+      "reason": "A native developer-facing client for viewing terminal sessions, Git worktrees, workspaces, and coding-agent activity.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002116
+    },
+    {
+      "repo_id": 1210798325,
+      "repo": "petipoua/petiglyph",
+      "verdict": "off",
+      "reason": "petiglyph is a media-to-font-glyph creation tool for terminal art, not software primarily used by developers for development work.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002384
+    },
+    {
+      "repo_id": 1220768501,
+      "repo": "PixelPaw-Labs/codex-trace",
+      "verdict": "on",
+      "reason": "A developer-focused viewer for inspecting OpenAI Codex CLI sessions, tool calls, tokens, and logs during software development.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002206
+    },
+    {
+      "repo_id": 1245333424,
+      "repo": "pixtuoid/pixtuoid",
+      "verdict": "on",
+      "reason": "A terminal tool that visualizes AI coding agents for developers, fitting the topic's inclusion of tooling for AI coding agents.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002156
+    },
+    {
+      "repo_id": 1217838440,
+      "repo": "planetf1/otelite",
+      "verdict": "on",
+      "reason": "Otelite is a developer observability and OpenTelemetry dashboard tool for monitoring local LLM development.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001938
+    },
+    {
+      "repo_id": 1349828911,
+      "repo": "plannotator/plannotator-tui",
+      "verdict": "on",
+      "reason": "A terminal-based Markdown annotation and review tool designed to send structured feedback to coding agents, directly supporting software development workflows.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.000248
+    },
+    {
+      "repo_id": 1102768269,
+      "repo": "pranav-cs-1/nexus",
+      "verdict": "on",
+      "reason": "A Rust terminal-based HTTP client for testing and managing APIs, primarily used by developers during development and testing.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.000181
+    },
+    {
+      "repo_id": 1226740973,
+      "repo": "prime-radiant-inc/books-for-bots",
+      "verdict": "on",
+      "reason": "A Rust CLI for converting EPUBs into agent-readable Markdown with navigation offsets, directly supporting AI-assisted software development workflows.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001976
+    },
+    {
+      "repo_id": 943383028,
+      "repo": "probelabs/probe",
+      "verdict": "on",
+      "reason": "Probe is a developer-focused semantic code search and context engine that supports AI coding assistants and code understanding workflows.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001948
+    },
+    {
+      "repo_id": 1105114479,
+      "repo": "qbit-ai/qbit",
+      "verdict": "on",
+      "reason": "Qbit is an agentic terminal and coding-assistant application whose primary users are software developers.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.000196
+    },
+    {
+      "repo_id": 1266290680,
+      "repo": "Rafaelpta/dupehound",
+      "verdict": "on",
+      "reason": "dupehound is a developer-focused duplicate-code detector with scanning, history analysis, and CI gating for code quality.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001998
+    },
+    {
+      "repo_id": 1193798478,
+      "repo": "RealZST/HarnessKit",
+      "verdict": "on",
+      "reason": "HarnessKit is a developer tool for managing AI coding agents, their plugins, configurations, hooks, and related development workflows.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.000216
+    },
+    {
+      "repo_id": 1377007152,
+      "repo": "reco-tools/ritridata",
+      "verdict": "on",
+      "reason": "A Rust CLI for inspecting and validating disk images, partition tables, file signatures, and generating test images, primarily serving developers and forensic tooling users.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001994
+    },
+    {
+      "repo_id": 1195423391,
+      "repo": "recranvvi5c/ContextCrucible",
+      "verdict": "on",
+      "reason": "A Rust developer tool that compiles, ranks, filters, and secret-scans repository context into budgeted packs for coding agents.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002018
+    },
+    {
+      "repo_id": 1194762164,
+      "repo": "Regsorm/code-index-mcp",
+      "verdict": "on",
+      "reason": "Это сервер индексации и поиска по коду для ИИ-агентов, то есть инструмент разработки для анализа исходников.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.000235
+    },
+    {
+      "repo_id": 964642744,
+      "repo": "Reim-developer/Sephera",
+      "verdict": "on",
+      "reason": "Sephera is a Rust developer tool that analyzes code dependency graphs and provides reverse-dependency context for refactoring and AI-assisted development.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002092
+    },
+    {
+      "repo_id": 1307350189,
+      "repo": "rengwu/chartr",
+      "verdict": "on",
+      "reason": "A Rust-based terminal workspace for organizing projects, tools, workflows, and coding agents, primarily used by software developers.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001908
+    },
+    {
+      "repo_id": 1300733452,
+      "repo": "rezigned/upmd",
+      "verdict": "on",
+      "reason": "upmd is a developer-facing CLI and TUI for running task workflows from Markdown, directly supporting development and CI workflows.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001922
+    },
+    {
+      "repo_id": 988268248,
+      "repo": "rfgrep/rfgrep",
+      "verdict": "on",
+      "reason": "A Rust command-line tool for recursively searching and listing files, directly supporting developers' code search and file-management workflows.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001972
+    },
+    {
+      "repo_id": 1146984886,
+      "repo": "rhoopr/kei",
+      "verdict": "off",
+      "reason": "A personal cloud photo and video backup application for end users, not a tool primarily used by software developers.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002164
+    },
+    {
+      "repo_id": 1151937255,
+      "repo": "robcholz/vibebox",
+      "verdict": "on",
+      "reason": "VibeBox is a Rust CLI developer tool that securely sandboxes and runs coding agents in per-project micro-VMs.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002038
+    },
+    {
+      "repo_id": 928597036,
+      "repo": "rocal-dev/rocal",
+      "verdict": "on",
+      "reason": "Rocal is a Rust/WebAssembly framework used by developers to build web applications, making it a developer tool.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001888
+    },
+    {
+      "repo_id": 1166306594,
+      "repo": "rohansx/workz",
+      "verdict": "on",
+      "reason": "workz is a Rust developer tool that provisions isolated dependencies, ports, databases, and containers for Git worktrees used by coding agents.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002164
+    },
+    {
+      "repo_id": 1043448231,
+      "repo": "run-llama/semtools",
+      "verdict": "off",
+      "reason": "A command-line tool for parsing and semantically searching general document collections, primarily serving information-retrieval users rather than software developers.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002474
+    },
+    {
+      "repo_id": 1083311382,
+      "repo": "rust-codegen-group/openapi-nexus",
+      "verdict": "on",
+      "reason": "An OpenAPI code-generation tool for developers that produces type-safe SDKs and API clients across multiple languages.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002034
+    },
+    {
+      "repo_id": 1049122682,
+      "repo": "sammwyy/listnr",
+      "verdict": "off",
+      "reason": "Listnr is an end-user terminal music player for browsing and playing audio, not a tool primarily used by software developers.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.000193
+    },
+    {
+      "repo_id": 934898479,
+      "repo": "SamuNatsu/mihomosh",
+      "verdict": "off",
+      "reason": "A CLI toolkit for managing Mihomo proxy configurations and traffic, aimed at network users rather than software developers doing development work.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002214
+    },
+    {
+      "repo_id": 1141662059,
+      "repo": "samvallad33/vestige",
+      "verdict": "on",
+      "reason": "Vestige is a developer-facing safety and audit tool for AI coding agents, guarding tool calls and recording their actions.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002556
+    },
+    {
+      "repo_id": 1154445441,
+      "repo": "sanohiro/bcon",
+      "verdict": "on",
+      "reason": "bcon is a Rust GPU-accelerated terminal emulator designed for running developer tools and coding workflows on the Linux console.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0003008
+    },
+    {
+      "repo_id": 1261602522,
+      "repo": "ScriptedAlchemy/tracedecay",
+      "verdict": "on",
+      "reason": "TraceDecay is a Rust-based semantic code intelligence and MCP tool for AI coding agents, directly supporting software development workflows.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001978
+    },
+    {
+      "repo_id": 1194055811,
+      "repo": "sderosiaux/chrome-agent",
+      "verdict": "on",
+      "reason": "A Rust browser-automation and verification tool for AI coding agents, used to execute and inspect web tasks.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.000202
+    },
+    {
+      "repo_id": 1119888702,
+      "repo": "serkanyersen/dotstate",
+      "verdict": "on",
+      "reason": "DotState is a developer-focused terminal tool for managing and syncing development environment dotfiles across machines.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.000197
+    },
+    {
+      "repo_id": 1221576836,
+      "repo": "shirenchuang/agentbro",
+      "verdict": "on",
+      "reason": "AgentBro is a desktop developer tool for managing AI coding-agent sessions, approvals, hooks, skills, MCP, and related development workflows.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002418
+    },
+    {
+      "repo_id": 1148941696,
+      "repo": "skilld-dev/skilld",
+      "verdict": "on",
+      "reason": "A Rust CLI for finding, running, and managing agent skills, directly serving software developers and coding agents.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002082
+    },
+    {
+      "repo_id": 1280626586,
+      "repo": "skillsynchq/txcript",
+      "verdict": "on",
+      "reason": "txcript is a Rust library and CLI for transferring conversations between coding agents, directly supporting developers' AI-assisted development workflows.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002222
+    },
+    {
+      "repo_id": 1176073062,
+      "repo": "slaveOftime/open-relay",
+      "verdict": "on",
+      "reason": "A session supervisor for coding agents, REPLs, and long-running development commands, providing persistent terminal and browser-based workflows for developers.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002106
+    },
+    {
+      "repo_id": 1223139487,
+      "repo": "sleepinginsummer/agent-ssh-cli",
+      "verdict": "on",
+      "reason": "A CLI SSH tool for agents that supports remote execution, file transfer, connection management, and command controls, directly serving developer and DevOps workflows.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002496
+    },
+    {
+      "repo_id": 1115409973,
+      "repo": "sohamw03/wifui",
+      "verdict": "off",
+      "reason": "WiFui is an end-user terminal application for managing Wi-Fi connections, not a tool primarily used by software developers.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002084
+    },
+    {
+      "repo_id": 915386403,
+      "repo": "solidiquis/grits",
+      "verdict": "on",
+      "reason": "Grits is a developer-oriented CLI for parsing, filtering, and formatting live software logs.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001978
+    },
+    {
+      "repo_id": 1152671435,
+      "repo": "srothgan/claude-code-rust",
+      "verdict": "on",
+      "reason": "A Rust terminal frontend for Claude Code that developers use as an AI coding and development tool.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001902
+    },
+    {
+      "repo_id": 943931578,
+      "repo": "sshwy/pku3b",
+      "verdict": "off",
+      "reason": "A CLI for PKU students to access courses, assignments, schedules, grades, and recordings is an end-user education app rather than a developer tool.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.00034735
+    },
+    {
+      "repo_id": 1160075256,
+      "repo": "sstraus/tuicommander",
+      "verdict": "on",
+      "reason": "TUICommander is an IDE and developer tool for orchestrating AI coding agents, managing branches, and monitoring development workflows.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002182
+    },
+    {
+      "repo_id": 1170162111,
+      "repo": "StanMarek/ghost-complete",
+      "verdict": "on",
+      "reason": "A Rust terminal autocomplete engine for developers, providing command completions through a PTY proxy.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001892
+    },
+    {
+      "repo_id": 1279589896,
+      "repo": "StaszeKrk/plaza",
+      "verdict": "off",
+      "reason": "Plaza is a terminal package-management browser for general Linux users, not a tool primarily used by software developers for development work.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002218
+    },
+    {
+      "repo_id": 1126260775,
+      "repo": "styler-ai/ProjectAtlas",
+      "verdict": "on",
+      "reason": "ProjectAtlas is Rust-based repository intelligence and code-navigation tooling designed to help coding agents perform development work efficiently.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001962
+    },
+    {
+      "repo_id": 1159909844,
+      "repo": "subinium/agf",
+      "verdict": "on",
+      "reason": "A Rust fuzzy finder for managing and resuming local AI coding-agent sessions, directly serving software developers.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002042
+    },
+    {
+      "repo_id": 1126625946,
+      "repo": "supernovae-st/nika",
+      "verdict": "on",
+      "reason": "Nika is a Rust-based workflow engine and CLI/TUI for defining, running, and verifying AI development workflows, clearly serving developers and operators.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002286
+    },
+    {
+      "repo_id": 1306176764,
+      "repo": "tacyan/zaivern-code",
+      "verdict": "on",
+      "reason": "Zaivern Code is a developer-focused Rust desktop tool for orchestrating multiple AI coding agents and preventing merge conflicts.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002056
+    },
+    {
+      "repo_id": 1184461384,
+      "repo": "tang-vu/ContribAI",
+      "verdict": "on",
+      "reason": "ContribAI is an AI-assisted developer tool that analyzes code repositories and prepares evidence-backed, reviewable pull requests for maintainers.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.000203
+    },
+    {
+      "repo_id": 1140373907,
+      "repo": "Taoidle/plan-cascade",
+      "verdict": "on",
+      "reason": "An AI-powered developer framework that decomposes projects and orchestrates coding agents, directly supporting software development workflows.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001972
+    },
+    {
+      "repo_id": 1117923796,
+      "repo": "tassiovirginio/try-rs",
+      "verdict": "on",
+      "reason": "try-rs is a developer-focused CLI/TUI workspace manager for organizing temporary coding experiments and projects.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001956
+    },
+    {
+      "repo_id": 1100623545,
+      "repo": "termide/termide",
+      "verdict": "on",
+      "reason": "TermIDE is an integrated developer workspace providing an editor, LSP, Git, terminal, coding agent, and related development tools for software developers.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002128
+    },
+    {
+      "repo_id": 1215501706,
+      "repo": "thClaws/thClaws",
+      "verdict": "on",
+      "reason": "An AI agent harness for coding, automation, and developer workflows, providing CLI, desktop, and web interfaces for software development.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002178
+    },
+    {
+      "repo_id": 1286986255,
+      "repo": "tinyhumansai/tinyflows",
+      "verdict": "on",
+      "reason": "A Rust library for building, compiling, and running agentic workflow automations, primarily used by developers integrating software workflows.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001942
+    },
+    {
+      "repo_id": 1117896698,
+      "repo": "tony1223/better-agent-terminal",
+      "verdict": "on",
+      "reason": "A developer-focused terminal and workspace tool with Claude Code/Codex integration, git tooling, and project terminal management.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.000201
+    },
+    {
+      "repo_id": 1410338898,
+      "repo": "tony3liu/eido",
+      "verdict": "on",
+      "reason": "Eido is a macOS AI coding workspace for code editing, agent-assisted development, and code review, directly serving software developers.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.000215
+    },
+    {
+      "repo_id": 1221331978,
+      "repo": "tools-rs/ramag",
+      "verdict": "on",
+      "reason": "Ramag is a desktop workspace for developers managing databases, Git, SSH/SFTP, object storage, and related development workflows.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002282
+    },
+    {
+      "repo_id": 1199441815,
+      "repo": "trailofbits/coop",
+      "verdict": "on",
+      "reason": "A Rust CLI for managing isolated disposable VMs to safely run AI coding agents and development tools.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001882
+    },
+    {
+      "repo_id": 1204161654,
+      "repo": "trigora-dev/trigora",
+      "verdict": "on",
+      "reason": "Trigora is a developer-facing durable execution and workflow platform for building and operating long-running AI agents and programs.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002624
+    },
+    {
+      "repo_id": 946585140,
+      "repo": "trinhminhtriet/spiko",
+      "verdict": "on",
+      "reason": "Spiko is a Rust-based load testing and performance analysis tool used by developers to test web applications.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001966
+    },
+    {
+      "repo_id": 1125135212,
+      "repo": "Tuntii/RustAPI",
+      "verdict": "on",
+      "reason": "A Rust web framework and CLI for developers building, documenting, deploying, and operating APIs, including AI/LLM services.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002218
+    },
+    {
+      "repo_id": 1291098094,
+      "repo": "Tura-AI/tura",
+      "verdict": "on",
+      "reason": "suspicious-text: Tura is an agent runtime harness for executing coding-agent workflows more efficiently, directly serving software developers and fitting Rust developer tooling.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "03486bbbe07e3464851c566b9e5084f2134036b33d7932c8fc225fe6e118e3f5",
+      "cost_usd": 0.0002506
+    },
+    {
+      "repo_id": 1196223978,
+      "repo": "ubugeeei-prod/corsa-bind",
+      "verdict": "on",
+      "reason": "A Rust-based systems interface for the native TypeScript compiler that enables developers to build custom checker tooling and lint rules.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001946
+    },
+    {
+      "repo_id": 1104883572,
+      "repo": "ultralytics/template-rust",
+      "verdict": "on",
+      "reason": "A Rust project template that provides developers with standardized build, testing, linting, coverage, benchmarking, CI, and publishing tooling.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002006
+    },
+    {
+      "repo_id": 1216450471,
+      "repo": "unhappychoice/splashboard",
+      "verdict": "on",
+      "reason": "A Rust terminal dashboard for developers that displays git, CI, PR, and other development-workflow information on shell startup.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0003892
+    },
+    {
+      "repo_id": 1103697168,
+      "repo": "universal-tool-calling-protocol/rs-utcp",
+      "verdict": "on",
+      "reason": "A Rust client library implementing a universal tool-calling protocol for AI agents, intended as developer infrastructure for integrating and discovering tools.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002568
+    },
+    {
+      "repo_id": 1194549555,
+      "repo": "unixwin/niubash",
+      "verdict": "on",
+      "reason": "A Rust-native Bash shell and terminal environment for developers and AI coding agents, directly serving software development workflows.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002188
+    },
+    {
+      "repo_id": 1180326843,
+      "repo": "utensils/mold",
+      "verdict": "off",
+      "reason": "Mold is primarily an end-user local AI image and video generation application, not a tool for developers performing software development work.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002204
+    },
+    {
+      "repo_id": 1125922204,
+      "repo": "utensils/nxv",
+      "verdict": "on",
+      "reason": "nxv is a developer-facing CLI, API, and web tool for searching Nix package versions and exact nixpkgs commits.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002188
+    },
+    {
+      "repo_id": 1018267033,
+      "repo": "vaibhav-mattoo/alman",
+      "verdict": "on",
+      "reason": "Alman is a Rust CLI/TUI developer workflow tool for managing shell aliases and command history to improve command-line development efficiency.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.000203
+    },
+    {
+      "repo_id": 952968209,
+      "repo": "venqoi/thundery",
+      "verdict": "off",
+      "reason": "Thundery is an end-user weather information CLI, not a tool primarily used by software developers.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001922
+    },
+    {
+      "repo_id": 1188469040,
+      "repo": "VeraTools/vera",
+      "verdict": "on",
+      "reason": "Vera is a local code-search tool for developers and AI coding agents, providing semantic and structured search across source code.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002172
+    },
+    {
+      "repo_id": 1152719361,
+      "repo": "VG-dev1/flux",
+      "verdict": "on",
+      "reason": "A Rust CLI for monitoring and managing system processes, which is a developer and software-operations tool.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.000279
+    },
+    {
+      "repo_id": 1001008163,
+      "repo": "Vitruves/nail-parquet",
+      "verdict": "off",
+      "reason": "A command-line data analysis tool for exploring and transforming Parquet and other files primarily serves data analysis users rather than software developers building or operating software.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002676
+    },
+    {
+      "repo_id": 1167442477,
+      "repo": "Vladimir-Urik/OxMgr",
+      "verdict": "on",
+      "reason": "Oxmgr is a developer and DevOps process manager for supervising, monitoring, and operating executable services.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001946
+    },
+    {
+      "repo_id": 1210481465,
+      "repo": "vyfor/animate",
+      "verdict": "off",
+      "reason": "A general-purpose Rust animation library for GUI and terminal interfaces, aimed at application developers rather than software development tooling.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.00019
+    },
+    {
+      "repo_id": 1229613037,
+      "repo": "Wangnov/codex-asr",
+      "verdict": "off",
+      "reason": "A speech-to-text CLI and REST service for end-user audio transcription, not a tool primarily used for software development.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002192
+    },
+    {
+      "repo_id": 1210743721,
+      "repo": "Wangnov/codex-threadripper",
+      "verdict": "on",
+      "reason": "A Rust CLI that manages Codex thread history for developers using an AI coding tool.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001998
+    },
+    {
+      "repo_id": 1173556668,
+      "repo": "whoisyurii/christ-cli",
+      "verdict": "off",
+      "reason": "A terminal Bible-reading app for Christian users, not a tool primarily used by software developers for development work.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001934
+    },
+    {
+      "repo_id": 1110407215,
+      "repo": "workdone0/twig",
+      "verdict": "on",
+      "reason": "Twig is a terminal and web tool for developers to explore, search, and inspect JSON, YAML, and HAR files during development and operations.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002794
+    },
+    {
+      "repo_id": 1186331671,
+      "repo": "wshm-dev/wshm",
+      "verdict": "on",
+      "reason": "wshm is a Rust-based AI repository agent for code review, issue triage, merge queues, and workflow automation used by software development teams.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002246
+    },
+    {
+      "repo_id": 1272582985,
+      "repo": "wuisabel-gif/MemWhale",
+      "verdict": "on",
+      "reason": "MemoryWhale is a developer-facing debugging memory and coding-agent tool that records development workflows and serves them via MCP.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002304
+    },
+    {
+      "repo_id": 1157425108,
+      "repo": "yashksaini-coder/Rustlens",
+      "verdict": "on",
+      "reason": "A terminal-based Rust code inspector for exploring source structure, making it a developer code-navigation tool.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001972
+    },
+    {
+      "repo_id": 943186462,
+      "repo": "YeautyYE/ez-ffmpeg",
+      "verdict": "on",
+      "reason": "A Rust library providing a safe FFmpeg integration interface is developer tooling for building media software.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002058
+    },
+    {
+      "repo_id": 1113292031,
+      "repo": "yetidevworks/ygrep",
+      "verdict": "on",
+      "reason": "ygrep is a Rust-based indexed code search and AI coding assistant tool used by developers to find and navigate source code.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0001936
+    },
+    {
+      "repo_id": 1147425065,
+      "repo": "yfedoseev/fossil-mcp",
+      "verdict": "on",
+      "reason": "Fossil MCP is a static-analysis and code-quality CLI/MCP tool that developers use to detect dead code, duplication, and scaffolding.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002116
+    },
+    {
+      "repo_id": 1216634387,
+      "repo": "yicheng47/runner",
+      "verdict": "on",
+      "reason": "Runner orchestrates AI coding agents in terminal sessions, directly supporting software developers' development work.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002166
+    },
+    {
+      "repo_id": 1206153161,
+      "repo": "zdk/lowfat",
+      "verdict": "on",
+      "reason": "A Rust CLI developer tool that filters and condenses command and file output to help coding agents and developers reduce noise and token usage.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002014
+    },
+    {
+      "repo_id": 1172010174,
+      "repo": "zerowand01/markplane",
+      "verdict": "on",
+      "reason": "Markplane is a developer-focused project management CLI and MCP tool that stores tasks and plans in a code repository for collaboration with AI coding assistants.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002512
+    },
+    {
+      "repo_id": 1296672011,
+      "repo": "zihanyang-dev/onmark",
+      "verdict": "off",
+      "reason": "Onmark is a screenplay-to-video authoring and rendering tool for creating films, aimed at content creators and agents rather than software developers doing development work.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0002654
+    },
+    {
+      "repo_id": 1253024947,
+      "repo": "ziuus/orbit-tui",
+      "verdict": "on",
+      "reason": "Orbit is a Rust terminal workspace and developer dashboard for monitoring systems and integrating coding agents, making it a tool used by developers during development and operations.",
+      "model": "openai/gpt-5.6-luna",
+      "prompt_sha256": "567eafff59bd9598e6932b72645e262fd17c9f156b4786cdde44f788dea41bf8",
+      "cost_usd": 0.0003682
+    }
+  ]
+}
