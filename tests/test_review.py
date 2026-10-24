@@ -123,8 +123,8 @@ def test_run_flags_status_cards_and_ranking():
 
 
 def test_review_handles_run_without_events(tmp_path):
-    result = json.loads((BASELINE / "result.json").read_text())
-    (tmp_path / "result.json").write_text(json.dumps(result))
+    result = json.loads((BASELINE / "result.json").read_text(encoding="utf-8"))
+    (tmp_path / "result.json").write_text(json.dumps(result), encoding="utf-8")
     sheet = review(tmp_path)
     assert "(not seen in this run)" in sheet and "Research: 0 browse (0 distinct" in sheet
 
@@ -134,7 +134,7 @@ def test_review_handles_run_without_events(tmp_path):
 
 @pytest.fixture
 def universe() -> Universe:
-    return Universe.model_validate_json((BASELINE / "universe-rust-devtools-25.json").read_text())
+    return Universe.model_validate_json((BASELINE / "universe-rust-devtools-25.json").read_text(encoding="utf-8"))
 
 
 def _prompt(universe: Universe, **kw) -> str:
@@ -229,13 +229,13 @@ def test_wrong_if_repetitive_and_varied():
 
 
 def test_coverage_low_flag(tmp_path):
-    (tmp_path / "result.json").write_text((BASELINE / "result.json").read_text())
+    (tmp_path / "result.json").write_text((BASELINE / "result.json").read_text(encoding="utf-8"), encoding="utf-8")
     browse_results = {"c_001", "c_002", "c_003"}
     kept = []
-    for line in (BASELINE / "events.jsonl").read_text().splitlines():
+    for line in (BASELINE / "events.jsonl").read_text(encoding="utf-8").splitlines():
         e = json.loads(line)
         if not (e["type"] == "tool_result" and e["call_id"] in browse_results):
             kept.append(line)
-    (tmp_path / "events.jsonl").write_text("\n".join(kept) + "\n")
+    (tmp_path / "events.jsonl").write_text("\n".join(kept) + "\n", encoding="utf-8")
     assert "[coverage-low] browse showed 0 of 25" in review(tmp_path)
     assert "coverage-low" not in review(BASELINE)

@@ -206,9 +206,9 @@ const CHAINS = [["T01","T02","T03","T10","T11","T17"], ["T05","T06","T07","T08",
 const CHECKS = [[2, "A · ~2:00 fake run in UI"], [3, "B · ~3:15 real run ok"], [4, "C · ~4:15 backup recorded"]];
 const PRI_LABEL = {core: "P0", opt: "P1 / stretch"};
 // Status as of the last update. Ready = every hard dependency is done.
-const STATUS_AT = "2026-10-24, after T11 and T19 merged; product works end to end in the UI (live luna run, $0.02); T08 awaits a re-check after T18 rebuilds";
-const DONE = new Set(["T01", "T02", "T03", "T04", "T05", "T06", "T07", "T09", "T10", "T11", "T12", "T13", "T14", "T15", "T16", "T19"]);
-const ACTIVE = new Set(["T08", "T18"]);  // tickets someone has started
+const STATUS_AT = "2026-10-24 16:25: product works end to end in the UI; S2 merged; S1 (Benny) and T18 in progress; T08 awaits a re-check after T18 rebuilds";
+const DONE = new Set(["T01", "T02", "T03", "T04", "T05", "T06", "T07", "T09", "T10", "T11", "T12", "T13", "T14", "T15", "T16", "T19", "S2"]);
+const ACTIVE = new Set(["T08", "T18", "S1"]);  // tickets someone has started
 
 const byId = Object.fromEntries(N.map(n => [n.id, n]));
 const kids = Object.fromEntries(N.map(n => [n.id, []]));
