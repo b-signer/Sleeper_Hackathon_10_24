@@ -30,3 +30,6 @@ env/
 
 # Generated JSON Schemas (uv run sleeper schema)
 schemas/
+
+# Playwright MCP snapshots and screenshots
+.playwright-mcp/
