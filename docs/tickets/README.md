@@ -13,27 +13,29 @@ Sizes are time budgets: **S** is about 30 minutes, **M** about 45, **L** about 9
 
 ## Index
 
-| ID | Title | Track | Pri | Size | Depends on | File |
-|---|---|---|---|---|---|---|
-| T01 | Project skeleton | Foundations | P0 | S | none | [foundations](foundations.md) |
-| T02 | Shared contracts | Foundations | P0 | M | T01 | [foundations](foundations.md) |
-| T03 | Fake data | Foundations | P0 | S | T02 | [foundations](foundations.md) |
-| T04 👤 | Keys and spend limit | Foundations | P0 | S | none | [foundations](foundations.md) |
-| T05 | GitHub access layer | Data | P0 | M | T01 | [data](data.md) |
-| T06 | Repo metrics | Data | P0 | M | T05 | [data](data.md) |
-| T07 | Universe builder and criteria scores | Data | P0 | M | T02, T06 | [data](data.md) |
-| T08 👤 | Build the demo universes | Data | P0 | S (waiting) | T07 | [data](data.md) |
-| T09 | Agent tools | Agent | P0 | M | T02, T03 | [agent](agent.md) |
-| T10 | Agent loop, budget, run records | Agent | P0 | L | T02, T03, T04 | [agent](agent.md) |
-| T11 | Prompt and tuning (Checkpoint B) | Agent | P0 | M | T09, T10, T08 | [agent](agent.md) |
-| T12 | Skeptic review | Agent | P1 | S | T10 | [agent](agent.md) |
-| T13 | Fact check | Agent | P1 | S | T03 | [agent](agent.md) |
-| T14 | Server, event stream, replay | UI | P0 | M | T02 (T03 for tests) | [ui](ui.md) |
-| T15 | Launcher, live trace, budget meter | UI | P0 | M | T14 | [ui](ui.md) |
-| T16 | Pick cards view | UI | P0 | M | T14 | [ui](ui.md) |
-| T17 👤 | Demo runs, picks on record, rehearsal | Demo | P0 | M | all P0 | [demo](demo.md) |
-| S1 | Rough backtest | Stretch | | L | T07, T10 | [demo](demo.md) |
-| S2 | Linked papers | Stretch | | M | T09 | [demo](demo.md) |
+**Status as of 2026-10-24, after T09, T15 and T16 were merged.** Update this column when you start or finish a ticket. Build notes: [T09-plan.md](T09-plan.md), [T10-plan.md](T10-plan.md).
+
+| ID | Status | Title | Track | Pri | Size | Depends on | File |
+|---|---|---|---|---|---|---|---|
+| T01 | ✅ Done | Project skeleton | Foundations | P0 | S | none | [foundations](foundations.md) |
+| T02 | ✅ Done | Shared contracts | Foundations | P0 | M | T01 | [foundations](foundations.md) |
+| T03 | ✅ Done | Fake data | Foundations | P0 | S | T02 | [foundations](foundations.md) |
+| T04 👤 | ✅ Done | Keys and spend limit | Foundations | P0 | S | none | [foundations](foundations.md) |
+| T05 | ✅ Done | GitHub access layer | Data | P0 | M | T01 | [data](data.md) |
+| T06 | ✅ Done | Repo metrics | Data | P0 | M | T05 | [data](data.md) |
+| T07 | ✅ Done | Universe builder and criteria scores | Data | P0 | M | T02, T06 | [data](data.md) |
+| T08 👤 | 🔨 In progress | Build the demo universes | Data | P0 | S (waiting) | T07 | [data](data.md) |
+| T09 | ✅ Done | Agent tools | Agent | P0 | M | T02, T03 | [agent](agent.md) |
+| T10 | ✅ Done | Agent loop, budget, run records | Agent | P0 | L | T02, T03, T04 | [agent](agent.md) |
+| T11 | ⏳ Waiting | Prompt and tuning (Checkpoint B) | Agent | P0 | M | T09, T10, T08 | [agent](agent.md) |
+| T12 | ▶ Ready (P1) | Skeptic review | Agent | P1 | S | T10 | [agent](agent.md) |
+| T13 | ▶ Ready (P1) | Fact check | Agent | P1 | S | T03 | [agent](agent.md) |
+| T14 | ✅ Done | Server, event stream, replay | UI | P0 | M | T02 (T03 for tests) | [ui](ui.md) |
+| T15 | ✅ Done | Launcher, live trace, budget meter | UI | P0 | M | T14 | [ui](ui.md) |
+| T16 | ✅ Done | Pick cards view | UI | P0 | M | T14 | [ui](ui.md) |
+| T17 👤 | ⏳ Waiting | Demo runs, picks on record, rehearsal | Demo | P0 | M | all P0 | [demo](demo.md) |
+| S1 | ⏳ Stretch | Rough backtest | Stretch | | L | T07, T10 | [demo](demo.md) |
+| S2 | ⏳ Stretch | Linked papers | Stretch | | M | T09 | [demo](demo.md) |
 
 ## Schedule and checkpoints
 

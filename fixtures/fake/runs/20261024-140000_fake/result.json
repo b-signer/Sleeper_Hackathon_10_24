@@ -1,0 +1,341 @@
+{
+  "schema_version": 1,
+  "run_id": "20261024-140000_fake",
+  "status": "ok",
+  "error": null,
+  "settings": {
+    "topic": "fake",
+    "universe_file": "fixtures/fake/universe.json",
+    "stars_min": 50,
+    "stars_max": 2000,
+    "created_after": "2025-01-01",
+    "max_picks": 5,
+    "min_ranked": 5,
+    "model": "openai/gpt-5.6-luna",
+    "token_budget": 300000,
+    "max_turns": 25,
+    "max_wall_clock_s": 600,
+    "seed": 7
+  },
+  "started_at": "2026-10-24T14:00:00Z",
+  "finished_at": "2026-10-24T14:01:50Z",
+  "turns": 6,
+  "usage": {
+    "prompt_tokens": 91900,
+    "completion_tokens": 4510,
+    "cached_tokens": 0,
+    "total_tokens": 96410,
+    "cost_usd": 0.023792
+  },
+  "cards": [
+    {
+      "repo": "acme/quiver",
+      "pitch": "Incremental Rust linter: 81 commits in 90 days and 12 new forks this month, at only 340 stars.",
+      "criteria": {
+        "popularity": {
+          "score": 55.6,
+          "score_call_id": "c_003",
+          "key_figure": {
+            "label": "Stars",
+            "value": 340.0,
+            "unit": "stars",
+            "source_call_id": "c_003",
+            "source_path": "/metrics/stars"
+          }
+        },
+        "momentum": {
+          "score": 81.2,
+          "score_call_id": "c_003",
+          "key_figure": {
+            "label": "Forks, last 30 days",
+            "value": 12.0,
+            "unit": "forks",
+            "source_call_id": "c_003",
+            "source_path": "/metrics/forks_30d"
+          }
+        },
+        "quality": {
+          "score": 75.0,
+          "score_call_id": "c_003",
+          "key_figure": {
+            "label": "Commits, last 90 days",
+            "value": 81.0,
+            "unit": "commits",
+            "source_call_id": "c_003",
+            "source_path": "/metrics/commits_90d"
+          }
+        },
+        "newness": {
+          "score": 55.6,
+          "score_call_id": "c_003",
+          "key_figure": {
+            "label": "Age",
+            "value": 140.0,
+            "unit": "days",
+            "source_call_id": "c_003",
+            "source_path": "/metrics/age_days"
+          }
+        }
+      },
+      "case": [
+        {
+          "text": "81 commits in the last 90 days from 4 authors",
+          "source_call_ids": [
+            "c_003"
+          ]
+        },
+        {
+          "text": "Ships regularly: 6 releases so far",
+          "source_call_ids": [
+            "c_003"
+          ]
+        },
+        {
+          "text": "The README documents installation and usage",
+          "source_call_ids": [
+            "c_009"
+          ]
+        }
+      ],
+      "risks": [
+        {
+          "text": "Only 4 active authors in the last 90 days",
+          "source_call_ids": [
+            "c_003"
+          ]
+        }
+      ],
+      "proven_wrong_if": [
+        "No new release in the next 60 days",
+        "Commits in the last 90 days fall below 20"
+      ],
+      "confidence": 0.7,
+      "skeptic": {
+        "verdict": "survives",
+        "argument": "Activity is broad (4 authors) and releases are regular; the star count is low for the work shipped.",
+        "cited_call_ids": [
+          "c_003"
+        ],
+        "model": "openai/gpt-5.6-luna"
+      },
+      "fact_flags": []
+    },
+    {
+      "repo": "lumen-dev/tidepool",
+      "pitch": "Live connection-pool debugger with 6 active authors and 180 stars.",
+      "criteria": {
+        "popularity": {
+          "score": 33.3,
+          "score_call_id": "c_004",
+          "key_figure": {
+            "label": "Stars",
+            "value": 180.0,
+            "unit": "stars",
+            "source_call_id": "c_004",
+            "source_path": "/metrics/stars"
+          }
+        },
+        "momentum": {
+          "score": 62.5,
+          "score_call_id": "c_004",
+          "key_figure": {
+            "label": "Forks, last 30 days",
+            "value": 9.0,
+            "unit": "forks",
+            "source_call_id": "c_004",
+            "source_path": "/metrics/forks_30d"
+          }
+        },
+        "quality": {
+          "score": 87.5,
+          "score_call_id": "c_004",
+          "key_figure": {
+            "label": "Commits, last 90 days",
+            "value": 120.0,
+            "unit": "commits",
+            "source_call_id": "c_004",
+            "source_path": "/metrics/commits_90d"
+          }
+        },
+        "newness": {
+          "score": 77.8,
+          "score_call_id": "c_004",
+          "key_figure": {
+            "label": "Age",
+            "value": 95.0,
+            "unit": "days",
+            "source_call_id": "c_004",
+            "source_path": "/metrics/age_days"
+          }
+        }
+      },
+      "case": [
+        {
+          "text": "120 commits in the last 90 days from 6 authors",
+          "source_call_ids": [
+            "c_004"
+          ]
+        },
+        {
+          "text": "14 forks created in the last 30 days",
+          "source_call_ids": [
+            "c_004"
+          ]
+        }
+      ],
+      "risks": [
+        {
+          "text": "Young: 95 days old",
+          "source_call_ids": [
+            "c_004"
+          ]
+        }
+      ],
+      "proven_wrong_if": [
+        "Fewer than 3 new forks in a month"
+      ],
+      "confidence": 0.6,
+      "skeptic": {
+        "verdict": "weakened",
+        "argument": "Only 95 days old: recent momentum may be launch interest that fades.",
+        "cited_call_ids": [
+          "c_004"
+        ],
+        "model": "openai/gpt-5.6-luna"
+      },
+      "fact_flags": [
+        {
+          "card_path": "case[1].text",
+          "shown": "14",
+          "source_call_id": "c_004",
+          "source_path": "/metrics/forks_30d",
+          "found": "9",
+          "message": "14 does not match forks_30d = 9 in c_004"
+        }
+      ]
+    },
+    {
+      "repo": "ghostly/phantom-build",
+      "pitch": "Build tool gaining 20.0 stars a day: a momentum bet.",
+      "criteria": {
+        "popularity": {
+          "score": 88.9,
+          "score_call_id": "c_007",
+          "key_figure": {
+            "label": "Stars",
+            "value": 1200.0,
+            "unit": "stars",
+            "source_call_id": "c_007",
+            "source_path": "/metrics/stars"
+          }
+        },
+        "momentum": {
+          "score": 62.5,
+          "score_call_id": "c_007",
+          "key_figure": {
+            "label": "Forks, last 30 days",
+            "value": 1.0,
+            "unit": "forks",
+            "source_call_id": "c_007",
+            "source_path": "/metrics/forks_30d"
+          }
+        },
+        "quality": {
+          "score": 25.0,
+          "score_call_id": "c_007",
+          "key_figure": {
+            "label": "Commits, last 90 days",
+            "value": 3.0,
+            "unit": "commits",
+            "source_call_id": "c_007",
+            "source_path": "/metrics/commits_90d"
+          }
+        },
+        "newness": {
+          "score": 88.9,
+          "score_call_id": "c_007",
+          "key_figure": {
+            "label": "Age",
+            "value": 60.0,
+            "unit": "days",
+            "source_call_id": "c_007",
+            "source_path": "/metrics/age_days"
+          }
+        }
+      },
+      "case": [
+        {
+          "text": "20.0 stars per day since it was created",
+          "source_call_ids": [
+            "c_007"
+          ]
+        },
+        {
+          "text": "At least 300 star events in the last 30 days",
+          "source_call_ids": [
+            "c_007"
+          ]
+        }
+      ],
+      "risks": [
+        {
+          "text": "Only 3 commits in the last 90 days",
+          "source_call_ids": [
+            "c_007"
+          ]
+        },
+        {
+          "text": "The README is short and makes big claims",
+          "source_call_ids": [
+            "c_011"
+          ]
+        }
+      ],
+      "proven_wrong_if": [
+        "Fewer than 10 commits in the next 90 days"
+      ],
+      "confidence": 0.4,
+      "skeptic": {
+        "verdict": "killed",
+        "argument": "At least 300 star events in 30 days, but only 3 commits in 90 days and 1 new fork. That looks like a bought or viral star burst, not a project gaining users.",
+        "cited_call_ids": [
+          "c_007",
+          "c_011"
+        ],
+        "model": "openai/gpt-5.6-luna"
+      },
+      "fact_flags": []
+    }
+  ],
+  "ranking": [
+    {
+      "rank": 1,
+      "repo": "acme/quiver",
+      "note": null
+    },
+    {
+      "rank": 2,
+      "repo": "lumen-dev/tidepool",
+      "note": null
+    },
+    {
+      "rank": 3,
+      "repo": "ghostly/phantom-build",
+      "note": "Momentum bet; activity is thin"
+    },
+    {
+      "rank": 4,
+      "repo": "fernwork/cargo-sprout",
+      "note": "Promising but very new"
+    },
+    {
+      "rank": 5,
+      "repo": "solo-hacker/bytewise",
+      "note": "Single maintainer (1 author in 90 days)"
+    }
+  ],
+  "summary": "Two young Rust tools pair steady commits with fast star growth at low star counts. The third pick is a momentum bet that the skeptic should test.",
+  "ranking_below_min": false,
+  "submit_attempts": 2,
+  "last_submit_errors": []
+}

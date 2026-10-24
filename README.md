@@ -20,6 +20,18 @@ cp .env.example .env     # then fill in GITHUB_TOKEN and OPENROUTER_API_KEY
 uv run sleeper --help    # command-line entry point
 ```
 
+## Web UI (T14–T16)
+
+```sh
+uv run sleeper serve     # http://127.0.0.1:8000
+```
+
+Pick a topic and model, start a run, and watch the trace live; the picks appear when it finishes. Click any number or `c_…` citation on a card to see the tool output it came from. Past runs can be reopened or replayed (1×, 4×, 16×). Deep link: `/#run=<run_id>` (add `&tab=trace` to stay on the trace).
+
+- **Scripted fake (offline, free)** runs T10's scripted agent on the fake universe. Real models spend from the OpenRouter budget (the spend guard still applies). With `SLEEPER_OFFLINE=1`, only the scripted model can run.
+- The list always includes the recorded fake run and the fake universe, so the demo works with no network. Real universes are read from `SLEEPER_UNIVERSES_DIR` (default `universes/`).
+- API reference: the top of [`src/sleeper/server/app.py`](src/sleeper/server/app.py).
+
 ## Tests
 
 ```sh

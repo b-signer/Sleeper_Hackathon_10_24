@@ -1,0 +1,11 @@
+# cargo-sprout
+
+Scaffold Rust crates from templates with sensible CI defaults
+
+## Install
+
+    cargo install cargo-sprout
+
+## Usage
+
+Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo used in tests. Placeholder README text for a fictional repo us
