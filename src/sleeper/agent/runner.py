@@ -19,12 +19,13 @@ from sleeper.agent.spend import check_spend
 from sleeper.agent.types import ChatModel, ToolExecutor
 from sleeper.config import Settings, load_settings
 from sleeper.contracts import RunEvent, RunFinished, RunResult, RunSettings, Universe, Usage
+from sleeper.universe import UNIVERSES_DIR as BUILT_UNIVERSES_DIR
 
 log = logging.getLogger(__name__)
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
 FAKE_UNIVERSE = Path("fixtures/fake/universe.json")
-UNIVERSES_DIR = Path("data/universes")
+UNIVERSES_DIR = BUILT_UNIVERSES_DIR  # where T07's `sleeper build-universe` writes them
 
 
 def _find(path: Path) -> Path | None:
@@ -36,7 +37,7 @@ def _find(path: Path) -> Path | None:
 
 
 def load_universe(settings: RunSettings) -> Universe:
-    """settings.universe_file if set; topic 'fake' -> the T03 fixture; else universes/<topic>.json."""
+    """settings.universe_file if set; topic 'fake' -> the T03 fixture; else data/universes/<topic>.json."""
     if settings.universe_file:
         path = Path(settings.universe_file)
     elif settings.topic == "fake":
