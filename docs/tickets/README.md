@@ -24,7 +24,7 @@ Sizes are time budgets: **S** is about 30 minutes, **M** about 45, **L** about 9
 | T05 | ✅ Done | GitHub access layer | Data | P0 | M | T01 | [data](data.md) |
 | T06 | ✅ Done | Repo metrics | Data | P0 | M | T05 | [data](data.md) |
 | T07 | ✅ Done | Universe builder and criteria scores | Data | P0 | M | T02, T06 | [data](data.md) |
-| T08 👤 | 🔨 In progress | Build the demo universes | Data | P0 | S (waiting) | T07 | [data](data.md) |
+| T08 👤 | 🔨 Built, awaiting human check | Build the demo universes | Data | P0 | S (waiting) | T07 | [data](data.md) |
 | T09 | ✅ Done | Agent tools | Agent | P0 | M | T02, T03 | [agent](agent.md) |
 | T10 | ✅ Done | Agent loop, budget, run records | Agent | P0 | L | T02, T03, T04 | [agent](agent.md) |
 | T11 | ⏳ Waiting | Prompt and tuning (Checkpoint B) | Agent | P0 | M | T09, T10, T08 | [agent](agent.md) |
