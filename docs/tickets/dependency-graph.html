@@ -169,9 +169,9 @@ const COLS = [
 ];
 const LANES = [
   ["found", "Foundations", "T01–T04"],
-  ["data", "Data", "T05–T08"],
+  ["data", "Data", "T05–T08 · T18"],
   ["agent", "Agent", "T09–T13"],
-  ["ui", "Web UI", "T14–T16"],
+  ["ui", "Web UI", "T14–T16 · T19"],
   ["demo", "Demo + stretch", "T17 · S1 · S2"],
 ];
 // pri: core (= P0) | opt (P1 / stretch) ; h = needs a person ; d = hard deps ; s = soft deps
@@ -185,6 +185,7 @@ const N = [
   {id:"T06", t:"Repo metrics", f:"Repo metrics behind the four criteria", lane:"data", col:2, pri:"core", d:["T05"]},
   {id:"T07", t:"Universe + scores", f:"Universe builder and criteria scores", lane:"data", col:3, pri:"core", d:["T02","T06"]},
   {id:"T08", t:"Build demo universes", f:"Build the demo universes (2 topics, ~2:45)", lane:"data", col:3, pri:"core", h:1, d:["T07"]},
+  {id:"T18", t:"Relevance + quality", f:"Topic relevance and quality score (real-data findings); rebuilds both universes", lane:"data", col:4, pri:"core", d:["T07"]},
 
   {id:"T09", t:"Agent tools", f:"Agent tools: browse/screen, details, README, submit", lane:"agent", col:2, pri:"core", d:["T02","T03"]},
   {id:"T10", t:"Loop · Checkpoint A", f:"Agent loop, budget, run records (Checkpoint A ~2:00)", lane:"agent", col:2, pri:"core", d:["T02","T03","T04"]},
@@ -195,8 +196,9 @@ const N = [
   {id:"T14", t:"Server + replay", f:"Server, event stream, replay", lane:"ui", col:1, pri:"core", d:["T02"], s:["T03"]},
   {id:"T15", t:"Launcher + trace", f:"Launcher, live trace, budget meter", lane:"ui", col:2, pri:"core", d:["T14"]},
   {id:"T16", t:"Pick cards view", f:"Pick cards view", lane:"ui", col:2, pri:"core", d:["T14"]},
+  {id:"T19", t:"Real runs from UI", f:"Real runs from the UI: Replay vs Live run, readable refusals", lane:"ui", col:4, pri:"core", d:["T15","T09"]},
 
-  {id:"T17", t:"Demo · Checkpoint C", f:"Demo runs, picks on record, rehearsal (backup recorded by ~4:15)", lane:"demo", col:5, pri:"core", h:1, d:["T11","T15","T16","T08"], s:["T12","T13"]},
+  {id:"T17", t:"Demo · Checkpoint C", f:"Demo runs, picks on record, rehearsal (backup recorded by ~4:15)", lane:"demo", col:5, pri:"core", h:1, d:["T11","T15","T16","T08","T18","T19"], s:["T12","T13"]},
   {id:"S1", t:"Rough backtest", f:"Rough backtest (stretch)", lane:"demo", col:5, pri:"opt", d:["T07","T10"]},
   {id:"S2", t:"Linked papers", f:"Linked papers (stretch)", lane:"demo", col:5, pri:"opt", d:["T09"]},
 ];
@@ -204,9 +206,9 @@ const CHAINS = [["T01","T02","T03","T10","T11","T17"], ["T05","T06","T07","T08",
 const CHECKS = [[2, "A · ~2:00 fake run in UI"], [3, "B · ~3:15 real run ok"], [4, "C · ~4:15 backup recorded"]];
 const PRI_LABEL = {core: "P0", opt: "P1 / stretch"};
 // Status as of the last update. Ready = every hard dependency is done.
-const STATUS_AT = "2026-10-24, after T13 merged; T08 built, awaiting human sanity check";
+const STATUS_AT = "2026-10-24, after T12 merged and the T18/T19 plan; T08 awaits a re-check after T18 rebuilds";
 const DONE = new Set(["T01", "T02", "T03", "T04", "T05", "T06", "T07", "T09", "T10", "T12", "T13", "T14", "T15", "T16"]);
-const ACTIVE = new Set(["T08"]);  // tickets someone has started
+const ACTIVE = new Set(["T08", "T11"]);  // tickets someone has started
 
 const byId = Object.fromEntries(N.map(n => [n.id, n]));
 const kids = Object.fromEntries(N.map(n => [n.id, []]));
