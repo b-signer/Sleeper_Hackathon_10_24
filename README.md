@@ -1,8 +1,8 @@
 # Sleeper
 
-An agent that finds underrated GitHub repos, with a backtest that checks whether its picks beat simple baselines.
+An agent that finds underrated GitHub repos and rates them on popularity, momentum, quality and newness.
 
-- [PRD](docs/prd.md): what we are building and why
-- [Decisions](docs/decisions.md): the big locked choices, verified facts and known traps
-- [Tickets](docs/tickets/README.md): work packages, tickets, dependencies and schedule
-- [Archive](docs/archive/): earlier PRD drafts (v0.2 has detailed implementation hints)
+- [PRD](docs/prd.md): what we are building and why (MVP)
+- [Decisions](docs/decisions.md): the few locked choices
+- [Tickets](docs/tickets/README.md): 17 MVP tickets, schedule and checkpoints ([dependency graph](docs/tickets/dependency-graph.html))
+- [Archive](docs/archive/): earlier plans. `v0.3-full-plan/` covers the backtest and the full grounding suite (stretch material)

@@ -109,20 +109,19 @@ aside dd { margin: 0; }
 
 <div class="wrap">
   <header>
-    <h1>Sleeper build graph</h1>
+    <h1>Sleeper MVP build graph</h1>
     <p class="sub">Each column is a time window: tickets in the same column can run in parallel. Each row is a track. Arrows point from a ticket to the tickets that need it. Hover or click a ticket to see everything it waits on and everything it unblocks.</p>
   </header>
 
   <div class="bar">
     <div class="legend">
-      <span class="key"><span class="sw core"></span>Core (demo needs it)</span>
-      <span class="key"><span class="sw p0"></span>P0, after Core</span>
-      <span class="key"><span class="sw opt"></span>P1 / P2 / extension</span>
+      <span class="key"><span class="sw core"></span>P0 (demo needs it)</span>
+      <span class="key"><span class="sw opt"></span>P1 / stretch</span>
       <span class="key"><span class="sw crit"></span>Critical path</span>
       <span class="key"><span class="sw hum"></span>Needs a person</span>
       <span class="key"><span class="ln"></span>Checkpoint</span>
     </div>
-    <label class="tog"><input type="checkbox" id="coreonly"> Show Core only</label>
+    <label class="tog"><input type="checkbox" id="coreonly"> Show P0 only</label>
   </div>
 
   <div class="stage">
@@ -131,7 +130,7 @@ aside dd { margin: 0; }
       <div>
         <h2>Critical path</h2>
         <p class="crit-path" id="critText"></p>
-        <p class="hint">The rate-limited universe build sits in the middle of it. If a checkpoint slips more than 20 minutes, apply the cut order.</p>
+        <p class="hint">Two chains: the agent loop, and the data that feeds tuning. Both meet at T11. If a checkpoint slips more than 20 minutes, apply the cut order.</p>
       </div>
       <div id="detail"><p class="hint">Select a ticket to see its dependencies.</p></div>
     </aside>
@@ -140,97 +139,55 @@ aside dd { margin: 0; }
 
 <script>
 const COLS = [
-  ["0:00–0:20", "kickoff"],
-  ["0:20–0:50", "contracts, stage 1"],
-  ["0:50–1:30", "build on fakes"],
-  ["1:30–2:15", "builds start ~2:00"],
-  ["2:15–3:15", "integration"],
-  ["3:15–4:00", "real runs, scoring"],
-  ["4:00–4:50", "campaign"],
-  ["4:50–5:30", "rehearsal"],
+  ["0:00–0:30", "kickoff"],
+  ["0:30–1:00", "fakes + plumbing"],
+  ["1:00–2:00", "build on fakes"],
+  ["2:00–3:15", "real data"],
+  ["3:15–4:15", "polish"],
+  ["4:15–5:30", "demo"],
 ];
 const LANES = [
-  ["found", "Foundations", "WP0"],
-  ["data", "GitHub data", "WP1"],
-  ["uni", "Universe", "WP2"],
-  ["tools", "Agent tools", "WP3"],
-  ["agent", "Agent runtime", "WP4"],
-  ["ground", "Grounding", "WP5"],
-  ["bt", "Backtest", "WP6"],
-  ["ui", "Web UI", "WP7"],
-  ["rel", "Release", "WP8 · WP9"],
+  ["found", "Foundations", "T01–T04"],
+  ["data", "Data", "T05–T08"],
+  ["agent", "Agent", "T09–T13"],
+  ["ui", "Web UI", "T14–T16"],
+  ["demo", "Demo + stretch", "T17 · S1 · S2"],
 ];
-// pri: core | p0 | opt ; h = needs a person ; d = hard deps ; s = soft deps
+// pri: core (= P0) | opt (P1 / stretch) ; h = needs a person ; d = hard deps ; s = soft deps
 const N = [
-  {id:"T0.5", t:"Keys + spend limit", f:"Accounts, keys and spend limit", lane:"found", col:0, pri:"core", h:1, d:[]},
-  {id:"T0.1", t:"Project skeleton", f:"Project skeleton", lane:"found", col:0, pri:"core", d:[]},
-  {id:"T0.2", t:"Shared contracts", f:"Shared contracts (two-stage freeze)", lane:"found", col:1, pri:"core", d:["T0.1"]},
-  {id:"T0.4", t:"Verify assumptions", f:"Verify external assumptions (A1 first)", lane:"found", col:1, pri:"core", d:["T0.1","T0.5"]},
-  {id:"T0.3", t:"Fake data", f:"Fake data (fixtures), target ~1:15", lane:"found", col:2, pri:"core", d:["T0.2"]},
-  {id:"T0.6", t:"Runtime core", f:"Runtime core: tool registry, run context, metered LLM client, fake model", lane:"found", col:2, pri:"core", d:["T0.2"]},
+  {id:"T04", t:"Keys + spend limit", f:"Keys and spend limit", lane:"found", col:0, pri:"core", h:1, d:[]},
+  {id:"T01", t:"Project skeleton", f:"Project skeleton", lane:"found", col:0, pri:"core", d:[]},
+  {id:"T02", t:"Shared contracts", f:"Shared contracts (freeze ~0:45)", lane:"found", col:0, pri:"core", d:["T01"]},
+  {id:"T03", t:"Fake data", f:"Fake data incl. a recorded fake run (~1:00)", lane:"found", col:1, pri:"core", d:["T02"]},
 
-  {id:"T1.1", t:"GitHub access layer", f:"GitHub access layer", lane:"data", col:1, pri:"core", d:["T0.1"]},
-  {id:"T1.2", t:"Stars as of T", f:"Stars as of T", lane:"data", col:2, pri:"core", d:["T1.1","T0.4"]},
-  {id:"T1.3", t:"Activity as of T", f:"Activity as of T", lane:"data", col:2, pri:"core", d:["T1.1"]},
-  {id:"T1.4", t:"README as of T", f:"README and description as of T", lane:"data", col:2, pri:"core", d:["T1.1"]},
-  {id:"T1.5", t:"Future-data guard", f:"Future-data guard", lane:"data", col:2, pri:"core", d:["T0.2"]},
-  {id:"T1.6", t:"Live-mode data", f:"Live-mode data", lane:"data", col:4, pri:"p0", d:["T1.2","T1.3","T1.4"]},
-  {id:"T1.7", t:"Contributors as of T", f:"Contributors as of T", lane:"data", col:4, pri:"opt", d:["T1.1"]},
+  {id:"T05", t:"GitHub access layer", f:"GitHub access layer (auth, rate limits, cache, offline)", lane:"data", col:1, pri:"core", d:["T01"]},
+  {id:"T06", t:"Repo metrics", f:"Repo metrics behind the four criteria", lane:"data", col:2, pri:"core", d:["T05"]},
+  {id:"T07", t:"Universe + scores", f:"Universe builder and criteria scores", lane:"data", col:3, pri:"core", d:["T02","T06"]},
+  {id:"T08", t:"Build demo universes", f:"Build the demo universes (2 topics, ~2:45)", lane:"data", col:3, pri:"core", h:1, d:["T07"]},
 
-  {id:"T2.1", t:"Topic definitions", f:"Topic definitions", lane:"uni", col:0, pri:"core", d:[]},
-  {id:"T2.2a", t:"Universe candidates", f:"Universe candidates (code against a stubbed stars-at-T; real build needs T1.2)", lane:"uni", col:3, pri:"core", d:["T1.1","T1.2","T1.5","T2.1"]},
-  {id:"T2.2b", t:"Universe metrics", f:"Universe metrics", lane:"uni", col:4, pri:"core", d:["T2.2a","T1.3","T1.4"]},
-  {id:"T2.3", t:"Build backtest universes", f:"Build and commit backtest universes (builds start ~2:00; first final universe ~3:15, rest by ~3:45)", lane:"uni", col:4, pri:"core", h:1, d:["T1.2","T2.2a","T2.2b"]},
-  {id:"T2.4", t:"Build live universes", f:"Build live universes (2 topics)", lane:"uni", col:4, pri:"p0", d:["T1.6","T2.2b"]},
+  {id:"T09", t:"Agent tools", f:"Agent tools: browse/screen, details, README, submit", lane:"agent", col:2, pri:"core", d:["T02","T03"]},
+  {id:"T10", t:"Loop · Checkpoint A", f:"Agent loop, budget, run records (Checkpoint A ~2:00)", lane:"agent", col:2, pri:"core", d:["T02","T03","T04"]},
+  {id:"T11", t:"Prompt · Checkpoint B", f:"Prompt and tuning (Checkpoint B ~3:15)", lane:"agent", col:3, pri:"core", d:["T09","T10","T08"]},
+  {id:"T12", t:"Skeptic review", f:"Skeptic review (P1)", lane:"agent", col:4, pri:"opt", d:["T10"]},
+  {id:"T13", t:"Fact check", f:"Fact check (P1)", lane:"agent", col:4, pri:"opt", d:["T03"]},
 
-  {id:"T3.3", t:"Calculator tool", f:"Calculator tool", lane:"tools", col:2, pri:"core", d:["T0.2"]},
-  {id:"T3.4", t:"Submit + validation", f:"Submit tool and validation", lane:"tools", col:3, pri:"core", d:["T0.2","T0.6"]},
-  {id:"T3.1", t:"Browse + screen tools", f:"Browse and screen tools", lane:"tools", col:3, pri:"core", d:["T0.3","T0.6"]},
-  {id:"T3.2", t:"Deep-dive + README", f:"Deep-dive and README tools (fakes first, then real data)", lane:"tools", col:3, pri:"core", d:["T0.3","T0.6","T1.2","T1.3","T1.4"]},
-  {id:"T3.5", t:"Planted-repo injection", f:"Planted-repo injection", lane:"tools", col:4, pri:"opt", d:["T0.3","T3.2"]},
-  {id:"T3.6", t:"Contributors tool", f:"Contributors tool", lane:"tools", col:4, pri:"opt", d:["T1.7","T3.2"]},
+  {id:"T14", t:"Server + replay", f:"Server, event stream, replay", lane:"ui", col:1, pri:"core", d:["T02"], s:["T03"]},
+  {id:"T15", t:"Launcher + trace", f:"Launcher, live trace, budget meter", lane:"ui", col:2, pri:"core", d:["T14"]},
+  {id:"T16", t:"Pick cards view", f:"Pick cards view", lane:"ui", col:2, pri:"core", d:["T14"]},
 
-  {id:"T4.4", t:"Run records", f:"Run records", lane:"agent", col:2, pri:"core", d:["T0.2"]},
-  {id:"T4.1", t:"Agent loop", f:"Agent loop (stub tools first, then T3.1 and T3.4)", lane:"agent", col:3, pri:"core", d:["T0.3","T0.6"], s:["T3.1","T3.4"]},
-  {id:"T4.7", t:"Bear pass", f:"Bear pass", lane:"agent", col:3, pri:"p0", d:["T0.6","T4.4"]},
-  {id:"T4.2", t:"Budget + spend", f:"Budget and spend control", lane:"agent", col:4, pri:"core", d:["T4.1"]},
-  {id:"T4.5", t:"CLI + run command", f:"Command-line entry and run command", lane:"agent", col:4, pri:"core", d:["T4.1"]},
-  {id:"T4.8", t:"Pipeline · Checkpoint A", f:"Run pipeline integration (Checkpoint A ~2:45)", lane:"agent", col:4, pri:"core", d:["T4.1","T4.4","T5.1","T7.1","T7.3"], s:["T4.7"]},
-  {id:"T4.3", t:"Bounded context", f:"Bounded context", lane:"agent", col:4, pri:"core", d:["T4.1"]},
-  {id:"T4.6", t:"Prompt · Checkpoint B", f:"System prompt and tuning (Checkpoint B ~3:30: real runs on luna)", lane:"agent", col:5, pri:"core", d:["T4.1","T4.3","T3.2"], s:["T2.3","T2.4"]},
-
-  {id:"T5.1", t:"Grounding checks", f:"Deterministic grounding checks and scorecard", lane:"ground", col:3, pri:"core", d:["T0.3"]},
-  {id:"T5.2", t:"Claim judge", f:"Claim judge and labeled set", lane:"ground", col:3, pri:"p0", d:["T0.3","T0.6"]},
-  {id:"T5.3", t:"Planted-repo test", f:"Planted-repo test", lane:"ground", col:5, pri:"opt", d:["T3.5","T5.1"]},
-  {id:"T5.4", t:"Perturbation test", f:"Perturbation test (P2)", lane:"ground", col:5, pri:"opt", d:["T4.1","T5.1"]},
-  {id:"T5.5", t:"Tool spot-check", f:"Tool accuracy spot-check", lane:"ground", col:5, pri:"opt", h:1, d:["T2.3"]},
-
-  {id:"T6.3", t:"Statistics", f:"Statistics", lane:"bt", col:3, pri:"core", d:["T0.2","T0.3"]},
-  {id:"T6.4", t:"Contamination canary", f:"Contamination controls", lane:"bt", col:3, pri:"p0", d:["T0.5","T0.6"]},
-  {id:"T6.1", t:"Outcome snapshot", f:"Outcome snapshot", lane:"bt", col:5, pri:"core", d:["T2.3"]},
-  {id:"T6.2", t:"Baselines · Checkpoint C", f:"Baselines and scoring command (Checkpoint C ~4:15: one scored run)", lane:"bt", col:5, pri:"core", d:["T6.1","T0.6","T6.3","T4.8"]},
-  {id:"T6.5", t:"Backtest campaign", f:"Backtest campaign", lane:"bt", col:6, pri:"core", h:1, d:["T2.3","T4.8","T5.1","T6.1","T6.2","T6.3","T6.4"]},
-
-  {id:"T7.1", t:"Server + event stream", f:"Server and event stream", lane:"ui", col:3, pri:"core", d:["T4.4"]},
-  {id:"T7.2", t:"Launcher + trace", f:"Launcher, live trace, budget meter", lane:"ui", col:3, pri:"core", d:["T7.1"]},
-  {id:"T7.3", t:"Cards + drill-down", f:"Cards with source drill-down", lane:"ui", col:3, pri:"core", d:["T7.1"]},
-  {id:"T7.5", t:"Runs list + replay", f:"Runs list and offline replay", lane:"ui", col:3, pri:"core", d:["T7.1"]},
-  {id:"T7.4", t:"Grounding + backtest UI", f:"Grounding and backtest panels", lane:"ui", col:5, pri:"core", d:["T7.1","T0.3"]},
-
-  {id:"T9.1", t:"Linked papers", f:"Linked papers as signals (extension, only after Checkpoint B)", lane:"rel", col:6, pri:"opt", d:["T3.2"]},
-  {id:"T8.1", t:"Live picks on record", f:"Live picks on the record", lane:"rel", col:6, pri:"opt", d:["T4.5","T2.4"]},
-  {id:"T9.2", t:"Paper discovery mode", f:"Paper discovery mode (stretch)", lane:"rel", col:7, pri:"opt", d:["T9.1"]},
-  {id:"T8.2", t:"Demo rehearsal", f:"Demo rehearsal and backup", lane:"rel", col:7, pri:"core", h:1, d:["T6.5","T7.2","T7.3","T7.4","T7.5"]},
+  {id:"T17", t:"Demo · Checkpoint C", f:"Demo runs, picks on record, rehearsal (backup recorded by ~4:15)", lane:"demo", col:5, pri:"core", h:1, d:["T11","T15","T16","T08"], s:["T12","T13"]},
+  {id:"S1", t:"Rough backtest", f:"Rough backtest (stretch)", lane:"demo", col:5, pri:"opt", d:["T07","T10"]},
+  {id:"S2", t:"Linked papers", f:"Linked papers (stretch)", lane:"demo", col:5, pri:"opt", d:["T09"]},
 ];
-const CRIT = ["T0.1","T1.1","T1.2","T2.2a","T2.2b","T2.3","T6.1","T6.2","T6.5","T8.2"];
-const CHECKS = [[4, "A · ~2:45 fake run end to end"], [5, "B ~3:30 · C ~4:15 scored backtest"]];
-const PRI_LABEL = {core: "Core", p0: "P0 (after Core)", opt: "P1 / P2 / extension"};
+const CHAINS = [["T01","T02","T03","T10","T11","T17"], ["T05","T06","T07","T08","T11"]];
+const CHECKS = [[2, "A · ~2:00 fake run in UI"], [3, "B · ~3:15 real run ok"], [4, "C · ~4:15 backup recorded"]];
+const PRI_LABEL = {core: "P0", opt: "P1 / stretch"};
 
 const byId = Object.fromEntries(N.map(n => [n.id, n]));
 const kids = Object.fromEntries(N.map(n => [n.id, []]));
 N.forEach(n => [...n.d, ...(n.s || [])].forEach(p => kids[p].push(n.id)));
-const critSet = new Set(CRIT);
-const critEdges = new Set(CRIT.slice(1).map((id, i) => CRIT[i] + ">" + id));
+const critSet = new Set(CHAINS.flat());
+const critEdges = new Set(CHAINS.flatMap(c => c.slice(1).map((id, i) => c[i] + ">" + id)));
 
 // depth for ordering inside a cell
 const depth = {};
@@ -349,6 +306,6 @@ function clear() {
   document.getElementById("detail").innerHTML = `<p class="hint">Select a ticket to see its dependencies.</p>`;
 }
 svg.addEventListener("click", () => { pinned = null; clear(); });
-document.getElementById("critText").textContent = CRIT.join(" → ");
+document.getElementById("critText").innerHTML = CHAINS.map(c => c.join(" → ")).join("<br>");
 document.getElementById("coreonly").addEventListener("change", e => svg.classList.toggle("coreonly", e.target.checked));
 </script>

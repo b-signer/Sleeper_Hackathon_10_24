@@ -1,83 +1,32 @@
-# Decisions, facts and known traps
+# Decisions
 
-This file holds the **big decisions** that every work package depends on, the external facts we have **verified**, and the **traps** we already know about. Everything not listed here is the ticket owner's call.
+The few decisions every ticket depends on. Everything else is the ticket owner's call. To change a decision, edit this file in the same commit and tell the affected owners.
 
-**Changing a decision:** edit this file in the same commit as the change, give the reason in the commit message, and tell the owners of affected tickets.
-
-## 1. Locked decisions
+## Locked decisions
 
 | # | Decision | Value | Why |
 |---|---|---|---|
-| D1 | Language and runtime | Python 3.12. One package manager for the whole repo (suggested: `uv`) | Fastest for data and LLM glue; everyone can run it |
-| D2 | LLM access | OpenRouter, through an OpenAI-compatible client | One key, many models, `usage` and cost reporting |
-| D3 | Agent model (backtest **and** live) | `openai/gpt-5.6-terra` ($2 / $12 per M input/output tokens; cutoff 2026-02-16) | The live demo should use the configuration the backtest validated |
-| D4 | Cheap model (development, bear pass, claim judge, probes, fallback agent) | `openai/gpt-5.6-luna` ($0.20 / $1.20; same cutoff) | Same family, so prompts transfer; 10× cheaper; cutoff before T |
-| D5 | Backtest date T | `2026-04-01T00:00:00Z` | 6+ weeks after the model cutoff; about 206 days of outcomes by 2026-10-24 |
-| D6 | Star range at T | 50–2,000 | Keeps as-of-T star reconstruction cheap |
-| D7 | Created window | On or after 2025-01-01 and before T | Repos are 0–15 months old at T |
-| D8 | Topics | `rust-devtools`, `local-first`, `llm-evals` (cut `llm-evals` first) | Each has 150–450 candidate repos (measured, §2) |
-| D9 | Universe cap | About 400 repos per topic | Fits one GitHub token's hourly limit for a backtest build |
-| D10 | Per-run token budget | About 800k tokens (`prompt + completion`, summed over agent calls) | Every turn re-sends the context, so 400k is too small to research 20 repos |
-| D11 | Total LLM spend | $50 hard limit, set on the OpenRouter key; the code refuses runs past about $45 | Hackathon budget |
-| D12 | GitHub data source | GitHub REST and GraphQL APIs only | The alternative was verified to be broken (§2) |
-| D13 | Storage | Local files plus a local response cache. No database server | Runs on a laptop |
-| D14 | UI | A local web page served by the Python app. It updates live while a run is in progress | One process; replay works offline |
-| D16 | Run limits (defaults; adjustable in run settings) | At most 40 turns, 20 minutes of wall-clock time, and 2 retries for an invalid submission | Bound the worst case; v0.2 sizing |
-| D15 | Agent web access | Never | Leaks the future in backtests and breaks grounding in both modes |
+| D1 | Scope | **Live mode only.** GitHub repos only. No backtest in the MVP | Time. Product and demo first |
+| D2 | Language | Python 3.12, one package manager for the repo (suggested: `uv`) | Fastest for data and LLM glue |
+| D3 | LLM access | OpenRouter, through an OpenAI-compatible client | One key, many models, usage and cost reporting |
+| D4 | Development model | `openai/gpt-5.6-luna` ($0.20 / $1.20 per M input/output tokens) | Cheap; same family as the demo model |
+| D5 | Demo model | `openai/gpt-5.6-terra` ($2 / $12 per M input/output tokens) | Better research quality for the demo |
+| D6 | Data source | GitHub REST and GraphQL APIs, with a token. Responses are cached locally | The stargazers endpoint needs a token (verified) |
+| D7 | Universe size | About 200 repos per topic, filtered by stars (default 50–2,000) and creation date (default 2025-01-01 or later) | Small enough to build quickly and screen cheaply |
+| D8 | Criteria | Popularity, momentum, quality, newness (PRD §4). Code computes the scores from the metrics, for example as a percentile within the universe | Reproducible, and the model never invents scores |
+| D9 | Run limits | About 300k tokens, 25 turns and 10 minutes per run (defaults, adjustable) | Bounds the cost per run |
+| D10 | Spend | $50 hard limit set on the OpenRouter key. The code refuses runs that would push past about $45 | Hackathon budget |
+| D11 | UI | One local web page served by the Python app, updating live during a run. No frontend build step | Simple to run and to replay offline |
+| D12 | Agent web access | Never | Breaks the facts-from-tools rule |
 
-**Suggested budget split:**
+**Suggested budget split:** about $10 for development, $10 for demo and tuning runs, and the rest in reserve.
 
-| Use | Allocation |
-|---|---|
-| Development | $10 |
-| Backtest runs | $15 |
-| Live demo | $8 |
-| Bear, judge, probes and naive baseline | $3 |
-| Reserve | $14 |
+## Verified facts (2026-10-24)
 
-## 2. Verified facts (2026-10-24)
+- The GitHub stargazers endpoint returns `401` without a token, so every teammate needs their own GitHub token.
+- Topic search sizes (stars ≥ 40, created 2025-01-01 to 2026-03-31, not forks): Rust + `topic:cli` 335, Rust + `topic:developer-tools` 153, `topic:local-first` 305, "llm evaluation" 205. The universes are a workable size.
+- The OpenRouter key has **no spend limit** yet. Set one before any run (T04).
 
-| Fact | Consequence |
-|---|---|
-| The GitHub stargazers endpoint returns `401` without a token | A GitHub token is mandatory, even for development. One per teammate |
-| Search sizes (current stars ≥ 40, created 2025-01-01..2026-03-31, not forks): Rust + `topic:cli` 335, Rust + `topic:developer-tools` 153, `topic:local-first` 305, "llm evaluation" in name/description/topics 205, `topic:llm-evaluation` 43 | The universes are a workable size. If you slice by creation month, no slice hits the 1,000-result search cap |
-| The ClickHouse public `github_events` dataset is incomplete (`astral-sh/uv`: 16,917 star events against 91,117 real stars) and ends 2026-07-02 | Rejected (D12) |
-| OpenRouter's model list has a `knowledge_cutoff` field. Tool-calling models with cutoffs before T: `gpt-5.6-luna`/`-terra`/`-sol` (2026-02-16), `gpt-5.5` (2025-12-01), `gpt-5.4-mini`/`-nano` (2025-08-31) | The fallback models if D3/D4 fail. Many newer models list no cutoff and are not eligible for backtests |
-| The OpenRouter key in use has **no spend limit** | Set one before any agent run (T0.5) |
+## Learnings log
 
-## 3. Assumptions still to verify (T0.4 owns A1–A4, A6 and A7; T6.4 owns A5)
-
-| ID | Assumption | If it fails |
-|---|---|---|
-| A1 | Stargazers with `starred_at` come oldest first and allow jumping to page N | Use GraphQL stargazers ordered by date with cursor paging (slower) |
-| A2 | GraphQL commit-history counts over a time window match REST | Count with REST |
-| A3 | GraphQL issue and PR search counts work and avoid REST search's limit of 30 requests per minute | Use REST search behind a rate limiter |
-| A4 | The README can be fetched as of a given commit | Fetch `README.md` contents at that commit |
-| A5 | The agent and bear models know nothing after T | Pick another model from §2 |
-| A6 | Parallel tool calls work through OpenRouter for D3/D4 | Allow one call per turn and allow more turns |
-| A7 | Responses include token `usage` (and ideally cost) | Estimate tokens and mark cost as estimated |
-
-Record the result of each check here when it runs.
-
-## 4. Known traps
-
-These traps were found while drafting v0.2. Each one would leak the future or break a run. They are constraints, not implementation instructions.
-
-| Trap | Why it matters |
-|---|---|
-| Putting an **upper** star bound, or a sort by current popularity, into backtest universe searches | Drops repos that grew after T, which are exactly the winners. A **lower** bound on current stars is safe, because stars at T counted from current stargazers can't exceed the current count |
-| Filtering out **archived** repos in backtests | Some were archived after T |
-| Showing the **current** repo description or topics in backtests | They may describe the future. Use README text as of T instead |
-| Showing contributors' **current** followers, organizations or repo counts in backtests | These are current values, not values at T |
-| Stars at T counted from current stargazers | Slightly low, because people who removed their star are invisible. Outcomes must use the same basis |
-| A future-data check that rejects a timestamp **equal to** T | Run metadata legitimately contains `as_of = T`. Data timestamps must be strictly before T; metadata is exempt |
-| Commit dates can be rewritten or backdated | A known caveat; report it, don't try to fix it |
-| Repo name, owner, language and license are current values | Rarely wrong; list as a caveat |
-| No API for dependents | Dependents are out of scope |
-| Paper author h-index is a current value | Omit it in backtest mode |
-
-## 5. Learnings log
-
-If you learn something other tickets need (a failed assumption, a new trap, a changed number), **append** one dated line here, naming your ticket. Never rewrite other people's lines, so parallel edits don't conflict.
-
-- 2026-10-24 (v0.3 drafting): the future-data guard must exempt metadata equal to T (see §4).
+Append one dated line per finding, naming your ticket. Don't rewrite other people's lines.
