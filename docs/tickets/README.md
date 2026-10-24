@@ -34,10 +34,10 @@ Sizes are time budgets: **S** is about 30 minutes, **M** about 45, **L** about 9
 | T15 | ✅ Done | Launcher, live trace, budget meter | UI | P0 | M | T14 | [ui](ui.md) |
 | T16 | ✅ Done | Pick cards view | UI | P0 | M | T14 | [ui](ui.md) |
 | T17 👤 | ⏳ Waiting | Demo runs, picks on record, rehearsal | Demo | P0 | M | all P0 | [demo](demo.md) |
-| T18 | ▶ Ready | Topic relevance and quality score (real-data findings) | Data | P0 | M | T07 | [data](data.md) |
+| T18 | 🔨 In progress | Topic relevance and quality score (real-data findings) | Data | P0 | M | T07 | [data](data.md) |
 | T19 | ✅ Done | Real runs from the UI | UI | P0 | S | T15, T09 | [ui](ui.md) |
-| S1 | 🔨 Framework built, needs GH Archive data | Rough backtest | Stretch | | L | T07, T10 | [demo](demo.md) |
-| S2 | ⏳ Stretch | Linked papers | Stretch | | M | T09 | [demo](demo.md) |
+| S1 | 🔨 In progress (Benny): framework built, needs GH Archive data | Rough backtest | Stretch | | L | T07, T10 | [demo](demo.md) |
+| S2 | ✅ Done | Linked papers | Stretch | | M | T09 | [demo](demo.md) |
 
 ## Schedule and checkpoints
 
