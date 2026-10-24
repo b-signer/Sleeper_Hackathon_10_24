@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sleeper</title>
+<!-- No external assets: the page must load with no network (C4). -->
+<link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+<header class="top">
+  <span class="brand"><span class="logo" aria-hidden="true"></span>Sleeper</span>
+  <span class="tagline">finds GitHub repos that are good but not yet discovered</span>
+  <span id="offline-pill" class="pill" hidden>offline</span>
+</header>
+
+<div class="layout">
+  <aside class="side">
+    <section class="panel">
+      <h2>New run</h2>
+      <form id="launcher">
+        <label>Topic
+          <select id="f-universe" required></select>
+        </label>
+        <label>Model
+          <select id="f-model" required></select>
+        </label>
+        <div class="row">
+          <label>Stars from <input id="f-stars-min" type="number" min="0" value="50" required></label>
+          <label>to <input id="f-stars-max" type="number" min="0" value="2000" required></label>
+        </div>
+        <label>Max picks <input id="f-max-picks" type="number" min="1" max="5" value="5" required></label>
+        <p id="f-hint" class="hint"></p>
+        <button id="f-start" class="primary" type="submit">Start run</button>
+        <p id="launch-error" class="error" role="alert" hidden></p>
+      </form>
+    </section>
+    <section class="panel">
+      <h2>Runs</h2>
+      <ul id="run-list" class="run-list"></ul>
+    </section>
+  </aside>
+
+  <main class="main">
+    <div id="empty" class="empty">
+      <p>Start a run, or pick one from the list to watch it again.</p>
+    </div>
+
+    <section id="run" hidden>
+      <div class="run-head">
+        <div>
+          <h1 id="run-title"></h1>
+          <p class="meta"><span id="run-status" class="pill"></span> <span id="run-meta"></span></p>
+        </div>
+        <div class="replay-box">
+          <select id="speed" aria-label="Replay speed">
+            <option value="1">1×</option>
+            <option value="4" selected>4×</option>
+            <option value="16">16×</option>
+          </select>
+          <button id="replay" type="button" disabled>Replay</button>
+        </div>
+      </div>
+
+      <div id="meter" class="meter">
+        <div class="meter-stats">
+          <span><span class="muted">Tokens</span> <span id="m-tokens">—</span></span>
+          <span><span class="muted">Turn</span> <span id="m-turns">—</span></span>
+          <span><span class="muted">Cost</span> <span id="m-cost">—</span></span>
+        </div>
+        <div class="meter-track"><div id="m-bar" class="meter-bar"></div></div>
+      </div>
+
+      <nav class="tabs">
+        <button type="button" data-tab="trace" class="active">Trace</button>
+        <button type="button" data-tab="picks">Picks <span id="picks-count" class="count"></span></button>
+      </nav>
+
+      <div id="tab-trace">
+        <ol id="trace" class="trace" aria-live="polite"></ol>
+      </div>
+      <div id="tab-picks" hidden>
+        <p id="summary" class="summary" hidden></p>
+        <div id="cards" class="cards"></div>
+        <h3>Ranking</h3>
+        <div class="wide"><table id="ranking" class="ranking"></table></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<aside id="drawer" class="drawer" hidden>
+  <div class="drawer-head">
+    <span id="drawer-title"></span>
+    <button id="drawer-close" type="button" aria-label="Close">×</button>
+  </div>
+  <div id="drawer-body" class="drawer-body"></div>
+</aside>
+
+<script type="module" src="/static/app.js"></script>
+</body>
+</html>
