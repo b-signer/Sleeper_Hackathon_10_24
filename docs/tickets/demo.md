@@ -17,7 +17,7 @@
 **Depends on:** T07, T10 · *Only if Checkpoint C landed early*
 
 **Done when:**
-- For one topic, stars at a past date are rebuilt from stargazer timestamps, and the agent runs on that past view of the data.
+- For one topic, star counts at a past date are rebuilt from an outside source, since GitHub no longer lists stargazers (for example GH Archive), and the agent runs on that past view of the data. Check feasibility first. It's likely post-hackathon.
 - Its picks are compared on star growth since that date against the universe average and a "top recent stars" baseline.
 - The results are shown even if they are bad, with caveats: the model may know these repos, and only part of the data is as of the past date.
 

@@ -15,8 +15,17 @@ class RepoMetrics(Contract):
 
     # Popularity
     stars: int = Field(ge=0)
-    # Momentum
-    stars_gained_30d: int | None = Field(None, ge=0)
+    # Momentum. GitHub no longer lists stargazers through the API (decisions.md, learnings log),
+    # so momentum comes from star velocity and recent forks, plus recent star events where available.
+    stars_per_day: float | None = Field(None, ge=0, description="stars / max(1, age_days): lifetime star velocity")
+    forks: int | None = Field(None, ge=0)
+    forks_30d: int | None = Field(None, ge=0, description="Forks created in the last 30 days")
+    star_events_30d: int | None = Field(
+        None, ge=0, description="Star events in the last 30 days from the repo events feed; a lower bound if star_events_capped"
+    )
+    star_events_capped: bool | None = Field(
+        None, description="True if the events feed hit its 300-event limit, so star_events_30d undercounts"
+    )
     # Quality
     commits_90d: int | None = Field(None, ge=0)
     authors_90d: int | None = Field(None, ge=0)

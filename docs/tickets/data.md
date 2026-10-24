@@ -18,7 +18,7 @@
 
 **Must provide at least:**
 - **Popularity:** stars
-- **Momentum:** stars gained in the last 30 days
+- **Momentum (D13):** star velocity (`stars / age_days`), forks in the last 30 days, and star events in the last 30 days from the repo events feed, flagged when the feed hit its 300-event limit. GitHub no longer lists stargazers, so don't try to page them
 - **Quality:** commits in the last 90 days, distinct authors in the last 90 days, number of releases and date of the latest, date of the last commit, README length
 - **Newness:** created date and age in days
 - **Display:** description, language and license
@@ -27,7 +27,7 @@
 - Each metric is tested on fixture data.
 - Values that can't be determined are reported as unknown, never guessed.
 - A live check on 3 repos matches the GitHub UI.
-- Requests per repo are bounded (state the number). In particular, stars gained recently must not require paging through every stargazer of a big repo.
+- Requests per repo are bounded (state the number). Recent forks: stop paging once forks are older than 30 days.
 
 ---
 
@@ -39,7 +39,7 @@
 - A topics file defines `rust-devtools` and `local-first` (and optionally `llm-evals`), each with a label and how to find its repos.
 - One command builds a universe for a topic: matching public repos in the star range and created window, excluding forks, archived repos and "awesome" lists.
 - If more than about 200 repos match, a seeded random sample is taken rather than the top 200, so the universe isn't biased toward popular repos.
-- Every row has the T06 metrics and a score for each of the four criteria. The scores are computed by code from the metrics (D8) and documented in one short paragraph: how each score is computed, and why a higher score is better.
+- Every row has the T06 metrics and a score for each of the four criteria. The momentum score uses `stars_per_day` and `forks_30d` (D13), not the capped star-event count. The scores are computed by code from the metrics (D8) and documented in one short paragraph: how each score is computed, and why a higher score is better.
 - The file is valid against the contract and records when and how it was built.
 - A 200-repo build finishes within about one token's hourly rate limit. Report the time and request count.
 
