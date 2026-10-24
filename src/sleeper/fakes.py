@@ -30,7 +30,6 @@ from sleeper.contracts import (
     CriterionRating,
     ErrorOutput,
     FactCheckEvent,
-    FactCheckFlag,
     KeyFigure,
     Narration,
     RankingEntry,
@@ -61,6 +60,7 @@ from sleeper.contracts import (
     UsageEvent,
     dump_event,
 )
+from sleeper.factcheck import check_card
 
 DEFAULT_OUT = Path("fixtures/fake")
 TOPIC = "fake"
@@ -557,18 +557,7 @@ def fake_run(universe: Universe | None = None) -> FakeRun:
         b.spend(2400, 220)
 
     b.event(StatusEvent, phase="fact_checking")
-    flags = {
-        q.repo: [],
-        t.repo: [FactCheckFlag(
-            card_path="case[1].text",
-            shown=str(wrong_forks),
-            source_call_id=t.call_id,
-            source_path="/metrics/forks_30d",
-            found=str(tm.forks_30d),
-            message=f"{wrong_forks} does not match forks_30d = {tm.forks_30d} in {t.call_id}",
-        )],
-        p.repo: [],
-    }
+    flags = {c.repo: check_card(c, b.outputs) for c in cards}  # the real T13 check
     for repo, repo_flags in flags.items():
         b.event(FactCheckEvent, repo=repo, flags=repo_flags)
 

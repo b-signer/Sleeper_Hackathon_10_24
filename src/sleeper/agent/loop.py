@@ -26,6 +26,8 @@ from sleeper.agent.types import ChatModel, EventSink, ModelError, ModelReply, To
 from sleeper.contracts import (
     TOOL_ARGS,
     ErrorOutput,
+    FactCheckEvent,
+    FactCheckFlag,
     Narration,
     Reasoning,
     ResultCard,
@@ -44,6 +46,7 @@ from sleeper.contracts import (
     Universe,
     UsageEvent,
 )
+from sleeper.factcheck import check_card
 
 log = logging.getLogger(__name__)
 
@@ -132,6 +135,8 @@ class _Run:
         self.accepted: Submission | None = None
         self.out_of_attempts = False
         self.end_reason: str | None = None  # why an invalid / budget_exhausted run ended
+        self.outputs: dict[str, ToolOutput] = {}  # call_id -> output, for the fact check
+        self.fact_flags: dict[str, list[FactCheckFlag]] = {}  # card repo -> T13 flags
 
     # ---- events ----
 
@@ -167,6 +172,8 @@ class _Run:
             self.emit(StatusEvent, phase="starting")
             self.emit(StatusEvent, phase="researching")
             status, error = self.loop()
+            if self.accepted is not None:
+                self.fact_check()
         except Exception as e:  # a bug or a failing sink: still end the run cleanly
             log.exception("agent loop failed")
             status, error = "error", f"unexpected error: {type(e).__name__}: {e}"
@@ -187,7 +194,7 @@ class _Run:
             finished_at=datetime.now(UTC),
             turns=self.budget.turns,
             usage=self.budget.usage,
-            cards=[ResultCard(**c.model_dump()) for c in sub.cards] if sub else [],
+            cards=[ResultCard(**c.model_dump(), fact_flags=self.fact_flags.get(c.repo, [])) for c in sub.cards] if sub else [],
             ranking=sub.ranking if sub else [],
             summary=sub.summary if sub else None,
             ranking_below_min=bool(sub) and len(sub.ranking) < self.settings.min_ranked,
@@ -345,8 +352,21 @@ class _Run:
             out = self.error(c, "UPSTREAM", f"tool failed: {type(e).__name__}: {e}")
         return out, int((time.monotonic() - t0) * 1000)
 
+    def fact_check(self) -> None:
+        """T13: flag card numbers that don't match the outputs they cite. Never fails the run."""
+        self.emit(StatusEvent, phase="fact_checking")
+        for card in self.accepted.cards:
+            try:
+                flags = check_card(card, self.outputs)
+            except Exception:
+                log.exception("fact check failed for %s", card.repo)
+                continue
+            self.fact_flags[card.repo] = flags
+            self.emit(FactCheckEvent, repo=card.repo, flags=flags)
+
     def finish(self, turn: int, c: _Call, out: ToolOutput, duration_ms: int) -> None:
         c.output = out
+        self.outputs[c.call_id] = out
         self.emit(
             ToolResult,
             turn=turn,
