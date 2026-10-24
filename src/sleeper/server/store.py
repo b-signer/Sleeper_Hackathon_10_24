@@ -34,6 +34,25 @@ class RunInfo(BaseModel):
     writable: bool = True  # False for recorded runs in read-only dirs, e.g. the fake run
 
 
+class ModelInfo(BaseModel):
+    """One model the launcher can offer."""
+
+    id: str
+    label: str
+    input_per_m: float | None = None  # USD per million tokens; None if unknown
+    output_per_m: float | None = None
+    offline_ok: bool = False  # True only for the scripted fake model
+
+
+class ServerConfig(BaseModel):
+    """What the launcher needs to know about this server."""
+
+    offline: bool
+    models: list[ModelInfo]
+    default_model: str
+    fake_model: str
+
+
 class UniverseInfo(BaseModel):
     """One prebuilt universe the launcher can offer."""
 
