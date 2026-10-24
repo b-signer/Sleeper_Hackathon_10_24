@@ -183,5 +183,6 @@ TOOL_ARGS: dict[str, type[Contract]] = {
     "browse": BrowseArgs,
     "repo_details": RepoArgs,
     "readme": ReadmeArgs,
+    "papers": PapersArgs,
     "submit": SubmitArgs,
 }

@@ -9,7 +9,10 @@ import pytest
 
 from sleeper import fakes
 from sleeper.agent.data_tools import DataTools, ReadmeUnavailable
+from sleeper.agent.stub_tools import StubTools
 from sleeper.agent.submit_check import SubmitContext, check_submission
+from sleeper.agent.tool_specs import tool_specs
+from sleeper.agent.toolbox import Toolbox
 from sleeper.contracts import ErrorOutput, PapersArgs, PapersOutput
 from sleeper.papers import MAX_PAPERS, PapersClient, PapersUnavailable, find_arxiv_ids, linked_papers, parse_arxiv_feed
 
@@ -259,3 +262,28 @@ def test_submit_accepts_key_figure_from_papers_and_checks_repo(tmp_path):
         "cards[0] (lumen-dev/tidepool) criteria.quality.key_figure: c_003 is papers for acme/quiver, not lumen-dev/tidepool; "
         "cite this repo's own number"
     ]
+
+
+# ---- registration -------------------------------------------------------------
+
+
+def test_papers_is_offered_to_the_model():
+    spec = next(s["function"] for s in tool_specs() if s["function"]["name"] == "papers")
+    assert spec["parameters"]["required"] == ["repo"] and "arXiv" in spec["description"]
+
+
+def test_toolbox_runs_papers_and_counts_it_as_research(tmp_path):
+    tools, _ = papers_tools(tmp_path)
+    tb = Toolbox(tools.universe, tools)
+    out = tb.execute("papers", {"repo": "acme/quiver"}, "c_001")
+    assert isinstance(out, PapersOutput) and tb.outputs["c_001"] is out
+    assert tb.researched == {"acme/quiver": ("acme/quiver", "c_001")}
+    bad = tb.execute("papers", {"repo": "not a repo"}, "c_002")
+    assert isinstance(bad, ErrorOutput) and bad.error.code == "BAD_ARGS"
+
+
+def test_stub_tools_papers():
+    stub = StubTools(fakes.fake_universe())
+    out = stub.execute("papers", {"repo": "ACME/Quiver"}, "c_001")
+    assert isinstance(out, PapersOutput) and out.repo == "acme/quiver" and out.papers == []
+    assert stub.execute("papers", {"repo": "rust-lang/cargo"}, "c_002").error.code == "NOT_IN_UNIVERSE"
