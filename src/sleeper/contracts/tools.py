@@ -13,7 +13,7 @@ from sleeper.contracts.cards import Submission
 from sleeper.contracts.common import CallId, Contract, Repo
 from sleeper.contracts.universe import CriteriaScores, RepoMetrics
 
-ToolName = Literal["browse", "repo_details", "readme", "submit"]
+ToolName = Literal["browse", "repo_details", "readme", "papers", "submit"]
 
 # Fields browse can filter and sort on: the numeric metrics and the four criteria scores.
 ScreenField = Literal[
@@ -132,6 +132,31 @@ class ReadmeOutput(Contract):
     total_chars: int = Field(ge=0, description="Full README length before the cap")
 
 
+# ---- linked papers (S2) ----------------------------------------------------
+
+
+class PapersArgs(Contract):
+    repo: Repo
+
+
+class LinkedPaper(Contract):
+    arxiv_id: str = Field(description="e.g. 2106.09685, without version")
+    url: str
+    found: bool = Field(description="False: arXiv has no such paper (a broken or mistyped link)")
+    title: str | None = None
+    published: str | None = Field(None, description="Date of the first arXiv version, YYYY-MM-DD")
+    citation_count: int | None = Field(None, description="From Semantic Scholar; None if unknown")
+    citations_as_of: str | None = Field(None, description="When citation_count was read (UTC, ISO 8601)")
+
+
+class PapersOutput(Contract):
+    call_id: CallId
+    tool: Literal["papers"] = "papers"
+    repo: Repo
+    papers: list[LinkedPaper] = Field(description="arXiv papers the README links to, in order of first mention")
+    total_linked: int = Field(ge=0, description="arXiv papers linked before the cap on how many are looked up")
+
+
 # ---- submit (F3.4) ---------------------------------------------------------
 
 SubmitArgs = Submission
@@ -151,7 +176,7 @@ class SubmitOutput(Contract):
         return self
 
 
-ToolOutput = BrowseOutput | RepoDetailsOutput | ReadmeOutput | SubmitOutput | ErrorOutput
+ToolOutput = BrowseOutput | RepoDetailsOutput | ReadmeOutput | PapersOutput | SubmitOutput | ErrorOutput
 
 # Argument model per tool, e.g. to generate the OpenAI-style tool schemas (T09).
 TOOL_ARGS: dict[str, type[Contract]] = {

@@ -34,8 +34,8 @@ from pathlib import Path
 
 import httpx
 from dotenv import load_dotenv
-from pydantic import BaseModel
 
+from sleeper.contracts import LinkedPaper
 from sleeper.github import ResponseCache, request_key
 
 log = logging.getLogger(__name__)
@@ -55,16 +55,6 @@ _PATTERNS = [
     re.compile(r"10\.48550/arxiv\." + _ID, re.IGNORECASE),
 ]
 _VERSION = re.compile(r"v\d+$")
-
-
-class Paper(BaseModel):
-    arxiv_id: str
-    url: str
-    found: bool  # False: arXiv has no such paper, so the README link is broken or mistyped
-    title: str | None = None
-    published: str | None = None  # date of the first version, YYYY-MM-DD
-    citation_count: int | None = None  # None: unknown (not on Semantic Scholar, or it was unreachable)
-    citations_as_of: str | None = None  # when the citation count was read (UTC, ISO 8601)
 
 
 class PapersUnavailable(Exception):
@@ -134,7 +124,7 @@ class PapersClient:
         self._transport = transport
         self._timeout = timeout
 
-    def lookup(self, arxiv_ids: list[str]) -> list[Paper]:
+    def lookup(self, arxiv_ids: list[str]) -> list[LinkedPaper]:
         """Papers for ``arxiv_ids``, in the same order. Cached answers never touch the network."""
         meta = {i: self.cache.get(_arxiv_key(i)) for i in arxiv_ids}
         missing = [i for i, entry in meta.items() if entry is None]
@@ -156,7 +146,7 @@ class PapersClient:
         for i in arxiv_ids:
             data, cite = meta[i]["data"], cites.get(i)
             papers.append(
-                Paper(
+                LinkedPaper(
                     arxiv_id=i,
                     url=f"https://arxiv.org/abs/{i}",
                     found=data is not None,
@@ -213,7 +203,7 @@ class PapersClient:
         raise PapersUnavailable(f"{error} after {self.max_attempts} attempts")
 
 
-def linked_papers(readme: str, client: PapersClient, *, limit: int = MAX_PAPERS) -> list[Paper]:
+def linked_papers(readme: str, client: PapersClient, *, limit: int = MAX_PAPERS) -> list[LinkedPaper]:
     """The first ``limit`` arXiv papers ``readme`` links to, looked up through ``client``."""
     ids = find_arxiv_ids(readme)[:limit]
     return client.lookup(ids) if ids else []
