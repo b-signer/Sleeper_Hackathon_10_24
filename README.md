@@ -19,6 +19,14 @@ cp .env.example .env     # then fill in GITHUB_TOKEN and OPENROUTER_API_KEY
 uv run sleeper --help    # command-line entry point
 ```
 
+## Web UI (T14)
+
+```sh
+uv run sleeper serve     # http://127.0.0.1:8000
+```
+
+Lists runs in `SLEEPER_RUNS_DIR` plus the recorded fake run, and universes in `SLEEPER_UNIVERSES_DIR` plus the fake universe. Works with no network. Until the agent loop (T10) lands, "start a run" replays the fake run as if it were live. The API is documented at the top of [`src/sleeper/server/app.py`](src/sleeper/server/app.py).
+
 ## Tests
 
 ```sh
