@@ -1,13 +1,13 @@
 # Setup: keys and secrets (T04)
 
-You need two keys in a `.env` file in the project root. Copy `.env.example` to `.env`. The OpenRouter key is already filled in, so add only your GitHub token. `.env` is git-ignored. Never commit it, and never paste keys into group chats, docs or issues.
+You need two keys in a `.env` file in the project root. Run `cp .env.example .env`: **both team keys are already filled in** (committed on purpose for the hackathon, to be rotated afterwards). Nothing else is needed. `.env` is git-ignored. Keep it that way, and don't post the keys anywhere outside this private repo.
 
 | Key | What it's for | Cost | Who has it |
 |---|---|---|---|
 | `OPENROUTER_API_KEY` | Calls the AI models: luna for development, terra for the demo | Paid from prepaid credits | **One shared team key.** It's already filled in `.env.example` (committed on purpose for the hackathon, to be rotated afterwards) |
-| `GITHUB_TOKEN` | Reads **other people's public repos** (the ones Sleeper analyzes): stars, forks, commits, releases, activity, READMEs. It isn't used for our own repo; pushing and pulling use your normal git login | Free | Anyone whose code calls GitHub: the data track and the agent track. Everyone uses their own, because rate limits are per token |
+| `GITHUB_TOKEN` | Reads **other people's public repos** (the ones Sleeper analyzes): stars, forks, commits, releases, activity, READMEs. It isn't used for our own repo; pushing and pulling use your normal git login | Free | **One shared team token** (Roee's, classic, no scopes), filled in `.env.example`. The team shares its 5,000 requests per hour. If you hit rate limits, make your own (below) and put it in your `.env` |
 
-## Make your GitHub token (2 minutes)
+## Your own GitHub token (only if the shared one runs out of requests)
 
 Use a **classic** token with **no scopes**. It can only read public data, and it's the type we've tested. Fine-grained tokens returned `403` on some endpoints.
 
