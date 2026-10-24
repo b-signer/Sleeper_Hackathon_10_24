@@ -23,7 +23,59 @@ def build_parser() -> argparse.ArgumentParser:
     metrics = sub.add_parser("metrics", help="print one repo's T06 metrics as JSON")
     metrics.add_argument("repo", help="owner/name")
     metrics.add_argument("--as-of", help="ISO time for the 30/90-day windows (default: now)")
+    build = sub.add_parser("build-universe", help="build a topic's universe file (T07)")
+    build.add_argument("topic", help="topic id from topics.toml, e.g. local-first")
+    build.add_argument("--out", help="output file (default: data/universes/<topic>.json)")
+    build.add_argument("--seed", type=int, default=None, help="sampling seed (default: 7)")
+    build.add_argument("--max-size", type=int, default=None, help="maximum rows (default: 200)")
+    build.add_argument("--topics", help="topics file (default: topics.toml at the repo root)")
+    build.add_argument("--stars-min", type=int, help="override the topic's minimum stars (default 50)")
+    build.add_argument("--stars-max", type=int, help="override the topic's maximum stars (default 2000)")
+    build.add_argument("--created-after", help="YYYY-MM-DD, override (default 2025-01-01)")
+    build.add_argument("--created-before", help="YYYY-MM-DD, optional upper bound on the creation date")
+    build.add_argument(
+        "--refresh-search", action="store_true", help="refetch search results instead of using the cache"
+    )
     return parser
+
+
+def _cmd_build_universe(args: argparse.Namespace) -> int:
+    import dataclasses
+    import sys
+    from datetime import date
+
+    from sleeper.github import GitHubClient
+    from sleeper.universe import (
+        DEFAULT_MAX_SIZE,
+        DEFAULT_SEED,
+        build_universe,
+        default_out_path,
+        load_topics,
+        write_universe,
+    )
+
+    topics = load_topics(args.topics)
+    if args.topic not in topics:
+        print(f"unknown topic {args.topic!r}; known: {', '.join(topics)}", file=sys.stderr)
+        return 2
+    over = {
+        k: v
+        for k, v in {
+            "stars_min": args.stars_min,
+            "stars_max": args.stars_max,
+            "created_after": date.fromisoformat(args.created_after) if args.created_after else None,
+            "created_before": date.fromisoformat(args.created_before) if args.created_before else None,
+        }.items()
+        if v is not None
+    }
+    topic = dataclasses.replace(topics[args.topic], **over)
+    seed = DEFAULT_SEED if args.seed is None else args.seed
+    max_size = DEFAULT_MAX_SIZE if args.max_size is None else args.max_size
+    with GitHubClient() as gh:
+        universe = build_universe(gh, topic, seed=seed, max_size=max_size, refresh_search=args.refresh_search)
+    path = write_universe(universe, args.out or default_out_path(topic.id))
+    print(path)
+    return 0
 
 
 def _cmd_config() -> int:
@@ -90,6 +142,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         return _cmd_schema(args.out)
     if args.command == "metrics":
         return _cmd_metrics(args.repo, args.as_of)
+    if args.command == "build-universe":
+        return _cmd_build_universe(args)
     parser.print_help()
     return 0
 
