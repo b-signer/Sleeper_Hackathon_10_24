@@ -25,8 +25,11 @@ The few decisions every ticket depends on. Everything else is the ticket owner's
 
 - The GitHub stargazers endpoint returns `401` without a token, so every teammate needs their own GitHub token.
 - Topic search sizes (stars ≥ 40, created 2025-01-01 to 2026-03-31, not forks): Rust + `topic:cli` 335, Rust + `topic:developer-tools` 153, `topic:local-first` 305, "llm evaluation" 205. The universes are a workable size.
-- The OpenRouter key has **no spend limit** yet. Set one before any run (T04).
+- The OpenRouter key has a $50 limit (set, T04). The account holds only $5 of credit, so it needs topping up.
 
 ## Learnings log
 
 Append one dated line per finding, naming your ticket. Don't rewrite other people's lines.
+- 2026-10-24 (T04): OpenRouter key works, with a $50 key limit and $0 used. **The account has only $5 of credit**, so top it up to $50 before tuning runs.
+- 2026-10-24 (T04): `gpt-5.6-luna` and `gpt-5.6-terra` are both available with tool calling. Luna returned 3 tool calls in one turn, so parallel calls work. `usage` includes token counts and exact `cost` (`"usage": {"include": true}`).
+- 2026-10-24 (T04): python.org's Python on macOS fails SSL verification until its certificates are installed (see `docs/setup.md`).
