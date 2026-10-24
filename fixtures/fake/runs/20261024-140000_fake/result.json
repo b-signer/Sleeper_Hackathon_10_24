@@ -208,9 +208,9 @@
           "card_path": "case[1].text",
           "shown": "14",
           "source_call_id": "c_004",
-          "source_path": "/metrics/forks_30d",
-          "found": "9",
-          "message": "14 does not match forks_30d = 9 in c_004"
+          "source_path": null,
+          "found": null,
+          "message": "14 is not in the cited output (c_004)"
         }
       ]
     },

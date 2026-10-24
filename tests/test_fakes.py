@@ -149,8 +149,9 @@ def test_the_fact_flag_points_at_a_real_mismatch(run):
     outputs = {e.call_id: e.output.model_dump(mode="json") for e in run.events if isinstance(e, ToolResult)}
     (card,) = [c for c in run.result.cards if c.fact_flags]
     (flag,) = card.fact_flags
-    assert flag.shown in card.case[1].text
-    assert str(resolve(outputs[flag.source_call_id], flag.source_path)) == flag.found != flag.shown
+    assert flag.card_path == "case[1].text" and flag.shown in card.case[1].text
+    cited = outputs[card.case[1].source_call_ids[0]]
+    assert int(flag.shown) not in cited["metrics"].values()
 
 
 def test_usage_is_cumulative_and_matches_result(run):
