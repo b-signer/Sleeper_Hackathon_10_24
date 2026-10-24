@@ -206,7 +206,7 @@ const PRI_LABEL = {core: "P0", opt: "P1 / stretch"};
 // Status as of the last update. Ready = every hard dependency is done.
 const STATUS_AT = "2026-10-24, after T10 merged";
 const DONE = new Set(["T01", "T02", "T03", "T04", "T05", "T10"]);
-const ACTIVE = new Set([]);  // tickets someone has started
+const ACTIVE = new Set(["T06", "T07", "T08", "T14"]);  // tickets someone has started
 
 const byId = Object.fromEntries(N.map(n => [n.id, n]));
 const kids = Object.fromEntries(N.map(n => [n.id, []]));
