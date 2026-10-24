@@ -17,8 +17,29 @@
 <div class="layout">
   <aside class="side">
     <section class="panel">
-      <h2>New run</h2>
-      <form id="launcher">
+      <div class="mode" role="tablist" aria-label="Launcher mode">
+        <button id="mode-replay" type="button" role="tab" aria-selected="true" class="active">Replay<span class="mode-sub">free · offline</span></button>
+        <button id="mode-live" type="button" role="tab" aria-selected="false">Live run<span class="mode-sub">real model · costs money</span></button>
+      </div>
+      <p id="live-disabled" class="notice" hidden></p>
+
+      <form id="replay-form" class="launcher">
+        <label>Recorded run
+          <select id="r-run" required></select>
+        </label>
+        <label>Speed
+          <select id="r-speed">
+            <option value="1">1×</option>
+            <option value="4" selected>4×</option>
+            <option value="16">16×</option>
+            <option value="0">Instant</option>
+          </select>
+        </label>
+        <p class="hint">Plays back a finished run from its records. No model calls, no spend.</p>
+        <button id="r-start" class="primary" type="submit">Replay run</button>
+      </form>
+
+      <form id="launcher" class="launcher" hidden>
         <label>Topic
           <select id="f-universe" required></select>
         </label>
@@ -26,14 +47,24 @@
           <select id="f-model" required></select>
         </label>
         <div class="row">
-          <label>Stars from <input id="f-stars-min" type="number" min="0" value="50" required></label>
-          <label>to <input id="f-stars-max" type="number" min="0" value="2000" required></label>
+          <label>Max picks <input id="f-max-picks" type="number" min="1" max="5" value="5" required></label>
+          <label>Token budget <input id="f-budget" type="number" min="1000" step="1000" value="300000" required></label>
         </div>
-        <label>Max picks <input id="f-max-picks" type="number" min="1" max="5" value="5" required></label>
         <p id="f-hint" class="hint"></p>
-        <button id="f-start" class="primary" type="submit">Start run</button>
-        <p id="launch-error" class="error" role="alert" hidden></p>
+        <p id="f-spend" class="hint"></p>
+        <button id="f-start" class="primary live" type="submit">Start live run</button>
+        <div id="f-confirm" class="confirm" hidden>
+          <p id="f-confirm-text"></p>
+          <div class="confirm-actions">
+            <button id="f-go" class="primary live" type="button">Yes, start it</button>
+            <button id="f-cancel" type="button">Cancel</button>
+          </div>
+        </div>
       </form>
+      <div id="launch-error" class="refusal" role="alert" hidden>
+        <strong id="launch-error-title"></strong>
+        <p id="launch-error-msg"></p>
+      </div>
     </section>
     <section class="panel">
       <h2>Runs</h2>
@@ -43,7 +74,7 @@
 
   <main class="main">
     <div id="empty" class="empty">
-      <p>Start a run, or pick one from the list to watch it again.</p>
+      <p>Replay a recorded run, or start a live one. Pick a run from the list to open it.</p>
     </div>
 
     <section id="run" hidden>
@@ -57,6 +88,7 @@
             <option value="1">1×</option>
             <option value="4" selected>4×</option>
             <option value="16">16×</option>
+            <option value="0">Instant</option>
           </select>
           <button id="replay" type="button" disabled>Replay</button>
         </div>
