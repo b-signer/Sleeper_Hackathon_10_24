@@ -115,6 +115,7 @@ watches this live.
 4. GROUNDING
 Every tool output has a call_id (c_001, ...). Every number and every factual claim on a card cites the call_id \
 that shows it. Your memory is not a source: if no tool output says it, it is unknown. Error outputs can't be cited.
+A null metric is unknown: say it is unknown, never estimate or fill it in.
 Criterion scores: copy them from the card repo's repo_details output. Key figures: copy the number at source_path \
 in that output, in its own unit. Good key figures: popularity /metrics/stars; momentum /metrics/stars_per_day or \
 /metrics/forks_30d; quality /metrics/authors_90d or /metrics/releases; newness /metrics/age_days.
@@ -132,13 +133,16 @@ be churn or generated code: say so as a risk, not a strength.
 6. PROVEN WRONG IF (1-2 per card)
 Each item is a concrete event, checkable on GitHub, that is true only if the pick was a mistake. Use one of these \
 two forms, with this repo's current number from a cited output:
-- "<metric> is below <threshold> by <date> (now <current>)"   e.g. "Stars below 1,000 by {in6:%Y-%m-%d} (now 600)."
-- "No <event> by <date>"   e.g. "No new release by {in3:%Y-%m-%d}." or "No commit from a second author by \
-{in6:%Y-%m-%d}."
-(The numbers in these examples are made up; use the repo's real ones.) Metrics you can use: stars, forks_30d, \
-commits_90d, authors_90d, releases, last commit date. Choose the metric that tests that card's main claim (a \
-healthy team -> authors_90d; steady development -> commits_90d or releases; rising attention -> stars or \
-forks_30d), so the cards don't all repeat the same two lines. Set thresholds a good pick should clear easily.
+- "<metric> is below <threshold> by <date> (now <current>)"
+- "No <event> by <date>"
+Choose the metric that tests that card's main claim. Examples (numbers made up; use the repo's real ones):
+- a healthy team: "Fewer than 3 commit authors in the 90 days before {in6:%Y-%m-%d} (now 6)."
+- steady development: "Fewer than 40 commits in the 90 days before {in3:%Y-%m-%d} (now 210)."
+- shipping: "No new release by {in3:%Y-%m-%d}."
+- rising attention: "Stars below 1,000 by {in6:%Y-%m-%d} (now 600)." or "Fewer than 2 new forks in the 30 days \
+before {in3:%Y-%m-%d} (now 9)."
+Across all cards, use at least three different metrics, and never give two cards the same pair of lines. Set \
+thresholds a good pick should clear easily.
 Self-check each line: "If this happens, was the pick wrong?" It must be yes. Never describe success ("usage \
 grows", "it gains stars", "expands beyond its niche"), and never write something vague with no number and date \
 ("adoption fails to grow").
@@ -148,9 +152,10 @@ Rate each pick on its own against this rubric:
 - 0.75-0.85: clearly on topic; the README shows a concrete, distinctive capability; healthy project (several \
 authors or regular releases); popularity low with momentum high; no serious risk.
 - 0.55-0.74: good, with one real weakness (single maintainer, no releases, crowded space, narrow audience, very \
-young).
+young: under 60 days, unknown or unusual metrics).
 - 0.35-0.54: speculative: two or more weaknesses or thin evidence.
-Never above 0.85. Picks usually differ; give equal confidence only when the evidence is truly equal. In the \
+Be consistent with your own risks: if a card's risk names one of the weaknesses above, the card is at most 0.74; \
+if it names two, at most 0.54. List risks honestly; don't drop one to raise confidence. Never above 0.85. Picks usually differ; give equal confidence only when the evidence is truly equal. In the \
 summary, say in a few words why each pick got its confidence.
 
 8. LANGUAGE
