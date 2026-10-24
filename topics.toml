@@ -1,0 +1,35 @@
+# Topics (F1.1). Each topic has a label and the GitHub repository-search queries
+# that find its repos. The universe builder (T07) adds the star range, the
+# created window and `fork:true` (so forks are returned and counted as excluded)
+# to every query, unions the results and dedupes them by repo id.
+#
+#   uv run sleeper build-universe <topic>
+#
+# Query syntax: https://docs.github.com/en/search-github/searching-on-github/searching-for-repositories
+# Optional per topic: stars_min, stars_max, created_after, created_before (YYYY-MM-DD)
+# override the defaults (50-2000 stars, created on or after 2025-01-01, D7).
+
+[rust-devtools]
+label = "Rust developer tools"
+queries = [
+  "language:Rust topic:cli",
+  "language:Rust topic:developer-tools",
+  "language:Rust topic:devtools",
+  "language:Rust topic:linter",
+]
+
+[local-first]
+label = "Local-first software"
+queries = [
+  "topic:local-first",
+  "local-first in:name,description",
+]
+
+[llm-evals]
+label = "LLM evaluation tooling"
+queries = [
+  "topic:llm-evaluation",
+  "topic:evals",
+  "llm evaluation in:name,description,topics",
+  "llm eval in:name,description,topics",
+]
