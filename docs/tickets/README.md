@@ -28,7 +28,7 @@ Sizes are time budgets: **S** is about 30 minutes, **M** about 45, **L** about 9
 | T09 | ✅ Done | Agent tools | Agent | P0 | M | T02, T03 | [agent](agent.md) |
 | T10 | ✅ Done | Agent loop, budget, run records | Agent | P0 | L | T02, T03, T04 | [agent](agent.md) |
 | T11 | ▶ Ready | Prompt and tuning (Checkpoint B) | Agent | P0 | M | T09, T10, T08 | [agent](agent.md) |
-| T12 | ▶ Ready (P1) | Skeptic review | Agent | P1 | S | T10 | [agent](agent.md) |
+| T12 | ✅ Done | Skeptic review | Agent | P1 | S | T10 | [agent](agent.md) |
 | T13 | ✅ Done | Fact check | Agent | P1 | S | T03 | [agent](agent.md) |
 | T14 | ✅ Done | Server, event stream, replay | UI | P0 | M | T02 (T03 for tests) | [ui](ui.md) |
 | T15 | ✅ Done | Launcher, live trace, budget meter | UI | P0 | M | T14 | [ui](ui.md) |
