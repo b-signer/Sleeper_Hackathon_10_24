@@ -26,6 +26,17 @@ _TIMEFRAME = re.compile(
     rf"|\bQ[1-4]\b|\b{_MONTHS}\s+\d{{4}}\b|\b(?:by|before|until|through)\s+(?:end of\s+)?(?:20\d\d|{_MONTHS})"
 )
 _NUMBER = re.compile(r"(?i)\d|\b(?:no|zero|none|any|single|one|two|three|five|ten)\b")
+# Wrong-if direction (heuristic): a failure condition needs a failure marker. Limits: it reads words, not
+# meaning, so "fewer bugs than before by 2027-01-01" passes and an unusual failure phrasing ("is archived") is
+# flagged; a person still reads the items.
+_FAILURE = re.compile(
+    r"(?i)\b(?:fewer|below|under|at most|no|not|never|drops?|dropping|falls?|stops?|stalls?|zero|fails?|"
+    r"less than|declines?|shrinks?|only|abandon\w*|archived)\b"
+)
+_SUCCESS = re.compile(
+    r"(?i)\b(?:grows?|growing|expands?|gains?|reach(?:es)?|exceeds?|surpass(?:es)?|more than|rises?|"
+    r"increases?|continues?|becomes?|adopts?)\b"
+)
 _README_LENGTH = re.compile(
     r"(?i)readme[^.;]{0,40}\b(?:chars?|characters|length|long|lines|words)\b"
     r"|\b(?:chars?|characters|length|long)\b[^.;]{0,25}readme"
@@ -138,6 +149,16 @@ def wrong_if_problems(text: str) -> list[str]:
     return problems
 
 
+def wrong_if_direction(text: str) -> str | None:
+    """Why an item may describe success instead of failure, or None if it reads as a failure condition."""
+    if _FAILURE.search(text):
+        return None
+    m = _SUCCESS.search(text)
+    if m:
+        return f"reads as success ({m.group(0)!r}, no failure marker)"
+    return "no failure marker (fewer than / below / no / drops / stops ...)"
+
+
 def card_flags(card: dict[str, Any]) -> list[Flag]:
     repo = card.get("repo")
     flags = []
@@ -148,6 +169,9 @@ def card_flags(card: dict[str, Any]) -> list[Flag]:
     for i, text in enumerate(card.get("proven_wrong_if") or []):
         for problem in wrong_if_problems(text):
             flags.append(Flag("wrong-if-vague", f"proven_wrong_if[{i}] has {problem}: {text!r}", repo))
+        direction = wrong_if_direction(text)
+        if direction:
+            flags.append(Flag("wrong-if-direction", f"proven_wrong_if[{i}] {direction}: {text!r}", repo))
     for name in CRITERIA:
         kf = ((card.get("criteria") or {}).get(name) or {}).get("key_figure") or {}
         path, label = kf.get("source_path") or "", kf.get("label") or ""

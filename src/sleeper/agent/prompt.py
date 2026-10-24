@@ -15,33 +15,36 @@ from sleeper.contracts import RunSettings, UniverseHeader
 # tagged `cli`), so it contains repos that match the query but not the topic; the agent screens them out.
 TOPIC_SCOPE: dict[str, str] = {
     "rust-devtools": (
-        "On topic: tools written in Rust whose main users are software developers doing development work: "
-        "linters, formatters, compilers and build tools, cargo plugins, test runners, debuggers, profilers, "
-        "language servers and code intelligence, code search, git and version-control tools, editors and IDE "
-        "tooling, API/HTTP clients, CI and release tooling, dev environment and container tooling, developer "
-        "terminal workflows, and tooling for AI coding agents (agent harnesses, context and session tools, MCP "
-        "servers for code). "
-        "Off topic, even though they are Rust CLIs: media and music players, DJ or audio tools, chat and social "
-        "clients (Discord, Spotify, Teams, messengers), RSS readers, blogging tools, games, finance and stock "
-        "dashboards, weather, launchers for games, VPN/Wi-Fi/Bluetooth managers, general personal productivity "
-        "(habits, notes) and generic end-user apps. Borderline (file managers, terminal emulators, system "
-        "monitors): only pick one if its README clearly targets developers."
+        "Principle: a developer tool is software that software developers use while building, testing, "
+        "debugging, shipping or operating software. The test is who uses it and for what: if its main users are "
+        "developers doing development work, it is on topic; if it is an app for some other audience or activity "
+        "that merely happens to be written in Rust or run in a terminal, it is not. "
+        "Illustrations only (not exhaustive): on topic are things like linters, build and test tooling, code "
+        "search, version-control helpers, editor or language tooling, and tooling for AI coding agents; off "
+        "topic are things like an end-user app for media, chat or personal finance, even with a CLI. When the "
+        "description is ambiguous, read the README and apply the principle."
     ),
     "local-first": (
-        "On topic: software built on local-first principles: the user's data lives on their device, the app "
-        "works offline, and sync or collaboration is optional and user-controlled. That includes sync engines, "
-        "CRDT and replication libraries, offline-first databases and storage, local-first apps (notes, tasks, "
-        "documents) and the developer tooling for building them. "
-        "Off topic: projects that only say 'local' or 'self-hosted' as a feature but are not about local data "
-        "ownership and sync, e.g. a business or sales AI tool, a hotel or booking system, a generic local LLM "
-        "runner or chatbot, or any app whose description doesn't speak to local data, offline use or sync."
+        "Principle: local-first software keeps the user's data primarily on the user's own device, keeps working "
+        "offline, and treats sync or collaboration with other devices and people as optional and under the "
+        "user's control. The test is whether local data ownership, offline use or sync is the project's main point "
+        "or just an implementation detail. Most desktop software keeps files on the machine; that alone does not "
+        "make it local-first, and neither does calling itself local-first, being self-hosted, or running a local "
+        "AI model. A project whose main purpose is something else (an assistant, an agent manager, analytics, "
+        "media) is off topic even if its data stays local. "
+        "Illustrations only (not exhaustive): on topic are things like sync engines, CRDT or replication "
+        "libraries, offline-first storage, and apps built on them; off topic are things like a server product "
+        "that you self-host, or a tool that just runs on your machine without a local-data or sync story. When "
+        "the description is ambiguous, read the README and apply the principle."
     ),
     "llm-evals": (
-        "On topic: tooling to evaluate LLMs and LLM applications: eval harnesses and frameworks, benchmark "
-        "suites, LLM-as-judge tooling, regression testing of prompts and agents, tracing used for evaluation, "
-        "red-teaming and safety eval tools. "
-        "Off topic: general LLM apps, chatbots, agent frameworks without an evaluation focus, model weights, "
-        "awesome-lists and course material."
+        "Principle: LLM evaluation tooling helps people measure how well LLMs or LLM applications perform: it "
+        "runs tests, benchmarks or graders and reports results. The test is whether evaluating models or LLM "
+        "apps is the project's main purpose, not a side feature. "
+        "Illustrations only (not exhaustive): on topic are things like eval harnesses, benchmark suites, "
+        "LLM-as-judge or regression-testing tools; off topic are things like general LLM apps or agent frameworks "
+        "that only mention evals in passing. When the description is ambiguous, read the README and apply the "
+        "principle."
     ),
 }
 
@@ -49,8 +52,10 @@ TOPIC_SCOPE: dict[str, str] = {
 def _scope(header: UniverseHeader) -> str:
     return TOPIC_SCOPE.get(
         header.topic,
-        f'On topic: projects whose main purpose is "{header.topic_label}", judged from the description and README. '
-        "Off topic: repos that only match the search query by tag or language but serve a different purpose.",
+        f'Principle: a repo is on topic if its main purpose is "{header.topic_label}". The test is who uses it '
+        "and for what, judged from the description and, when unsure, the README. Repos that only match the "
+        "search query by tag, keyword or language but serve a different purpose are off topic, even when they use "
+        "the topic's words to describe themselves.",
     )
 
 
@@ -120,14 +125,19 @@ numbers that matter: more than one active author, regular releases, recent commi
 - Never present README length (readme_chars, total_chars) as a strength. A long README is not quality.
 - Never present a raw commit count as quality on its own. Hundreds of commits from one author in a young repo can \
 be churn or generated code: say so as a risk, not a strength.
-- Be specific: "exposes LSP diagnostics and references as MCP tools" beats "polished and feature-rich".
+- Be specific: name a concrete capability the README describes, not "polished and feature-rich".
 
 6. PROVEN WRONG IF (1-2 per card)
-Each item is a concrete event, checkable on GitHub, that would show the pick was a mistake. Each one names a \
-metric, a threshold and a date, and describes FAILURE, never success. Use today's numbers as the baseline.
-Good: "Fewer than 400 stars by {in6:%Y-%m-%d} (175 now)." "No new release by {in3:%Y-%m-%d}." "Fewer than 20 \
-commits in the 90 days before {in3:%Y-%m-%d}." "Still only 1 commit author in the 90 days before {in6:%Y-%m-%d}."
-Bad: "Adoption fails to grow." (no number, no date) "Usage expands beyond its niche." (that is success)
+Each item is a concrete event, checkable on GitHub, that is true only if the pick was a mistake. Use one of these \
+two forms, with this repo's current number from a cited output:
+- "<metric> is below <threshold> by <date> (now <current>)"   e.g. "Stars below 1,000 by {in6:%Y-%m-%d} (now 600)."
+- "No <event> by <date>"   e.g. "No new release by {in3:%Y-%m-%d}." or "No commit from a second author by \
+{in6:%Y-%m-%d}."
+(The numbers in these examples are made up; use the repo's real ones.) Metrics you can use: stars, forks_30d, \
+commits_90d, authors_90d, releases, last commit date. Set thresholds a good pick should clear easily.
+Self-check each line: "If this happens, was the pick wrong?" It must be yes. Never describe success ("usage \
+grows", "it gains stars", "expands beyond its niche"), and never write something vague with no number and date \
+("adoption fails to grow").
 
 7. CONFIDENCE (0-1): how likely the pick is a genuinely good, underrated tool in this topic
 Rate each pick on its own against this rubric:
