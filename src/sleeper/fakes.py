@@ -423,7 +423,7 @@ def _criteria(d: RepoDetailsOutput) -> CardCriteria:
 def fake_run(universe: Universe | None = None) -> FakeRun:
     """A complete `ok` run: 6 turns, 2 tool errors, 1 rejected submit, 3 cards (one killed, one fact-check flag)."""
     u = universe or fake_universe()
-    settings = RunSettings(topic=TOPIC, universe_file=str(DEFAULT_OUT / "universe.json"), model=MODEL, min_ranked=5)
+    settings = RunSettings(topic=TOPIC, universe_file=(DEFAULT_OUT / "universe.json").as_posix(), model=MODEL, min_ranked=5)
     b = _RunBuilder(u, settings)
     b.event(RunStarted, settings=settings, universe=u.header)
     b.event(StatusEvent, phase="starting")

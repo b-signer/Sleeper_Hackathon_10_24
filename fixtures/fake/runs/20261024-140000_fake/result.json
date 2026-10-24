@@ -5,7 +5,7 @@
   "error": null,
   "settings": {
     "topic": "fake",
-    "universe_file": "fixtures\\fake\\universe.json",
+    "universe_file": "fixtures/fake/universe.json",
     "stars_min": 50,
     "stars_max": 2000,
     "created_after": "2025-01-01",
