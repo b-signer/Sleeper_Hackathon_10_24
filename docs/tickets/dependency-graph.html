@@ -21,6 +21,9 @@
   --crit: #c4521a;
   --check: #6a4fb3;
   --edge: #9aa39f;
+  --done: #4d7a3f;
+  --done-bg: #e3eedc;
+  --ready: #d99a00;
   --font-display: "IBM Plex Sans", system-ui, sans-serif;
   --font-node: "IBM Plex Sans Condensed", "Arial Narrow", system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
@@ -28,13 +31,13 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #121615; --surface: #1a1f1e; --fg: #e3e8e5; --muted: #949d99; --rule: #2e3533; --lane: #171c1b;
-    --core: #4fa59c; --core-fg: #0d1211; --p0: #4fa59c; --opt: #7b8480; --crit: #f0814a; --check: #a891f0; --edge: #56605c;
+    --core: #4fa59c; --core-fg: #0d1211; --p0: #4fa59c; --opt: #7b8480; --crit: #f0814a; --check: #a891f0; --edge: #56605c; --done: #9cc98a; --done-bg: #1f2b1b; --ready: #ffc23d;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --bg: #121615; --surface: #1a1f1e; --fg: #e3e8e5; --muted: #949d99; --rule: #2e3533; --lane: #171c1b;
-  --core: #4fa59c; --core-fg: #0d1211; --p0: #4fa59c; --opt: #7b8480; --crit: #f0814a; --check: #a891f0; --edge: #56605c;
+  --core: #4fa59c; --core-fg: #0d1211; --p0: #4fa59c; --opt: #7b8480; --crit: #f0814a; --check: #a891f0; --edge: #56605c; --done: #9cc98a; --done-bg: #1f2b1b; --ready: #ffc23d;
   color-scheme: dark;
 }
 body {
@@ -55,6 +58,8 @@ h1 { font-size: 1.6rem; margin: 0; letter-spacing: -0.01em; text-wrap: balance; 
 .sw.p0 { border: 1.5px solid var(--p0); background: var(--surface); }
 .sw.opt { border: 1.5px dashed var(--opt); background: var(--surface); }
 .sw.crit { border: 2.5px solid var(--crit); background: var(--surface); }
+.sw.done { background: var(--done-bg); border: 1.5px solid var(--done); }
+.sw.ready { border: 3px solid var(--ready); background: var(--surface); }
 .sw.hum { width: 10px; height: 10px; border-radius: 50%; background: var(--crit); }
 .ln { width: 2px; height: 14px; background: var(--check); display: inline-block; }
 label.tog { display: inline-flex; gap: 6px; align-items: center; cursor: pointer; }
@@ -83,6 +88,11 @@ svg { display: block; }
 .node.core .id { fill: var(--core-fg); opacity: .8; }
 .node.core .tt { fill: var(--core-fg); }
 .node .hum { fill: var(--crit); }
+.node.st-done rect.box { fill: var(--done-bg); stroke: var(--done); stroke-dasharray: none; }
+.node.st-done .id, .node.st-done .tt { fill: var(--done); opacity: 1; }
+.node.st-ready rect.box { stroke: var(--ready); stroke-width: 3.2; }
+.node.st-ready .id { fill: var(--ready); opacity: 1; }
+.node.core.st-ready .id { fill: var(--core-fg); }
 .node { cursor: pointer; outline: none; }
 .node:focus-visible rect.box { stroke: var(--check); stroke-width: 3; }
 svg.focus .node, svg.focus .edge { opacity: .14; }
@@ -104,6 +114,10 @@ aside dd { margin: 0; }
 .none { color: var(--muted); }
 .crit-path { font-family: var(--font-mono); font-size: 12px; line-height: 1.7; color: var(--crit); }
 .hint { color: var(--muted); font-size: 12.5px; }
+.sgroup { display: grid; gap: 4px; margin-top: 8px; }
+.slabel { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+.chip.st-ready { border-color: var(--ready); }
+.chip.st-done { color: var(--done); }
 @media (prefers-reduced-motion: reduce) { .edge, .node rect.box { transition: none; } }
 </style>
 
@@ -119,6 +133,8 @@ aside dd { margin: 0; }
       <span class="key"><span class="sw opt"></span>P1 / stretch</span>
       <span class="key"><span class="sw crit"></span>Critical path</span>
       <span class="key"><span class="sw hum"></span>Needs a person</span>
+      <span class="key"><span class="sw done"></span>Done</span>
+      <span class="key"><span class="sw ready"></span>Ready to start</span>
       <span class="key"><span class="ln"></span>Checkpoint</span>
     </div>
     <label class="tog"><input type="checkbox" id="coreonly"> Show P0 only</label>
@@ -127,6 +143,11 @@ aside dd { margin: 0; }
   <div class="stage">
     <div class="scroller"><svg id="g" role="img" aria-label="Dependency graph of Sleeper tickets by time window and track"></svg></div>
     <aside id="panel" aria-live="polite">
+      <div>
+        <h2>Status</h2>
+        <p class="hint" id="statusAt"></p>
+        <div id="statusList"></div>
+      </div>
       <div>
         <h2>Critical path</h2>
         <p class="crit-path" id="critText"></p>
@@ -182,9 +203,14 @@ const N = [
 const CHAINS = [["T01","T02","T03","T10","T11","T17"], ["T05","T06","T07","T08","T11"]];
 const CHECKS = [[2, "A · ~2:00 fake run in UI"], [3, "B · ~3:15 real run ok"], [4, "C · ~4:15 backup recorded"]];
 const PRI_LABEL = {core: "P0", opt: "P1 / stretch"};
+// Status as of the last update. Ready = every hard dependency is done.
+const STATUS_AT = "2026-10-24, after T04";
+const DONE = new Set(["T01", "T02", "T04", "T05"]);
+const ACTIVE = new Set([]);  // tickets someone has started
 
 const byId = Object.fromEntries(N.map(n => [n.id, n]));
 const kids = Object.fromEntries(N.map(n => [n.id, []]));
+const statusOf = id => DONE.has(id) ? "done" : ACTIVE.has(id) ? "active" : byId[id].d.every(p => DONE.has(p)) ? "ready" : "blocked";
 N.forEach(n => [...n.d, ...(n.s || [])].forEach(p => kids[p].push(n.id)));
 const critSet = new Set(CHAINS.flat());
 const critEdges = new Set(CHAINS.flatMap(c => c.slice(1).map((id, i) => c[i] + ">" + id)));
@@ -261,10 +287,11 @@ edges.filter(x => x.e.classList.contains("crit")).forEach(x => edgeG.appendChild
 const nodeEls = {};
 N.forEach(n => {
   const p = pos[n.id];
-  const cls = ["node", n.pri === "core" ? "core" : n.pri === "p0" ? "p0" : "opt"]; if (critSet.has(n.id)) cls.push("crit");
+  const st = statusOf(n.id);
+  const cls = ["node", n.pri === "core" ? "core" : n.pri === "p0" ? "p0" : "opt", "st-" + st]; if (critSet.has(n.id)) cls.push("crit");
   const g = el("g", {class: cls.join(" "), transform: `translate(${p.x},${p.y})`, tabindex: 0, role: "button", "aria-label": `${n.id} ${n.f}`});
   el("rect", {class: "box", width: NW, height: NH, rx: 5}, g);
-  el("text", {x: 9, y: 15, class: "id"}, g).textContent = n.id;
+  el("text", {x: 9, y: 15, class: "id"}, g).textContent = n.id + (st === "done" ? "  ✓ done" : st === "active" ? "  ● in progress" : st === "ready" ? "  ▶ ready" : "");
   el("text", {x: 9, y: 31, class: "tt"}, g).textContent = n.t;
   if (n.h) el("circle", {cx: NW - 10, cy: 11, r: 4, class: "hum"}, g);
   nodeEls[n.id] = g;
@@ -289,6 +316,7 @@ function show(id) {
   document.getElementById("detail").innerHTML = `
     <div><div class="idl">${n.id}${n.h ? " · needs a person" : ""}${critSet.has(id) ? " · critical path" : ""}</div><h2>${n.f}</h2></div>
     <dl>
+      <dt>Status</dt><dd>${{done: "Done", active: "In progress", ready: "Ready to start", blocked: "Waiting on dependencies"}[statusOf(id)]}</dd>
       <dt>When</dt><dd>${COLS[n.col][0]}</dd>
       <dt>Priority</dt><dd>${PRI_LABEL[n.pri]}</dd>
       <dt>Waits on</dt><dd>${chips(n.d)}${n.s ? `<div class="hint">Optional: ${n.s.join(", ")}</div>` : ""}</dd>
@@ -306,6 +334,16 @@ function clear() {
   document.getElementById("detail").innerHTML = `<p class="hint">Select a ticket to see its dependencies.</p>`;
 }
 svg.addEventListener("click", () => { pinned = null; clear(); });
+document.getElementById("statusAt").textContent = "As of " + STATUS_AT;
+{
+  const groups = [["Ready to start", "ready"], ["In progress", "active"], ["Done", "done"], ["Waiting", "blocked"]];
+  document.getElementById("statusList").innerHTML = groups.map(([label, st]) => {
+    const ids = N.filter(n => statusOf(n.id) === st).map(n => n.id);
+    if (!ids.length) return "";
+    return `<div class="sgroup"><div class="slabel">${label} · ${ids.length}</div><div class="chips">${ids.map(x => `<button class="chip st-${st}" data-id="${x}" title="${byId[x].f}">${x}</button>`).join("")}</div></div>`;
+  }).join("");
+  document.querySelectorAll("#statusList .chip").forEach(b => b.addEventListener("click", () => { pinned = b.dataset.id; show(b.dataset.id); }));
+}
 document.getElementById("critText").innerHTML = CHAINS.map(c => c.join(" → ")).join("<br>");
 document.getElementById("coreonly").addEventListener("change", e => svg.classList.toggle("coreonly", e.target.checked));
 </script>
