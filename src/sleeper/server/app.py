@@ -3,11 +3,12 @@
 | Method | Path                            | Returns                                                       |
 |--------|---------------------------------|---------------------------------------------------------------|
 | GET    | /                               | The page (static/index.html; no external assets)              |
-| GET    | /api/config                     | ServerConfig: offline flag and the models the launcher offers |
+| GET    | /api/config                     | ServerConfig: offline flag, models with prices, spend guard   |
+| GET    | /api/spend                      | SpendInfo {spent_usd, guard_usd, source}; null when offline   |
 | GET    | /api/universes                  | [UniverseInfo] for the launcher                               |
 | GET    | /api/runs                       | [RunInfo], newest first                                       |
 | POST   | /api/runs                       | Body: RunSettings. 202 {"run_id"}; 409 if a run is in progress; |
-|        |                                 | 400 if the runner refused it (e.g. spend guard), with the reason |
+|        |                                 | 400 {"detail": Refusal} if it was refused before starting     |
 | GET    | /api/runs/{run_id}              | RunInfo                                                       |
 | GET    | /api/runs/{run_id}/result       | RunResult; 409 while the run is in progress                   |
 | GET    | /api/runs/{run_id}/events       | SSE: every event so far, then new ones live, then `end`       |
@@ -17,25 +18,37 @@ SSE messages: `id` is the event's seq, `event` its type, `data` the event as JSO
 contract). Every stream ends with an `end` message: close the EventSource on it, or the browser
 reconnects. When `end` arrives the result is ready to fetch. A reconnect sends Last-Event-ID, and
 the live stream resumes after that seq.
+
+A refused run (400) never creates a run folder. Its `detail` is a Refusal object,
+`{"reason": "spend_guard" | "offline" | "no_universe" | "no_api_key" | "web_model" | "other",
+"message": "<human sentence>"}`, mapped from the exception type by `refusal_for`. Other errors
+(404, 409, 422, 504) keep FastAPI's usual detail (a string, or a list for 422).
 """
 
 from __future__ import annotations
 
 import threading
-from collections.abc import AsyncIterator, Sequence
+from collections.abc import AsyncIterator, Callable, Sequence
 from pathlib import Path
+from typing import get_args
 
 from fastapi import FastAPI, Header, HTTPException, Query
 from fastapi.responses import FileResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 
 from sleeper.contracts import RunEvent, RunResult, RunSettings, dump_event
-from sleeper.server.runner import Launch, Runner, launch
+from sleeper.agent.openrouter import WebAccessRefused
+from sleeper.agent.spend import SpendGuardError
+from sleeper.agent.types import ModelError
+from sleeper.server.runner import Launch, Runner, RunRefused, launch
 from sleeper.server.store import (
     ModelInfo,
+    Refusal,
+    RefusalReason,
     RunInfo,
     RunStore,
     ServerConfig,
+    SpendInfo,
     UniverseInfo,
     follow_events,
     list_universes,
@@ -45,6 +58,26 @@ from sleeper.server.store import (
 
 STATIC_DIR = Path(__file__).parent / "static"
 FAKE_MODEL = "scripted/fake"  # T10's ScriptedModel: offline, free, fake universe only
+
+
+def refusal_for(e: Exception) -> Refusal:
+    """The 400 detail for an exception raised before a run started."""
+    if isinstance(e, RunRefused):
+        reason = e.reason if e.reason in get_args(RefusalReason) else "other"
+    elif isinstance(e, SpendGuardError):
+        reason = "spend_guard"
+    elif isinstance(e, WebAccessRefused):
+        reason = "web_model"
+    elif isinstance(e, FileNotFoundError):
+        reason = "no_universe"
+    elif isinstance(e, ModelError) and e.kind == "auth":
+        reason = "no_api_key"
+    else:
+        reason = "other"
+    message = str(e) or type(e).__name__
+    if reason == "other" and not isinstance(e, RunRefused):
+        message = f"{type(e).__name__}: {message}"
+    return Refusal(reason=reason, message=message)
 
 
 def _sse(events: AsyncIterator[RunEvent]) -> StreamingResponse:
@@ -62,6 +95,7 @@ def create_app(
     runner: Runner,
     start_timeout_s: float = 30,
     config: ServerConfig | None = None,
+    spend: Callable[[], SpendInfo | None] | None = None,
 ) -> FastAPI:
     config = config or ServerConfig(
         offline=True,
@@ -88,6 +122,10 @@ def create_app(
     def server_config() -> ServerConfig:
         return config
 
+    @app.get("/api/spend")
+    def spent() -> SpendInfo | None:
+        return spend() if spend is not None else None
+
     @app.get("/api/universes")
     def universes() -> list[UniverseInfo]:
         return list_universes(universe_dirs)
@@ -107,7 +145,7 @@ def create_app(
             if not started.wait(start_timeout_s):
                 raise HTTPException(504, "the run did not start in time")
         if started.refused is not None:
-            raise HTTPException(400, f"run refused: {type(started.refused).__name__}: {started.refused}")
+            raise HTTPException(400, refusal_for(started.refused).model_dump())
         if started.run_id is None:
             raise HTTPException(500, "the runner finished without starting a run")
         return {"run_id": started.run_id}

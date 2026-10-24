@@ -57,6 +57,8 @@ def build_parser() -> argparse.ArgumentParser:
     run.add_argument("--max-wall-clock", type=int, metavar="S", help="wall-clock limit in seconds (default 600)")
     run.add_argument("--fake", action="store_true", help="scripted model and the real tools on fake data: offline, free")
     run.add_argument("--quiet", action="store_true", help="don't print the live trace")
+    review = sub.add_parser("review", help="print a review sheet for a recorded run, with automatic flags (T11)")
+    review.add_argument("run_dir", help="run folder (with result.json), or a run id under the runs directory")
     from sleeper.backtest import cli as backtest_cli
 
     backtest_cli.add_parser(sub)
@@ -263,6 +265,22 @@ def _cmd_run(args: argparse.Namespace) -> int:
     return 0 if result.status == "ok" else 1
 
 
+def _cmd_review(run_dir: str) -> int:
+    import sys
+    from pathlib import Path
+
+    from sleeper.review import review
+
+    path = Path(run_dir)
+    if not (path / "result.json").is_file():
+        path = load_settings().runs_dir / run_dir
+    if not (path / "result.json").is_file():
+        print(f"sleeper review: no result.json in {run_dir}", file=sys.stderr)
+        return 2
+    print(review(path))
+    return 0
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
@@ -280,6 +298,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         return _cmd_serve(args.host, args.port)
     if args.command == "run":
         return _cmd_run(args)
+    if args.command == "review":
+        return _cmd_review(args.run_dir)
     if args.command == "backtest":
         from sleeper.backtest import cli as backtest_cli
 

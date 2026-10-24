@@ -13,11 +13,21 @@ from sleeper.contracts import TOOL_ARGS
 
 DESCRIPTIONS: dict[str, str] = {
     "browse": (
-        "Screen the universe: filter (AND) and sort by any metric or criterion score, optional keyword/language. "
-        "Returns up to `limit` compact rows and the total match count. Cheap: use it to find candidates."
+        "Screen the universe: filter (AND) and sort by any metric or criterion score, optional keyword (matches "
+        "repo name or description) and language. Returns up to `limit` compact rows (repo, description, stars, "
+        "scores) and the total match count. Cheap: use it several times with different sorts and filters to find "
+        "candidates, and use the descriptions to screen out repos that are not in the topic. Keep limit <= 25 and "
+        "page with offset."
     ),
-    "repo_details": "Full metrics and the four criterion scores for one repo in the universe.",
-    "readme": "The repo's README text, capped at max_chars (500-12000). Use it to judge what the project does.",
+    "repo_details": (
+        "Full metrics (stars, star velocity, recent forks, commits and authors in 90 days, releases, last commit, "
+        "age, description, license) and the four criterion scores for one repo in the universe. Cards copy their "
+        "scores and key figures from this output."
+    ),
+    "readme": (
+        "The repo's README text, capped at max_chars. Use max_chars 2500 (at most 3000) to keep the run in budget. "
+        "Use it to judge what the project does, whether it fits the topic, and how mature it is."
+    ),
     "submit": (
         "Submit your picks (cards citing call ids), the ranking of every repo you looked at closely, and a summary. "
         "Rules the submit tool checks: every cited call id must be an earlier successful research call; each "
