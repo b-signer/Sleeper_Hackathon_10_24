@@ -64,3 +64,25 @@ def test_cli_run_fake(runs, capsys):
     result = RunResult.model_validate_json((folder / "result.json").read_text())
     assert result.status == "ok" and len(result.cards) >= 1
     assert str(folder) in capsys.readouterr().out
+
+
+
+def test_execute_run_defaults_to_real_toolbox(runs, monkeypatch):
+    """T09 integration: execute_run uses Toolbox + DataTools by default, and the scripted fake run passes strict validation."""
+    from sleeper.agent import loop, runner
+    from sleeper.agent.toolbox import Toolbox
+    from sleeper.config import load_settings
+
+    seen = {}
+    original = loop.run_agent
+
+    def spy(settings, universe, model, tools, sink, **kw):
+        seen["tools"] = tools
+        return original(settings, universe, model, tools, sink, **kw)
+
+    monkeypatch.setattr(loop, "run_agent", spy)  # runner imports run_agent lazily from sleeper.agent.loop
+    s = RunSettings(topic="fake", model="scripted/fake", min_ranked=5)
+    result = runner.execute_run(s, fake=True, cfg=load_settings())
+    assert isinstance(seen["tools"], Toolbox)
+    assert result.status == "ok", (result.error, result.last_submit_errors)
+    assert result.cards and result.submit_attempts == 2
