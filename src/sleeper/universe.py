@@ -28,7 +28,8 @@ Steps:
    Relevance (T18): if the topic has a ``scope``, each candidate is first
    classified by a cheap model (relevance.py, one README request, verdicts
    cached in ``data/relevance/<topic>.json``). Anything but ``on`` is dropped
-   as ``off_topic`` before its metrics are fetched, and backfilled the same way.
+   as ``off_topic``, and an ``on`` whose text looks like a prompt injection as
+   ``suspicious``, before its metrics are fetched; both are backfilled the same way.
 4. Metrics (T06) for each sampled repo, all with the same ``as_of = built_at``.
 5. Scores (scoring.py), percentiles within the final rows.
 
@@ -265,9 +266,10 @@ def build_universe(
         name = it["full_name"]
         if checker is not None:
             v = checker.check(gh, it)
-            if v.verdict != "on":
-                excluded["off_topic"] = excluded.get("off_topic", 0) + 1
-                progress(f"  [{len(results):>3}/{min(max_size, len(eligible))}] {name} (dropped: off_topic, {v.verdict}: {v.reason})")
+            why = v.excluded_as  # "off_topic", "suspicious" (an untrusted "on") or None
+            if why:
+                excluded[why] = excluded.get(why, 0) + 1
+                progress(f"  [{len(results):>3}/{min(max_size, len(eligible))}] {name} (dropped: {why}, {v.verdict}: {v.reason})")
                 continue
         try:
             r = fetch(gh, name, as_of=built_at)

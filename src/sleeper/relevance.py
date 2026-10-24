@@ -13,17 +13,21 @@ to the topic before fetching its metrics. Use::
 - Output: a forced ``relevance_verdict`` tool call with strict JSON arguments
   ``{"verdict": "on"|"off"|"unsure", "reason": "<one line>"}``. Free text is never
   parsed; anything malformed counts as ``unsure``. The builder keeps only ``on``.
-- Prompt injection: the repo's text is untrusted. It goes inside
-  ``<untrusted_repo_data>`` delimiters (any delimiter look-alikes in it are
-  removed), the system prompt says it is data, never instructions, and text that
-  looks like instructions or a verdict is flagged: the reason starts with
-  ``suspicious-text:`` and the file's totals count it, for a human to review.
+- Prompt injection: the repo's text is untrusted. Every ``<`` and ``>`` in it is
+  escaped (to ``‹``/``›``), so it cannot open or close the
+  ``<untrusted_repo_data>`` block it is wrapped in; the system prompt says the
+  block is data, never instructions. Text that looks like instructions or a
+  verdict (SUSPICIOUS) marks the verdict ``suspicious``: a suspicious "on" is
+  not trusted, the builder excludes it as ``excluded["suspicious"]`` for a human
+  to review.
 - Verdicts are saved in ``data/relevance/<topic>.json`` (committed) and reused
-  when ``repo_id``, ``model`` and ``prompt_sha256`` match, so a rebuild makes no
-  model calls and works offline. Verdicts made with the first (pre-hardening)
-  prompt are reused when they cannot have been gamed into inclusion: every
-  ``off``/``unsure``, and an ``on`` only if its input has no suspicious text;
-  the rest are re-checked. They keep their own ``prompt_sha256``.
+  only when ``repo_id``, ``model``, ``prompt_sha256`` and ``input_sha256`` (a
+  hash of the exact name, description, topics and README excerpt) all match, so
+  a rebuild makes no model calls and works offline. A verdict is never saved
+  when the README was missing or could not be fetched (re-checked next time).
+  Verdicts made with the first (pre-hardening) prompt are reused only when they
+  exclude the repo (``off``/``unsure``): that direction can't be gamed into
+  inclusion. Every first-prompt "on" is re-checked.
 - Cost controls: a cap per build (CostCapExceeded; default $0.50, lower it with
   SLEEPER_RELEVANCE_CAP_USD), and before the first model
   call the D10 spend guard: refuse if spent + cap > SPEND_GUARD_USD.
@@ -35,7 +39,7 @@ import hashlib
 import json
 import os
 import re
-from dataclasses import asdict, dataclass, field
+from dataclasses import asdict, dataclass, field, replace
 from pathlib import Path
 from typing import Any, Callable
 
@@ -118,10 +122,10 @@ README (first {n} characters):
 
 # Instruction- or verdict-like text in a repo's own text: flagged for review, never trusted.
 SUSPICIOUS = re.compile(
-    r"ignore\s+(?:all\s+|any\s+|the\s+)?(?:previous|prior|above|earlier)\s+instructions"
-    r"|disregard\s+(?:all\s+|any\s+|the\s+)?(?:previous|prior|above)"
-    r"|\bverdict\b|[\"']on[\"']|\bon[- ]topic\b|\bclassif(?:y|ier)\b|system\s+prompt"
-    r"|untrusted_repo_data|relevance_verdict|you\s+are\s+(?:an?|the)\s+(?:ai|assistant|model|classifier|llm)",
+    r"ignore\s+(?:all\s+|any\s+|the\s+|your\s+)?(?:previous|prior|above|earlier)\s+instructions"
+    r"|disregard\s+(?:all\s+|any\s+|the\s+|your\s+)?(?:previous|prior|above)"
+    r"|\bverdict\b|[\"']on[\"']\s*[,}]|\bon[- ]topic\b|classif(?:y|ied)\s+(?:this|it|me|the)\b"
+    r"|untrusted_repo_data|relevance_verdict|you\s+are\s+(?:an?|the)\s+(?:ai|assistant|model|classifier|llm)\b",
     re.I,
 )
 
@@ -130,9 +134,14 @@ def suspicious_text(*parts: str) -> bool:
     return any(SUSPICIOUS.search(p or "") for p in parts)
 
 
-def _clean(text: str) -> str:
-    """Untrusted text with delimiter look-alikes removed, so it can't close the data block."""
-    return re.sub(r"</?\s*untrusted_repo_data\s*>", "", text, flags=re.I)
+def _escape(text: str) -> str:
+    """Untrusted text with every angle bracket escaped, so no tag in it can open or close the data block."""
+    return text.replace("<", "\u2039").replace(">", "\u203a")
+
+
+def input_sha256(name: str, description: str, topics: str, readme: str) -> str:
+    """Hash of the exact untrusted input a verdict was made from."""
+    return hashlib.sha256(json.dumps([name, description, topics, readme]).encode("utf-8")).hexdigest()
 
 
 class RelevanceError(RuntimeError):
@@ -165,6 +174,15 @@ class Verdict:
     model: str
     prompt_sha256: str
     cost_usd: float
+    input_sha256: str = ""  # empty for first-prompt verdicts
+    suspicious: bool = False  # the input looked like instructions or a verdict (SUSPICIOUS)
+
+    @property
+    def excluded_as(self) -> str | None:
+        """None if the repo is kept; else "suspicious" (an untrusted "on") or "off_topic"."""
+        if self.verdict == "on":
+            return "suspicious" if self.suspicious else None
+        return "off_topic"
 
 
 def parse_verdict(arguments: str | None) -> tuple[str, str]:
@@ -193,15 +211,19 @@ def verdict_from_reply(reply: Any) -> tuple[str, str]:
     return parse_verdict(calls[0].arguments if len(calls) == 1 else None)
 
 
-def _readme_excerpt(gh: GitHubClient, repo: str) -> str:
-    """First README_CHARS of the README: the same request as metrics._readme_chars (shared cache)."""
+def _readme_excerpt(gh: GitHubClient, repo: str) -> tuple[str, bool]:
+    """(first README_CHARS of the README, whether a real README was read).
+
+    The same request as metrics._readme_chars (shared cache)."""
     try:
         text = gh.get(f"/repos/{repo}/readme", accept=RAW_ACCEPT)
     except NotFound:
-        return "(no README)"
+        return "(no README)", False
     except GitHubError:
-        return "(README could not be fetched)"
-    return text[:README_CHARS] if isinstance(text, str) and text.strip() else "(empty README)"
+        return "(README could not be fetched)", False
+    if isinstance(text, str) and text.strip():
+        return text[:README_CHARS], True
+    return "(empty README)", False
 
 
 @dataclass
@@ -210,7 +232,7 @@ class RelevanceStats:
     new: int = 0  # model calls in this build
     cost_usd: float = 0.0  # recorded cost of the verdicts used in this build
     new_cost_usd: float = 0.0  # cost of this build's model calls (what the cap limits)
-    counts: dict[str, int] = field(default_factory=lambda: {v: 0 for v in VERDICTS})
+    counts: dict[str, int] = field(default_factory=lambda: {v: 0 for v in (*VERDICTS, "suspicious")})
 
 
 class RelevanceChecker:
@@ -273,19 +295,21 @@ class RelevanceChecker:
         out = {}
         for v in data.get("verdicts", []):
             try:
-                out[int(v["repo_id"])] = Verdict(**{k: v[k] for k in Verdict.__dataclass_fields__})
+                out[int(v["repo_id"])] = Verdict(**{k: v[k] for k in Verdict.__dataclass_fields__ if k in v})
             except (KeyError, TypeError, ValueError):
                 continue
         return out
 
     def save(self) -> Path:
-        """Write the verdict file: verdicts for the current model and prompt (or reusable v1 ones), by repo."""
+        """Write the verdict file: verdicts for the current model and prompt (and reusable first-prompt
+        ones: off/unsure), sorted by repo."""
         current = sorted(
-            (v for v in self._verdicts.values() if v.model == self.model_id and v.prompt_sha256 in (self.sha, self.v1_sha)),
+            (v for v in self._verdicts.values() if self._reusable_kind(v)),
             key=lambda v: (v.repo.lower(), v.repo_id),
         )
         counts = {k: sum(v.verdict == k for v in current) for k in VERDICTS}
-        counts["suspicious_text"] = sum(v.reason.startswith("suspicious-text:") for v in current)
+        counts["suspicious"] = sum(v.suspicious for v in current)
+        counts["suspicious_on_excluded"] = sum(v.excluded_as == "suspicious" for v in current)
         counts["v1_prompt"] = sum(v.prompt_sha256 == self.v1_sha for v in current)
         data = {
             "topic": self.topic_id,
@@ -306,13 +330,22 @@ class RelevanceChecker:
 
     # ---- checking -------------------------------------------------------------
 
-    def cached(self, repo_id: int) -> Verdict | None:
-        """A verdict made with the current prompt, or a v1 verdict that could not have been gamed into
-        inclusion (off/unsure). A v1 "on" is reused by check() only if its input is not suspicious."""
+    def _reusable_kind(self, v: Verdict) -> bool:
+        if v.model != self.model_id:
+            return False
+        return (v.prompt_sha256 == self.sha and bool(v.input_sha256)) or (
+            v.prompt_sha256 == self.v1_sha and v.verdict != "on"
+        )
+
+    def cached(self, repo_id: int, input_sha: str) -> Verdict | None:
+        """A saved verdict for exactly this model, prompt and input, or a first-prompt verdict that
+        excluded the repo (it can't have been gamed into inclusion). Fail closed otherwise."""
         v = self._verdicts.get(repo_id)
         if not v or v.model != self.model_id:
             return None
-        if v.prompt_sha256 == self.sha or (v.prompt_sha256 == self.v1_sha and v.verdict != "on"):
+        if v.prompt_sha256 == self.sha and v.input_sha256 and v.input_sha256 == input_sha:
+            return v
+        if v.prompt_sha256 == self.v1_sha and v.verdict != "on":
             return v
         return None
 
@@ -336,18 +369,18 @@ class RelevanceChecker:
         return self._model
 
     def check(self, gh: GitHubClient, item: dict) -> Verdict:
-        """Verdict for one search item (needs id, full_name; uses description and topics)."""
+        """Verdict for one search item (needs id, full_name; uses description and topics).
+
+        Keep the repo only if ``verdict.excluded_as is None``."""
         repo_id, repo = int(item["id"]), item["full_name"]
         desc = " ".join((item.get("description") or "").split())[:DESCRIPTION_CHARS] or "(none)"
         topics = ", ".join(item.get("topics") or []) or "(none)"
-        v = self.cached(repo_id)
-        readme = None
-        if v is None:
-            old = self._verdicts.get(repo_id)
-            if old and old.model == self.model_id and old.prompt_sha256 == self.v1_sha:  # a v1 "on"
-                readme = _readme_excerpt(gh, repo)  # cached by the build that made it
-                if not suspicious_text(repo, desc, topics, readme):
-                    v = old
+        readme, readme_ok = _readme_excerpt(gh, repo)
+        in_sha = input_sha256(repo, desc, topics, readme)
+        suspicious = suspicious_text(repo, desc, topics, readme)
+        v = self.cached(repo_id, in_sha) if readme_ok else None
+        if v is not None and v.suspicious != suspicious:
+            v = replace(v, suspicious=suspicious)  # the flag follows the current SUSPICIOUS pattern
         if v is None:
             if self.stats.new_cost_usd >= self.cap_usd:
                 raise CostCapExceeded(
@@ -355,37 +388,42 @@ class RelevanceChecker:
                     f"{self.stats.new} model calls; verdicts so far are saved in {self.store_path}"
                 )
             self._check_guard()
-            readme = readme if readme is not None else _readme_excerpt(gh, repo)
             user = USER_PROMPT.format(
-                name=_clean(repo), description=_clean(desc), topics=_clean(topics), n=README_CHARS, readme=_clean(readme)
+                name=_escape(repo), description=_escape(desc), topics=_escape(topics), n=README_CHARS,
+                readme=_escape(readme),
             )
             messages = [{"role": "system", "content": self.system}, {"role": "user", "content": user}]
             try:
                 reply = self._get_model().complete(messages, [VERDICT_TOOL], tool_choice=FORCE_VERDICT, timeout_s=60.0)
             except ModelError as e:
                 # Not saved: a failed call is retried on the next build. Dropped from this one.
-                self.stats.checked += 1
-                self.stats.counts["unsure"] += 1
-                return Verdict(repo_id, repo, "unsure", f"model error: {e}", self.model_id, self.sha, 0.0)
+                v = Verdict(repo_id, repo, "unsure", f"model error: {e}", self.model_id, self.sha, 0.0, in_sha, suspicious)
+                self._count(v)
+                return v
             verdict, reason = verdict_from_reply(reply)
-            if suspicious_text(repo, desc, topics, readme):
-                reason = f"suspicious-text: {reason}"
             cost = round(reply.usage.cost_usd, 8)
-            v = Verdict(repo_id, repo, verdict, reason, self.model_id, self.sha, cost)
-            self._verdicts[repo_id] = v
+            v = Verdict(repo_id, repo, verdict, reason, self.model_id, self.sha, cost, in_sha, suspicious)
             self.stats.new += 1
             self.stats.new_cost_usd += cost
-            self.save()
+            if readme_ok:  # never cache a verdict made without the real README
+                self._verdicts[repo_id] = v
+                self.save()
+        elif self._verdicts.get(repo_id) is not v:
+            self._verdicts[repo_id] = v
+        self._count(v)
+        return v
+
+    def _count(self, v: Verdict) -> None:
         self.stats.checked += 1
         self.stats.cost_usd += v.cost_usd
-        self.stats.counts[v.verdict] += 1
-        return v
+        self.stats.counts["suspicious" if v.excluded_as == "suspicious" else v.verdict] += 1
 
     def summary(self) -> str:
         """One line for header.builder, e.g. 'relevance openai/gpt-5.6-luna 412 checked, 37 off, $0.08'."""
         s = self.stats
         dropped = s.counts["off"] + s.counts["unsure"]
+        susp = f", {s.counts['suspicious']} suspicious" if s.counts["suspicious"] else ""
         return (
-            f"relevance {self.model_id} {s.checked} checked, {dropped} off-topic, ${s.cost_usd:.2f}"
+            f"relevance {self.model_id} {s.checked} checked, {dropped} off-topic{susp}, ${s.cost_usd:.2f}"
             f" (prompt {self.sha[:8]})"
         )
