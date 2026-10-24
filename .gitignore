@@ -27,3 +27,6 @@ env/
 
 # Claude Code agent worktrees
 .claude/worktrees/
+
+# Generated JSON Schemas (uv run sleeper schema)
+schemas/
