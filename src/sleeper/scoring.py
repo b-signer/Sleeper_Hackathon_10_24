@@ -13,18 +13,30 @@ from datetime import datetime
 
 from sleeper.contracts.universe import CriteriaScores, RepoMetrics
 
+# Quality volume caps (T18): values at or above a cap tie, so raw volume can't win quality.
+# Tuned on the rebuilt universes so that roughly 25-40% of repos sit at each cap.
+COMMITS_CAP = 150
+RELEASES_CAP = 25
+AUTHORS_CAP = 3
+README_REAL_CHARS = 500  # a README at least this long counts as "has a real README"
+# Quality weights (sum to 1): commits, authors, releases, last-commit recency, has-README.
+QUALITY_WEIGHTS = (0.25, 0.25, 0.20, 0.20, 0.10)
+
 SCORING = (
     "Scores are percentiles within this universe (0 = lowest repo, 100 = highest; ties share the "
-    "average rank), and a criterion built from several metrics is the mean of their percentiles, "
-    "rounded to 0.1. Higher always means more of the criterion. Popularity: stars. Momentum: "
-    "lifetime star velocity (stars_per_day) and forks created in the last 30 days (forks_30d), "
-    "equally weighted (D13; star_events_30d is not used because the events feed caps it). "
-    "Quality: commits in the last 90 days, distinct commit authors in the last 90 days, number "
-    "of releases, recency of the last commit, and README length, equally weighted, so an "
-    "active, multi-author, released and documented repo scores high. Newness: creation date, "
-    "so the newest repo scores 100. A metric that is unknown (None) for a repo counts as the "
-    "median (50) for that repo, neither rewarded nor penalised; the other repos' percentiles "
-    "are computed among the known values only."
+    "average rank), rounded to 0.1. Higher always means more of the criterion. Popularity: stars. "
+    "Momentum: lifetime star velocity (stars_per_day) and forks created in the last 30 days "
+    "(forks_30d), equally weighted (D13; star_events_30d is not used because the events feed caps "
+    "it). Quality: a weighted mean of commits in the last 90 days capped at "
+    f"{COMMITS_CAP} (25%), distinct commit authors in the last 90 days capped at {AUTHORS_CAP} (25%), "
+    f"number of releases capped at {RELEASES_CAP} (20%), recency of the last commit (20%), and "
+    f"has-a-real-README (10%: 100 if the README has at least {README_REAL_CHARS} characters, 0 if "
+    "shorter or missing, 50 if unknown). Each capped metric is clipped before its percentile, so "
+    "every repo at or above the cap ties: volume beyond the cap earns nothing more, and README "
+    "length beyond the threshold does not count. Newness: creation date, so the newest repo scores "
+    "100. A metric that is unknown (None) for a repo counts as the median (50) for that repo, "
+    "neither rewarded nor penalised; the other repos' percentiles are computed among the known "
+    "values only."
 )
 
 UNKNOWN = 50.0  # percentile given to an unknown (None) metric
@@ -58,6 +70,17 @@ def _mean(*cols: list[float]) -> list[float]:
     return [sum(vals) / len(vals) for vals in zip(*cols)]
 
 
+def _cap(v: float | None, cap: float) -> float | None:
+    return None if v is None else min(v, cap)
+
+
+def has_readme(readme_chars: int | None) -> float:
+    """100 for a real README (>= README_REAL_CHARS), 0 for a short or missing one, 50 if unknown."""
+    if readme_chars is None:
+        return UNKNOWN
+    return 100.0 if readme_chars >= README_REAL_CHARS else 0.0
+
+
 def _clamp(x: float) -> float:
     return min(100.0, max(0.0, round(x, 1)))
 
@@ -71,13 +94,14 @@ def score_universe(metrics: Sequence[RepoMetrics]) -> list[CriteriaScores]:
 
     popularity = p(lambda x: x.stars)
     momentum = _mean(p(lambda x: x.stars_per_day), p(lambda x: x.forks_30d))
-    quality = _mean(
-        p(lambda x: x.commits_90d),
-        p(lambda x: x.authors_90d),
-        p(lambda x: x.releases),
+    cols = (
+        p(lambda x: _cap(x.commits_90d, COMMITS_CAP)),
+        p(lambda x: _cap(x.authors_90d, AUTHORS_CAP)),
+        p(lambda x: _cap(x.releases, RELEASES_CAP)),
         p(lambda x: _ts(x.last_commit_at)),  # later last commit = higher
-        p(lambda x: x.readme_chars),
+        [has_readme(x.readme_chars) for x in m],  # absolute, not a percentile
     )
+    quality = [sum(w * c for w, c in zip(QUALITY_WEIGHTS, vals)) for vals in zip(*cols)]
     newness = p(lambda x: x.created_at.timestamp())  # created later = newer = higher
     return [
         CriteriaScores(popularity=_clamp(a), momentum=_clamp(b), quality=_clamp(c), newness=_clamp(d))

@@ -25,6 +25,10 @@ Steps:
    universe is a seeded random sample (not the top N), and a repo dropped while
    fetching (``not_found``, ``fetch_error``, or newly forked/archived) is
    replaced by the next one in the shuffle.
+   Relevance (T18): if the topic has a ``scope``, each candidate is first
+   classified by a cheap model (relevance.py, one README request, verdicts
+   cached in ``data/relevance/<topic>.json``). Anything but ``on`` is dropped
+   as ``off_topic`` before its metrics are fetched, and backfilled the same way.
 4. Metrics (T06) for each sampled repo, all with the same ``as_of = built_at``.
 5. Scores (scoring.py), percentiles within the final rows.
 
@@ -48,6 +52,7 @@ from sleeper.contracts.settings import RunSettings
 from sleeper.contracts.universe import Universe, UniverseCounts, UniverseHeader, UniverseRow
 from sleeper.github import GitHubClient, GitHubHTTPError, GraphQLError, NotFound
 from sleeper.metrics import RepoMetricsResult, fetch_repo_metrics
+from sleeper.relevance import RelevanceChecker
 from sleeper.scoring import SCORING, score_universe
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -82,6 +87,7 @@ class Topic:
     stars_max: int = DEFAULT_STARS_MAX
     created_after: date = DEFAULT_CREATED_AFTER
     created_before: date | None = None
+    scope: str | None = None  # what is on/off topic; set = relevance check in build_universe (T18)
 
 
 def load_topics(path: str | Path | None = None) -> dict[str, Topic]:
@@ -93,6 +99,8 @@ def load_topics(path: str | Path | None = None) -> dict[str, Topic]:
         if not queries:
             raise ValueError(f"topic {tid!r} has no queries")
         extra = {k: t[k] for k in ("stars_min", "stars_max", "created_after", "created_before") if k in t}
+        if (t.get("scope") or "").strip():
+            extra["scope"] = " ".join(t["scope"].split())
         topics[tid] = Topic(id=tid, label=t.get("label") or tid, queries=queries, **extra)
     return topics
 
@@ -221,8 +229,14 @@ def build_universe(
     refresh_search: bool = False,
     progress: Progress = _stderr,
     fetch: Callable[..., RepoMetricsResult] | None = None,
+    relevance: RelevanceChecker | None | bool = None,
 ) -> Universe:
+    """Build a topic's universe. ``relevance``: None = the default checker if the topic has a
+    ``scope`` (dev model, verdicts in data/relevance/), False = no check, or a checker to use."""
     fetch = fetch or fetch_repo_metrics  # looked up at call time, so tests can patch it
+    if relevance is None and topic.scope:
+        relevance = RelevanceChecker.for_topic(topic.id, topic.label, topic.scope)
+    checker = relevance or None
     t0 = time.monotonic()
     requests0 = gh.stats.network_requests
     built_at = (built_at or datetime.now(timezone.utc)).astimezone(timezone.utc).replace(microsecond=0)
@@ -249,6 +263,12 @@ def build_universe(
         if len(results) >= max_size:
             break
         name = it["full_name"]
+        if checker is not None:
+            v = checker.check(gh, it)
+            if v.verdict != "on":
+                excluded["off_topic"] = excluded.get("off_topic", 0) + 1
+                progress(f"  [{len(results):>3}/{min(max_size, len(eligible))}] {name} (dropped: off_topic, {v.verdict}: {v.reason})")
+                continue
         try:
             r = fetch(gh, name, as_of=built_at)
         except NotFound:
@@ -300,7 +320,7 @@ def build_universe(
         created_after=topic.created_after,
         created_before=topic.created_before,
         built_at=built_at,
-        builder=f"sleeper {__version__} @ {git_sha()}",
+        builder=f"sleeper {__version__} @ {git_sha()}" + (f"; {checker.summary()}" if checker else ""),
         seed=seed,
         max_size=max_size,
         github_requests=gh.stats.network_requests - requests0,
@@ -309,6 +329,10 @@ def build_universe(
         counts=counts,
     )
     universe = Universe(header=header, rows=rows)
+    if checker is not None:
+        stats = getattr(checker, "stats", None)
+        extra = f"; {stats.new} new model calls, ${stats.new_cost_usd:.4f}" if stats else ""
+        progress(f"  {checker.summary()}{extra}")
     progress(
         f"Done: {counts.rows} rows, {header.github_requests} GitHub requests "
         f"({gh.stats.cache_hits} cache hits), {header.build_seconds}s"
