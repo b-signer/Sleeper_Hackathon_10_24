@@ -169,7 +169,8 @@ def test_a_refused_run_reports_why_and_leaves_no_folder(tmp_path):
 
     client = make_client(tmp_path, runner=refusing_runner)
     res = client.post("/api/runs", json=SETTINGS)
-    assert res.status_code == 400 and "spend guard" in res.json()["detail"]
+    assert res.status_code == 400
+    assert res.json()["detail"]["reason"] == "other" and "spend guard" in res.json()["detail"]["message"]
     assert not (tmp_path / "runs").exists()
     assert client.post("/api/runs", json=SETTINGS).status_code == 400  # not stuck as "in progress"
 
@@ -214,10 +215,24 @@ def agent_client(tmp_path, monkeypatch):
 
 def test_config_lists_models_and_offline(agent_client):
     config = agent_client.get("/api/config").json()
-    assert config["offline"] is True and config["default_model"] == FAKE_MODEL
+    assert config["offline"] is True and "SLEEPER_OFFLINE" in config["live_disabled_reason"]
+    assert config["default_model"] != FAKE_MODEL  # the fake model is an offline test, never the default
     by_id = {m["id"]: m for m in config["models"]}
-    assert by_id[FAKE_MODEL]["offline_ok"] is True
+    assert by_id[FAKE_MODEL]["offline_ok"] is True and config["models"][-1]["id"] == FAKE_MODEL
     assert by_id["openai/gpt-5.6-terra"]["input_per_m"] == 2.0
+    assert config["spend_guard_usd"] == 45.0 and config["default_token_budget"] == 300_000
+    # 300k tokens * ($2 + 10% * $12) / 1M = $0.96; luna: 300k * ($0.20 + 10% * $1.20) / 1M = $0.096
+    assert by_id["openai/gpt-5.6-terra"]["max_run_usd"] == pytest.approx(0.96)
+    assert by_id["openai/gpt-5.6-luna"]["max_run_usd"] == pytest.approx(0.096)
+
+
+def test_spend_is_null_offline(agent_client):
+    assert agent_client.get("/api/spend").json() is None
+
+
+def test_fixture_replay_streams_offline(agent_client):
+    messages = parse_sse(agent_client.get(f"/api/runs/{FAKE_RUN_ID}/replay", params={"speed": 0}).text)
+    assert messages[-2]["event"] == "run_finished" and messages[-1]["event"] == "end"
 
 
 def test_scripted_run_through_t10_end_to_end(agent_client):
@@ -231,15 +246,16 @@ def test_scripted_run_through_t10_end_to_end(agent_client):
 
 
 @pytest.mark.parametrize(
-    "body, reason",
+    "body, reason, text",
     [
-        ({"topic": "fake", "model": "openai/gpt-5.6-luna"}, "offline mode"),
-        ({"topic": "rust-devtools", "model": FAKE_MODEL}, "only works on the 'fake' universe"),
+        ({"topic": "fake", "model": "openai/gpt-5.6-luna"}, "offline", "Offline mode"),
+        ({"topic": "rust-devtools", "model": FAKE_MODEL}, "other", "only works on the 'fake' universe"),
     ],
 )
-def test_refused_settings(agent_client, body, reason):
+def test_refused_settings(agent_client, body, reason, text):
     res = agent_client.post("/api/runs", json=body)
-    assert res.status_code == 400 and reason in res.json()["detail"]
+    assert res.status_code == 400
+    assert res.json()["detail"]["reason"] == reason and text in res.json()["detail"]["message"]
 
 
 # ---- The page -------------------------------------------------------------------

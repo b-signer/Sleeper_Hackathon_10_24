@@ -9,9 +9,9 @@ from fastapi import FastAPI
 
 from sleeper.config import Settings
 from sleeper.contracts import RunSettings
-from sleeper.server.app import FAKE_MODEL, create_app
-from sleeper.server.runner import FAKE_RUN_DIR, FakeRunner, Runner
-from sleeper.server.store import ModelInfo, RunInfo, RunStore, ServerConfig, UniverseInfo
+from sleeper.server.app import FAKE_MODEL, create_app, refusal_for
+from sleeper.server.runner import FAKE_RUN_DIR, FakeRunner, Runner, RunRefused
+from sleeper.server.store import ModelInfo, Refusal, RunInfo, RunStore, ServerConfig, SpendInfo, UniverseInfo
 
 FAKE_DIR = Path("fixtures/fake")
 FAKE_TOPIC = "fake"
@@ -20,31 +20,41 @@ __all__ = [
     "FAKE_MODEL",
     "FakeRunner",
     "ModelInfo",
+    "Refusal",
     "RunInfo",
+    "RunRefused",
     "RunStore",
     "Runner",
     "ServerConfig",
+    "SpendInfo",
     "UniverseInfo",
     "agent_runner",
     "app_from_settings",
     "create_app",
+    "refusal_for",
     "server_config",
+    "spend_info",
 ]
 
-
-class RunRefused(ValueError):
-    """Settings this server won't run; raised before any run folder exists, so the request gets a 400."""
+OFFLINE_REASON = "Offline mode (SLEEPER_OFFLINE=1): live runs are off. Replay works."
+NO_KEY_REASON = "OPENROUTER_API_KEY is not set, so live runs can't call a model. Replay works."
 
 
 def agent_runner(cfg: Settings) -> Runner:
-    """Runs T10's execute_run. The scripted fake model is free and offline, but only knows the fake universe."""
+    """Runs T10's execute_run. The scripted fake model is free and offline, but only knows the fake universe.
+
+    Refusals (RunRefused here; SpendGuardError, FileNotFoundError, WebAccessRefused and
+    ModelError("auth") from execute_run) are raised before `on_start`, so no run folder exists.
+    """
 
     def run(settings: RunSettings, on_start: Callable[[str], None]) -> None:
         fake = settings.model == FAKE_MODEL
         if fake and settings.topic != FAKE_TOPIC:
-            raise RunRefused(f"the scripted fake model only works on the '{FAKE_TOPIC}' universe")
+            raise RunRefused(f"The scripted fake model only works on the '{FAKE_TOPIC}' universe.", "other")
         if cfg.offline and not fake:
-            raise RunRefused(f"offline mode (SLEEPER_OFFLINE=1): only {FAKE_MODEL} can run")
+            raise RunRefused(f"Offline mode (SLEEPER_OFFLINE=1): only {FAKE_MODEL} can run.", "offline")
+        if not fake and not cfg.openrouter_api_key:
+            raise RunRefused("OPENROUTER_API_KEY is not set, so the model can't be called.", "no_api_key")
         from sleeper.agent.runner import execute_run
 
         execute_run(settings, fake=fake, cfg=cfg, on_start=on_start)
@@ -54,21 +64,49 @@ def agent_runner(cfg: Settings) -> Runner:
 
 def server_config(cfg: Settings) -> ServerConfig:
     from sleeper.agent.openrouter import PRICES
+    from sleeper.agent.spend import estimate_max_cost
 
-    models = [ModelInfo(id=FAKE_MODEL, label="Scripted fake (offline, free)", offline_ok=True)]
+    default_budget = RunSettings.model_fields["token_budget"].default
+    models: list[ModelInfo] = []
     for model_id, role in [(cfg.dev_model, "Development"), (cfg.demo_model, "Demo")]:
-        if model_id not in {m.id for m in models}:
-            price = PRICES.get(model_id)
-            models.append(
-                ModelInfo(
-                    id=model_id,
-                    label=f"{role}: {model_id}",
-                    input_per_m=price[0] if price else None,
-                    output_per_m=price[1] if price else None,
-                )
+        if model_id in {m.id for m in models}:
+            continue
+        price = PRICES.get(model_id)
+        worst = estimate_max_cost(RunSettings(topic=FAKE_TOPIC, model=model_id, token_budget=default_budget))
+        models.append(
+            ModelInfo(
+                id=model_id,
+                label=f"{role}: {model_id}",
+                input_per_m=price[0] if price else None,
+                output_per_m=price[1] if price else None,
+                max_run_usd=round(worst, 4),
             )
-    default = FAKE_MODEL if cfg.offline else cfg.dev_model
-    return ServerConfig(offline=cfg.offline, models=models, default_model=default, fake_model=FAKE_MODEL)
+        )
+    # Last on purpose: an offline test, never the default for a live run.
+    models.append(ModelInfo(id=FAKE_MODEL, label="Offline test: scripted fake (free)", offline_ok=True, max_run_usd=0.0))
+    live_disabled = OFFLINE_REASON if cfg.offline else None if cfg.openrouter_api_key else NO_KEY_REASON
+    return ServerConfig(
+        offline=cfg.offline,
+        models=models,
+        default_model=cfg.dev_model,
+        fake_model=FAKE_MODEL,
+        default_token_budget=default_budget,
+        live_disabled_reason=live_disabled,
+    )
+
+
+def spend_info(cfg: Settings) -> SpendInfo | None:
+    """Spent so far on this key (OpenRouter's figure, else the local ledger); None when offline."""
+    from sleeper.agent import spend
+
+    if cfg.offline:
+        return None
+    if cfg.openrouter_api_key:
+        try:
+            return SpendInfo(spent_usd=spend.fetch_key_usage(cfg.openrouter_api_key), source="openrouter")
+        except Exception:  # network, HTTP, shape: same fallback as the guard itself
+            pass
+    return SpendInfo(spent_usd=spend.local_spend(cfg.runs_dir), source="local")
 
 
 def app_from_settings(settings: Settings, runner: Runner | None = None) -> FastAPI:
@@ -79,4 +117,5 @@ def app_from_settings(settings: Settings, runner: Runner | None = None) -> FastA
         universe_dirs=[settings.universes_dir, FAKE_DIR],
         runner=runner or agent_runner(settings),
         config=server_config(settings),
+        spend=lambda: spend_info(settings),
     )

@@ -31,6 +31,17 @@ log = logging.getLogger(__name__)
 FAKE_RUN_DIR = Path("fixtures/fake/runs/20261024-140000_fake")
 
 
+class RunRefused(ValueError):
+    """Settings this server won't run; raised before any run folder exists, so the request gets a 400.
+
+    `reason` is the `Refusal.reason` the client sees (e.g. "offline", "no_api_key").
+    """
+
+    def __init__(self, message: str, reason: str = "other") -> None:
+        super().__init__(message)
+        self.reason = reason
+
+
 class Runner(Protocol):
     def __call__(self, settings: RunSettings, on_start: Callable[[str], None]) -> None: ...
 
