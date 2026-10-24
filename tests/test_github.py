@@ -10,6 +10,7 @@ import httpx
 import pytest
 import respx
 
+from sleeper.config import load_settings
 from sleeper.github import (
     STAR_ACCEPT,
     GitHubClient,
@@ -322,7 +323,7 @@ def test_raw_readme_returned_as_text(make_client):
 
 @pytest.mark.live
 def test_live_repo_and_graphql(tmp_path):
-    if not os.environ.get("GITHUB_TOKEN"):
+    if not load_settings().github_token:  # reads .env too
         pytest.skip("GITHUB_TOKEN not set")
     with GitHubClient(cache_dir=tmp_path, offline=False) as gh:
         assert gh.get("/repos/astral-sh/uv")["full_name"] == "astral-sh/uv"
