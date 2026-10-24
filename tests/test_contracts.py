@@ -252,7 +252,7 @@ def test_event_line_round_trip(event):
 
 
 def test_tool_args_cover_every_tool():
-    assert set(TOOL_ARGS) == {"browse", "repo_details", "readme", "submit"}
+    assert set(TOOL_ARGS) == {"browse", "repo_details", "readme", "papers", "submit"}
 
 
 def test_universe_lookup_is_case_insensitive():

@@ -1,6 +1,6 @@
 """Toolbox: the real ToolExecutor (T09, plan §2.2).
 
-Dispatches the four tools, validates data-tool arguments (BAD_ARGS), records every output by call_id, tracks
+Dispatches the tools, validates data-tool arguments (BAD_ARGS), records every output by call_id, tracks
 the repos researched in depth and the submit attempts, and validates submissions with check_submission.
 The data tools run outside the lock, so one turn's calls stay parallel; submit runs under the lock.
 """
@@ -19,6 +19,8 @@ from sleeper.contracts import (
     BrowseArgs,
     BrowseOutput,
     ErrorOutput,
+    PapersArgs,
+    PapersOutput,
     ReadmeArgs,
     ReadmeOutput,
     RepoArgs,
@@ -34,6 +36,7 @@ class DataToolsLike(Protocol):
     def browse(self, args: BrowseArgs, call_id: str) -> BrowseOutput: ...
     def repo_details(self, args: RepoArgs, call_id: str) -> RepoDetailsOutput | ErrorOutput: ...
     def readme(self, args: ReadmeArgs, call_id: str) -> ReadmeOutput | ErrorOutput: ...
+    def papers(self, args: PapersArgs, call_id: str) -> PapersOutput | ErrorOutput: ...
 
 
 def _call_num(call_id: str) -> int:
@@ -75,6 +78,8 @@ class Toolbox:
                 out = self.data.browse(parsed, call_id)
             elif isinstance(parsed, ReadmeArgs):
                 out = self.data.readme(parsed, call_id)
+            elif isinstance(parsed, PapersArgs):
+                out = self.data.papers(parsed, call_id)
             else:
                 assert isinstance(parsed, RepoArgs)
                 out = self.data.repo_details(parsed, call_id)
@@ -84,7 +89,7 @@ class Toolbox:
     def _record(self, out: ToolOutput, call_id: str) -> None:
         with self._lock:
             self.outputs[call_id] = out
-            if isinstance(out, RepoDetailsOutput | ReadmeOutput):
+            if isinstance(out, RepoDetailsOutput | ReadmeOutput | PapersOutput):
                 key = out.repo.lower()
                 prev = self.researched.get(key)
                 if prev is None or _call_num(call_id) < _call_num(prev[1]):

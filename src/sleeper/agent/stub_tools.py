@@ -1,7 +1,7 @@
 """StubTools: a small ToolExecutor for any Universe. Test double for the loop tests; production uses
 sleeper.agent.toolbox.Toolbox with DataTools (T09).
 
-browse / repo_details / readme delegate to the sleeper.fakes helpers. submit checks the submission's shape
+browse / repo_details / readme delegate to the sleeper.fakes helpers; papers finds none. submit checks the submission's shape
 (contract), card and ranking repos are in the universe, citations point at earlier successful calls, and
 the number of picks; it counts attempts. T09 replaces this; tests keep using it.
 """
@@ -18,6 +18,8 @@ from sleeper.contracts import (
     TOOL_ARGS,
     BrowseArgs,
     ErrorOutput,
+    PapersArgs,
+    PapersOutput,
     ReadmeArgs,
     RepoArgs,
     Submission,
@@ -62,12 +64,21 @@ class StubTools:
                 out = browse_output(self.universe, parsed, call_id)
             elif isinstance(parsed, ReadmeArgs):
                 out = readme_output(self.universe, parsed.repo, call_id, parsed.max_chars)
+            elif isinstance(parsed, PapersArgs):
+                out = self._papers(parsed.repo, call_id)
             else:
                 assert isinstance(parsed, RepoArgs)
                 out = repo_details_output(self.universe, parsed.repo, call_id)
         with self._lock:
             self.outputs[call_id] = out
         return out
+
+    def _papers(self, repo: str, call_id: str) -> PapersOutput | ErrorOutput:
+        row = self.universe.get(repo)
+        if row is None:
+            error = ToolError(code="NOT_IN_UNIVERSE", message=f"{repo} is not in the universe")
+            return ErrorOutput(call_id=call_id, tool="papers", error=error)
+        return PapersOutput(call_id=call_id, repo=row.repo, papers=[], total_linked=0)
 
     def _submit(self, args: dict[str, Any], call_id: str) -> SubmitOutput:
         if self.submit_attempts >= self.max_submit_attempts:

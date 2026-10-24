@@ -28,13 +28,18 @@ DESCRIPTIONS: dict[str, str] = {
         "The repo's README text, capped at max_chars. Use max_chars 2500 (at most 3000) to keep the run in budget. "
         "Use it to judge what the project does, whether it fits the topic, and how mature it is."
     ),
+    "papers": (
+        "The arXiv papers linked anywhere in the repo's full README (not only the part readme returned): title, "
+        "first-version date and citation count (null when unknown). Returns an empty list when there are none. "
+        "Cheap. found=false means the link points at no real paper. Citations are the paper's, not the repo's."
+    ),
     "submit": (
         "Submit your picks (cards citing call ids), the ranking of every repo you looked at closely, and a summary. "
         "Rules the submit tool checks: every cited call id must be an earlier successful research call; each "
         "criterion score must be copied from the cited repo_details output or browse row of that card's repo; "
         "each key_figure.value must be the number at source_path (a JSON Pointer such as /metrics/forks_30d) in "
         "the cited output of that card's repo, copied in the source's unit (no k or months conversion); the "
-        "ranking must include every card repo and every repo you called repo_details or readme on successfully. "
+        "ranking must include every card repo and every repo you called repo_details, readme or papers on successfully. "
         "Rejected submissions come back with specific errors and use up one of 3 attempts; fix them and resubmit. "
         "Ends the run when accepted."
     ),
