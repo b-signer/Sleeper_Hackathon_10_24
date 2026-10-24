@@ -1,10 +1,10 @@
 # Setup: keys and secrets (T04)
 
-You need two keys in a `.env` file in the project root. Copy `.env.example` to `.env`, then fill it in. `.env` is git-ignored. Never commit it, and never paste keys into group chats, docs or issues.
+You need two keys in a `.env` file in the project root. Copy `.env.example` to `.env`. The OpenRouter key is already filled in, so add only your GitHub token. `.env` is git-ignored. Never commit it, and never paste keys into group chats, docs or issues.
 
 | Key | What it's for | Cost | Who has it |
 |---|---|---|---|
-| `OPENROUTER_API_KEY` | Calls the AI models: luna for development, terra for the demo | Paid from prepaid credits | **One shared team key.** Ask Roee for it by direct message or password manager |
+| `OPENROUTER_API_KEY` | Calls the AI models: luna for development, terra for the demo | Paid from prepaid credits | **One shared team key.** It's already filled in `.env.example` (committed on purpose for the hackathon, to be rotated afterwards) |
 | `GITHUB_TOKEN` | Reads **other people's public repos** (the ones Sleeper analyzes): stars, forks, commits, releases, activity, READMEs. It isn't used for our own repo; pushing and pulling use your normal git login | Free | Anyone whose code calls GitHub: the data track and the agent track. Everyone uses their own, because rate limits are per token |
 
 ## Make your GitHub token (2 minutes)
