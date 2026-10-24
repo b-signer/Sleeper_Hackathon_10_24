@@ -1,0 +1,786 @@
+{
+  "header": {
+    "schema_version": 1,
+    "topic": "rust-devtools",
+    "topic_label": "Rust developer tools",
+    "queries": [
+      "language:Rust topic:cli stars:50..2000 created:>=2025-01-01 fork:true",
+      "language:Rust topic:developer-tools stars:50..2000 created:>=2025-01-01 fork:true",
+      "language:Rust topic:devtools stars:50..2000 created:>=2025-01-01 fork:true",
+      "language:Rust topic:linter stars:50..2000 created:>=2025-01-01 fork:true"
+    ],
+    "stars_min": 50,
+    "stars_max": 2000,
+    "created_after": "2025-01-01",
+    "created_before": null,
+    "built_at": "2026-10-24T22:31:53Z",
+    "builder": "sleeper 0.1.0 @ 4e6a761",
+    "seed": 7,
+    "max_size": 25,
+    "github_requests": 154,
+    "build_seconds": 104.0,
+    "scoring": "Scores are percentiles within this universe (0 = lowest repo, 100 = highest; ties share the average rank), and a criterion built from several metrics is the mean of their percentiles, rounded to 0.1. Higher always means more of the criterion. Popularity: stars. Momentum: lifetime star velocity (stars_per_day) and forks created in the last 30 days (forks_30d), equally weighted (D13; star_events_30d is not used because the events feed caps it). Quality: commits in the last 90 days, distinct commit authors in the last 90 days, number of releases, recency of the last commit, and README length, equally weighted, so an active, multi-author, released and documented repo scores high. Newness: creation date, so the newest repo scores 100. A metric that is unknown (None) for a repo counts as the median (50) for that repo, neither rewarded nor penalised; the other repos' percentiles are computed among the known values only.",
+    "counts": {
+      "search_total": 586,
+      "excluded": {
+        "archived": 4,
+        "fork": 4
+      },
+      "eligible": 578,
+      "sampled": true,
+      "rows": 25
+    }
+  },
+  "rows": [
+    {
+      "repo": "3axap4eHko/prmt",
+      "repo_id": 1038870158,
+      "url": "https://github.com/3axap4eHko/prmt",
+      "metrics": {
+        "stars": 251,
+        "stars_per_day": 0.5783,
+        "forks": 11,
+        "forks_30d": 0,
+        "star_events_30d": 0,
+        "star_events_capped": false,
+        "commits_90d": 0,
+        "authors_90d": 0,
+        "releases": 17,
+        "last_release_at": "2026-07-16T01:52:13Z",
+        "last_commit_at": "2026-07-22T00:24:57Z",
+        "readme_chars": 17794,
+        "created_at": "2025-08-16T01:23:35Z",
+        "age_days": 434,
+        "description": "Ultra-fast, customizable shell prompt generator",
+        "language": "Rust",
+        "license": "MIT"
+      },
+      "scores": {
+        "popularity": 62.5,
+        "momentum": 31.2,
+        "quality": 26.7,
+        "newness": 25.0
+      }
+    },
+    {
+      "repo": "anistark/wasmrun",
+      "repo_id": 973175068,
+      "url": "https://github.com/anistark/wasmrun",
+      "metrics": {
+        "stars": 50,
+        "stars_per_day": 0.0916,
+        "forks": 4,
+        "forks_30d": 0,
+        "star_events_30d": 1,
+        "star_events_capped": false,
+        "commits_90d": 25,
+        "authors_90d": 2,
+        "releases": 22,
+        "last_release_at": "2026-10-20T10:12:38Z",
+        "last_commit_at": "2026-10-20T10:01:20Z",
+        "readme_chars": 7239,
+        "created_at": "2025-04-26T12:28:50Z",
+        "age_days": 546,
+        "description": "Powerful WASM runtime with debug capabilities",
+        "language": "Rust",
+        "license": "MIT"
+      },
+      "scores": {
+        "popularity": 0.0,
+        "momentum": 8.3,
+        "quality": 41.2,
+        "newness": 8.3
+      }
+    },
+    {
+      "repo": "bgreenwell/lstr",
+      "repo_id": 997508788,
+      "url": "https://github.com/bgreenwell/lstr",
+      "metrics": {
+        "stars": 1547,
+        "stars_per_day": 3.0634,
+        "forks": 32,
+        "forks_30d": 2,
+        "star_events_30d": 10,
+        "star_events_capped": false,
+        "commits_90d": 14,
+        "authors_90d": 2,
+        "releases": 3,
+        "last_release_at": "2026-07-14T01:06:12Z",
+        "last_commit_at": "2026-09-24T11:33:42Z",
+        "readme_chars": 14832,
+        "created_at": "2025-06-06T16:43:27Z",
+        "age_days": 505,
+        "description": "A fast, minimalist directory tree viewer, written in Rust.",
+        "language": "Rust",
+        "license": "MIT"
+      },
+      "scores": {
+        "popularity": 100.0,
+        "momentum": 71.9,
+        "quality": 34.5,
+        "newness": 12.5
+      }
+    },
+    {
+      "repo": "bug-ops/mcpls",
+      "repo_id": 1122042547,
+      "url": "https://github.com/bug-ops/mcpls",
+      "metrics": {
+        "stars": 79,
+        "stars_per_day": 0.2599,
+        "forks": 18,
+        "forks_30d": 0,
+        "star_events_30d": 0,
+        "star_events_capped": true,
+        "commits_90d": 210,
+        "authors_90d": 5,
+        "releases": 20,
+        "last_release_at": "2026-10-20T10:02:11Z",
+        "last_commit_at": "2026-10-24T11:21:17Z",
+        "readme_chars": 5146,
+        "created_at": "2025-12-24T02:27:14Z",
+        "age_days": 304,
+        "description": "Universal MCP to LSP bridge - expose Language Server Protocol capabilities as MCP tools for AI agents",
+        "language": "Rust",
+        "license": "Apache-2.0"
+      },
+      "scores": {
+        "popularity": 16.7,
+        "momentum": 16.7,
+        "quality": 62.0,
+        "newness": 37.5
+      }
+    },
+    {
+      "repo": "BurntSushi/bttf",
+      "repo_id": 945094389,
+      "url": "https://github.com/BurntSushi/bttf",
+      "metrics": {
+        "stars": 764,
+        "stars_per_day": 1.284,
+        "forks": 13,
+        "forks_30d": 1,
+        "star_events_30d": 0,
+        "star_events_capped": false,
+        "commits_90d": 1,
+        "authors_90d": 1,
+        "releases": 4,
+        "last_release_at": "2026-05-28T15:23:55Z",
+        "last_commit_at": "2026-08-03T11:39:10Z",
+        "readme_chars": 10431,
+        "created_at": "2025-03-08T16:41:33Z",
+        "age_days": 595,
+        "description": "A command line tool for datetime arithmetic, parsing, formatting and more.",
+        "language": "Rust",
+        "license": "Unlicense"
+      },
+      "scores": {
+        "popularity": 91.7,
+        "momentum": 52.1,
+        "quality": 20.6,
+        "newness": 4.2
+      }
+    },
+    {
+      "repo": "cladam/tbdflow",
+      "repo_id": 1014684893,
+      "url": "https://github.com/cladam/tbdflow",
+      "metrics": {
+        "stars": 64,
+        "stars_per_day": 0.1347,
+        "forks": 5,
+        "forks_30d": 0,
+        "star_events_30d": 0,
+        "star_events_capped": false,
+        "commits_90d": 2,
+        "authors_90d": 1,
+        "releases": 67,
+        "last_release_at": "2026-07-27T08:49:43Z",
+        "last_commit_at": "2026-07-27T08:45:42Z",
+        "readme_chars": 40029,
+        "created_at": "2025-07-06T07:52:25Z",
+        "age_days": 475,
+        "description": "tbdflow is a command-line tool designed to streamline and safeguard your Git workflow for Trunk-Based Development.",
+        "language": "Rust",
+        "license": "MIT"
+      },
+      "scores": {
+        "popularity": 8.3,
+        "momentum": 12.5,
+        "quality": 47.2,
+        "newness": 16.7
+      }
+    },
+    {
+      "repo": "codejunkie99/brain",
+      "repo_id": 1222427087,
+      "url": "https://github.com/codejunkie99/brain",
+      "metrics": {
+        "stars": 84,
+        "stars_per_day": 0.4667,
+        "forks": 14,
+        "forks_30d": 1,
+        "star_events_30d": 2,
+        "star_events_capped": false,
+        "commits_90d": 2,
+        "authors_90d": 2,
+        "releases": 1,
+        "last_release_at": "2026-04-27T20:48:17Z",
+        "last_commit_at": "2026-08-06T20:51:14Z",
+        "readme_chars": 3027,
+        "created_at": "2026-04-27T11:01:58Z",
+        "age_days": 180,
+        "description": "Git-backed long-term memory for AI coding agents",
+        "language": "Rust",
+        "license": "Apache-2.0"
+      },
+      "scores": {
+        "popularity": 20.8,
+        "momentum": 37.5,
+        "quality": 20.4,
+        "newness": 75.0
+      }
+    },
+    {
+      "repo": "crabtalk/cydonia",
+      "repo_id": 1335336610,
+      "url": "https://github.com/crabtalk/cydonia",
+      "metrics": {
+        "stars": 145,
+        "stars_per_day": 2.0714,
+        "forks": 10,
+        "forks_30d": 1,
+        "star_events_30d": 25,
+        "star_events_capped": false,
+        "commits_90d": 54,
+        "authors_90d": 2,
+        "releases": 38,
+        "last_release_at": "2026-10-23T13:58:54Z",
+        "last_commit_at": "2026-10-23T12:50:13Z",
+        "readme_chars": 1680,
+        "created_at": "2026-08-15T18:55:20Z",
+        "age_days": 70,
+        "description": "Agent control panel for Claude Code, Codex, OpenCode, Pi and 40+ agents with articles and boards supported",
+        "language": "Rust",
+        "license": "MIT"
+      },
+      "scores": {
+        "popularity": 41.7,
+        "momentum": 60.4,
+        "quality": 49.5,
+        "newness": 91.7
+      }
+    },
+    {
+      "repo": "dpc/tau",
+      "repo_id": 1213244638,
+      "url": "https://github.com/dpc/tau",
+      "metrics": {
+        "stars": 106,
+        "stars_per_day": 0.5579,
+        "forks": 9,
+        "forks_30d": 1,
+        "star_events_30d": 3,
+        "star_events_capped": false,
+        "commits_90d": 1497,
+        "authors_90d": null,
+        "releases": 4,
+        "last_release_at": "2026-09-29T21:57:34Z",
+        "last_commit_at": "2026-10-18T07:10:07Z",
+        "readme_chars": 1444,
+        "created_at": "2026-04-17T07:22:47Z",
+        "age_days": 190,
+        "description": "Tau Coding Agent - like Pi, but twice as much",
+        "language": "Rust",
+        "license": "MPL-2.0"
+      },
+      "scores": {
+        "popularity": 29.2,
+        "momentum": 43.8,
+        "quality": 42.9,
+        "newness": 70.8
+      }
+    },
+    {
+      "repo": "fzn0x/idx",
+      "repo_id": 1422491888,
+      "url": "https://github.com/fzn0x/idx",
+      "metrics": {
+        "stars": 188,
+        "stars_per_day": 23.5,
+        "forks": 15,
+        "forks_30d": 15,
+        "star_events_30d": 178,
+        "star_events_capped": true,
+        "commits_90d": 116,
+        "authors_90d": 2,
+        "releases": 13,
+        "last_release_at": "2026-10-18T15:04:16Z",
+        "last_commit_at": "2026-10-18T14:57:22Z",
+        "readme_chars": 27496,
+        "created_at": "2026-10-16T17:51:21Z",
+        "age_days": 8,
+        "description": "Analyze the Indonesian stock market (IDX/IHSG) from web terminal, CLI, or any AI agents via MCP server. IHSG Prices, Fundamentals, and Screening. Free and No API keys required. Changelog: https://github.com/fzn0x/idx/blob/main/CHANGELOG.md",
+        "language": "Rust",
+        "license": "MIT"
+      },
+      "scores": {
+        "popularity": 50.0,
+        "momentum": 95.8,
+        "quality": 51.6,
+        "newness": 100.0
+      }
+    },
+    {
+      "repo": "holon-run/holon",
+      "repo_id": 1118865410,
+      "url": "https://github.com/holon-run/holon",
+      "metrics": {
+        "stars": 175,
+        "stars_per_day": 0.5645,
+        "forks": 17,
+        "forks_30d": 4,
+        "star_events_30d": 3,
+        "star_events_capped": true,
+        "commits_90d": 981,
+        "authors_90d": 3,
+        "releases": 77,
+        "last_release_at": "2026-10-24T16:26:37Z",
+        "last_commit_at": "2026-10-24T21:40:11Z",
+        "readme_chars": 10615,
+        "created_at": "2025-12-18T11:46:49Z",
+        "age_days": 310,
+        "description": "Open-source software for individuals and teams to create and run AI assistants on their own computers or servers. Assign tasks, track progress, and let them follow up on ongoing work.",
+        "language": "Rust",
+        "license": "Apache-2.0"
+      },
+      "scores": {
+        "popularity": 45.8,
+        "momentum": 60.4,
+        "quality": 81.4,
+        "newness": 33.3
+      }
+    },
+    {
+      "repo": "JustRoccat/rs-pug",
+      "repo_id": 1207968230,
+      "url": "https://github.com/JustRoccat/rs-pug",
+      "metrics": {
+        "stars": 76,
+        "stars_per_day": 0.3878,
+        "forks": 1,
+        "forks_30d": 0,
+        "star_events_30d": 7,
+        "star_events_capped": false,
+        "commits_90d": 34,
+        "authors_90d": 1,
+        "releases": 0,
+        "last_release_at": null,
+        "last_commit_at": "2026-10-16T16:32:00Z",
+        "readme_chars": 4024,
+        "created_at": "2026-04-11T16:35:57Z",
+        "age_days": 196,
+        "description": "Blazing fast, terminal music player (TUI) written in Rust. Extensible via Lua plugins, built on Ratatui, MPV, and YT-DLP. Listen to YouTube, SoundCloud, and local files directly from your terminal. Lightweight, headless, ads-free.",
+        "language": "Rust",
+        "license": "GPL-2.0"
+      },
+      "scores": {
+        "popularity": 12.5,
+        "momentum": 18.8,
+        "quality": 21.8,
+        "newness": 58.3
+      }
+    },
+    {
+      "repo": "LumaryLabsLLC/muxin",
+      "repo_id": 1410747188,
+      "url": "https://github.com/LumaryLabsLLC/muxin",
+      "metrics": {
+        "stars": 372,
+        "stars_per_day": 23.25,
+        "forks": 56,
+        "forks_30d": 56,
+        "star_events_30d": 150,
+        "star_events_capped": true,
+        "commits_90d": 116,
+        "authors_90d": 5,
+        "releases": 15,
+        "last_release_at": "2026-10-23T17:46:53Z",
+        "last_commit_at": "2026-10-23T17:11:06Z",
+        "readme_chars": 71766,
+        "created_at": "2026-10-08T17:47:55Z",
+        "age_days": 16,
+        "description": "All your machines, one app. For you and your AI agents: agent sessions, desktops, files, logs and GitHub across your Macs, Linux and Windows machines, with an MCP server.",
+        "language": "Rust",
+        "license": "Apache-2.0"
+      },
+      "scores": {
+        "popularity": 70.8,
+        "momentum": 97.9,
+        "quality": 71.5,
+        "newness": 95.8
+      }
+    },
+    {
+      "repo": "M-Igashi/baken",
+      "repo_id": 1130719878,
+      "url": "https://github.com/M-Igashi/baken",
+      "metrics": {
+        "stars": 60,
+        "stars_per_day": 0.2083,
+        "forks": 6,
+        "forks_30d": 3,
+        "star_events_30d": 3,
+        "star_events_capped": true,
+        "commits_90d": 140,
+        "authors_90d": 3,
+        "releases": 65,
+        "last_release_at": "2026-10-22T02:07:28Z",
+        "last_commit_at": "2026-10-24T01:52:18Z",
+        "readme_chars": 53762,
+        "created_at": "2026-01-08T23:03:14Z",
+        "age_days": 288,
+        "description": "Bake'n Deck: rekordbox → CDJ prep toolkit built for rekordbox, not instead of it. Loudness gain, key + BPM playlist order, CDJ-safe MP3 and USB export, baked into your files",
+        "language": "Rust",
+        "license": "MIT"
+      },
+      "scores": {
+        "popularity": 4.2,
+        "momentum": 43.8,
+        "quality": 80.6,
+        "newness": 45.8
+      }
+    },
+    {
+      "repo": "micahkepe/jsongrep",
+      "repo_id": 1034729507,
+      "url": "https://github.com/micahkepe/jsongrep",
+      "metrics": {
+        "stars": 676,
+        "stars_per_day": 1.5294,
+        "forks": 12,
+        "forks_30d": 0,
+        "star_events_30d": 7,
+        "star_events_capped": false,
+        "commits_90d": 48,
+        "authors_90d": 2,
+        "releases": 14,
+        "last_release_at": "2026-08-28T12:18:28Z",
+        "last_commit_at": "2026-09-14T00:56:09Z",
+        "readme_chars": 16046,
+        "created_at": "2025-08-08T22:08:52Z",
+        "age_days": 442,
+        "description": "A path query language for JSON, YAML, TOML, and other serialization formats.",
+        "language": "Rust",
+        "license": "MIT"
+      },
+      "scores": {
+        "popularity": 87.5,
+        "momentum": 37.5,
+        "quality": 42.0,
+        "newness": 20.8
+      }
+    },
+    {
+      "repo": "michel/soulseek-rs",
+      "repo_id": 912470080,
+      "url": "https://github.com/michel/soulseek-rs",
+      "metrics": {
+        "stars": 85,
+        "stars_per_day": 0.1294,
+        "forks": 4,
+        "forks_30d": 1,
+        "star_events_30d": 32,
+        "star_events_capped": false,
+        "commits_90d": 283,
+        "authors_90d": 2,
+        "releases": 24,
+        "last_release_at": "2026-10-24T07:18:23Z",
+        "last_commit_at": "2026-10-22T12:19:42Z",
+        "readme_chars": 38351,
+        "created_at": "2025-01-05T17:00:13Z",
+        "age_days": 657,
+        "description": "A Soulseek client and lib built in Rust 🦀 for the terminal: TUI, CLI and daemon. Built for agents and people who live there.",
+        "language": "Rust",
+        "license": "MIT"
+      },
+      "scores": {
+        "popularity": 25.0,
+        "momentum": 27.1,
+        "quality": 64.9,
+        "newness": 0.0
+      }
+    },
+    {
+      "repo": "nostacks/ekphos",
+      "repo_id": 1116772709,
+      "url": "https://github.com/nostacks/ekphos",
+      "metrics": {
+        "stars": 1073,
+        "stars_per_day": 3.4281,
+        "forks": 47,
+        "forks_30d": 2,
+        "star_events_30d": 29,
+        "star_events_capped": false,
+        "commits_90d": 60,
+        "authors_90d": 3,
+        "releases": 28,
+        "last_release_at": "2026-10-06T15:44:50Z",
+        "last_commit_at": "2026-10-06T15:42:11Z",
+        "readme_chars": 1878,
+        "created_at": "2025-12-15T11:06:31Z",
+        "age_days": 313,
+        "description": "A lightweight, fast, terminal-based markdown research tool inspired by Obsidian",
+        "language": "Rust",
+        "license": "MIT"
+      },
+      "scores": {
+        "popularity": 95.8,
+        "momentum": 78.1,
+        "quality": 47.2,
+        "newness": 29.2
+      }
+    },
+    {
+      "repo": "ojuschugh1/sqz",
+      "repo_id": 1208373001,
+      "url": "https://github.com/ojuschugh1/sqz",
+      "metrics": {
+        "stars": 662,
+        "stars_per_day": 3.3949,
+        "forks": 43,
+        "forks_30d": 0,
+        "star_events_30d": 35,
+        "star_events_capped": false,
+        "commits_90d": 254,
+        "authors_90d": 2,
+        "releases": 26,
+        "last_release_at": "2026-10-11T04:38:45Z",
+        "last_commit_at": "2026-10-22T12:25:39Z",
+        "readme_chars": 36113,
+        "created_at": "2026-04-12T07:23:52Z",
+        "age_days": 195,
+        "description": "Context compression for AI coding agents: compresses tool output before it enters the model, dedups repeats to 13-token refs. Claude Code, Cursor, Codex, Kiro, Zed, any MCP client. Rust, zero LLM calls.",
+        "language": "Rust",
+        "license": "Apache-2.0"
+      },
+      "scores": {
+        "popularity": 83.3,
+        "momentum": 50.0,
+        "quality": 66.2,
+        "newness": 62.5
+      }
+    },
+    {
+      "repo": "omacom/ttfx",
+      "repo_id": 1329255615,
+      "url": "https://github.com/omacom/ttfx",
+      "metrics": {
+        "stars": 353,
+        "stars_per_day": 4.7067,
+        "forks": 40,
+        "forks_30d": 20,
+        "star_events_30d": 0,
+        "star_events_capped": false,
+        "commits_90d": 356,
+        "authors_90d": 8,
+        "releases": 11,
+        "last_release_at": "2026-09-27T21:42:35Z",
+        "last_commit_at": "2026-09-28T13:06:04Z",
+        "readme_chars": 14348,
+        "created_at": "2026-08-09T23:01:29Z",
+        "age_days": 75,
+        "description": "Terminal text effects as a single static binary — a parity-exact Rust port of terminaltexteffects",
+        "language": "Rust",
+        "license": "MIT"
+      },
+      "scores": {
+        "popularity": 66.7,
+        "momentum": 93.8,
+        "quality": 59.1,
+        "newness": 87.5
+      }
+    },
+    {
+      "repo": "petipoua/petiglyph",
+      "repo_id": 1210798325,
+      "url": "https://github.com/petipoua/petiglyph",
+      "metrics": {
+        "stars": 206,
+        "stars_per_day": 1.0674,
+        "forks": 11,
+        "forks_30d": 0,
+        "star_events_30d": 3,
+        "star_events_capped": false,
+        "commits_90d": 0,
+        "authors_90d": 0,
+        "releases": 6,
+        "last_release_at": "2026-06-09T17:09:56Z",
+        "last_commit_at": "2026-06-10T14:12:36Z",
+        "readme_chars": 18993,
+        "created_at": "2026-04-14T19:10:20Z",
+        "age_days": 193,
+        "description": "petiglyph is a TUI and CLI tool for turning images and videos into custom font glyphs",
+        "language": "Rust",
+        "license": "MIT"
+      },
+      "scores": {
+        "popularity": 58.3,
+        "momentum": 33.3,
+        "quality": 22.5,
+        "newness": 66.7
+      }
+    },
+    {
+      "repo": "pixtuoid/pixtuoid",
+      "repo_id": 1245333424,
+      "url": "https://github.com/pixtuoid/pixtuoid",
+      "metrics": {
+        "stars": 505,
+        "stars_per_day": 3.2372,
+        "forks": 35,
+        "forks_30d": 5,
+        "star_events_30d": 1,
+        "star_events_capped": true,
+        "commits_90d": 775,
+        "authors_90d": 4,
+        "releases": 25,
+        "last_release_at": "2026-10-21T04:22:03Z",
+        "last_commit_at": "2026-10-24T19:50:53Z",
+        "readme_chars": 11816,
+        "created_at": "2026-05-21T06:05:19Z",
+        "age_days": 156,
+        "description": "Terminal pixel-art office for AI coding agents",
+        "language": "Rust",
+        "license": "MIT"
+      },
+      "scores": {
+        "popularity": 79.2,
+        "momentum": 81.2,
+        "quality": 76.5,
+        "newness": 79.2
+      }
+    },
+    {
+      "repo": "skillsynchq/txcript",
+      "repo_id": 1280626586,
+      "url": "https://github.com/skillsynchq/txcript",
+      "metrics": {
+        "stars": 205,
+        "stars_per_day": 1.6942,
+        "forks": 21,
+        "forks_30d": 9,
+        "star_events_30d": 69,
+        "star_events_capped": false,
+        "commits_90d": 128,
+        "authors_90d": 9,
+        "releases": 24,
+        "last_release_at": "2026-09-13T23:41:24Z",
+        "last_commit_at": "2026-10-23T06:54:00Z",
+        "readme_chars": 8311,
+        "created_at": "2026-06-25T19:22:08Z",
+        "age_days": 121,
+        "description": "Pandoc for AI chats. Move ai chats across harnesses: Claude Code, Codex, OpenCode, Cursor, and more. Rust library, CLI, and WASM.",
+        "language": "Rust",
+        "license": "Apache-2.0"
+      },
+      "scores": {
+        "popularity": 54.2,
+        "momentum": 77.1,
+        "quality": 64.6,
+        "newness": 83.3
+      }
+    },
+    {
+      "repo": "slaveOftime/open-relay",
+      "repo_id": 1176073062,
+      "url": "https://github.com/slaveOftime/open-relay",
+      "metrics": {
+        "stars": 109,
+        "stars_per_day": 0.4739,
+        "forks": 13,
+        "forks_30d": 1,
+        "star_events_30d": 14,
+        "star_events_capped": false,
+        "commits_90d": 508,
+        "authors_90d": 6,
+        "releases": 35,
+        "last_release_at": "2026-10-18T07:00:32Z",
+        "last_commit_at": "2026-10-22T23:09:36Z",
+        "readme_chars": 7899,
+        "created_at": "2026-03-08T15:27:15Z",
+        "age_days": 230,
+        "description": "oly runs coding agents and long-running commands in persistent, supervised terminal sessions. The daemon owns the PTY, so you can close your terminal and come back from the browser or your phone.",
+        "language": "Rust",
+        "license": "MIT"
+      },
+      "scores": {
+        "popularity": 33.3,
+        "momentum": 39.6,
+        "quality": 69.9,
+        "newness": 54.2
+      }
+    },
+    {
+      "repo": "styler-ai/ProjectAtlas",
+      "repo_id": 1126260775,
+      "url": "https://github.com/styler-ai/ProjectAtlas",
+      "metrics": {
+        "stars": 454,
+        "stars_per_day": 1.5338,
+        "forks": 11,
+        "forks_30d": 1,
+        "star_events_30d": 10,
+        "star_events_capped": true,
+        "commits_90d": 752,
+        "authors_90d": 2,
+        "releases": 49,
+        "last_release_at": "2026-10-24T09:51:34Z",
+        "last_commit_at": "2026-10-24T12:23:21Z",
+        "readme_chars": 11903,
+        "created_at": "2026-01-01T14:15:37Z",
+        "age_days": 296,
+        "description": "Every file not opened. Every folder not explored. Tokens saved. ProjectAtlas guides coding agents with purpose metadata and an intelligent code graph, reducing token costs by over 90%.",
+        "language": "Rust",
+        "license": "MIT"
+      },
+      "scores": {
+        "popularity": 75.0,
+        "momentum": 56.2,
+        "quality": 72.9,
+        "newness": 41.7
+      }
+    },
+    {
+      "repo": "Taoidle/plan-cascade",
+      "repo_id": 1140373907,
+      "url": "https://github.com/Taoidle/plan-cascade",
+      "metrics": {
+        "stars": 133,
+        "stars_per_day": 0.4854,
+        "forks": 12,
+        "forks_30d": 0,
+        "star_events_30d": 1,
+        "star_events_capped": false,
+        "commits_90d": 0,
+        "authors_90d": 0,
+        "releases": 1,
+        "last_release_at": "2026-02-27T17:47:31Z",
+        "last_commit_at": "2026-03-14T05:38:44Z",
+        "readme_chars": 10816,
+        "created_at": "2026-01-23T07:30:20Z",
+        "age_days": 274,
+        "description": "AI-powered cascading development framework. Decompose complex projects into parallel executable tasks with auto-generated PRDs, design docs, and multi-agent collaboration (Claude Code, Codex, Aider).",
+        "language": "Rust",
+        "license": "MIT"
+      },
+      "scores": {
+        "popularity": 37.5,
+        "momentum": 25.0,
+        "quality": 12.1,
+        "newness": 50.0
+      }
+    }
+  ]
+}

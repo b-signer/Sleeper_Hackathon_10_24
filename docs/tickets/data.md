@@ -55,3 +55,15 @@
 - Universes for 2 topics are built and committed.
 - A person has sanity-checked the header counts and a few rows.
 - The response cache is copied to the demo machine.
+
+---
+
+### T18 Topic relevance and quality score (real-data findings)
+**Goal:** Universes contain repos that actually belong to the topic, and the quality score can't be won by sheer volume.
+**Implements:** F1.1–F1.3, PRD §4, D8 · **Depends on:** T07 · **P0 · M** · *From the [findings](../findings/2026-10-24-real-data-baseline.md) (problems 1 and 2)*
+
+**Done when:**
+- **Topic relevance:** a person samples 20 random rows from each universe, and at least 17 clearly belong to the topic. The baseline Rust universe had a Discord client, a blogging tool and a DJ tool; local-first had a trade-sales AI and a hotel check-in system. How to do it is the owner's call: tighter searches, a keyword check on the description and README, or a cheap model classifying each repo. If a model is used, record the cost.
+- **Quality score:** volume metrics are damped, for example capped or log-scaled commits and releases, so 981 commits doesn't beat 200 by a mile. README length is no longer a quality input; at most it's a small "has a real README" check. The header's `scoring` paragraph is updated to match.
+- Universes are rebuilt and committed. All tests pass.
+

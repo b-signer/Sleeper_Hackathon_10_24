@@ -1,0 +1,484 @@
+{
+  "schema_version": 1,
+  "run_id": "20261024-223404_rust-devtools",
+  "status": "ok",
+  "error": null,
+  "settings": {
+    "topic": "rust-devtools",
+    "universe_file": "/private/tmp/claude-502/-Users-roee-workspace-compiled-16-hackathon-Sleeper-Hackathon-10-24/abab5628-333e-4d4a-b0d6-88445e8563f0/scratchpad/rust-smoke.json",
+    "stars_min": 50,
+    "stars_max": 2000,
+    "created_after": "2025-01-01",
+    "max_picks": 5,
+    "min_ranked": 8,
+    "model": "openai/gpt-5.6-luna",
+    "token_budget": 120000,
+    "max_turns": 12,
+    "max_wall_clock_s": 600,
+    "seed": 7
+  },
+  "started_at": "2026-10-24T22:34:04.293174Z",
+  "finished_at": "2026-10-24T22:34:44.057779Z",
+  "turns": 3,
+  "usage": {
+    "prompt_tokens": 32550,
+    "completion_tokens": 4226,
+    "cached_tokens": 10507,
+    "total_tokens": 36776,
+    "cost_usd": 0.01079164
+  },
+  "cards": [
+    {
+      "repo": "holon-run/holon",
+      "pitch": "A deeply active, released local-first agent workspace that remains only moderately discovered.",
+      "criteria": {
+        "popularity": {
+          "score": 45.8,
+          "score_call_id": "c_004",
+          "key_figure": {
+            "label": "Stars",
+            "value": 175.0,
+            "unit": "stars",
+            "source_call_id": "c_004",
+            "source_path": "/metrics/stars"
+          }
+        },
+        "momentum": {
+          "score": 60.4,
+          "score_call_id": "c_004",
+          "key_figure": {
+            "label": "Forks, last 30 days",
+            "value": 4.0,
+            "unit": "forks",
+            "source_call_id": "c_004",
+            "source_path": "/metrics/forks_30d"
+          }
+        },
+        "quality": {
+          "score": 81.4,
+          "score_call_id": "c_004",
+          "key_figure": {
+            "label": "Commits, last 90 days",
+            "value": 981.0,
+            "unit": "commits",
+            "source_call_id": "c_004",
+            "source_path": "/metrics/commits_90d"
+          }
+        },
+        "newness": {
+          "score": 33.3,
+          "score_call_id": "c_004",
+          "key_figure": {
+            "label": "Age",
+            "value": 310.0,
+            "unit": "days",
+            "source_call_id": "c_004",
+            "source_path": "/metrics/age_days"
+          }
+        }
+      },
+      "case": [
+        {
+          "text": "Holon combines continuous agent workspaces, explicit task/wait models, event-driven wake-up, trust boundaries, and local-first execution, with both TUI and web GUI workflows.",
+          "source_call_ids": [
+            "c_014"
+          ]
+        },
+        {
+          "text": "Its quality score is 81.4 while popularity is just 45.8; the repository reports 981 recent commits, 77 releases, and a commit on the as-of date.",
+          "source_call_ids": [
+            "c_004"
+          ]
+        }
+      ],
+      "risks": [
+        {
+          "text": "The product is a relatively broad assistant platform, so adoption may depend on users wanting its particular local daemon, task model, and provider setup.",
+          "source_call_ids": [
+            "c_014"
+          ]
+        }
+      ],
+      "proven_wrong_if": [
+        "Its quality-adjusted adoption fails to grow despite sustained releases and active contributions.",
+        "The local-first workspace model does not retain users beyond experimentation."
+      ],
+      "confidence": 0.9,
+      "skeptic": null,
+      "fact_flags": []
+    },
+    {
+      "repo": "M-Igashi/baken",
+      "pitch": "A remarkably polished, almost undiscovered Rust toolkit that solves concrete rekordbox-to-CDJ workflow gaps.",
+      "criteria": {
+        "popularity": {
+          "score": 4.2,
+          "score_call_id": "c_005",
+          "key_figure": {
+            "label": "Stars",
+            "value": 60.0,
+            "unit": "stars",
+            "source_call_id": "c_005",
+            "source_path": "/metrics/stars"
+          }
+        },
+        "momentum": {
+          "score": 43.8,
+          "score_call_id": "c_005",
+          "key_figure": {
+            "label": "Forks, last 30 days",
+            "value": 3.0,
+            "unit": "forks",
+            "source_call_id": "c_005",
+            "source_path": "/metrics/forks_30d"
+          }
+        },
+        "quality": {
+          "score": 80.6,
+          "score_call_id": "c_005",
+          "key_figure": {
+            "label": "Commits, last 90 days",
+            "value": 140.0,
+            "unit": "commits",
+            "source_call_id": "c_005",
+            "source_path": "/metrics/commits_90d"
+          }
+        },
+        "newness": {
+          "score": 45.8,
+          "score_call_id": "c_005",
+          "key_figure": {
+            "label": "Age",
+            "value": 288.0,
+            "unit": "days",
+            "source_call_id": "c_005",
+            "source_path": "/metrics/age_days"
+          }
+        }
+      },
+      "case": [
+        {
+          "text": "Bake'n Deck has a sharply defined use case: measured loudness gain, compound key+BPM sorting, CDJ-safe transcoding, and direct USB export without replacing rekordbox.",
+          "source_call_ids": [
+            "c_015"
+          ]
+        },
+        {
+          "text": "It is the strongest popularity/quality mismatch in the shortlist: popularity 4.2 versus quality 80.6, alongside 65 releases and 53,762 README characters.",
+          "source_call_ids": [
+            "c_005"
+          ]
+        }
+      ],
+      "risks": [
+        {
+          "text": "The addressable audience is specialized and depends on rekordbox exports and Pioneer CDJ workflows; the README explicitly positions it as a supplement rather than a replacement for rekordbox.",
+          "source_call_ids": [
+            "c_015"
+          ]
+        }
+      ],
+      "proven_wrong_if": [
+        "Usage expands beyond a niche DJ audience into a durable general music-library tool.",
+        "Real-world CDJ compatibility and release cadence continue without serious regressions."
+      ],
+      "confidence": 0.88,
+      "skeptic": null,
+      "fact_flags": []
+    },
+    {
+      "repo": "skillsynchq/txcript",
+      "pitch": "A fast-rising interoperability layer for carrying AI coding sessions across agents, with Rust, JavaScript, WASM, and CLI surfaces.",
+      "criteria": {
+        "popularity": {
+          "score": 54.2,
+          "score_call_id": "c_007",
+          "key_figure": {
+            "label": "Stars",
+            "value": 205.0,
+            "unit": "stars",
+            "source_call_id": "c_007",
+            "source_path": "/metrics/stars"
+          }
+        },
+        "momentum": {
+          "score": 77.1,
+          "score_call_id": "c_007",
+          "key_figure": {
+            "label": "Forks, last 30 days",
+            "value": 9.0,
+            "unit": "forks",
+            "source_call_id": "c_007",
+            "source_path": "/metrics/forks_30d"
+          }
+        },
+        "quality": {
+          "score": 64.6,
+          "score_call_id": "c_007",
+          "key_figure": {
+            "label": "Commits, last 90 days",
+            "value": 128.0,
+            "unit": "commits",
+            "source_call_id": "c_007",
+            "source_path": "/metrics/commits_90d"
+          }
+        },
+        "newness": {
+          "score": 83.3,
+          "score_call_id": "c_007",
+          "key_figure": {
+            "label": "Age",
+            "value": 121.0,
+            "unit": "days",
+            "source_call_id": "c_007",
+            "source_path": "/metrics/age_days"
+          }
+        }
+      },
+      "case": [
+        {
+          "text": "txcript converts and searches agent sessions across harnesses, offers native CLI operations such as continue/query/view/crop/export, and exposes Rust, JavaScript, and WASM interfaces.",
+          "source_call_ids": [
+            "c_017"
+          ]
+        },
+        {
+          "text": "It pairs momentum 77.1 and newness 83.3 with only 205 stars; the repository also reports nine recent commit authors and a commit on the as-of date.",
+          "source_call_ids": [
+            "c_007"
+          ]
+        }
+      ],
+      "risks": [
+        {
+          "text": "Cross-agent fidelity is inherently uneven: the README qualifies continuation by whether the target supports the carried-over information, and supported harness formats can change.",
+          "source_call_ids": [
+            "c_017"
+          ]
+        }
+      ],
+      "proven_wrong_if": [
+        "Major coding-agent vendors converge on incompatible formats that txcript cannot keep up with.",
+        "The project gains stars but not repeat usage across multiple agent harnesses."
+      ],
+      "confidence": 0.87,
+      "skeptic": null,
+      "fact_flags": []
+    },
+    {
+      "repo": "slaveOftime/open-relay",
+      "pitch": "A focused, well-released session supervisor that gives coding agents durable PTYs, browser access, and human-in-the-loop control.",
+      "criteria": {
+        "popularity": {
+          "score": 33.3,
+          "score_call_id": "c_006",
+          "key_figure": {
+            "label": "Stars",
+            "value": 109.0,
+            "unit": "stars",
+            "source_call_id": "c_006",
+            "source_path": "/metrics/stars"
+          }
+        },
+        "momentum": {
+          "score": 39.6,
+          "score_call_id": "c_006",
+          "key_figure": {
+            "label": "Forks, last 30 days",
+            "value": 1.0,
+            "unit": "forks",
+            "source_call_id": "c_006",
+            "source_path": "/metrics/forks_30d"
+          }
+        },
+        "quality": {
+          "score": 69.9,
+          "score_call_id": "c_006",
+          "key_figure": {
+            "label": "Commits, last 90 days",
+            "value": 508.0,
+            "unit": "commits",
+            "source_call_id": "c_006",
+            "source_path": "/metrics/commits_90d"
+          }
+        },
+        "newness": {
+          "score": 54.2,
+          "score_call_id": "c_006",
+          "key_figure": {
+            "label": "Age",
+            "value": 230.0,
+            "unit": "days",
+            "source_call_id": "c_006",
+            "source_path": "/metrics/age_days"
+          }
+        }
+      },
+      "case": [
+        {
+          "text": "Open Relay keeps the daemon-owned PTY alive after terminal closure, provides terminal and password-protected browser dashboards, supports intervention, and routes work across connected machines.",
+          "source_call_ids": [
+            "c_016"
+          ]
+        },
+        {
+          "text": "It has only 109 stars but quality 69.9, 508 commits in 90 days, six recent authors, and 35 releases.",
+          "source_call_ids": [
+            "c_006"
+          ]
+        }
+      ],
+      "risks": [
+        {
+          "text": "The README labels the 0.5.0-beta.3 channel as a breaking preview while stable installs remain on the 0.3 line, so upgrades may require migration care.",
+          "source_call_ids": [
+            "c_016"
+          ]
+        }
+      ],
+      "proven_wrong_if": [
+        "The beta-to-stable transition causes enough breakage or churn that users abandon the supervisor.",
+        "Persistent sessions and remote intervention do not become a recurring need for agent users."
+      ],
+      "confidence": 0.84,
+      "skeptic": null,
+      "fact_flags": []
+    },
+    {
+      "repo": "bug-ops/mcpls",
+      "pitch": "A very low-star, security-conscious MCP/LSP bridge that gives AI agents real compiler and IDE semantics instead of guesses.",
+      "criteria": {
+        "popularity": {
+          "score": 16.7,
+          "score_call_id": "c_010",
+          "key_figure": {
+            "label": "Stars",
+            "value": 79.0,
+            "unit": "stars",
+            "source_call_id": "c_010",
+            "source_path": "/metrics/stars"
+          }
+        },
+        "momentum": {
+          "score": 16.7,
+          "score_call_id": "c_010",
+          "key_figure": {
+            "label": "Forks, last 30 days",
+            "value": 0.0,
+            "unit": "forks",
+            "source_call_id": "c_010",
+            "source_path": "/metrics/forks_30d"
+          }
+        },
+        "quality": {
+          "score": 62.0,
+          "score_call_id": "c_010",
+          "key_figure": {
+            "label": "Commits, last 90 days",
+            "value": 210.0,
+            "unit": "commits",
+            "source_call_id": "c_010",
+            "source_path": "/metrics/commits_90d"
+          }
+        },
+        "newness": {
+          "score": 37.5,
+          "score_call_id": "c_010",
+          "key_figure": {
+            "label": "Age",
+            "value": 304.0,
+            "unit": "days",
+            "source_call_id": "c_010",
+            "source_path": "/metrics/age_days"
+          }
+        }
+      },
+      "case": [
+        {
+          "text": "mcpls bridges MCP to LSP and exposes 31 tools for type information, references, diagnostics, refactoring, hierarchies, formatting, and symbol search across language servers.",
+          "source_call_ids": [
+            "c_020"
+          ]
+        },
+        {
+          "text": "Its popularity is only 16.7, yet quality is 62.0 with 210 recent commits, five recent authors, 20 releases, and a documented security/trust model.",
+          "source_call_ids": [
+            "c_010",
+            "c_020"
+          ]
+        }
+      ],
+      "risks": [
+        {
+          "text": "Language servers execute workspace code and are not sandboxed; the README explicitly warns users to consult its security guidance before analyzing untrusted code.",
+          "source_call_ids": [
+            "c_020"
+          ]
+        }
+      ],
+      "proven_wrong_if": [
+        "MCP clients do not adopt richer compiler-aware workflows beyond basic text retrieval.",
+        "The unsandboxed language-server model blocks safe deployment in the environments that need it most."
+      ],
+      "confidence": 0.82,
+      "skeptic": null,
+      "fact_flags": []
+    }
+  ],
+  "ranking": [
+    {
+      "rank": 1,
+      "repo": "holon-run/holon",
+      "note": "Best quality/visibility imbalance; 81.4 quality and 981 recent commits. [c_004]"
+    },
+    {
+      "rank": 2,
+      "repo": "M-Igashi/baken",
+      "note": "Most under-discovered quality outlier: 4.2 popularity versus 80.6 quality. [c_005]"
+    },
+    {
+      "rank": 3,
+      "repo": "skillsynchq/txcript",
+      "note": "Best interoperability momentum/newness combination among the low-to-mid popularity group. [c_007]"
+    },
+    {
+      "rank": 4,
+      "repo": "slaveOftime/open-relay",
+      "note": "Strong practical utility and quality at 109 stars, with 508 recent commits. [c_006]"
+    },
+    {
+      "rank": 5,
+      "repo": "bug-ops/mcpls",
+      "note": "Most neglected specialist pick: 79 stars, 62.0 quality, and unusually clear documentation. [c_010][c_020]"
+    },
+    {
+      "rank": 6,
+      "repo": "LumaryLabsLLC/muxin",
+      "note": "Exceptional momentum and breadth, but already at 372 stars and 70.8 popularity. [c_008][c_018]"
+    },
+    {
+      "rank": 7,
+      "repo": "pixtuoid/pixtuoid",
+      "note": "High-quality and fast-moving, but 505 stars and 79.2 popularity make it less overlooked. [c_009][c_019]"
+    },
+    {
+      "rank": 8,
+      "repo": "omacom/ttfx",
+      "note": "Very strong momentum, but quality is only 59.1 and the utility is narrower. [c_012]"
+    },
+    {
+      "rank": 9,
+      "repo": "crabtalk/cydonia",
+      "note": "New and interesting agent workspace, but quality is 49.5 on only 54 recent commits. [c_011][c_021]"
+    },
+    {
+      "rank": 10,
+      "repo": "fzn0x/idx",
+      "note": "Excellent momentum/newness, but specialized market scope and quality 51.6 add execution risk. [c_013]"
+    }
+  ],
+  "summary": "Five Rust developer-tool sleepers stand out. Holon is the best overall quality compounder; baken is the clearest extreme value/visibility mismatch; txcript is the strongest rising interoperability bet; open-relay is a practical session-supervision utility; and mcpls is the most neglected technical specialist. Muxin, pixtuoid, ttfx, Cydonia, and idx are credible alternatives, but their popularity, narrower scope, or lower quality scores weaken the sleeper case.",
+  "ranking_below_min": false,
+  "submit_attempts": 1,
+  "last_submit_errors": []
+}
