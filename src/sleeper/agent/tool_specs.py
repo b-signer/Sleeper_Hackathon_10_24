@@ -20,7 +20,13 @@ DESCRIPTIONS: dict[str, str] = {
     "readme": "The repo's README text, capped at max_chars (500-12000). Use it to judge what the project does.",
     "submit": (
         "Submit your picks (cards citing call ids), the ranking of every repo you looked at closely, and a summary. "
-        "Rejected submissions come back with specific errors; fix them and resubmit. Ends the run when accepted."
+        "Rules the submit tool checks: every cited call id must be an earlier successful research call; each "
+        "criterion score must be copied from the cited repo_details output or browse row of that card's repo; "
+        "each key_figure.value must be the number at source_path (a JSON Pointer such as /metrics/forks_30d) in "
+        "the cited output of that card's repo, copied in the source's unit (no k or months conversion); the "
+        "ranking must include every card repo and every repo you called repo_details or readme on successfully. "
+        "Rejected submissions come back with specific errors and use up one of 3 attempts; fix them and resubmit. "
+        "Ends the run when accepted."
     ),
 }
 

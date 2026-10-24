@@ -15,7 +15,7 @@ Rules for every model: unknown fields are rejected; timestamps carry a timezone 
 
 ## Universe file (`universe.py`)
 
-One JSON file: `Universe = {header, rows}`. Checks: no duplicate repos, `header.counts.rows == len(rows)`. `universe.get("owner/name")` is a case-insensitive lookup.
+One JSON file: `Universe = {header, rows}`. Checks: no duplicate repos, `header.counts.rows == len(rows)`. `universe.get("owner/name")` is a case-insensitive lookup. Built by `uv run sleeper build-universe <topic>` (T07; topics in `topics.toml`) into `data/universes/<topic>.json`. How the scores are computed: [scoring.md](scoring.md).
 
 - `UniverseHeader`: `schema_version` (1), `topic`, `topic_label`, `queries` (GitHub searches used), `stars_min`, `stars_max`, `created_after`, `created_before`?, `built_at` (metrics are as of this time), `builder` (version and git SHA), `seed`, `max_size` (200), `github_requests`?, `build_seconds`?, `scoring` (one paragraph on how the scores are computed), `counts`.
 - `UniverseCounts`: `search_total`, `excluded` (reason → count, e.g. `fork`, `archived`, `awesome_list`), `eligible`, `sampled`, `rows`.
