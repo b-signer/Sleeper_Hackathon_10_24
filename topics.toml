@@ -8,9 +8,24 @@
 # Query syntax: https://docs.github.com/en/search-github/searching-on-github/searching-for-repositories
 # Optional per topic: stars_min, stars_max, created_after, created_before (YYYY-MM-DD)
 # override the defaults (50-2000 stars, created on or after 2025-01-01, D7).
+# Optional `scope`: what belongs to the topic, stated as a principle (who uses the
+# project and for what). When set, the builder asks a cheap model (the dev model)
+# whether each candidate is on topic, from its name, description, GitHub topics and
+# README start, and keeps only "on" repos (T18, src/sleeper/relevance.py). Examples
+# in a scope illustrate the principle; they are not a list to match against.
 
 [rust-devtools]
 label = "Rust developer tools"
+scope = """
+Principle: a developer tool is software that software developers use while building, testing, \
+debugging, shipping or operating software. The test is who uses it and for what: if its main users \
+are developers doing development work, it is on topic; if it is an app for some other audience or \
+activity that merely happens to be written in Rust or run in a terminal, it is not. Illustrations \
+only (not exhaustive): on topic are things like linters, build and test tooling, code search, \
+version-control helpers, editor or language tooling, and tooling for AI coding agents; off topic are \
+things like an end-user app for media, chat or personal finance, even with a CLI. When the \
+description is ambiguous, read the README and apply the principle.
+"""
 queries = [
   "language:Rust topic:cli",
   "language:Rust topic:developer-tools",
@@ -20,13 +35,41 @@ queries = [
 
 [local-first]
 label = "Local-first software"
+scope = """
+Principle: local-first software keeps the user's data primarily on the user's own device, keeps \
+working offline, and treats sync or collaboration with other devices and people as optional and \
+under the user's control. The test is whether local data ownership, offline use or sync is the \
+project's main point or just an implementation detail. Most desktop software keeps files on the \
+machine; that alone does not make it local-first, and neither does calling itself local-first, being \
+self-hosted, or running a local AI model. A project whose main purpose is something else (an \
+assistant, an agent manager, analytics, media) is off topic even if its data stays local. \
+Illustrations only (not exhaustive): on topic are things like sync engines, CRDT or replication \
+libraries, offline-first storage, and apps built on them; off topic are things like a server product \
+that you self-host, or a tool that just runs on your machine without a local-data or sync story. \
+When the description is ambiguous, read the README and apply the principle.
+"""
 queries = [
   "topic:local-first",
   "local-first in:name,description",
+  # T18: the two above are mostly "local AI" apps (smoke build: 13% on topic), so add the
+  # building blocks and offline-first apps, which are on topic far more often.
+  "topic:crdt",
+  "topic:sync-engine",
+  "topic:offline-first",
+  "crdt in:name,description",
+  "offline-first in:name,description",
 ]
 
 [llm-evals]
 label = "LLM evaluation tooling"
+scope = """
+Principle: LLM evaluation tooling helps people measure how well LLMs or LLM applications perform: it \
+runs tests, benchmarks or graders and reports results. The test is whether evaluating models or LLM \
+apps is the project's main purpose, not a side feature. Illustrations only (not exhaustive): on \
+topic are things like eval harnesses, benchmark suites, LLM-as-judge or regression-testing tools; \
+off topic are things like general LLM apps or agent frameworks that only mention evals in passing. \
+When the description is ambiguous, read the README and apply the principle.
+"""
 queries = [
   "topic:llm-evaluation",
   "topic:evals",
