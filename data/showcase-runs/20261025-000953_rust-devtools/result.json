@@ -1,0 +1,569 @@
+{
+  "schema_version": 1,
+  "run_id": "20261025-000953_rust-devtools",
+  "status": "ok",
+  "error": null,
+  "settings": {
+    "topic": "rust-devtools",
+    "universe_file": null,
+    "stars_min": 50,
+    "stars_max": 2000,
+    "created_after": "2025-01-01",
+    "max_picks": 5,
+    "min_ranked": 10,
+    "model": "openai/gpt-5.6-luna",
+    "token_budget": 300000,
+    "max_turns": 25,
+    "max_wall_clock_s": 600,
+    "seed": 7
+  },
+  "started_at": "2026-10-25T00:09:53.549961Z",
+  "finished_at": "2026-10-25T00:10:51.509112Z",
+  "turns": 5,
+  "usage": {
+    "prompt_tokens": 130801,
+    "completion_tokens": 7014,
+    "cached_tokens": 81422,
+    "total_tokens": 137815,
+    "cost_usd": 0.02235699
+  },
+  "cards": [
+    {
+      "repo": "crizant/probe",
+      "pitch": "Native Rust API development for desktop, CLI, CI, and coding agents, with OpenCollection YAML, GraphQL/WebSockets, assertions, imports, and no cloud account.",
+      "criteria": {
+        "popularity": {
+          "score": 2.5,
+          "score_call_id": "c_012",
+          "key_figure": {
+            "label": "Stars",
+            "value": 52.0,
+            "unit": "stars",
+            "source_call_id": "c_012",
+            "source_path": "/metrics/stars"
+          }
+        },
+        "momentum": {
+          "score": 66.6,
+          "score_call_id": "c_012",
+          "key_figure": {
+            "label": "Forks, last 30 days",
+            "value": 4.0,
+            "unit": "forks",
+            "source_call_id": "c_012",
+            "source_path": "/metrics/forks_30d"
+          }
+        },
+        "quality": {
+          "score": 87.7,
+          "score_call_id": "c_012",
+          "key_figure": {
+            "label": "Releases",
+            "value": 51.0,
+            "unit": "releases",
+            "source_call_id": "c_012",
+            "source_path": "/metrics/releases"
+          }
+        },
+        "newness": {
+          "score": 93.0,
+          "score_call_id": "c_012",
+          "key_figure": {
+            "label": "Repository age",
+            "value": 70.0,
+            "unit": "days",
+            "source_call_id": "c_012",
+            "source_path": "/metrics/age_days"
+          }
+        }
+      },
+      "case": [
+        {
+          "text": "Probe has an unusually strong quality/momentum combination at only 52 stars: its README documents two first-class interfaces, a native GPUI desktop, an agent-friendly CLI, Git-friendly YAML workspaces, CI automation, and concrete HTTP, GraphQL, WebSocket, assertion, import, and secret-variable support.",
+          "source_call_ids": [
+            "c_030",
+            "c_012"
+          ]
+        },
+        {
+          "text": "It belongs squarely in Rust developer tools because developers use it to build and test APIs, while its local-first CLI also targets CI and AI coding agents; 51 releases and five active authors provide healthier shipping evidence than its popularity suggests.",
+          "source_call_ids": [
+            "c_030",
+            "c_012"
+          ]
+        }
+      ],
+      "risks": [
+        {
+          "text": "At 70 days old, Probe is still young, so compatibility and API stability across its desktop and CLI surfaces are not yet proven over a long period.",
+          "source_call_ids": [
+            "c_012"
+          ]
+        }
+      ],
+      "proven_wrong_if": [
+        "Fewer than 2 forks in the 30 days before 2027-01-24 (now 4).",
+        "No new release by 2027-01-24."
+      ],
+      "confidence": 0.82,
+      "skeptic": {
+        "verdict": "weakened",
+        "argument": "The pick is plausible but materially overstated. Popularity remains very low at 52 stars, while the unusually high activity is concentrated in a 70-day-old repository: 523 commits in 90 days and 51 releases do not establish durability or stability. The README is largely a feature-and-goals inventory, not evidence that the claimed desktop, CLI, GraphQL/WebSocket, assertions, imports, and agent workflows work reliably in practice. Five authors is some breadth, but the outputs do not show maintainer distribution, usage, tests, issue health, or sustained adoption. Four forks and eight star events in 30 days are limited signals, and the card’s future “proven wrong” tests are not evidence as of 2026-10-24.",
+        "cited_call_ids": [
+          "c_012",
+          "c_030"
+        ],
+        "model": "openai/gpt-5.6-luna"
+      },
+      "fact_flags": []
+    },
+    {
+      "repo": "mrjones2014/jj-gh",
+      "pitch": "A small, focused Rust CLI that makes GitHub PR stacks first-class in Jujutsu: create, fetch, inspect CI, auto-merge, and re-stack from the terminal.",
+      "criteria": {
+        "popularity": {
+          "score": 1.3,
+          "score_call_id": "c_022",
+          "key_figure": {
+            "label": "Stars",
+            "value": 51.0,
+            "unit": "stars",
+            "source_call_id": "c_022",
+            "source_path": "/metrics/stars"
+          }
+        },
+        "momentum": {
+          "score": 44.7,
+          "score_call_id": "c_022",
+          "key_figure": {
+            "label": "Forks, last 30 days",
+            "value": 2.0,
+            "unit": "forks",
+            "source_call_id": "c_022",
+            "source_path": "/metrics/forks_30d"
+          }
+        },
+        "quality": {
+          "score": 74.1,
+          "score_call_id": "c_022",
+          "key_figure": {
+            "label": "Releases",
+            "value": 21.0,
+            "unit": "releases",
+            "source_call_id": "c_022",
+            "source_path": "/metrics/releases"
+          }
+        },
+        "newness": {
+          "score": 72.9,
+          "score_call_id": "c_022",
+          "key_figure": {
+            "label": "Repository age",
+            "value": 155.0,
+            "unit": "days",
+            "source_call_id": "c_022",
+            "source_path": "/metrics/age_days"
+          }
+        }
+      },
+      "case": [
+        {
+          "text": "jj-gh solves a specific developer workflow gap: the README shows PR creation from arbitrary revisions, stacked-PR base selection, PR fetch across forks, CI metadata in the commit graph, auto-merge, and interactive re-stacking without the GitHub web UI.",
+          "source_call_ids": [
+            "c_032"
+          ]
+        },
+        {
+          "text": "This is a particularly clean underrated signal—just 51 stars but seven recent commit authors, 144 recent commits, and 21 releases—while its Rust CLI directly serves version-control and code-review work.",
+          "source_call_ids": [
+            "c_022",
+            "c_032"
+          ]
+        }
+      ],
+      "risks": [
+        {
+          "text": "The tool requires jj and the Git backend, and the README says the simple jj backend is unsupported; that narrows the addressable workflow compared with a general GitHub CLI.",
+          "source_call_ids": [
+            "c_032"
+          ]
+        }
+      ],
+      "proven_wrong_if": [
+        "Stars below 100 by 2027-04-24 (now 51).",
+        "Fewer than 2 commit authors in the 90 days before 2027-01-24 (now 7)."
+      ],
+      "confidence": 0.8,
+      "skeptic": {
+        "verdict": "weakened",
+        "argument": "The pick is plausible but materially oversold. Popularity is only 51 stars, with 0 star events in the last 30 days and just 7 forks total; the card’s “momentum” leans on 2 forks rather than demonstrated adoption. Activity is also concentrated enough to warrant caution: 144 commits in 90 days and 21 releases show motion, but not necessarily durable users or broad contributors. The README documents an ambitious feature set, yet the evidence supplied is only README claims, and the Git-backend-only requirement plus unsupported simple backend narrows the audience. Still, a recent commit on 2026-10-23 and 7 authors keep this from being killed outright.",
+        "cited_call_ids": [
+          "c_022",
+          "c_032"
+        ],
+        "model": "openai/gpt-5.6-luna"
+      },
+      "fact_flags": []
+    },
+    {
+      "repo": "VeraTools/vera",
+      "pitch": "Offline Rust semantic code search for developers and coding agents: BM25 plus embeddings, code-aware reranking, tree-sitter parsing, and structured symbol results.",
+      "criteria": {
+        "popularity": {
+          "score": 45.5,
+          "score_call_id": "c_014",
+          "key_figure": {
+            "label": "Stars",
+            "value": 120.0,
+            "unit": "stars",
+            "source_call_id": "c_014",
+            "source_path": "/metrics/stars"
+          }
+        },
+        "momentum": {
+          "score": 44.7,
+          "score_call_id": "c_014",
+          "key_figure": {
+            "label": "Forks, last 30 days",
+            "value": 1.0,
+            "unit": "forks",
+            "source_call_id": "c_014",
+            "source_path": "/metrics/forks_30d"
+          }
+        },
+        "quality": {
+          "score": 87.1,
+          "score_call_id": "c_014",
+          "key_figure": {
+            "label": "Releases",
+            "value": 77.0,
+            "unit": "releases",
+            "source_call_id": "c_014",
+            "source_path": "/metrics/releases"
+          }
+        },
+        "newness": {
+          "score": 51.3,
+          "score_call_id": "c_014",
+          "key_figure": {
+            "label": "Repository age",
+            "value": 216.0,
+            "unit": "days",
+            "source_call_id": "c_014",
+            "source_path": "/metrics/age_days"
+          }
+        }
+      },
+      "case": [
+        {
+          "text": "Vera's README gives a concrete behavior-search workflow—ask where expired sessions are cleaned up and receive ranked functions/classes—while combining BM25, embedding search, and code-aware ranking that favors definitions and source over incidental mentions.",
+          "source_call_ids": [
+            "c_034"
+          ]
+        },
+        {
+          "text": "It is a practical developer tool rather than an AI demo: a single native binary, local index, CPU-capable default model, 65-language support, documented install paths, and no API key or server; six authors and 77 releases support active maintenance.",
+          "source_call_ids": [
+            "c_034",
+            "c_014"
+          ]
+        }
+      ],
+      "risks": [
+        {
+          "text": "Vera operates in a rapidly growing semantic MCP/code-search ecosystem, so its differentiation and retrieval quality need to hold up against several similarly stacked tools.",
+          "source_call_ids": [
+            "c_034"
+          ]
+        }
+      ],
+      "proven_wrong_if": [
+        "Fewer than 2 forks in the 30 days before 2027-01-24 (now 1).",
+        "No new release by 2027-01-24."
+      ],
+      "confidence": 0.72,
+      "skeptic": {
+        "verdict": "weakened",
+        "argument": "The pick is plausible but materially overstated. The repository has only 120 stars, 16 forks, 1 fork in the last 30 days, and 0 star events in that period, so the momentum case is weak. Although 331 commits and 6 authors in 90 days look active, the evidence does not establish a durable contributor base or rule out concentrated maintenance. The README is largely a product description: its claimed behavior-search example, 65-language support, ranking quality, and practical advantages are not independently demonstrated by the cited outputs. Seventy-seven releases since creation 216 days ago may reflect frequent iteration rather than maturity. The Rust/topic fit is real, but differentiation against competing tools is explicitly unresolved.",
+        "cited_call_ids": [
+          "c_014",
+          "c_034"
+        ],
+        "model": "openai/gpt-5.6-luna"
+      },
+      "fact_flags": []
+    },
+    {
+      "repo": "runxhq/runx",
+      "pitch": "A Rust runtime for executing agent skills with explicit authority, credential boundaries, supervision, and verifiable receipts—developer tooling for repeatable agent workflows.",
+      "criteria": {
+        "popularity": {
+          "score": 41.2,
+          "score_call_id": "c_016",
+          "key_figure": {
+            "label": "Stars",
+            "value": 104.0,
+            "unit": "stars",
+            "source_call_id": "c_016",
+            "source_path": "/metrics/stars"
+          }
+        },
+        "momentum": {
+          "score": 62.6,
+          "score_call_id": "c_016",
+          "key_figure": {
+            "label": "Forks, last 30 days",
+            "value": 7.0,
+            "unit": "forks",
+            "source_call_id": "c_016",
+            "source_path": "/metrics/forks_30d"
+          }
+        },
+        "quality": {
+          "score": 83.6,
+          "score_call_id": "c_016",
+          "key_figure": {
+            "label": "Releases",
+            "value": 27.0,
+            "unit": "releases",
+            "source_call_id": "c_016",
+            "source_path": "/metrics/releases"
+          }
+        },
+        "newness": {
+          "score": 61.3,
+          "score_call_id": "c_016",
+          "key_figure": {
+            "label": "Repository age",
+            "value": 196.0,
+            "unit": "days",
+            "source_call_id": "c_016",
+            "source_path": "/metrics/age_days"
+          }
+        }
+      },
+      "case": [
+        {
+          "text": "Runx makes SKILL.md-based procedures executable: its README describes explicit authority admission, tool-boundary credentials, supervised execution, and a sealed receipt for every act, exposed through CLI, MCP, or a language client.",
+          "source_call_ids": [
+            "c_036"
+          ]
+        },
+        {
+          "text": "That is directly developer tooling for operating coding-agent workflows, and the project currently pairs 104 stars with 600 recent commits, seven authors, 27 releases, and seven recent forks—a strong quality/momentum profile without broad popularity.",
+          "source_call_ids": [
+            "c_016",
+            "c_036"
+          ]
+        }
+      ],
+      "risks": [
+        {
+          "text": "Runx's scope extends beyond coding into business-operations workflows in the README examples, so its usefulness to software teams depends on the agent skills and integrations they choose to build.",
+          "source_call_ids": [
+            "c_036"
+          ]
+        }
+      ],
+      "proven_wrong_if": [
+        "Fewer than 5 forks in the 30 days before 2027-01-24 (now 7).",
+        "Fewer than 100 commits in the 90 days before 2027-01-24 (now 600)."
+      ],
+      "confidence": 0.76,
+      "skeptic": {
+        "verdict": "weakened",
+        "argument": "The pick is plausible but materially overstated. The README is truncated and largely promotional, so claims about governed execution, credentials, supervision, and verifiable receipts are not independently demonstrated here; its examples also center business operations, weakening the Rust developer-tools fit (c_036). Activity is recent and substantial, but only 7 authors in 90 days leaves meaningful maintainer-concentration risk, while 0 star events in 30 days and 104 total stars show no current popularity burst (c_016). The card also calls 600 commits and 7 forks a strong momentum profile without showing whether commits are substantive or forks indicate adoption. Thus the evidence supports an active young project, not clearly an underrated developer-tooling pick.",
+        "cited_call_ids": [
+          "c_016",
+          "c_036"
+        ],
+        "model": "openai/gpt-5.6-luna"
+      },
+      "fact_flags": []
+    },
+    {
+      "repo": "KingDasWinx/Dexo",
+      "pitch": "An exceptionally undiscovered Rust database workbench: terminal UI, CLI, and MCP for PostgreSQL/MySQL/MariaDB/SQLite, with approval-gated writes and production guardrails for humans and agents.",
+      "criteria": {
+        "popularity": {
+          "score": 0.3,
+          "score_call_id": "c_024",
+          "key_figure": {
+            "label": "Stars",
+            "value": 50.0,
+            "unit": "stars",
+            "source_call_id": "c_024",
+            "source_path": "/metrics/stars"
+          }
+        },
+        "momentum": {
+          "score": 64.6,
+          "score_call_id": "c_024",
+          "key_figure": {
+            "label": "Forks, last 30 days",
+            "value": 4.0,
+            "unit": "forks",
+            "source_call_id": "c_024",
+            "source_path": "/metrics/forks_30d"
+          }
+        },
+        "quality": {
+          "score": 60.3,
+          "score_call_id": "c_024",
+          "key_figure": {
+            "label": "Releases",
+            "value": 13.0,
+            "unit": "releases",
+            "source_call_id": "c_024",
+            "source_path": "/metrics/releases"
+          }
+        },
+        "newness": {
+          "score": 92.0,
+          "score_call_id": "c_024",
+          "key_figure": {
+            "label": "Repository age",
+            "value": 71.0,
+            "unit": "days",
+            "source_call_id": "c_024",
+            "source_path": "/metrics/age_days"
+          }
+        }
+      },
+      "case": [
+        {
+          "text": "Dexo is unusually concrete: its README describes SQL autocomplete and diagnostics, schema diffs, EXPLAIN trees, TLS/SSH/proxy connections, backups, and an MCP server whose profiles and per-write approval protect production databases from both users and agents.",
+          "source_call_ids": [
+            "c_031"
+          ]
+        },
+        {
+          "text": "At only 50 stars, its momentum is already 64.6; 1,152 recent commits and 13 releases indicate fast product development, while its terminal/CLI/MCP interfaces clearly serve developers operating databases.",
+          "source_call_ids": [
+            "c_024",
+            "c_031"
+          ]
+        }
+      ],
+      "risks": [
+        {
+          "text": "Dexo is only 71 days old, so the unusually broad database surface and safety behavior have had limited time to prove stability in production.",
+          "source_call_ids": [
+            "c_024"
+          ]
+        }
+      ],
+      "proven_wrong_if": [
+        "Stars below 150 by 2027-04-24 (now 50).",
+        "No new release by 2027-01-24."
+      ],
+      "confidence": 0.68,
+      "skeptic": {
+        "verdict": "killed",
+        "argument": "A careful reviewer should not pick this yet. The repository is only 71 days old and has just 50 stars, while the claimed momentum is largely 1,152 commits in 90 days—an unusually high volume that does not establish users, stability, or independent maintenance. The latest commit and release are already dated 2026-10-12 and 2026-10-13, with no evidence of activity afterward. The README is truncated and presents an extensive feature and safety surface, but the cited output provides no tests, adoption, issue history, maintainer breadth, or production validation. Thus the card leans on self-description and cherry-picked aggregate metrics; its Rust developer-tool relevance is plausible, not demonstrated as exceptional.",
+        "cited_call_ids": [
+          "c_024",
+          "c_031"
+        ],
+        "model": "openai/gpt-5.6-luna"
+      },
+      "fact_flags": []
+    }
+  ],
+  "ranking": [
+    {
+      "rank": 1,
+      "repo": "crizant/probe",
+      "note": "Best combined quality, momentum, extreme under-discovery, and concrete API-tool scope."
+    },
+    {
+      "rank": 2,
+      "repo": "mrjones2014/jj-gh",
+      "note": "Exceptionally low popularity for a focused, maintained Jujutsu/GitHub workflow tool."
+    },
+    {
+      "rank": 3,
+      "repo": "VeraTools/vera",
+      "note": "High quality and strong concrete code-search design; moderate popularity and crowded space."
+    },
+    {
+      "rank": 4,
+      "repo": "runxhq/runx",
+      "note": "Strong quality and momentum for governed agent execution, with broader scope."
+    },
+    {
+      "rank": 5,
+      "repo": "KingDasWinx/Dexo",
+      "note": "Most undiscovered and fast-moving database tool, tempered by very young age."
+    },
+    {
+      "rank": 6,
+      "repo": "ScriptedAlchemy/tracedecay",
+      "note": "Distinctive semantic graph and impact analysis, but unusually high commit volume warrants validation."
+    },
+    {
+      "rank": 7,
+      "repo": "flupkede/codesearch",
+      "note": "Capable offline multi-repo semantic MCP search with strong maintenance signals."
+    },
+    {
+      "rank": 8,
+      "repo": "slaveOftime/open-relay",
+      "note": "Useful persistent supervised sessions for coding agents and long-running commands."
+    },
+    {
+      "rank": 9,
+      "repo": "supernovae-st/nika",
+      "note": "Well-maintained file-based agent workflow engine, though momentum is comparatively modest."
+    },
+    {
+      "rank": 10,
+      "repo": "ziuus/orbit-tui",
+      "note": "Polished developer dashboard with low popularity and substantial release activity."
+    },
+    {
+      "rank": 11,
+      "repo": "bug-ops/mcpls",
+      "note": "Interesting MCP-to-LSP bridge with strong quality but weak recent momentum."
+    },
+    {
+      "rank": 12,
+      "repo": "dallay/agentsync",
+      "note": "Mature, well-released configuration synchronizer, but lower current momentum."
+    },
+    {
+      "rank": 13,
+      "repo": "OpenCoven/coven",
+      "note": "Solid project-scoped agent runtime with durable state and authority boundaries."
+    },
+    {
+      "rank": 14,
+      "repo": "affromero/gitpane",
+      "note": "Well-maintained multi-repo Git dashboard, but less momentum and more visibility."
+    },
+    {
+      "rank": 15,
+      "repo": "nhtera/OxiMux",
+      "note": "Distinctive multi-agent worktree cockpit; single-author maintenance is a material concern."
+    },
+    {
+      "rank": 16,
+      "repo": "juliensimon/cache-commander",
+      "note": "Useful developer-cache auditing tool, but quality and momentum metrics are modest."
+    },
+    {
+      "rank": 17,
+      "repo": "Regsorm/code-index-mcp",
+      "note": "Strong specialized code-index MCP with high release activity, but popularity is already mid-pack."
+    },
+    {
+      "rank": 18,
+      "repo": "agent-sh/agnix",
+      "note": "Excellent developer-tool fit and activity, but substantially more discovered than the leading picks."
+    }
+  ],
+  "summary": "The strongest underrated Rust developer tools are Probe (API development), jj-gh (Jujutsu PR stacks), Vera (offline semantic code search), runx (governed agent execution), and Dexo (guarded database workbench). Probe and jj-gh combine the clearest topic fit with the largest quality/popularity gap; Vera and runx are stronger established bets with moderate discovery; Dexo is the highest-upside but youngest pick.",
+  "ranking_below_min": false,
+  "submit_attempts": 1,
+  "last_submit_errors": []
+}

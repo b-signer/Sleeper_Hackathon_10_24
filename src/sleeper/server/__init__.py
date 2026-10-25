@@ -15,6 +15,7 @@ from sleeper.server.store import ModelInfo, Refusal, RunInfo, RunStore, ServerCo
 from sleeper.server.topics import TopicService, topic_service_from_settings
 
 FAKE_DIR = Path("fixtures/fake")
+SHOWCASE_DIR = Path("data/showcase-runs")  # committed real runs, listed read-only so a fresh checkout can replay them
 FAKE_TOPIC = "fake"
 
 __all__ = [
@@ -115,9 +116,9 @@ def spend_info(cfg: Settings) -> SpendInfo | None:
 
 
 def app_from_settings(settings: Settings, runner: Runner | None = None, topics: TopicService | None = None) -> FastAPI:
-    """The app `sleeper serve` runs: runs in SLEEPER_RUNS_DIR plus the recorded fake run, started with T10.
+    """The app `sleeper serve` runs: runs in SLEEPER_RUNS_DIR, the committed showcase runs, and the recorded fake run.
     Universes: the prebuilt ones, custom topics built from the launcher (under the cache), and the fake one."""
-    store = RunStore(settings.runs_dir, extra_dirs=[FAKE_RUN_DIR.parent])
+    store = RunStore(settings.runs_dir, extra_dirs=[SHOWCASE_DIR, FAKE_RUN_DIR.parent])
     topics = topics or topic_service_from_settings(settings)
     return create_app(
         store,
