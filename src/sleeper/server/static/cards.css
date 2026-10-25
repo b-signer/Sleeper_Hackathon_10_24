@@ -1,1 +1,107 @@
-/* Placeholder so the page's assets all load on this branch. The cards branch owns this file: take theirs on merge. */
+/* Pick cards (cards.js). Uses the theme variables from app.css (--bg, --panel, --fg, --muted,
+   --line, --accent, --pop, --new, --ok, --warn, --bad and their -soft variants, --mono);
+   light/dark comes from there. Everything is namespaced pick-* / picks-*. */
+
+/* ---- Summary ---- */
+.picks-summary { margin: 0 0 18px; max-width: 68ch; color: var(--fg); }
+
+/* ---- Card list ---- */
+.picks { display: grid; gap: 10px; margin: 0 0 24px; max-width: 760px; }
+.picks-empty { margin: 0; color: var(--muted); }
+
+.pick { background: var(--panel); border-radius: 12px; }
+.pick-sum { list-style: none; cursor: pointer; display: grid; gap: 4px; padding: 16px 44px 16px 18px; position: relative; border-radius: 12px; }
+.pick-sum::-webkit-details-marker { display: none; }
+.pick-sum::after {
+  content: ""; position: absolute; right: 20px; top: 22px; width: 7px; height: 7px;
+  border-right: 1.5px solid var(--muted); border-bottom: 1.5px solid var(--muted);
+  transform: rotate(45deg); transition: transform .15s ease; opacity: .7;
+}
+.pick[open] > .pick-sum::after { transform: translate(0, 3px) rotate(-135deg); }
+.pick-sum:hover::after { opacity: 1; }
+.pick-sum:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.pick-line { display: flex; align-items: baseline; gap: 8px; min-width: 0; }
+.pick-repo { font-weight: 600; color: var(--fg); text-decoration: none; overflow-wrap: anywhere; }
+.pick-repo:hover, .pick-repo:focus-visible { text-decoration: underline; text-underline-offset: 3px; }
+.pick-conf { margin-left: auto; font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.pick-pitch { color: var(--muted); font-size: 14px; line-height: 1.45; }
+
+.pick-mark {
+  display: inline-grid; place-items: center; width: 15px; height: 15px; border-radius: 50%;
+  font-size: 10px; font-weight: 700; line-height: 1; align-self: center; cursor: help; flex: none;
+}
+.pick-mark-warn { background: var(--warn-soft); color: var(--warn); }
+.pick-mark-bad { background: var(--bad-soft); color: var(--bad); }
+
+.pick-killed .pick-repo, .pick-killed .pick-pitch { opacity: .6; }
+
+/* ---- Expanded body ---- */
+.pick-body { display: grid; gap: 18px; padding: 4px 18px 20px; }
+.pick-sec h4 { margin: 0 0 6px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.pick-sec p { margin: 0; font-size: 14px; }
+.pick-small { font-size: 12px; color: var(--muted); }
+.pick-list { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 14px; }
+.pick-list li::marker { color: var(--muted); }
+
+/* Criteria */
+.pick-crit { display: grid; gap: 7px; }
+.pick-crit-row { display: grid; grid-template-columns: 84px minmax(0, 1fr) 30px minmax(0, 130px); gap: 10px; align-items: center; font-size: 13px; }
+.pick-crit-label { color: var(--muted); }
+.pick-track { position: relative; height: 4px; border-radius: 2px; background: var(--line); }
+.pick-bar { position: absolute; inset: 0 auto 0 0; border-radius: 2px; background: var(--accent); }
+.pick-crit-popularity .pick-bar { background: var(--pop); }
+.pick-crit-newness .pick-bar { background: var(--new); }
+.pick-tick { position: absolute; top: -4px; bottom: -4px; width: 0; border-left: 1.5px solid var(--fg); opacity: .35; }
+.pick-crit-key { display: flex; align-items: center; gap: 6px; margin-top: 2px; }
+.pick-tick-key { display: inline-block; height: 10px; border-left: 1.5px solid var(--fg); opacity: .35; }
+
+/* Buttons that open a source: quiet until hovered */
+.pick-score, .pick-fig-btn, .pick-cite {
+  border: 0; background: none; padding: 0; cursor: pointer; color: inherit;
+  border-radius: 4px; text-underline-offset: 3px;
+}
+.pick-score { font-weight: 600; font-variant-numeric: tabular-nums; text-align: right; }
+.pick-fig { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; min-width: 0; }
+.pick-fig-btn { font-size: 12px; color: var(--muted); text-align: left; }
+.pick-cite { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-left: 4px; }
+.pick-score:hover, .pick-fig-btn:hover, .pick-cite:hover { color: var(--accent); text-decoration: underline; }
+.pick-score:focus-visible, .pick-fig-btn:focus-visible, .pick-cite:focus-visible, .pick-flag:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+/* Fact-check flags */
+.pick-flag {
+  display: inline-block; padding: 0 6px; border: 0; border-radius: 4px; font-size: 11px; font-weight: 600;
+  background: var(--warn-soft); color: var(--warn); cursor: help;
+}
+button.pick-flag { cursor: pointer; }
+button.pick-flag:hover { text-decoration: underline; }
+.pick-flags { list-style: none; padding-left: 0; }
+
+/* Skeptic */
+.pick-skeptic { padding-left: 12px; border-left: 2px solid var(--line); }
+.pick-skeptic-survives { border-left-color: var(--ok); }
+.pick-skeptic-weakened { border-left-color: var(--warn); }
+.pick-skeptic-killed { border-left-color: var(--bad); }
+.pick-skeptic-survives h4 { color: var(--ok); }
+.pick-skeptic-weakened h4 { color: var(--warn); }
+.pick-skeptic-killed h4 { color: var(--bad); }
+
+/* ---- Ranking: plain list ---- */
+.picks-rank { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; font-size: 14px; max-width: 760px; }
+.picks-rank-item { display: grid; grid-template-columns: 24px minmax(0, auto) minmax(0, 1fr); gap: 10px; align-items: baseline; }
+.picks-rank-num { color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; text-align: right; }
+.picks-rank-repo { font-weight: 500; overflow-wrap: anywhere; }
+.picks-rank-note { color: var(--muted); font-size: 13px; }
+.picks-rank-item.is-killed .picks-rank-repo { text-decoration: line-through; text-decoration-color: var(--bad); color: var(--muted); }
+
+/* ---- Phone width ---- */
+@media (max-width: 520px) {
+  .pick-sum { padding: 14px 40px 14px 14px; }
+  .pick-sum::after { right: 16px; top: 20px; }
+  .pick-body { padding: 2px 14px 16px; }
+  .pick-crit-row { grid-template-columns: 72px minmax(0, 1fr) 26px; gap: 8px; }
+  .pick-fig { grid-column: 1 / -1; padding-left: 80px; margin-top: -4px; }
+  .picks-rank-item { grid-template-columns: 20px minmax(0, 1fr); }
+  .picks-rank-note { grid-column: 2; }
+}
+@media (prefers-reduced-motion: reduce) { .pick-sum::after { transition: none; } }
