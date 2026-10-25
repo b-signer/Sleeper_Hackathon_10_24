@@ -14,12 +14,12 @@
     "created_after": "2025-01-01",
     "created_before": null,
     "built_at": "2026-10-24T23:09:34Z",
-    "builder": "sleeper 0.1.0 @ c747017-dirty; relevance openai/gpt-5.6-luna 277 checked, 76 off-topic, 1 suspicious, $0.07 (prompt 03486bbb)",
+    "builder": "sleeper 0.1.0 @ 233bc70; relevance openai/gpt-5.6-luna 277 checked, 76 off-topic, 1 suspicious, $0.07 (prompt 03486bbb)",
     "seed": 7,
     "max_size": 200,
-    "github_requests": 62,
-    "build_seconds": 55.6,
-    "scoring": "Scores are percentiles within this universe (0 = lowest repo, 100 = highest; ties share the average rank), rounded to 0.1. Higher always means more of the criterion. Popularity: stars. Momentum: lifetime star velocity (stars_per_day) and forks created in the last 30 days (forks_30d), equally weighted (D13; star_events_30d is not used because the events feed caps it). Quality: a weighted mean of commits in the last 90 days capped at 150 (25%), distinct commit authors in the last 90 days capped at 3 (25%), number of releases capped at 25 (20%), recency of the last commit (20%), and has-a-real-README (10%: 100 if the README has at least 500 characters, 0 if shorter or missing, 50 if unknown). Each capped metric is clipped before its percentile, so every repo at or above the cap ties: volume beyond the cap earns nothing more, and README length beyond the threshold does not count. Newness: creation date, so the newest repo scores 100. A metric that is unknown (None) for a repo counts as the median (50) for that repo, neither rewarded nor penalised; the other repos' percentiles are computed among the known values only.",
+    "github_requests": 1173,
+    "build_seconds": 997.1,
+    "scoring": "Scores are percentiles within this universe (0 = lowest repo, 100 = highest; ties share the average rank), rounded to 0.1. Higher always means more of the criterion. Popularity: stars. Momentum: lifetime star velocity (stars_per_day) and forks created in the last 30 days (forks_30d), equally weighted (D13; star_events_30d is not used because the events feed caps it). Quality: a weighted mean of commits in the last 90 days capped at 150 (25%), distinct commit authors in the last 90 days capped at 4 (25%), number of releases capped at 40 (20%), recency of the last commit (20%), and has-a-real-README (10%: 100 if the README has at least 500 characters, 0 if shorter or missing, 50 if unknown). Each capped metric is clipped before its percentile, so every repo at or above the cap ties: volume beyond the cap earns nothing more, and README length beyond the threshold does not count. Newness: creation date, so the newest repo scores 100. A metric that is unknown (None) for a repo counts as the median (50) for that repo, neither rewarded nor penalised; the other repos' percentiles are computed among the known values only.",
     "counts": {
       "search_total": 586,
       "excluded": {
@@ -120,7 +120,7 @@
       "scores": {
         "popularity": 51.8,
         "momentum": 29.3,
-        "quality": 84.5,
+        "quality": 82.5,
         "newness": 42.7
       }
     },
@@ -180,7 +180,7 @@
       "scores": {
         "popularity": 85.4,
         "momentum": 78.1,
-        "quality": 83.1,
+        "quality": 86.4,
         "newness": 30.7
       }
     },
@@ -330,7 +330,7 @@
       "scores": {
         "popularity": 57.8,
         "momentum": 44.5,
-        "quality": 79.4,
+        "quality": 79.0,
         "newness": 23.6
       }
     },
@@ -360,7 +360,7 @@
       "scores": {
         "popularity": 6.3,
         "momentum": 30.0,
-        "quality": 54.9,
+        "quality": 56.9,
         "newness": 86.9
       }
     },
@@ -390,7 +390,7 @@
       "scores": {
         "popularity": 62.3,
         "momentum": 64.4,
-        "quality": 69.5,
+        "quality": 72.7,
         "newness": 19.1
       }
     },
@@ -420,7 +420,7 @@
       "scores": {
         "popularity": 87.4,
         "momentum": 69.2,
-        "quality": 71.0,
+        "quality": 69.4,
         "newness": 0.0
       }
     },
@@ -480,7 +480,7 @@
       "scores": {
         "popularity": 68.3,
         "momentum": 87.9,
-        "quality": 73.4,
+        "quality": 69.3,
         "newness": 91.5
       }
     },
@@ -540,7 +540,7 @@
       "scores": {
         "popularity": 74.9,
         "momentum": 67.8,
-        "quality": 50.7,
+        "quality": 51.9,
         "newness": 39.2
       }
     },
@@ -570,7 +570,7 @@
       "scores": {
         "popularity": 46.5,
         "momentum": 42.5,
-        "quality": 74.1,
+        "quality": 70.9,
         "newness": 36.7
       }
     },
@@ -630,7 +630,7 @@
       "scores": {
         "popularity": 82.7,
         "momentum": 73.4,
-        "quality": 33.3,
+        "quality": 29.7,
         "newness": 56.3
       }
     },
@@ -660,7 +660,7 @@
       "scores": {
         "popularity": 77.9,
         "momentum": 50.1,
-        "quality": 62.1,
+        "quality": 63.4,
         "newness": 74.9
       }
     },
@@ -690,7 +690,7 @@
       "scores": {
         "popularity": 40.7,
         "momentum": 25.0,
-        "quality": 32.7,
+        "quality": 33.9,
         "newness": 48.7
       }
     },
@@ -750,7 +750,7 @@
       "scores": {
         "popularity": 72.1,
         "momentum": 63.6,
-        "quality": 66.3,
+        "quality": 67.5,
         "newness": 23.1
       }
     },
@@ -780,7 +780,7 @@
       "scores": {
         "popularity": 12.1,
         "momentum": 32.4,
-        "quality": 42.9,
+        "quality": 44.1,
         "newness": 41.2
       }
     },
@@ -960,7 +960,7 @@
       "scores": {
         "popularity": 70.9,
         "momentum": 41.6,
-        "quality": 33.4,
+        "quality": 34.6,
         "newness": 41.7
       }
     },
@@ -990,7 +990,7 @@
       "scores": {
         "popularity": 70.1,
         "momentum": 82.3,
-        "quality": 78.2,
+        "quality": 79.4,
         "newness": 78.4
       }
     },
@@ -1020,7 +1020,7 @@
       "scores": {
         "popularity": 32.7,
         "momentum": 32.7,
-        "quality": 64.7,
+        "quality": 61.6,
         "newness": 11.6
       }
     },
@@ -1050,7 +1050,7 @@
       "scores": {
         "popularity": 27.9,
         "momentum": 17.7,
-        "quality": 77.8,
+        "quality": 79.9,
         "newness": 20.6
       }
     },
@@ -1080,7 +1080,7 @@
       "scores": {
         "popularity": 51.0,
         "momentum": 64.2,
-        "quality": 65.9,
+        "quality": 62.7,
         "newness": 52.8
       }
     },
@@ -1110,7 +1110,7 @@
       "scores": {
         "popularity": 3.8,
         "momentum": 15.7,
-        "quality": 62.7,
+        "quality": 60.7,
         "newness": 45.2
       }
     },
@@ -1170,7 +1170,7 @@
       "scores": {
         "popularity": 15.1,
         "momentum": 11.4,
-        "quality": 41.7,
+        "quality": 42.9,
         "newness": 6.5
       }
     },
@@ -1230,7 +1230,7 @@
       "scores": {
         "popularity": 95.5,
         "momentum": 53.1,
-        "quality": 50.5,
+        "quality": 51.7,
         "newness": 26.1
       }
     },
@@ -1320,7 +1320,7 @@
       "scores": {
         "popularity": 60.1,
         "momentum": 49.1,
-        "quality": 67.0,
+        "quality": 68.2,
         "newness": 87.9
       }
     },
@@ -1350,7 +1350,7 @@
       "scores": {
         "popularity": 54.5,
         "momentum": 66.3,
-        "quality": 64.9,
+        "quality": 62.7,
         "newness": 93.5
       }
     },
@@ -1410,7 +1410,7 @@
       "scores": {
         "popularity": 2.5,
         "momentum": 66.6,
-        "quality": 84.4,
+        "quality": 87.7,
         "newness": 93.0
       }
     },
@@ -1440,7 +1440,7 @@
       "scores": {
         "popularity": 20.1,
         "momentum": 33.2,
-        "quality": 84.9,
+        "quality": 88.2,
         "newness": 25.6
       }
     },
@@ -1470,7 +1470,7 @@
       "scores": {
         "popularity": 51.0,
         "momentum": 49.7,
-        "quality": 50.1,
+        "quality": 51.3,
         "newness": 58.3
       }
     },
@@ -1500,7 +1500,7 @@
       "scores": {
         "popularity": 95.0,
         "momentum": 92.0,
-        "quality": 83.2,
+        "quality": 86.5,
         "newness": 47.7
       }
     },
@@ -1530,7 +1530,7 @@
       "scores": {
         "popularity": 39.2,
         "momentum": 90.2,
-        "quality": 79.0,
+        "quality": 76.2,
         "newness": 96.5
       }
     },
@@ -1560,7 +1560,7 @@
       "scores": {
         "popularity": 18.8,
         "momentum": 41.0,
-        "quality": 72.6,
+        "quality": 73.8,
         "newness": 3.5
       }
     },
@@ -1590,7 +1590,7 @@
       "scores": {
         "popularity": 81.4,
         "momentum": 79.3,
-        "quality": 70.8,
+        "quality": 72.9,
         "newness": 47.2
       }
     },
@@ -1620,7 +1620,7 @@
       "scores": {
         "popularity": 96.5,
         "momentum": 89.8,
-        "quality": 77.3,
+        "quality": 78.5,
         "newness": 27.6
       }
     },
@@ -1650,7 +1650,7 @@
       "scores": {
         "popularity": 97.5,
         "momentum": 78.6,
-        "quality": 77.8,
+        "quality": 79.0,
         "newness": 13.6
       }
     },
@@ -1680,7 +1680,7 @@
       "scores": {
         "popularity": 67.6,
         "momentum": 51.3,
-        "quality": 65.7,
+        "quality": 67.8,
         "newness": 25.1
       }
     },
@@ -1710,7 +1710,7 @@
       "scores": {
         "popularity": 33.2,
         "momentum": 20.5,
-        "quality": 51.7,
+        "quality": 48.6,
         "newness": 27.1
       }
     },
@@ -1770,7 +1770,7 @@
       "scores": {
         "popularity": 43.2,
         "momentum": 35.8,
-        "quality": 58.8,
+        "quality": 55.7,
         "newness": 73.4
       }
     },
@@ -1860,7 +1860,7 @@
       "scores": {
         "popularity": 84.4,
         "momentum": 95.5,
-        "quality": 66.8,
+        "quality": 68.0,
         "newness": 95.0
       }
     },
@@ -1890,7 +1890,7 @@
       "scores": {
         "popularity": 22.9,
         "momentum": 13.7,
-        "quality": 41.8,
+        "quality": 38.5,
         "newness": 11.1
       }
     },
@@ -1920,7 +1920,7 @@
       "scores": {
         "popularity": 67.6,
         "momentum": 70.2,
-        "quality": 84.1,
+        "quality": 87.4,
         "newness": 59.3
       }
     },
@@ -1950,7 +1950,7 @@
       "scores": {
         "popularity": 46.5,
         "momentum": 61.3,
-        "quality": 32.4,
+        "quality": 29.8,
         "newness": 72.4
       }
     },
@@ -2010,7 +2010,7 @@
       "scores": {
         "popularity": 94.0,
         "momentum": 77.4,
-        "quality": 77.7,
+        "quality": 81.0,
         "newness": 40.7
       }
     },
@@ -2130,7 +2130,7 @@
       "scores": {
         "popularity": 73.1,
         "momentum": 64.8,
-        "quality": 68.5,
+        "quality": 71.8,
         "newness": 76.4
       }
     },
@@ -2190,7 +2190,7 @@
       "scores": {
         "popularity": 36.7,
         "momentum": 37.7,
-        "quality": 77.8,
+        "quality": 81.0,
         "newness": 34.2
       }
     },
@@ -2310,7 +2310,7 @@
       "scores": {
         "popularity": 53.3,
         "momentum": 31.9,
-        "quality": 70.8,
+        "quality": 74.0,
         "newness": 2.0
       }
     },
@@ -2340,7 +2340,7 @@
       "scores": {
         "popularity": 75.4,
         "momentum": 65.3,
-        "quality": 61.3,
+        "quality": 62.5,
         "newness": 26.6
       }
     },
@@ -2460,7 +2460,7 @@
       "scores": {
         "popularity": 2.5,
         "momentum": 34.2,
-        "quality": 76.0,
+        "quality": 74.7,
         "newness": 60.3
       }
     },
@@ -2520,7 +2520,7 @@
       "scores": {
         "popularity": 60.1,
         "momentum": 59.5,
-        "quality": 85.6,
+        "quality": 83.6,
         "newness": 18.6
       }
     },
@@ -2640,7 +2640,7 @@
       "scores": {
         "popularity": 47.2,
         "momentum": 34.0,
-        "quality": 61.8,
+        "quality": 57.8,
         "newness": 69.3
       }
     },
@@ -2730,7 +2730,7 @@
       "scores": {
         "popularity": 35.2,
         "momentum": 54.3,
-        "quality": 50.8,
+        "quality": 52.8,
         "newness": 45.7
       }
     },
@@ -2760,7 +2760,7 @@
       "scores": {
         "popularity": 73.1,
         "momentum": 58.3,
-        "quality": 49.0,
+        "quality": 50.2,
         "newness": 10.1
       }
     },
@@ -2790,7 +2790,7 @@
       "scores": {
         "popularity": 17.1,
         "momentum": 97.7,
-        "quality": 52.6,
+        "quality": 49.4,
         "newness": 100.0
       }
     },
@@ -2850,7 +2850,7 @@
       "scores": {
         "popularity": 93.0,
         "momentum": 99.7,
-        "quality": 74.6,
+        "quality": 76.7,
         "newness": 99.5
       }
     },
@@ -2880,7 +2880,7 @@
       "scores": {
         "popularity": 86.4,
         "momentum": 71.0,
-        "quality": 51.5,
+        "quality": 52.7,
         "newness": 9.0
       }
     },
@@ -2910,7 +2910,7 @@
       "scores": {
         "popularity": 24.9,
         "momentum": 38.9,
-        "quality": 33.0,
+        "quality": 29.5,
         "newness": 62.8
       }
     },
@@ -2940,7 +2940,7 @@
       "scores": {
         "popularity": 98.5,
         "momentum": 94.3,
-        "quality": 86.0,
+        "quality": 89.3,
         "newness": 37.7
       }
     },
@@ -2970,7 +2970,7 @@
       "scores": {
         "popularity": 99.0,
         "momentum": 97.7,
-        "quality": 76.0,
+        "quality": 77.2,
         "newness": 82.9
       }
     },
@@ -3060,7 +3060,7 @@
       "scores": {
         "popularity": 80.4,
         "momentum": 99.0,
-        "quality": 68.3,
+        "quality": 70.3,
         "newness": 99.0
       }
     },
@@ -3090,7 +3090,7 @@
       "scores": {
         "popularity": 64.8,
         "momentum": 50.8,
-        "quality": 70.8,
+        "quality": 74.0,
         "newness": 30.2
       }
     },
@@ -3120,7 +3120,7 @@
       "scores": {
         "popularity": 13.1,
         "momentum": 16.2,
-        "quality": 63.9,
+        "quality": 66.0,
         "newness": 34.7
       }
     },
@@ -3300,7 +3300,7 @@
       "scores": {
         "popularity": 65.3,
         "momentum": 38.6,
-        "quality": 59.3,
+        "quality": 57.3,
         "newness": 39.7
       }
     },
@@ -3330,7 +3330,7 @@
       "scores": {
         "popularity": 1.3,
         "momentum": 44.7,
-        "quality": 72.1,
+        "quality": 74.1,
         "newness": 72.9
       }
     },
@@ -3360,7 +3360,7 @@
       "scores": {
         "popularity": 32.2,
         "momentum": 42.6,
-        "quality": 78.4,
+        "quality": 76.4,
         "newness": 90.5
       }
     },
@@ -3420,7 +3420,7 @@
       "scores": {
         "popularity": 12.1,
         "momentum": 49.4,
-        "quality": 69.3,
+        "quality": 70.5,
         "newness": 88.9
       }
     },
@@ -3450,7 +3450,7 @@
       "scores": {
         "popularity": 10.8,
         "momentum": 28.9,
-        "quality": 68.8,
+        "quality": 70.9,
         "newness": 20.1
       }
     },
@@ -3480,7 +3480,7 @@
       "scores": {
         "popularity": 2.5,
         "momentum": 84.2,
-        "quality": 57.1,
+        "quality": 53.9,
         "newness": 97.0
       }
     },
@@ -3540,7 +3540,7 @@
       "scores": {
         "popularity": 43.7,
         "momentum": 63.3,
-        "quality": 59.0,
+        "quality": 55.8,
         "newness": 94.0
       }
     },
@@ -3570,7 +3570,7 @@
       "scores": {
         "popularity": 91.5,
         "momentum": 54.1,
-        "quality": 72.4,
+        "quality": 68.1,
         "newness": 61.8
       }
     },
@@ -3600,7 +3600,7 @@
       "scores": {
         "popularity": 22.9,
         "momentum": 40.5,
-        "quality": 76.3,
+        "quality": 77.5,
         "newness": 68.3
       }
     },
@@ -3630,7 +3630,7 @@
       "scores": {
         "popularity": 28.9,
         "momentum": 22.7,
-        "quality": 66.3,
+        "quality": 67.6,
         "newness": 50.8
       }
     },
@@ -3660,7 +3660,7 @@
       "scores": {
         "popularity": 89.9,
         "momentum": 69.8,
-        "quality": 61.0,
+        "quality": 57.8,
         "newness": 7.5
       }
     },
@@ -3750,7 +3750,7 @@
       "scores": {
         "popularity": 69.3,
         "momentum": 67.1,
-        "quality": 77.7,
+        "quality": 72.1,
         "newness": 85.9
       }
     },
@@ -3810,7 +3810,7 @@
       "scores": {
         "popularity": 100.0,
         "momentum": 99.7,
-        "quality": 78.6,
+        "quality": 79.8,
         "newness": 96.0
       }
     },
@@ -3840,7 +3840,7 @@
       "scores": {
         "popularity": 44.2,
         "momentum": 48.2,
-        "quality": 57.2,
+        "quality": 54.1,
         "newness": 66.3
       }
     },
@@ -3870,7 +3870,7 @@
       "scores": {
         "popularity": 87.9,
         "momentum": 85.8,
-        "quality": 85.0,
+        "quality": 82.6,
         "newness": 71.9
       }
     },
@@ -3900,7 +3900,7 @@
       "scores": {
         "popularity": 38.4,
         "momentum": 51.5,
-        "quality": 76.9,
+        "quality": 74.9,
         "newness": 65.3
       }
     },
@@ -3930,7 +3930,7 @@
       "scores": {
         "popularity": 66.3,
         "momentum": 91.3,
-        "quality": 69.5,
+        "quality": 71.5,
         "newness": 94.5
       }
     },
@@ -4020,7 +4020,7 @@
       "scores": {
         "popularity": 93.5,
         "momentum": 60.8,
-        "quality": 74.3,
+        "quality": 72.3,
         "newness": 2.5
       }
     },
@@ -4050,7 +4050,7 @@
       "scores": {
         "popularity": 48.2,
         "momentum": 23.2,
-        "quality": 31.3,
+        "quality": 32.5,
         "newness": 15.6
       }
     },
@@ -4110,7 +4110,7 @@
       "scores": {
         "popularity": 86.9,
         "momentum": 87.3,
-        "quality": 76.3,
+        "quality": 75.5,
         "newness": 53.3
       }
     },
@@ -4170,7 +4170,7 @@
       "scores": {
         "popularity": 56.3,
         "momentum": 66.3,
-        "quality": 84.0,
+        "quality": 87.3,
         "newness": 54.8
       }
     },
@@ -4230,7 +4230,7 @@
       "scores": {
         "popularity": 79.9,
         "momentum": 71.4,
-        "quality": 70.5,
+        "quality": 67.4,
         "newness": 87.4
       }
     },
@@ -4260,7 +4260,7 @@
       "scores": {
         "popularity": 75.9,
         "momentum": 81.9,
-        "quality": 63.8,
+        "quality": 60.6,
         "newness": 84.9
       }
     },
@@ -4410,7 +4410,7 @@
       "scores": {
         "popularity": 41.2,
         "momentum": 62.6,
-        "quality": 85.7,
+        "quality": 83.6,
         "newness": 61.3
       }
     },
@@ -4470,7 +4470,7 @@
       "scores": {
         "popularity": 90.5,
         "momentum": 85.1,
-        "quality": 86.4,
+        "quality": 89.7,
         "newness": 29.6
       }
     },
@@ -4500,7 +4500,7 @@
       "scores": {
         "popularity": 6.3,
         "momentum": 15.2,
-        "quality": 48.0,
+        "quality": 49.2,
         "newness": 36.2
       }
     },
@@ -4530,7 +4530,7 @@
       "scores": {
         "popularity": 28.9,
         "momentum": 46.5,
-        "quality": 77.9,
+        "quality": 79.1,
         "newness": 75.9
       }
     },
@@ -4590,7 +4590,7 @@
       "scores": {
         "popularity": 82.7,
         "momentum": 72.7,
-        "quality": 63.0,
+        "quality": 61.0,
         "newness": 19.6
       }
     },
@@ -4620,7 +4620,7 @@
       "scores": {
         "popularity": 58.3,
         "momentum": 40.8,
-        "quality": 50.4,
+        "quality": 47.6,
         "newness": 67.3
       }
     },
@@ -4650,7 +4650,7 @@
       "scores": {
         "popularity": 79.4,
         "momentum": 45.1,
-        "quality": 75.8,
+        "quality": 79.0,
         "newness": 32.7
       }
     },
@@ -4680,7 +4680,7 @@
       "scores": {
         "popularity": 66.8,
         "momentum": 83.4,
-        "quality": 71.2,
+        "quality": 73.3,
         "newness": 79.4
       }
     },
@@ -4710,7 +4710,7 @@
       "scores": {
         "popularity": 42.2,
         "momentum": 42.0,
-        "quality": 80.7,
+        "quality": 79.9,
         "newness": 46.7
       }
     },
@@ -4740,7 +4740,7 @@
       "scores": {
         "popularity": 30.2,
         "momentum": 26.3,
-        "quality": 56.1,
+        "quality": 53.0,
         "newness": 69.8
       }
     },
@@ -4800,7 +4800,7 @@
       "scores": {
         "popularity": 74.4,
         "momentum": 75.3,
-        "quality": 82.1,
+        "quality": 85.3,
         "newness": 35.7
       }
     },
@@ -4830,7 +4830,7 @@
       "scores": {
         "popularity": 58.8,
         "momentum": 60.8,
-        "quality": 78.1,
+        "quality": 74.3,
         "newness": 38.7
       }
     },
@@ -4860,7 +4860,7 @@
       "scores": {
         "popularity": 78.9,
         "momentum": 62.1,
-        "quality": 62.6,
+        "quality": 57.2,
         "newness": 44.7
       }
     },
@@ -4890,7 +4890,7 @@
       "scores": {
         "popularity": 84.9,
         "momentum": 62.6,
-        "quality": 76.0,
+        "quality": 77.2,
         "newness": 22.1
       }
     },
@@ -4920,7 +4920,7 @@
       "scores": {
         "popularity": 57.3,
         "momentum": 32.5,
-        "quality": 62.2,
+        "quality": 65.5,
         "newness": 38.2
       }
     },
@@ -4950,7 +4950,7 @@
       "scores": {
         "popularity": 36.7,
         "momentum": 20.2,
-        "quality": 86.2,
+        "quality": 89.5,
         "newness": 22.6
       }
     },
@@ -4980,7 +4980,7 @@
       "scores": {
         "popularity": 9.3,
         "momentum": 55.5,
-        "quality": 74.1,
+        "quality": 72.1,
         "newness": 86.4
       }
     },
@@ -5010,7 +5010,7 @@
       "scores": {
         "popularity": 61.3,
         "momentum": 18.5,
-        "quality": 64.2,
+        "quality": 66.2,
         "newness": 1.5
       }
     },
@@ -5040,7 +5040,7 @@
       "scores": {
         "popularity": 72.1,
         "momentum": 60.1,
-        "quality": 56.5,
+        "quality": 57.7,
         "newness": 49.2
       }
     },
@@ -5100,7 +5100,7 @@
       "scores": {
         "popularity": 77.4,
         "momentum": 65.1,
-        "quality": 43.4,
+        "quality": 44.6,
         "newness": 18.1
       }
     },
@@ -5130,7 +5130,7 @@
       "scores": {
         "popularity": 61.8,
         "momentum": 28.3,
-        "quality": 80.1,
+        "quality": 78.1,
         "newness": 12.6
       }
     },
@@ -5160,7 +5160,7 @@
       "scores": {
         "popularity": 98.0,
         "momentum": 91.3,
-        "quality": 73.4,
+        "quality": 76.6,
         "newness": 64.3
       }
     },
@@ -5250,7 +5250,7 @@
       "scores": {
         "popularity": 88.4,
         "momentum": 74.2,
-        "quality": 74.2,
+        "quality": 77.5,
         "newness": 17.6
       }
     },
@@ -5340,7 +5340,7 @@
       "scores": {
         "popularity": 94.5,
         "momentum": 94.7,
-        "quality": 75.5,
+        "quality": 77.6,
         "newness": 56.8
       }
     },
@@ -5430,7 +5430,7 @@
       "scores": {
         "popularity": 15.1,
         "momentum": 14.9,
-        "quality": 54.3,
+        "quality": 51.2,
         "newness": 21.1
       }
     },
@@ -5460,7 +5460,7 @@
       "scores": {
         "popularity": 91.0,
         "momentum": 81.4,
-        "quality": 57.8,
+        "quality": 54.6,
         "newness": 83.4
       }
     },
@@ -5490,7 +5490,7 @@
       "scores": {
         "popularity": 17.1,
         "momentum": 19.7,
-        "quality": 73.8,
+        "quality": 71.8,
         "newness": 55.8
       }
     },
@@ -5520,7 +5520,7 @@
       "scores": {
         "popularity": 24.9,
         "momentum": 15.5,
-        "quality": 53.0,
+        "quality": 49.8,
         "newness": 15.1
       }
     },
@@ -5580,7 +5580,7 @@
       "scores": {
         "popularity": 63.3,
         "momentum": 72.5,
-        "quality": 84.8,
+        "quality": 88.1,
         "newness": 54.3
       }
     },
@@ -5670,7 +5670,7 @@
       "scores": {
         "popularity": 45.5,
         "momentum": 44.7,
-        "quality": 83.8,
+        "quality": 87.1,
         "newness": 51.3
       }
     },
@@ -5700,7 +5700,7 @@
       "scores": {
         "popularity": 76.4,
         "momentum": 60.6,
-        "quality": 68.6,
+        "quality": 66.3,
         "newness": 43.7
       }
     },
@@ -5820,7 +5820,7 @@
       "scores": {
         "popularity": 55.8,
         "momentum": 71.7,
-        "quality": 79.8,
+        "quality": 77.9,
         "newness": 77.9
       }
     },
@@ -5880,7 +5880,7 @@
       "scores": {
         "popularity": 13.6,
         "momentum": 13.2,
-        "quality": 56.2,
+        "quality": 57.4,
         "newness": 17.1
       }
     },
@@ -5940,7 +5940,7 @@
       "scores": {
         "popularity": 80.9,
         "momentum": 87.7,
-        "quality": 75.5,
+        "quality": 76.7,
         "newness": 64.8
       }
     },
@@ -5970,7 +5970,7 @@
       "scores": {
         "popularity": 89.4,
         "momentum": 68.5,
-        "quality": 52.3,
+        "quality": 53.5,
         "newness": 59.8
       }
     },
@@ -6000,7 +6000,7 @@
       "scores": {
         "popularity": 64.1,
         "momentum": 38.8,
-        "quality": 59.6,
+        "quality": 56.5,
         "newness": 46.2
       }
     },
@@ -6030,7 +6030,7 @@
       "scores": {
         "popularity": 9.3,
         "momentum": 39.4,
-        "quality": 80.0,
+        "quality": 78.0,
         "newness": 74.4
       }
     }
