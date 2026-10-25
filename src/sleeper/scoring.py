@@ -14,10 +14,11 @@ from datetime import datetime
 from sleeper.contracts.universe import CriteriaScores, RepoMetrics
 
 # Quality volume caps (T18): values at or above a cap tie, so raw volume can't win quality.
-# Tuned on the rebuilt universes so that roughly 25-40% of repos sit at each cap.
+# Tuned on the rebuilt universes (rust-devtools / local-first, 2026-10-24): at or above the cap sit
+# commits 32% / 39%, authors 25% / 26%, releases 33% / 30% of repos (target: roughly 25-40%).
 COMMITS_CAP = 150
-RELEASES_CAP = 25
-AUTHORS_CAP = 3
+RELEASES_CAP = 40
+AUTHORS_CAP = 4
 README_REAL_CHARS = 500  # a README at least this long counts as "has a real README"
 # Quality weights (sum to 1): commits, authors, releases, last-commit recency, has-README.
 QUALITY_WEIGHTS = (0.25, 0.25, 0.20, 0.20, 0.10)

@@ -14,53 +14,84 @@
     "created_after": "2025-01-01",
     "created_before": null,
     "built_at": "2026-10-24T23:09:34Z",
-    "builder": "sleeper 0.1.0 @ 2a028f6; relevance openai/gpt-5.6-luna 263 checked, 63 off-topic, $0.06 (prompt 03486bbb)",
+    "builder": "sleeper 0.1.0 @ c747017-dirty; relevance openai/gpt-5.6-luna 277 checked, 76 off-topic, 1 suspicious, $0.07 (prompt 03486bbb)",
     "seed": 7,
     "max_size": 200,
-    "github_requests": 1111,
-    "build_seconds": 941.5,
+    "github_requests": 62,
+    "build_seconds": 55.6,
     "scoring": "Scores are percentiles within this universe (0 = lowest repo, 100 = highest; ties share the average rank), rounded to 0.1. Higher always means more of the criterion. Popularity: stars. Momentum: lifetime star velocity (stars_per_day) and forks created in the last 30 days (forks_30d), equally weighted (D13; star_events_30d is not used because the events feed caps it). Quality: a weighted mean of commits in the last 90 days capped at 150 (25%), distinct commit authors in the last 90 days capped at 3 (25%), number of releases capped at 25 (20%), recency of the last commit (20%), and has-a-real-README (10%: 100 if the README has at least 500 characters, 0 if shorter or missing, 50 if unknown). Each capped metric is clipped before its percentile, so every repo at or above the cap ties: volume beyond the cap earns nothing more, and README length beyond the threshold does not count. Newness: creation date, so the newest repo scores 100. A metric that is unknown (None) for a repo counts as the median (50) for that repo, neither rewarded nor penalised; the other repos' percentiles are computed among the known values only.",
     "counts": {
       "search_total": 586,
       "excluded": {
         "archived": 4,
         "fork": 4,
-        "off_topic": 63
+        "off_topic": 76,
+        "suspicious": 1
       },
-      "eligible": 515,
+      "eligible": 501,
       "sampled": true,
       "rows": 200
     }
   },
   "rows": [
     {
-      "repo": "3axap4eHko/prmt",
-      "repo_id": 1038870158,
-      "url": "https://github.com/3axap4eHko/prmt",
+      "repo": "5c0/metropolis",
+      "repo_id": 1182919047,
+      "url": "https://github.com/5c0/metropolis",
       "metrics": {
-        "stars": 251,
-        "stars_per_day": 0.5783,
-        "forks": 11,
+        "stars": 293,
+        "stars_per_day": 1.3198,
+        "forks": 15,
         "forks_30d": 0,
-        "star_events_30d": 0,
+        "star_events_30d": 10,
         "star_events_capped": false,
         "commits_90d": 0,
         "authors_90d": 0,
-        "releases": 17,
-        "last_release_at": "2026-07-16T01:52:13Z",
-        "last_commit_at": "2026-07-22T00:24:57Z",
-        "readme_chars": 17794,
-        "created_at": "2025-08-16T01:23:35Z",
-        "age_days": 434,
-        "description": "Ultra-fast, customizable shell prompt generator",
+        "releases": 4,
+        "last_release_at": "2026-05-17T05:51:35Z",
+        "last_commit_at": "2026-06-27T22:34:07Z",
+        "readme_chars": 5248,
+        "created_at": "2026-03-16T04:53:45Z",
+        "age_days": 222,
+        "description": "A cyberpunk system monitor that transforms kernel metrics into a living terminal skyline. Built with Rust & Ratatui.",
         "language": "Rust",
         "license": "MIT"
       },
       "scores": {
-        "popularity": 72.9,
-        "momentum": 30.0,
-        "quality": 26.8,
-        "newness": 9.0
+        "popularity": 76.9,
+        "momentum": 45.6,
+        "quality": 20.1,
+        "newness": 48.2
+      }
+    },
+    {
+      "repo": "Adancurusul/serial-mcp-server",
+      "repo_id": 1032914311,
+      "url": "https://github.com/Adancurusul/serial-mcp-server",
+      "metrics": {
+        "stars": 95,
+        "stars_per_day": 0.214,
+        "forks": 25,
+        "forks_30d": 0,
+        "star_events_30d": 5,
+        "star_events_capped": false,
+        "commits_90d": 0,
+        "authors_90d": 0,
+        "releases": 2,
+        "last_release_at": "2026-06-25T13:47:04Z",
+        "last_commit_at": "2026-07-07T08:10:20Z",
+        "readme_chars": 11207,
+        "created_at": "2025-08-06T03:05:03Z",
+        "age_days": 444,
+        "description": "Rust MCP server and CLI for serial/UART devices, with JSON macro automation and agent skills for repeatable timed workflows.",
+        "language": "Rust",
+        "license": "MIT"
+      },
+      "scores": {
+        "popularity": 36.7,
+        "momentum": 14.7,
+        "quality": 18.8,
+        "newness": 8.0
       }
     },
     {
@@ -87,10 +118,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 50.8,
+        "popularity": 51.8,
         "momentum": 29.3,
-        "quality": 84.9,
-        "newness": 44.7
+        "quality": 84.5,
+        "newness": 42.7
       }
     },
     {
@@ -117,10 +148,10 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 93.0,
+        "popularity": 92.5,
         "momentum": 53.9,
-        "quality": 26.8,
-        "newness": 50.3
+        "quality": 26.7,
+        "newness": 49.7
       }
     },
     {
@@ -147,10 +178,10 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 85.9,
-        "momentum": 79.3,
-        "quality": 83.5,
-        "newness": 31.7
+        "popularity": 85.4,
+        "momentum": 78.1,
+        "quality": 83.1,
+        "newness": 30.7
       }
     },
     {
@@ -177,10 +208,10 @@
         "license": null
       },
       "scores": {
-        "popularity": 54.0,
-        "momentum": 38.1,
-        "quality": 19.3,
-        "newness": 66.3
+        "popularity": 54.5,
+        "momentum": 37.6,
+        "quality": 19.0,
+        "newness": 65.8
       }
     },
     {
@@ -207,10 +238,10 @@
         "license": "AGPL-3.0"
       },
       "scores": {
-        "popularity": 15.6,
-        "momentum": 19.2,
-        "quality": 33.2,
-        "newness": 52.3
+        "popularity": 15.1,
+        "momentum": 19.0,
+        "quality": 32.6,
+        "newness": 51.8
       }
     },
     {
@@ -238,9 +269,9 @@
       },
       "scores": {
         "popularity": 26.4,
-        "momentum": 28.4,
-        "quality": 44.1,
-        "newness": 6.5
+        "momentum": 27.9,
+        "quality": 43.5,
+        "newness": 6.0
       }
     },
     {
@@ -267,9 +298,9 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 84.4,
+        "popularity": 83.9,
         "momentum": 97.2,
-        "quality": 43.1,
+        "quality": 42.3,
         "newness": 97.5
       }
     },
@@ -297,10 +328,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 57.3,
-        "momentum": 45.0,
-        "quality": 80.0,
-        "newness": 24.6
+        "popularity": 57.8,
+        "momentum": 44.5,
+        "quality": 79.4,
+        "newness": 23.6
       }
     },
     {
@@ -328,8 +359,8 @@
       },
       "scores": {
         "popularity": 6.3,
-        "momentum": 30.3,
-        "quality": 55.3,
+        "momentum": 30.0,
+        "quality": 54.9,
         "newness": 86.9
       }
     },
@@ -357,10 +388,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 61.3,
-        "momentum": 65.6,
-        "quality": 69.8,
-        "newness": 20.1
+        "popularity": 62.3,
+        "momentum": 64.4,
+        "quality": 69.5,
+        "newness": 19.1
       }
     },
     {
@@ -387,9 +418,9 @@
         "license": null
       },
       "scores": {
-        "popularity": 87.9,
-        "momentum": 70.6,
-        "quality": 71.5,
+        "popularity": 87.4,
+        "momentum": 69.2,
+        "quality": 71.0,
         "newness": 0.0
       }
     },
@@ -419,8 +450,8 @@
       "scores": {
         "popularity": 0.3,
         "momentum": 10.4,
-        "quality": 55.0,
-        "newness": 5.0
+        "quality": 54.2,
+        "newness": 4.5
       }
     },
     {
@@ -447,9 +478,9 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 67.3,
-        "momentum": 88.3,
-        "quality": 73.7,
+        "popularity": 68.3,
+        "momentum": 87.9,
+        "quality": 73.4,
         "newness": 91.5
       }
     },
@@ -477,10 +508,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 14.6,
-        "momentum": 24.5,
-        "quality": 24.7,
-        "newness": 71.9
+        "popularity": 14.1,
+        "momentum": 24.0,
+        "quality": 24.6,
+        "newness": 71.4
       }
     },
     {
@@ -507,10 +538,10 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 75.4,
-        "momentum": 69.1,
-        "quality": 51.4,
-        "newness": 40.7
+        "popularity": 74.9,
+        "momentum": 67.8,
+        "quality": 50.7,
+        "newness": 39.2
       }
     },
     {
@@ -537,10 +568,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 45.5,
-        "momentum": 43.2,
-        "quality": 74.7,
-        "newness": 38.2
+        "popularity": 46.5,
+        "momentum": 42.5,
+        "quality": 74.1,
+        "newness": 36.7
       }
     },
     {
@@ -568,9 +599,9 @@
       },
       "scores": {
         "popularity": 70.1,
-        "momentum": 40.6,
-        "quality": 21.5,
-        "newness": 32.2
+        "momentum": 40.1,
+        "quality": 21.2,
+        "newness": 31.2
       }
     },
     {
@@ -597,10 +628,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 83.2,
-        "momentum": 74.4,
-        "quality": 33.4,
-        "newness": 56.8
+        "popularity": 82.7,
+        "momentum": 73.4,
+        "quality": 33.3,
+        "newness": 56.3
       }
     },
     {
@@ -629,8 +660,8 @@
       "scores": {
         "popularity": 77.9,
         "momentum": 50.1,
-        "quality": 62.9,
-        "newness": 75.4
+        "quality": 62.1,
+        "newness": 74.9
       }
     },
     {
@@ -657,10 +688,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 40.2,
-        "momentum": 25.3,
-        "quality": 33.0,
-        "newness": 49.2
+        "popularity": 40.7,
+        "momentum": 25.0,
+        "quality": 32.7,
+        "newness": 48.7
       }
     },
     {
@@ -688,9 +719,9 @@
       },
       "scores": {
         "popularity": 24.9,
-        "momentum": 55.7,
-        "quality": 52.6,
-        "newness": 74.4
+        "momentum": 54.4,
+        "quality": 51.9,
+        "newness": 73.9
       }
     },
     {
@@ -718,9 +749,9 @@
       },
       "scores": {
         "popularity": 72.1,
-        "momentum": 65.1,
-        "quality": 66.6,
-        "newness": 24.1
+        "momentum": 63.6,
+        "quality": 66.3,
+        "newness": 23.1
       }
     },
     {
@@ -747,10 +778,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 12.6,
-        "momentum": 33.2,
-        "quality": 43.4,
-        "newness": 42.7
+        "popularity": 12.1,
+        "momentum": 32.4,
+        "quality": 42.9,
+        "newness": 41.2
       }
     },
     {
@@ -778,9 +809,9 @@
       },
       "scores": {
         "popularity": 99.5,
-        "momentum": 77.9,
-        "quality": 39.5,
-        "newness": 6.0
+        "momentum": 76.9,
+        "quality": 38.7,
+        "newness": 5.5
       }
     },
     {
@@ -808,9 +839,9 @@
       },
       "scores": {
         "popularity": 71.4,
-        "momentum": 59.0,
-        "quality": 27.6,
-        "newness": 46.2
+        "momentum": 58.0,
+        "quality": 27.4,
+        "newness": 44.2
       }
     },
     {
@@ -837,9 +868,9 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 82.4,
-        "momentum": 89.1,
-        "quality": 55.5,
+        "popularity": 81.9,
+        "momentum": 88.6,
+        "quality": 55.2,
         "newness": 91.0
       }
     },
@@ -869,8 +900,8 @@
       "scores": {
         "popularity": 7.8,
         "momentum": 14.2,
-        "quality": 23.4,
-        "newness": 30.2
+        "quality": 23.3,
+        "newness": 29.1
       }
     },
     {
@@ -898,8 +929,8 @@
       },
       "scores": {
         "popularity": 78.4,
-        "momentum": 68.1,
-        "quality": 44.4,
+        "momentum": 67.6,
+        "quality": 44.0,
         "newness": 81.9
       }
     },
@@ -928,9 +959,9 @@
       },
       "scores": {
         "popularity": 70.9,
-        "momentum": 42.1,
-        "quality": 33.5,
-        "newness": 43.2
+        "momentum": 41.6,
+        "quality": 33.4,
+        "newness": 41.7
       }
     },
     {
@@ -958,9 +989,9 @@
       },
       "scores": {
         "popularity": 70.1,
-        "momentum": 83.2,
-        "quality": 78.3,
-        "newness": 78.9
+        "momentum": 82.3,
+        "quality": 78.2,
+        "newness": 78.4
       }
     },
     {
@@ -988,9 +1019,9 @@
       },
       "scores": {
         "popularity": 32.7,
-        "momentum": 33.4,
-        "quality": 65.2,
-        "newness": 12.1
+        "momentum": 32.7,
+        "quality": 64.7,
+        "newness": 11.6
       }
     },
     {
@@ -1018,9 +1049,9 @@
       },
       "scores": {
         "popularity": 27.9,
-        "momentum": 18.0,
-        "quality": 78.0,
-        "newness": 21.6
+        "momentum": 17.7,
+        "quality": 77.8,
+        "newness": 20.6
       }
     },
     {
@@ -1047,10 +1078,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 50.0,
-        "momentum": 65.5,
-        "quality": 66.4,
-        "newness": 53.3
+        "popularity": 51.0,
+        "momentum": 64.2,
+        "quality": 65.9,
+        "newness": 52.8
       }
     },
     {
@@ -1078,9 +1109,9 @@
       },
       "scores": {
         "popularity": 3.8,
-        "momentum": 15.5,
-        "quality": 63.0,
-        "newness": 47.2
+        "momentum": 15.7,
+        "quality": 62.7,
+        "newness": 45.2
       }
     },
     {
@@ -1108,9 +1139,9 @@
       },
       "scores": {
         "popularity": 26.4,
-        "momentum": 62.2,
-        "quality": 19.4,
-        "newness": 79.4
+        "momentum": 61.1,
+        "quality": 19.2,
+        "newness": 78.9
       }
     },
     {
@@ -1137,10 +1168,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 15.6,
+        "popularity": 15.1,
         "momentum": 11.4,
-        "quality": 42.2,
-        "newness": 7.0
+        "quality": 41.7,
+        "newness": 6.5
       }
     },
     {
@@ -1167,10 +1198,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 16.6,
-        "momentum": 33.7,
-        "quality": 16.9,
-        "newness": 34.2
+        "popularity": 16.1,
+        "momentum": 32.9,
+        "quality": 16.5,
+        "newness": 33.2
       }
     },
     {
@@ -1199,8 +1230,8 @@
       "scores": {
         "popularity": 95.5,
         "momentum": 53.1,
-        "quality": 51.1,
-        "newness": 27.1
+        "quality": 50.5,
+        "newness": 26.1
       }
     },
     {
@@ -1228,9 +1259,9 @@
       },
       "scores": {
         "popularity": 29.6,
-        "momentum": 42.5,
-        "quality": 32.9,
-        "newness": 69.3
+        "momentum": 41.7,
+        "quality": 32.1,
+        "newness": 68.8
       }
     },
     {
@@ -1257,10 +1288,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 60.3,
-        "momentum": 59.9,
+        "popularity": 60.8,
+        "momentum": 58.7,
         "quality": 23.6,
-        "newness": 25.1
+        "newness": 24.1
       }
     },
     {
@@ -1287,9 +1318,9 @@
         "license": null
       },
       "scores": {
-        "popularity": 59.5,
+        "popularity": 60.1,
         "momentum": 49.1,
-        "quality": 67.3,
+        "quality": 67.0,
         "newness": 87.9
       }
     },
@@ -1317,9 +1348,9 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 54.0,
-        "momentum": 66.8,
-        "quality": 65.3,
+        "popularity": 54.5,
+        "momentum": 66.3,
+        "quality": 64.9,
         "newness": 93.5
       }
     },
@@ -1349,8 +1380,8 @@
       "scores": {
         "popularity": 6.3,
         "momentum": 14.4,
-        "quality": 22.6,
-        "newness": 34.7
+        "quality": 22.4,
+        "newness": 33.7
       }
     },
     {
@@ -1378,8 +1409,8 @@
       },
       "scores": {
         "popularity": 2.5,
-        "momentum": 68.0,
-        "quality": 84.7,
+        "momentum": 66.6,
+        "quality": 84.4,
         "newness": 93.0
       }
     },
@@ -1407,10 +1438,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 20.6,
-        "momentum": 33.9,
-        "quality": 85.3,
-        "newness": 26.6
+        "popularity": 20.1,
+        "momentum": 33.2,
+        "quality": 84.9,
+        "newness": 25.6
       }
     },
     {
@@ -1437,10 +1468,40 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 50.0,
-        "momentum": 50.8,
-        "quality": 50.4,
+        "popularity": 51.0,
+        "momentum": 49.7,
+        "quality": 50.1,
         "newness": 58.3
+      }
+    },
+    {
+      "repo": "dark-hxx/CLI-Manager",
+      "repo_id": 1179821669,
+      "url": "https://github.com/dark-hxx/CLI-Manager",
+      "metrics": {
+        "stars": 806,
+        "stars_per_day": 3.5664,
+        "forks": 97,
+        "forks_30d": 11,
+        "star_events_30d": 44,
+        "star_events_capped": false,
+        "commits_90d": 921,
+        "authors_90d": 19,
+        "releases": 79,
+        "last_release_at": "2026-10-16T11:58:03Z",
+        "last_commit_at": "2026-10-24T10:26:01Z",
+        "readme_chars": 20449,
+        "created_at": "2026-03-12T12:18:12Z",
+        "age_days": 226,
+        "description": "A multi-project AI CLI workspace for local terminals, SSH hosts, and mobile-assisted workflows",
+        "language": "Rust",
+        "license": "AGPL-3.0"
+      },
+      "scores": {
+        "popularity": 95.0,
+        "momentum": 92.0,
+        "quality": 83.2,
+        "newness": 47.7
       }
     },
     {
@@ -1467,10 +1528,10 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 38.7,
+        "popularity": 39.2,
         "momentum": 90.2,
         "quality": 79.0,
-        "newness": 97.0
+        "newness": 96.5
       }
     },
     {
@@ -1497,10 +1558,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 19.3,
-        "momentum": 41.8,
-        "quality": 73.0,
-        "newness": 4.0
+        "popularity": 18.8,
+        "momentum": 41.0,
+        "quality": 72.6,
+        "newness": 3.5
       }
     },
     {
@@ -1527,10 +1588,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 81.9,
-        "momentum": 80.3,
-        "quality": 71.1,
-        "newness": 48.7
+        "popularity": 81.4,
+        "momentum": 79.3,
+        "quality": 70.8,
+        "newness": 47.2
       }
     },
     {
@@ -1558,9 +1619,9 @@
       },
       "scores": {
         "popularity": 96.5,
-        "momentum": 90.5,
-        "quality": 77.4,
-        "newness": 28.6
+        "momentum": 89.8,
+        "quality": 77.3,
+        "newness": 27.6
       }
     },
     {
@@ -1588,39 +1649,9 @@
       },
       "scores": {
         "popularity": 97.5,
-        "momentum": 79.6,
-        "quality": 77.9,
-        "newness": 14.6
-      }
-    },
-    {
-      "repo": "Dicklesworthstone/franken_whisper",
-      "repo_id": 1164301692,
-      "url": "https://github.com/Dicklesworthstone/franken_whisper",
-      "metrics": {
-        "stars": 94,
-        "stars_per_day": 0.3868,
-        "forks": 11,
-        "forks_30d": 1,
-        "star_events_30d": 1,
-        "star_events_capped": false,
-        "commits_90d": 1525,
-        "authors_90d": null,
-        "releases": 17,
-        "last_release_at": "2026-10-13T23:07:54Z",
-        "last_commit_at": "2026-10-24T02:40:30Z",
-        "readme_chars": 319156,
-        "created_at": "2026-02-22T23:14:13Z",
-        "age_days": 243,
-        "description": "Agent-first Rust ASR orchestration stack: Bayesian backend routing across whisper.cpp/insanely-fast-whisper/whisper-diarization, real-time NDJSON streaming, SQLite persistence, TTY audio transport, conformance harness. 107K lines, 2000+ tests, zero unsafe code.",
-        "language": "Rust",
-        "license": null
-      },
-      "scores": {
-        "popularity": 35.2,
-        "momentum": 40.2,
-        "quality": 68.1,
-        "newness": 44.2
+        "momentum": 78.6,
+        "quality": 77.8,
+        "newness": 13.6
       }
     },
     {
@@ -1647,10 +1678,10 @@
         "license": null
       },
       "scores": {
-        "popularity": 66.6,
-        "momentum": 52.3,
-        "quality": 66.3,
-        "newness": 26.1
+        "popularity": 67.6,
+        "momentum": 51.3,
+        "quality": 65.7,
+        "newness": 25.1
       }
     },
     {
@@ -1678,9 +1709,9 @@
       },
       "scores": {
         "popularity": 33.2,
-        "momentum": 20.7,
-        "quality": 52.5,
-        "newness": 28.1
+        "momentum": 20.5,
+        "quality": 51.7,
+        "newness": 27.1
       }
     },
     {
@@ -1707,9 +1738,9 @@
         "license": null
       },
       "scores": {
-        "popularity": 51.3,
-        "momentum": 83.8,
-        "quality": 56.3,
+        "popularity": 52.3,
+        "momentum": 83.0,
+        "quality": 55.8,
         "newness": 95.5
       }
     },
@@ -1737,10 +1768,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 42.2,
-        "momentum": 36.3,
-        "quality": 59.4,
-        "newness": 73.9
+        "popularity": 43.2,
+        "momentum": 35.8,
+        "quality": 58.8,
+        "newness": 73.4
       }
     },
     {
@@ -1767,10 +1798,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 21.9,
-        "momentum": 21.2,
-        "quality": 18.9,
-        "newness": 52.8
+        "popularity": 21.4,
+        "momentum": 21.0,
+        "quality": 18.6,
+        "newness": 52.3
       }
     },
     {
@@ -1797,10 +1828,10 @@
         "license": "MPL-2.0"
       },
       "scores": {
-        "popularity": 40.7,
-        "momentum": 45.5,
-        "quality": 57.8,
-        "newness": 63.3
+        "popularity": 41.7,
+        "momentum": 45.0,
+        "quality": 57.4,
+        "newness": 63.8
       }
     },
     {
@@ -1827,9 +1858,9 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 84.9,
+        "popularity": 84.4,
         "momentum": 95.5,
-        "quality": 67.1,
+        "quality": 66.8,
         "newness": 95.0
       }
     },
@@ -1857,10 +1888,10 @@
         "license": null
       },
       "scores": {
-        "popularity": 23.1,
+        "popularity": 22.9,
         "momentum": 13.7,
-        "quality": 42.2,
-        "newness": 11.6
+        "quality": 41.8,
+        "newness": 11.1
       }
     },
     {
@@ -1887,40 +1918,10 @@
         "license": "AGPL-3.0"
       },
       "scores": {
-        "popularity": 66.6,
-        "momentum": 71.7,
-        "quality": 84.4,
+        "popularity": 67.6,
+        "momentum": 70.2,
+        "quality": 84.1,
         "newness": 59.3
-      }
-    },
-    {
-      "repo": "eisber/lox-cli",
-      "repo_id": 1217860122,
-      "url": "https://github.com/eisber/lox-cli",
-      "metrics": {
-        "stars": 52,
-        "stars_per_day": 0.2811,
-        "forks": 10,
-        "forks_30d": 6,
-        "star_events_30d": 15,
-        "star_events_capped": false,
-        "commits_90d": 15,
-        "authors_90d": 3,
-        "releases": 1,
-        "last_release_at": "2026-04-30T17:44:16Z",
-        "last_commit_at": "2026-09-08T18:02:05Z",
-        "readme_chars": 11815,
-        "created_at": "2026-04-22T09:38:39Z",
-        "age_days": 185,
-        "description": "AI agent tooling for Loxone Miniserver — natural language → config-as-code → deploy",
-        "language": "Rust",
-        "license": null
-      },
-      "scores": {
-        "popularity": 2.5,
-        "momentum": 53.3,
-        "quality": 45.9,
-        "newness": 65.8
       }
     },
     {
@@ -1947,10 +1948,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 45.5,
-        "momentum": 62.8,
-        "quality": 32.7,
-        "newness": 72.9
+        "popularity": 46.5,
+        "momentum": 61.3,
+        "quality": 32.4,
+        "newness": 72.4
       }
     },
     {
@@ -1977,9 +1978,9 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 44.5,
-        "momentum": 55.5,
-        "quality": 37.6,
+        "popularity": 45.5,
+        "momentum": 54.3,
+        "quality": 37.0,
         "newness": 57.8
       }
     },
@@ -2007,10 +2008,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 94.5,
-        "momentum": 78.4,
-        "quality": 77.9,
-        "newness": 42.2
+        "popularity": 94.0,
+        "momentum": 77.4,
+        "quality": 77.7,
+        "newness": 40.7
       }
     },
     {
@@ -2039,8 +2040,8 @@
       "scores": {
         "popularity": 24.9,
         "momentum": 12.7,
-        "quality": 36.1,
-        "newness": 10.1
+        "quality": 35.3,
+        "newness": 9.5
       }
     },
     {
@@ -2067,10 +2068,10 @@
         "license": "AGPL-3.0"
       },
       "scores": {
-        "popularity": 41.7,
-        "momentum": 25.5,
-        "quality": 25.0,
-        "newness": 43.7
+        "popularity": 42.7,
+        "momentum": 25.3,
+        "quality": 24.9,
+        "newness": 42.2
       }
     },
     {
@@ -2098,8 +2099,8 @@
       },
       "scores": {
         "popularity": 6.3,
-        "momentum": 38.3,
-        "quality": 52.1,
+        "momentum": 37.8,
+        "quality": 51.7,
         "newness": 92.5
       }
     },
@@ -2127,10 +2128,10 @@
         "license": "MPL-2.0"
       },
       "scores": {
-        "popularity": 73.6,
-        "momentum": 65.3,
-        "quality": 69.0,
-        "newness": 76.9
+        "popularity": 73.1,
+        "momentum": 64.8,
+        "quality": 68.5,
+        "newness": 76.4
       }
     },
     {
@@ -2157,10 +2158,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 39.4,
-        "momentum": 38.9,
-        "quality": 42.9,
-        "newness": 33.2
+        "popularity": 39.9,
+        "momentum": 38.2,
+        "quality": 42.4,
+        "newness": 32.2
       }
     },
     {
@@ -2187,40 +2188,10 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 36.4,
-        "momentum": 38.4,
-        "quality": 78.5,
-        "newness": 35.2
-      }
-    },
-    {
-      "repo": "frankdierolf/whis",
-      "repo_id": 1091091652,
-      "url": "https://github.com/frankdierolf/whis",
-      "metrics": {
-        "stars": 127,
-        "stars_per_day": 0.3608,
-        "forks": 16,
-        "forks_30d": 1,
-        "star_events_30d": 1,
-        "star_events_capped": false,
-        "commits_90d": 0,
-        "authors_90d": 0,
-        "releases": 23,
-        "last_release_at": "2026-01-20T17:18:12Z",
-        "last_commit_at": "2026-01-26T14:46:24Z",
-        "readme_chars": 3497,
-        "created_at": "2025-11-06T14:45:52Z",
-        "age_days": 352,
-        "description": "Voice-to-text CLI for terminal users",
-        "language": "Rust",
-        "license": "MIT"
-      },
-      "scores": {
-        "popularity": 47.0,
-        "momentum": 38.2,
-        "quality": 25.6,
-        "newness": 12.6
+        "popularity": 36.7,
+        "momentum": 37.7,
+        "quality": 77.8,
+        "newness": 34.2
       }
     },
     {
@@ -2247,9 +2218,9 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 21.9,
-        "momentum": 22.2,
-        "quality": 21.1,
+        "popularity": 21.4,
+        "momentum": 22.0,
+        "quality": 20.9,
         "newness": 60.8
       }
     },
@@ -2278,9 +2249,9 @@
       },
       "scores": {
         "popularity": 96.0,
-        "momentum": 74.4,
-        "quality": 40.3,
-        "newness": 80.4
+        "momentum": 73.9,
+        "quality": 39.9,
+        "newness": 79.9
       }
     },
     {
@@ -2308,9 +2279,9 @@
       },
       "scores": {
         "popularity": 1.3,
-        "momentum": 28.9,
-        "quality": 37.5,
-        "newness": 25.6
+        "momentum": 28.4,
+        "quality": 36.8,
+        "newness": 24.6
       }
     },
     {
@@ -2337,10 +2308,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 52.3,
-        "momentum": 32.4,
-        "quality": 71.4,
-        "newness": 1.5
+        "popularity": 53.3,
+        "momentum": 31.9,
+        "quality": 70.8,
+        "newness": 2.0
       }
     },
     {
@@ -2367,10 +2338,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 75.9,
-        "momentum": 66.8,
-        "quality": 61.9,
-        "newness": 27.6
+        "popularity": 75.4,
+        "momentum": 65.3,
+        "quality": 61.3,
+        "newness": 26.6
       }
     },
     {
@@ -2398,9 +2369,9 @@
       },
       "scores": {
         "popularity": 9.3,
-        "momentum": 20.2,
-        "quality": 22.3,
-        "newness": 68.3
+        "momentum": 20.0,
+        "quality": 22.0,
+        "newness": 67.8
       }
     },
     {
@@ -2428,8 +2399,8 @@
       },
       "scores": {
         "popularity": 33.7,
-        "momentum": 67.8,
-        "quality": 71.1,
+        "momentum": 66.3,
+        "quality": 71.3,
         "newness": 89.9
       }
     },
@@ -2458,8 +2429,8 @@
       },
       "scores": {
         "popularity": 9.3,
-        "momentum": 28.0,
-        "quality": 18.4,
+        "momentum": 27.8,
+        "quality": 18.1,
         "newness": 82.4
       }
     },
@@ -2488,8 +2459,8 @@
       },
       "scores": {
         "popularity": 2.5,
-        "momentum": 34.9,
-        "quality": 76.6,
+        "momentum": 34.2,
+        "quality": 76.0,
         "newness": 60.3
       }
     },
@@ -2517,9 +2488,9 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 20.6,
-        "momentum": 55.0,
-        "quality": 40.6,
+        "popularity": 20.1,
+        "momentum": 54.0,
+        "quality": 39.8,
         "newness": 89.4
       }
     },
@@ -2547,10 +2518,10 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 59.5,
-        "momentum": 60.4,
-        "quality": 86.0,
-        "newness": 19.6
+        "popularity": 60.1,
+        "momentum": 59.5,
+        "quality": 85.6,
+        "newness": 18.6
       }
     },
     {
@@ -2578,9 +2549,9 @@
       },
       "scores": {
         "popularity": 97.0,
-        "momentum": 56.9,
-        "quality": 49.9,
-        "newness": 61.8
+        "momentum": 57.2,
+        "quality": 49.5,
+        "newness": 62.3
       }
     },
     {
@@ -2607,9 +2578,9 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 36.4,
-        "momentum": 40.3,
-        "quality": 69.3,
+        "popularity": 36.7,
+        "momentum": 39.8,
+        "quality": 69.5,
         "newness": 84.4
       }
     },
@@ -2637,9 +2608,9 @@
         "license": "GPL-3.0"
       },
       "scores": {
-        "popularity": 20.6,
-        "momentum": 33.5,
-        "quality": 60.8,
+        "popularity": 20.1,
+        "momentum": 33.0,
+        "quality": 60.2,
         "newness": 83.9
       }
     },
@@ -2667,10 +2638,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 46.2,
-        "momentum": 34.5,
-        "quality": 62.5,
-        "newness": 69.8
+        "popularity": 47.2,
+        "momentum": 34.0,
+        "quality": 61.8,
+        "newness": 69.3
       }
     },
     {
@@ -2698,9 +2669,69 @@
       },
       "scores": {
         "popularity": 31.2,
-        "momentum": 19.7,
-        "quality": 21.6,
-        "newness": 29.1
+        "momentum": 19.5,
+        "quality": 21.4,
+        "newness": 28.1
+      }
+    },
+    {
+      "repo": "juliensimon/cache-commander",
+      "repo_id": 1201491284,
+      "url": "https://github.com/juliensimon/cache-commander",
+      "metrics": {
+        "stars": 73,
+        "stars_per_day": 0.3596,
+        "forks": 6,
+        "forks_30d": 0,
+        "star_events_30d": 4,
+        "star_events_capped": false,
+        "commits_90d": 46,
+        "authors_90d": 2,
+        "releases": 11,
+        "last_release_at": "2026-10-20T18:49:19Z",
+        "last_commit_at": "2026-10-20T19:02:26Z",
+        "readme_chars": 17999,
+        "created_at": "2026-04-04T18:46:07Z",
+        "age_days": 203,
+        "description": "Cache Commander — a TUI and MCP server to explore, audit, and clean developer cache directories. Scan for CVEs, find outdated packages, reclaim disk space. Supports pip, npm, Cargo, HuggingFace, Homebrew, and more.",
+        "language": "Rust",
+        "license": "MIT"
+      },
+      "scores": {
+        "popularity": 22.9,
+        "momentum": 21.5,
+        "quality": 52.8,
+        "newness": 57.3
+      }
+    },
+    {
+      "repo": "jupyter-ai-contrib/nb-cli",
+      "repo_id": 1171985527,
+      "url": "https://github.com/jupyter-ai-contrib/nb-cli",
+      "metrics": {
+        "stars": 94,
+        "stars_per_day": 0.4,
+        "forks": 15,
+        "forks_30d": 4,
+        "star_events_30d": 2,
+        "star_events_capped": false,
+        "commits_90d": 16,
+        "authors_90d": 4,
+        "releases": 10,
+        "last_release_at": "2026-07-31T01:00:23Z",
+        "last_commit_at": "2026-09-10T03:39:55Z",
+        "readme_chars": 13378,
+        "created_at": "2026-03-03T20:32:49Z",
+        "age_days": 235,
+        "description": "A CLI-first interface for AI agents to work with notebooks",
+        "language": "Rust",
+        "license": "BSD-3-Clause"
+      },
+      "scores": {
+        "popularity": 35.2,
+        "momentum": 54.3,
+        "quality": 50.8,
+        "newness": 45.7
       }
     },
     {
@@ -2727,10 +2758,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 73.6,
-        "momentum": 59.8,
-        "quality": 49.7,
-        "newness": 10.6
+        "popularity": 73.1,
+        "momentum": 58.3,
+        "quality": 49.0,
+        "newness": 10.1
       }
     },
     {
@@ -2757,9 +2788,9 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 17.6,
+        "popularity": 17.1,
         "momentum": 97.7,
-        "quality": 53.5,
+        "quality": 52.6,
         "newness": 100.0
       }
     },
@@ -2788,8 +2819,8 @@
       },
       "scores": {
         "popularity": 0.3,
-        "momentum": 66.0,
-        "quality": 60.4,
+        "momentum": 64.6,
+        "quality": 60.3,
         "newness": 92.0
       }
     },
@@ -2817,9 +2848,9 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 93.5,
+        "popularity": 93.0,
         "momentum": 99.7,
-        "quality": 74.8,
+        "quality": 74.6,
         "newness": 99.5
       }
     },
@@ -2847,10 +2878,10 @@
         "license": "GPL-3.0"
       },
       "scores": {
-        "popularity": 86.9,
-        "momentum": 72.2,
-        "quality": 52.2,
-        "newness": 9.5
+        "popularity": 86.4,
+        "momentum": 71.0,
+        "quality": 51.5,
+        "newness": 9.0
       }
     },
     {
@@ -2878,9 +2909,9 @@
       },
       "scores": {
         "popularity": 24.9,
-        "momentum": 39.7,
-        "quality": 33.2,
-        "newness": 62.3
+        "momentum": 38.9,
+        "quality": 33.0,
+        "newness": 62.8
       }
     },
     {
@@ -2908,9 +2939,9 @@
       },
       "scores": {
         "popularity": 98.5,
-        "momentum": 94.1,
-        "quality": 86.3,
-        "newness": 39.2
+        "momentum": 94.3,
+        "quality": 86.0,
+        "newness": 37.7
       }
     },
     {
@@ -2967,9 +2998,9 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 48.0,
-        "momentum": 92.3,
-        "quality": 45.6,
+        "popularity": 49.0,
+        "momentum": 92.0,
+        "quality": 44.9,
         "newness": 98.0
       }
     },
@@ -2997,10 +3028,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 48.0,
-        "momentum": 57.5,
-        "quality": 38.9,
-        "newness": 75.9
+        "popularity": 49.0,
+        "momentum": 56.5,
+        "quality": 38.6,
+        "newness": 75.4
       }
     },
     {
@@ -3027,9 +3058,9 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 80.9,
+        "popularity": 80.4,
         "momentum": 99.0,
-        "quality": 68.5,
+        "quality": 68.3,
         "newness": 99.0
       }
     },
@@ -3057,10 +3088,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 63.8,
-        "momentum": 51.8,
-        "quality": 71.1,
-        "newness": 31.2
+        "popularity": 64.8,
+        "momentum": 50.8,
+        "quality": 70.8,
+        "newness": 30.2
       }
     },
     {
@@ -3087,10 +3118,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 13.6,
+        "popularity": 13.1,
         "momentum": 16.2,
-        "quality": 64.2,
-        "newness": 35.7
+        "quality": 63.9,
+        "newness": 34.7
       }
     },
     {
@@ -3117,8 +3148,8 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 92.5,
-        "momentum": 46.6,
+        "popularity": 92.0,
+        "momentum": 46.4,
         "quality": 48.4,
         "newness": 8.5
       }
@@ -3147,10 +3178,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 19.3,
+        "popularity": 18.8,
         "momentum": 13.4,
-        "quality": 31.3,
-        "newness": 13.1
+        "quality": 30.6,
+        "newness": 12.1
       }
     },
     {
@@ -3177,10 +3208,10 @@
         "license": null
       },
       "scores": {
-        "popularity": 89.4,
+        "popularity": 88.9,
         "momentum": 87.7,
-        "quality": 64.2,
-        "newness": 41.7
+        "quality": 64.0,
+        "newness": 40.2
       }
     },
     {
@@ -3207,10 +3238,10 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 86.4,
+        "popularity": 85.9,
         "momentum": 54.4,
-        "quality": 31.0,
-        "newness": 77.9
+        "quality": 30.5,
+        "newness": 77.4
       }
     },
     {
@@ -3237,10 +3268,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 43.7,
-        "momentum": 37.9,
-        "quality": 44.9,
-        "newness": 14.1
+        "popularity": 44.7,
+        "momentum": 37.2,
+        "quality": 44.1,
+        "newness": 13.1
       }
     },
     {
@@ -3267,10 +3298,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 64.3,
-        "momentum": 39.1,
-        "quality": 59.8,
-        "newness": 41.2
+        "popularity": 65.3,
+        "momentum": 38.6,
+        "quality": 59.3,
+        "newness": 39.7
       }
     },
     {
@@ -3298,9 +3329,9 @@
       },
       "scores": {
         "popularity": 1.3,
-        "momentum": 46.0,
-        "quality": 72.5,
-        "newness": 73.4
+        "momentum": 44.7,
+        "quality": 72.1,
+        "newness": 72.9
       }
     },
     {
@@ -3328,8 +3359,8 @@
       },
       "scores": {
         "popularity": 32.2,
-        "momentum": 43.1,
-        "quality": 79.1,
+        "momentum": 42.6,
+        "quality": 78.4,
         "newness": 90.5
       }
     },
@@ -3357,10 +3388,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 49.2,
-        "momentum": 68.5,
-        "quality": 54.1,
-        "newness": 71.4
+        "popularity": 50.3,
+        "momentum": 67.1,
+        "quality": 53.8,
+        "newness": 70.9
       }
     },
     {
@@ -3387,9 +3418,9 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 12.6,
-        "momentum": 50.4,
-        "quality": 69.8,
+        "popularity": 12.1,
+        "momentum": 49.4,
+        "quality": 69.3,
         "newness": 88.9
       }
     },
@@ -3417,10 +3448,40 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 11.1,
-        "momentum": 29.4,
+        "popularity": 10.8,
+        "momentum": 28.9,
         "quality": 68.8,
-        "newness": 21.1
+        "newness": 20.1
+      }
+    },
+    {
+      "repo": "Noopher-AI/oat-agents",
+      "repo_id": 1387844399,
+      "url": "https://github.com/Noopher-AI/oat-agents",
+      "metrics": {
+        "stars": 52,
+        "stars_per_day": 1.7931,
+        "forks": 9,
+        "forks_30d": 9,
+        "star_events_30d": 53,
+        "star_events_capped": false,
+        "commits_90d": 37,
+        "authors_90d": 3,
+        "releases": 0,
+        "last_release_at": null,
+        "last_commit_at": "2026-10-24T03:10:55Z",
+        "readme_chars": 15009,
+        "created_at": "2026-09-25T16:12:39Z",
+        "age_days": 29,
+        "description": "Open Agent Team: One screen for the whole team. One key to take over any agent.",
+        "language": "Rust",
+        "license": "MIT"
+      },
+      "scores": {
+        "popularity": 2.5,
+        "momentum": 84.2,
+        "quality": 57.1,
+        "newness": 97.0
       }
     },
     {
@@ -3447,9 +3508,9 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 17.6,
-        "momentum": 33.3,
-        "quality": 27.9,
+        "popularity": 17.1,
+        "momentum": 32.8,
+        "quality": 27.4,
         "newness": 85.4
       }
     },
@@ -3477,9 +3538,9 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 42.7,
-        "momentum": 64.1,
-        "quality": 59.1,
+        "popularity": 43.7,
+        "momentum": 63.3,
+        "quality": 59.0,
         "newness": 94.0
       }
     },
@@ -3507,10 +3568,10 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 92.0,
+        "popularity": 91.5,
         "momentum": 54.1,
-        "quality": 73.0,
-        "newness": 61.3
+        "quality": 72.4,
+        "newness": 61.8
       }
     },
     {
@@ -3537,10 +3598,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 23.1,
-        "momentum": 41.2,
+        "popularity": 22.9,
+        "momentum": 40.5,
         "quality": 76.3,
-        "newness": 68.8
+        "newness": 68.3
       }
     },
     {
@@ -3568,9 +3629,9 @@
       },
       "scores": {
         "popularity": 28.9,
-        "momentum": 23.0,
-        "quality": 67.0,
-        "newness": 51.3
+        "momentum": 22.7,
+        "quality": 66.3,
+        "newness": 50.8
       }
     },
     {
@@ -3597,10 +3658,10 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 90.5,
-        "momentum": 71.1,
-        "quality": 61.2,
-        "newness": 8.0
+        "popularity": 89.9,
+        "momentum": 69.8,
+        "quality": 61.0,
+        "newness": 7.5
       }
     },
     {
@@ -3627,10 +3688,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 64.8,
-        "momentum": 64.6,
-        "quality": 43.4,
-        "newness": 80.9
+        "popularity": 65.8,
+        "momentum": 63.8,
+        "quality": 43.0,
+        "newness": 80.4
       }
     },
     {
@@ -3657,40 +3718,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 74.4,
-        "momentum": 39.6,
-        "quality": 16.9,
-        "newness": 17.6
-      }
-    },
-    {
-      "repo": "pamburus/termframe",
-      "repo_id": 944178176,
-      "url": "https://github.com/pamburus/termframe",
-      "metrics": {
-        "stars": 143,
-        "stars_per_day": 0.2395,
-        "forks": 3,
-        "forks_30d": 0,
-        "star_events_30d": 1,
-        "star_events_capped": true,
-        "commits_90d": 99,
-        "authors_90d": 4,
-        "releases": 39,
-        "last_release_at": "2026-10-24T12:07:02Z",
-        "last_commit_at": "2026-10-24T16:39:27Z",
-        "readme_chars": 9704,
-        "created_at": "2025-03-06T23:06:50Z",
-        "age_days": 597,
-        "description": "📸 Terminal output SVG screenshot tool",
-        "language": "Rust",
-        "license": "MIT"
-      },
-      "scores": {
-        "popularity": 53.3,
-        "momentum": 16.5,
-        "quality": 78.2,
-        "newness": 3.0
+        "popularity": 73.9,
+        "momentum": 39.1,
+        "quality": 16.8,
+        "newness": 16.6
       }
     },
     {
@@ -3717,9 +3748,9 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 68.8,
-        "momentum": 67.6,
-        "quality": 78.3,
+        "popularity": 69.3,
+        "momentum": 67.1,
+        "quality": 77.7,
         "newness": 85.9
       }
     },
@@ -3747,9 +3778,9 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 23.1,
-        "momentum": 38.8,
-        "quality": 54.1,
+        "popularity": 22.9,
+        "momentum": 38.3,
+        "quality": 53.9,
         "newness": 88.4
       }
     },
@@ -3780,7 +3811,7 @@
         "popularity": 100.0,
         "momentum": 99.7,
         "quality": 78.6,
-        "newness": 96.5
+        "newness": 96.0
       }
     },
     {
@@ -3807,10 +3838,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 43.2,
-        "momentum": 49.2,
-        "quality": 57.6,
-        "newness": 66.8
+        "popularity": 44.2,
+        "momentum": 48.2,
+        "quality": 57.2,
+        "newness": 66.3
       }
     },
     {
@@ -3837,10 +3868,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 88.4,
-        "momentum": 86.6,
-        "quality": 85.4,
-        "newness": 72.4
+        "popularity": 87.9,
+        "momentum": 85.8,
+        "quality": 85.0,
+        "newness": 71.9
       }
     },
     {
@@ -3867,9 +3898,9 @@
         "license": null
       },
       "scores": {
-        "popularity": 37.9,
-        "momentum": 52.8,
-        "quality": 77.5,
+        "popularity": 38.4,
+        "momentum": 51.5,
+        "quality": 76.9,
         "newness": 65.3
       }
     },
@@ -3897,9 +3928,9 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 65.3,
-        "momentum": 91.6,
-        "quality": 69.7,
+        "popularity": 66.3,
+        "momentum": 91.3,
+        "quality": 69.5,
         "newness": 94.5
       }
     },
@@ -3927,10 +3958,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 58.8,
-        "momentum": 27.5,
-        "quality": 15.4,
-        "newness": 15.1
+        "popularity": 59.3,
+        "momentum": 27.3,
+        "quality": 15.2,
+        "newness": 14.1
       }
     },
     {
@@ -3957,10 +3988,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 54.8,
-        "momentum": 39.8,
-        "quality": 27.6,
-        "newness": 70.9
+        "popularity": 55.3,
+        "momentum": 39.3,
+        "quality": 27.1,
+        "newness": 70.4
       }
     },
     {
@@ -3987,9 +4018,9 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 94.0,
-        "momentum": 61.8,
-        "quality": 74.7,
+        "popularity": 93.5,
+        "momentum": 60.8,
+        "quality": 74.3,
         "newness": 2.5
       }
     },
@@ -4017,10 +4048,10 @@
         "license": null
       },
       "scores": {
-        "popularity": 47.0,
-        "momentum": 23.5,
-        "quality": 31.6,
-        "newness": 16.6
+        "popularity": 48.2,
+        "momentum": 23.2,
+        "quality": 31.3,
+        "newness": 15.6
       }
     },
     {
@@ -4047,10 +4078,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 39.4,
-        "momentum": 35.6,
-        "quality": 37.5,
-        "newness": 77.4
+        "popularity": 39.9,
+        "momentum": 35.1,
+        "quality": 36.7,
+        "newness": 76.9
       }
     },
     {
@@ -4077,40 +4108,10 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 87.4,
-        "momentum": 87.6,
+        "popularity": 86.9,
+        "momentum": 87.3,
         "quality": 76.3,
-        "newness": 53.8
-      }
-    },
-    {
-      "repo": "reco-tools/ritridata",
-      "repo_id": 1377007152,
-      "url": "https://github.com/reco-tools/ritridata",
-      "metrics": {
-        "stars": 214,
-        "stars_per_day": 6.1143,
-        "forks": 2,
-        "forks_30d": 1,
-        "star_events_30d": 122,
-        "star_events_capped": false,
-        "commits_90d": 1,
-        "authors_90d": 1,
-        "releases": 0,
-        "last_release_at": null,
-        "last_commit_at": "2026-09-19T09:33:50Z",
-        "readme_chars": 5127,
-        "created_at": "2026-09-19T10:07:26Z",
-        "age_days": 35,
-        "description": "Read-only MBR/GPT inspection, public file signature definitions, and synthetic disk image tools. AGPL-3.0-only.",
-        "language": "Rust",
-        "license": "AGPL-3.0"
-      },
-      "scores": {
-        "popularity": 68.3,
-        "momentum": 73.9,
-        "quality": 29.2,
-        "newness": 96.0
+        "newness": 53.3
       }
     },
     {
@@ -4137,10 +4138,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 67.8,
-        "momentum": 81.7,
-        "quality": 50.9,
-        "newness": 55.8
+        "popularity": 68.8,
+        "momentum": 81.2,
+        "quality": 49.9,
+        "newness": 55.3
       }
     },
     {
@@ -4167,10 +4168,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 55.8,
-        "momentum": 67.7,
-        "quality": 84.3,
-        "newness": 55.3
+        "popularity": 56.3,
+        "momentum": 66.3,
+        "quality": 84.0,
+        "newness": 54.8
       }
     },
     {
@@ -4199,8 +4200,8 @@
       "scores": {
         "popularity": 27.1,
         "momentum": 11.7,
-        "quality": 59.2,
-        "newness": 4.5
+        "quality": 58.8,
+        "newness": 4.0
       }
     },
     {
@@ -4228,8 +4229,8 @@
       },
       "scores": {
         "popularity": 79.9,
-        "momentum": 71.6,
-        "quality": 70.9,
+        "momentum": 71.4,
+        "quality": 70.5,
         "newness": 87.4
       }
     },
@@ -4257,9 +4258,9 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 76.4,
-        "momentum": 82.8,
-        "quality": 64.0,
+        "popularity": 75.9,
+        "momentum": 81.9,
+        "quality": 63.8,
         "newness": 84.9
       }
     },
@@ -4289,8 +4290,8 @@
       "scores": {
         "popularity": 5.0,
         "momentum": 10.7,
-        "quality": 20.0,
-        "newness": 5.5
+        "quality": 19.7,
+        "newness": 5.0
       }
     },
     {
@@ -4317,10 +4318,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 63.1,
-        "momentum": 36.6,
-        "quality": 21.5,
-        "newness": 36.2
+        "popularity": 64.1,
+        "momentum": 36.1,
+        "quality": 21.6,
+        "newness": 35.2
       }
     },
     {
@@ -4349,7 +4350,7 @@
       "scores": {
         "popularity": 4.5,
         "momentum": 9.9,
-        "quality": 15.5,
+        "quality": 15.3,
         "newness": 1.0
       }
     },
@@ -4378,9 +4379,39 @@
       },
       "scores": {
         "popularity": 34.4,
-        "momentum": 22.7,
-        "quality": 41.5,
-        "newness": 45.2
+        "momentum": 22.5,
+        "quality": 41.1,
+        "newness": 43.2
+      }
+    },
+    {
+      "repo": "runxhq/runx",
+      "repo_id": 1207981219,
+      "url": "https://github.com/runxhq/runx",
+      "metrics": {
+        "stars": 104,
+        "stars_per_day": 0.5306,
+        "forks": 109,
+        "forks_30d": 7,
+        "star_events_30d": 0,
+        "star_events_capped": false,
+        "commits_90d": 600,
+        "authors_90d": 7,
+        "releases": 27,
+        "last_release_at": "2026-10-18T11:53:55Z",
+        "last_commit_at": "2026-10-24T21:44:57Z",
+        "readme_chars": 26645,
+        "created_at": "2026-04-11T16:55:52Z",
+        "age_days": 196,
+        "description": "the governed runtime for agent skill workflows, off the leash but on the record",
+        "language": "Rust",
+        "license": "Apache-2.0"
+      },
+      "scores": {
+        "popularity": 41.2,
+        "momentum": 62.6,
+        "quality": 85.7,
+        "newness": 61.3
       }
     },
     {
@@ -4408,9 +4439,9 @@
       },
       "scores": {
         "popularity": 34.4,
-        "momentum": 17.7,
-        "quality": 47.8,
-        "newness": 11.1
+        "momentum": 17.5,
+        "quality": 47.3,
+        "newness": 10.6
       }
     },
     {
@@ -4437,10 +4468,10 @@
         "license": "AGPL-3.0"
       },
       "scores": {
-        "popularity": 91.0,
-        "momentum": 85.9,
-        "quality": 86.7,
-        "newness": 30.7
+        "popularity": 90.5,
+        "momentum": 85.1,
+        "quality": 86.4,
+        "newness": 29.6
       }
     },
     {
@@ -4468,9 +4499,9 @@
       },
       "scores": {
         "popularity": 6.3,
-        "momentum": 14.9,
-        "quality": 48.6,
-        "newness": 37.7
+        "momentum": 15.2,
+        "quality": 48.0,
+        "newness": 36.2
       }
     },
     {
@@ -4498,9 +4529,9 @@
       },
       "scores": {
         "popularity": 28.9,
-        "momentum": 47.2,
-        "quality": 78.0,
-        "newness": 76.4
+        "momentum": 46.5,
+        "quality": 77.9,
+        "newness": 75.9
       }
     },
     {
@@ -4527,10 +4558,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 37.9,
-        "momentum": 41.5,
-        "quality": 58.7,
-        "newness": 54.3
+        "popularity": 38.4,
+        "momentum": 40.7,
+        "quality": 58.1,
+        "newness": 53.8
       }
     },
     {
@@ -4557,10 +4588,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 83.2,
-        "momentum": 74.2,
-        "quality": 63.7,
-        "newness": 20.6
+        "popularity": 82.7,
+        "momentum": 72.7,
+        "quality": 63.0,
+        "newness": 19.6
       }
     },
     {
@@ -4587,10 +4618,10 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 57.8,
-        "momentum": 41.3,
-        "quality": 51.1,
-        "newness": 67.8
+        "popularity": 58.3,
+        "momentum": 40.8,
+        "quality": 50.4,
+        "newness": 67.3
       }
     },
     {
@@ -4618,9 +4649,9 @@
       },
       "scores": {
         "popularity": 79.4,
-        "momentum": 45.6,
-        "quality": 76.4,
-        "newness": 33.7
+        "momentum": 45.1,
+        "quality": 75.8,
+        "newness": 32.7
       }
     },
     {
@@ -4647,10 +4678,10 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 65.8,
-        "momentum": 84.0,
-        "quality": 71.7,
-        "newness": 79.9
+        "popularity": 66.8,
+        "momentum": 83.4,
+        "quality": 71.2,
+        "newness": 79.4
       }
     },
     {
@@ -4677,10 +4708,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 41.2,
-        "momentum": 42.7,
-        "quality": 81.2,
-        "newness": 48.2
+        "popularity": 42.2,
+        "momentum": 42.0,
+        "quality": 80.7,
+        "newness": 46.7
       }
     },
     {
@@ -4708,9 +4739,9 @@
       },
       "scores": {
         "popularity": 30.2,
-        "momentum": 26.5,
-        "quality": 56.8,
-        "newness": 70.4
+        "momentum": 26.3,
+        "quality": 56.1,
+        "newness": 69.8
       }
     },
     {
@@ -4739,7 +4770,7 @@
       "scores": {
         "popularity": 7.8,
         "momentum": 10.2,
-        "quality": 16.6,
+        "quality": 16.5,
         "newness": 0.5
       }
     },
@@ -4767,10 +4798,10 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 74.9,
-        "momentum": 76.5,
-        "quality": 82.6,
-        "newness": 36.7
+        "popularity": 74.4,
+        "momentum": 75.3,
+        "quality": 82.1,
+        "newness": 35.7
       }
     },
     {
@@ -4797,10 +4828,10 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 58.3,
-        "momentum": 62.3,
-        "quality": 78.2,
-        "newness": 40.2
+        "popularity": 58.8,
+        "momentum": 60.8,
+        "quality": 78.1,
+        "newness": 38.7
       }
     },
     {
@@ -4828,9 +4859,9 @@
       },
       "scores": {
         "popularity": 78.9,
-        "momentum": 62.8,
-        "quality": 63.2,
-        "newness": 46.7
+        "momentum": 62.1,
+        "quality": 62.6,
+        "newness": 44.7
       }
     },
     {
@@ -4857,10 +4888,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 85.4,
-        "momentum": 63.3,
-        "quality": 76.4,
-        "newness": 23.1
+        "popularity": 84.9,
+        "momentum": 62.6,
+        "quality": 76.0,
+        "newness": 22.1
       }
     },
     {
@@ -4887,10 +4918,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 56.8,
-        "momentum": 33.0,
-        "quality": 62.8,
-        "newness": 39.7
+        "popularity": 57.3,
+        "momentum": 32.5,
+        "quality": 62.2,
+        "newness": 38.2
       }
     },
     {
@@ -4917,10 +4948,10 @@
         "license": "AGPL-3.0"
       },
       "scores": {
-        "popularity": 36.4,
-        "momentum": 20.5,
-        "quality": 86.5,
-        "newness": 23.6
+        "popularity": 36.7,
+        "momentum": 20.2,
+        "quality": 86.2,
+        "newness": 22.6
       }
     },
     {
@@ -4948,9 +4979,39 @@
       },
       "scores": {
         "popularity": 9.3,
-        "momentum": 57.0,
-        "quality": 74.5,
+        "momentum": 55.5,
+        "quality": 74.1,
         "newness": 86.4
+      }
+    },
+    {
+      "repo": "Talus-Network/nexus-sdk",
+      "repo_id": 931432271,
+      "url": "https://github.com/Talus-Network/nexus-sdk",
+      "metrics": {
+        "stars": 179,
+        "stars_per_day": 0.2892,
+        "forks": 23,
+        "forks_30d": 0,
+        "star_events_30d": 0,
+        "star_events_capped": false,
+        "commits_90d": 44,
+        "authors_90d": 4,
+        "releases": 18,
+        "last_release_at": "2026-10-08T10:51:33Z",
+        "last_commit_at": "2026-10-22T07:42:16Z",
+        "readme_chars": 5480,
+        "created_at": "2025-02-12T09:13:59Z",
+        "age_days": 619,
+        "description": "The Nexus SDK is a set of tools to help facilitate developers building with Nexus, the Agentic Workflow Engine, to build Talus agents or Talus tools",
+        "language": "Rust",
+        "license": "Apache-2.0"
+      },
+      "scores": {
+        "popularity": 61.3,
+        "momentum": 18.5,
+        "quality": 64.2,
+        "newness": 1.5
       }
     },
     {
@@ -4978,9 +5039,9 @@
       },
       "scores": {
         "popularity": 72.1,
-        "momentum": 60.8,
-        "quality": 57.3,
-        "newness": 49.7
+        "momentum": 60.1,
+        "quality": 56.5,
+        "newness": 49.2
       }
     },
     {
@@ -5007,10 +5068,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 48.7,
-        "momentum": 27.0,
-        "quality": 16.6,
-        "newness": 29.6
+        "popularity": 49.7,
+        "momentum": 26.8,
+        "quality": 16.2,
+        "newness": 28.6
       }
     },
     {
@@ -5038,9 +5099,9 @@
       },
       "scores": {
         "popularity": 77.4,
-        "momentum": 66.6,
-        "quality": 43.9,
-        "newness": 19.1
+        "momentum": 65.1,
+        "quality": 43.4,
+        "newness": 18.1
       }
     },
     {
@@ -5067,10 +5128,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 60.8,
+        "popularity": 61.8,
         "momentum": 28.3,
-        "quality": 80.6,
-        "newness": 13.6
+        "quality": 80.1,
+        "newness": 12.6
       }
     },
     {
@@ -5098,9 +5159,39 @@
       },
       "scores": {
         "popularity": 98.0,
-        "momentum": 92.2,
-        "quality": 73.6,
-        "newness": 63.8
+        "momentum": 91.3,
+        "quality": 73.4,
+        "newness": 64.3
+      }
+    },
+    {
+      "repo": "tinyhumansai/tinyagents",
+      "repo_id": 1283610217,
+      "url": "https://github.com/tinyhumansai/tinyagents",
+      "metrics": {
+        "stars": 125,
+        "stars_per_day": 1.0684,
+        "forks": 26,
+        "forks_30d": 8,
+        "star_events_30d": 0,
+        "star_events_capped": true,
+        "commits_90d": 10136,
+        "authors_90d": null,
+        "releases": 10,
+        "last_release_at": "2026-10-15T10:30:09Z",
+        "last_commit_at": "2026-10-24T07:18:18Z",
+        "readme_chars": 11760,
+        "created_at": "2026-06-29T04:42:44Z",
+        "age_days": 117,
+        "description": "A small, provider-neutral agent harness written in Rust",
+        "language": "Rust",
+        "license": "GPL-3.0"
+      },
+      "scores": {
+        "popularity": 47.7,
+        "momentum": 78.4,
+        "quality": 65.7,
+        "newness": 80.9
       }
     },
     {
@@ -5128,7 +5219,7 @@
       },
       "scores": {
         "popularity": 31.2,
-        "momentum": 68.2,
+        "momentum": 66.8,
         "quality": 69.1,
         "newness": 81.4
       }
@@ -5157,10 +5248,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 88.9,
-        "momentum": 75.5,
-        "quality": 74.7,
-        "newness": 18.6
+        "popularity": 88.4,
+        "momentum": 74.2,
+        "quality": 74.2,
+        "newness": 17.6
       }
     },
     {
@@ -5187,9 +5278,9 @@
         "license": "GPL-3.0"
       },
       "scores": {
-        "popularity": 52.8,
+        "popularity": 53.8,
         "momentum": 58.4,
-        "quality": 44.7,
+        "quality": 44.3,
         "newness": 98.5
       }
     },
@@ -5218,9 +5309,9 @@
       },
       "scores": {
         "popularity": 3.8,
-        "momentum": 19.0,
-        "quality": 48.9,
-        "newness": 67.3
+        "momentum": 18.7,
+        "quality": 48.3,
+        "newness": 66.8
       }
     },
     {
@@ -5247,10 +5338,10 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 95.0,
-        "momentum": 94.5,
-        "quality": 75.8,
-        "newness": 57.3
+        "popularity": 94.5,
+        "momentum": 94.7,
+        "quality": 75.5,
+        "newness": 56.8
       }
     },
     {
@@ -5277,9 +5368,9 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 12.6,
-        "momentum": 55.2,
-        "quality": 44.2,
+        "popularity": 12.1,
+        "momentum": 54.3,
+        "quality": 43.9,
         "newness": 58.8
       }
     },
@@ -5309,8 +5400,8 @@
       "scores": {
         "popularity": 27.9,
         "momentum": 11.2,
-        "quality": 17.7,
-        "newness": 3.5
+        "quality": 17.6,
+        "newness": 3.0
       }
     },
     {
@@ -5337,10 +5428,10 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 15.6,
-        "momentum": 14.7,
-        "quality": 54.8,
-        "newness": 22.1
+        "popularity": 15.1,
+        "momentum": 14.9,
+        "quality": 54.3,
+        "newness": 21.1
       }
     },
     {
@@ -5367,9 +5458,9 @@
         "license": "AGPL-3.0"
       },
       "scores": {
-        "popularity": 91.5,
-        "momentum": 82.2,
-        "quality": 58.2,
+        "popularity": 91.0,
+        "momentum": 81.4,
+        "quality": 57.8,
         "newness": 83.4
       }
     },
@@ -5397,10 +5488,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 17.6,
-        "momentum": 20.0,
-        "quality": 74.4,
-        "newness": 56.3
+        "popularity": 17.1,
+        "momentum": 19.7,
+        "quality": 73.8,
+        "newness": 55.8
       }
     },
     {
@@ -5428,39 +5519,9 @@
       },
       "scores": {
         "popularity": 24.9,
-        "momentum": 15.2,
-        "quality": 53.8,
-        "newness": 16.1
-      }
-    },
-    {
-      "repo": "unhappychoice/splashboard",
-      "repo_id": 1216450471,
-      "url": "https://github.com/unhappychoice/splashboard",
-      "metrics": {
-        "stars": 226,
-        "stars_per_day": 1.2151,
-        "forks": 4,
-        "forks_30d": 0,
-        "star_events_30d": 13,
-        "star_events_capped": false,
-        "commits_90d": 107,
-        "authors_90d": 2,
-        "releases": 27,
-        "last_release_at": "2026-10-10T05:09:39Z",
-        "last_commit_at": "2026-10-18T14:12:15Z",
-        "readme_chars": 6268,
-        "created_at": "2026-04-20T23:21:16Z",
-        "age_days": 186,
-        "description": "A customizable terminal splash screen with plugin-based data sources.",
-        "language": "Rust",
-        "license": "ISC"
-      },
-      "scores": {
-        "popularity": 69.3,
-        "momentum": 45.1,
-        "quality": 64.3,
-        "newness": 64.3
+        "momentum": 15.5,
+        "quality": 53.0,
+        "newness": 15.1
       }
     },
     {
@@ -5487,10 +5548,10 @@
         "license": "MPL-2.0"
       },
       "scores": {
-        "popularity": 11.1,
+        "popularity": 10.8,
         "momentum": 12.2,
-        "quality": 25.9,
-        "newness": 15.6
+        "quality": 25.8,
+        "newness": 14.6
       }
     },
     {
@@ -5517,10 +5578,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 62.3,
-        "momentum": 73.7,
-        "quality": 85.2,
-        "newness": 54.8
+        "popularity": 63.3,
+        "momentum": 72.5,
+        "quality": 84.8,
+        "newness": 54.3
       }
     },
     {
@@ -5547,10 +5608,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 51.8,
-        "momentum": 25.8,
-        "quality": 44.8,
-        "newness": 22.6
+        "popularity": 52.8,
+        "momentum": 25.5,
+        "quality": 44.1,
+        "newness": 21.6
       }
     },
     {
@@ -5577,10 +5638,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 36.4,
-        "momentum": 30.4,
-        "quality": 35.1,
-        "newness": 7.5
+        "popularity": 36.7,
+        "momentum": 29.9,
+        "quality": 34.4,
+        "newness": 7.0
       }
     },
     {
@@ -5607,40 +5668,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 44.5,
-        "momentum": 45.2,
-        "quality": 84.1,
-        "newness": 51.8
-      }
-    },
-    {
-      "repo": "VG-dev1/flux",
-      "repo_id": 1152719361,
-      "url": "https://github.com/VG-dev1/flux",
-      "metrics": {
-        "stars": 59,
-        "stars_per_day": 0.2287,
-        "forks": 3,
-        "forks_30d": 0,
-        "star_events_30d": 0,
-        "star_events_capped": false,
-        "commits_90d": 0,
-        "authors_90d": 0,
-        "releases": 5,
-        "last_release_at": "2026-02-21T15:18:10Z",
-        "last_commit_at": "2026-02-21T15:15:21Z",
-        "readme_chars": 2598,
-        "created_at": "2026-02-08T10:21:11Z",
-        "age_days": 258,
-        "description": "Search, monitor, and nuke processes with ease, with system resource tracking",
-        "language": "Rust",
-        "license": "MIT"
-      },
-      "scores": {
-        "popularity": 11.1,
-        "momentum": 15.7,
-        "quality": 19.0,
-        "newness": 37.2
+        "popularity": 45.5,
+        "momentum": 44.7,
+        "quality": 83.8,
+        "newness": 51.3
       }
     },
     {
@@ -5667,10 +5698,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 76.9,
-        "momentum": 61.3,
-        "quality": 69.3,
-        "newness": 45.7
+        "popularity": 76.4,
+        "momentum": 60.6,
+        "quality": 68.6,
+        "newness": 43.7
       }
     },
     {
@@ -5697,10 +5728,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 83.9,
+        "popularity": 83.4,
         "momentum": 49.9,
-        "quality": 27.3,
-        "newness": 62.8
+        "quality": 27.2,
+        "newness": 63.3
       }
     },
     {
@@ -5727,10 +5758,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 61.8,
+        "popularity": 62.8,
         "momentum": 29.8,
-        "quality": 49.5,
-        "newness": 17.1
+        "quality": 49.1,
+        "newness": 16.1
       }
     },
     {
@@ -5758,9 +5789,9 @@
       },
       "scores": {
         "popularity": 31.2,
-        "momentum": 52.6,
-        "quality": 58.3,
-        "newness": 50.8
+        "momentum": 51.1,
+        "quality": 58.1,
+        "newness": 50.3
       }
     },
     {
@@ -5787,10 +5818,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 55.3,
-        "momentum": 73.0,
-        "quality": 80.4,
-        "newness": 78.4
+        "popularity": 55.8,
+        "momentum": 71.7,
+        "quality": 79.8,
+        "newness": 77.9
       }
     },
     {
@@ -5817,40 +5848,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 56.3,
-        "momentum": 32.3,
-        "quality": 19.8,
-        "newness": 38.7
-      }
-    },
-    {
-      "repo": "YeautyYE/ez-ffmpeg",
-      "repo_id": 943186462,
-      "url": "https://github.com/YeautyYE/ez-ffmpeg",
-      "metrics": {
-        "stars": 361,
-        "stars_per_day": 0.6037,
-        "forks": 36,
-        "forks_30d": 1,
-        "star_events_30d": 7,
-        "star_events_capped": false,
-        "commits_90d": 135,
-        "authors_90d": 2,
-        "releases": 44,
-        "last_release_at": "2026-10-06T22:35:25Z",
-        "last_commit_at": "2026-10-06T22:20:15Z",
-        "readme_chars": 5536,
-        "created_at": "2025-03-05T09:55:58Z",
-        "age_days": 598,
-        "description": "A safe and ergonomic Rust interface for FFmpeg integration, designed for ease of use.",
-        "language": "Rust",
-        "license": "Apache-2.0"
-      },
-      "scores": {
-        "popularity": 80.4,
-        "momentum": 48.2,
-        "quality": 62.9,
-        "newness": 2.0
+        "popularity": 56.8,
+        "momentum": 31.8,
+        "quality": 19.5,
+        "newness": 37.2
       }
     },
     {
@@ -5877,10 +5878,10 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 14.1,
+        "popularity": 13.6,
         "momentum": 13.2,
-        "quality": 56.9,
-        "newness": 18.1
+        "quality": 56.2,
+        "newness": 17.1
       }
     },
     {
@@ -5907,10 +5908,10 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 18.6,
-        "momentum": 34.7,
-        "quality": 21.7,
-        "newness": 32.7
+        "popularity": 18.1,
+        "momentum": 33.9,
+        "quality": 21.4,
+        "newness": 31.7
       }
     },
     {
@@ -5937,9 +5938,9 @@
         "license": "MIT"
       },
       "scores": {
-        "popularity": 81.4,
+        "popularity": 80.9,
         "momentum": 87.7,
-        "quality": 75.6,
+        "quality": 75.5,
         "newness": 64.8
       }
     },
@@ -5967,9 +5968,9 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 89.9,
-        "momentum": 69.0,
-        "quality": 53.2,
+        "popularity": 89.4,
+        "momentum": 68.5,
+        "quality": 52.3,
         "newness": 59.8
       }
     },
@@ -5997,10 +5998,10 @@
         "license": "Apache-2.0"
       },
       "scores": {
-        "popularity": 63.1,
-        "momentum": 39.3,
-        "quality": 60.3,
-        "newness": 47.7
+        "popularity": 64.1,
+        "momentum": 38.8,
+        "quality": 59.6,
+        "newness": 46.2
       }
     },
     {
@@ -6028,9 +6029,9 @@
       },
       "scores": {
         "popularity": 9.3,
-        "momentum": 40.5,
-        "quality": 80.5,
-        "newness": 74.9
+        "momentum": 39.4,
+        "quality": 80.0,
+        "newness": 74.4
       }
     }
   ]
