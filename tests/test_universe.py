@@ -115,6 +115,7 @@ class FakeFetch:
 
 
 TOPIC = Topic(id="t", label="Test topic", queries=("q1", "q2"))
+SCOPED = Topic(id="t", label="Test topic", queries=("q1", "q2"), scope="On topic: even-numbered repos.")
 
 
 def build(tmp_path, results, fetch=None, **kw) -> tuple[Universe, FakeSearch, FakeFetch]:
@@ -244,7 +245,9 @@ def test_scores_are_in_range_and_monotonic():
     scores = score_universe(ms)
     for crit in ("popularity", "momentum", "quality", "newness"):
         vals = [getattr(s, crit) for s in scores]
-        assert vals == sorted(vals) and vals[0] == 0.0 and vals[-1] == 100.0, crit
+        assert vals == sorted(vals) and vals[0] == 0.0, crit
+        # quality: authors above the cap tie, so the top repo needn't reach 100
+        assert vals[-1] == 100.0 or (crit == "quality" and vals[-1] > vals[-2]), crit
 
 
 def test_each_input_moves_its_criterion():
@@ -258,10 +261,43 @@ def test_each_input_moves_its_criterion():
     assert bumped(stars_per_day=99.0).momentum > s0.momentum
     assert bumped(forks_30d=99).momentum > s0.momentum
     assert bumped(star_events_30d=999).momentum == s0.momentum  # not a momentum input (D13)
-    for f, v in (("commits_90d", 999), ("authors_90d", 99), ("releases", 99), ("readme_chars", 99_999),
-                 ("last_commit_at", AS_OF)):
+    for f, v in (("commits_90d", 999), ("authors_90d", 99), ("releases", 99), ("last_commit_at", AS_OF)):
         assert bumped(**{f: v}).quality > s0.quality, f
     assert bumped(created_at=AS_OF - timedelta(days=1), age_days=1).newness > s0.newness
+
+
+def _quality_universe(**over):
+    """Three repos; the first gets ``over``. Returns the first repo's quality."""
+    base = [
+        metrics(commits_90d=10, authors_90d=1, releases=1),
+        metrics(commits_90d=60, authors_90d=2, releases=5),
+        metrics(commits_90d=300, authors_90d=6, releases=40),
+    ]
+    return score_universe([base[0].model_copy(update=over), *base[1:]])[0].quality
+
+
+def test_volume_is_capped():
+    from sleeper.scoring import AUTHORS_CAP, COMMITS_CAP, RELEASES_CAP
+
+    assert COMMITS_CAP <= 200  # so 981 and 200 commits tie
+    assert _quality_universe(commits_90d=981) == _quality_universe(commits_90d=200)
+    assert _quality_universe(releases=1924) == _quality_universe(releases=RELEASES_CAP)
+    assert _quality_universe(authors_90d=50) == _quality_universe(authors_90d=AUTHORS_CAP)
+    assert _quality_universe(commits_90d=COMMITS_CAP) > _quality_universe(commits_90d=COMMITS_CAP - 100)
+
+
+def test_readme_length_is_not_quality():
+    assert _quality_universe(readme_chars=3_000) == _quality_universe(readme_chars=300_000)
+    assert _quality_universe(readme_chars=0) < _quality_universe(readme_chars=3_000)  # no README < real README
+    assert _quality_universe(readme_chars=120) < _quality_universe(readme_chars=3_000)  # a stub doesn't count
+    assert _quality_universe(readme_chars=0) < _quality_universe(readme_chars=None) < _quality_universe(readme_chars=3_000)
+
+
+def test_quality_weights():
+    from sleeper.scoring import QUALITY_WEIGHTS, has_readme
+
+    assert QUALITY_WEIGHTS == (0.25, 0.25, 0.20, 0.20, 0.10) and abs(sum(QUALITY_WEIGHTS) - 1) < 1e-9
+    assert (has_readme(500), has_readme(499), has_readme(0), has_readme(None)) == (100.0, 0.0, 0.0, UNKNOWN)
 
 
 def test_none_metrics_count_as_median():
@@ -296,6 +332,64 @@ def test_universe_file_is_valid_against_the_contract(tmp_path):
     assert h.scoring == SCORING and h.github_requests == 2 and h.build_seconds is not None
     assert (h.topic, h.topic_label, h.stars_min, h.stars_max, h.created_after) == ("t", "Test topic", 50, 2000, date(2025, 1, 1))
     assert [r.repo for r in back.rows] == sorted(r.repo for r in back.rows)
+
+
+# ---- relevance (T18) ---------------------------------------------------------------
+
+
+class FakeChecker:
+    """Stands in for RelevanceChecker: even repo numbers are on topic."""
+
+    def __init__(self) -> None:
+        self.calls: list[str] = []
+
+    def check(self, gh, item):
+        from sleeper.relevance import Verdict
+
+        self.calls.append(item["full_name"])
+        on = item["id"] % 2 == 0
+        return Verdict(item["id"], item["full_name"], "on" if on else "off", "fake", "fake-model", "sha", 0.001)
+
+    def summary(self) -> str:
+        return f"relevance fake-model {len(self.calls)} checked"
+
+
+def test_off_topic_repos_are_excluded_and_backfilled(tmp_path):
+    results = {"q1": [item(i) for i in range(1, 41)], "q2": []}
+    checker = FakeChecker()
+    u, _, fetch = build(tmp_path, results, topic=SCOPED, max_size=10, relevance=checker)
+    c = u.header.counts
+    assert c.rows == len(u.rows) == 10 and all(r.repo_id % 2 == 0 for r in u.rows)
+    assert c.excluded["off_topic"] == len(checker.calls) - 10 > 0
+    on_topic = [n for n in checker.calls if int(n.split("/")[0].removeprefix("own")) % 2 == 0]
+    assert sorted(fetch.calls) == sorted(on_topic)  # no metrics fetched for off-topic repos
+    assert c.eligible == c.search_total - sum(c.excluded.values())
+    assert u.header.builder.endswith(f"; relevance fake-model {len(checker.calls)} checked")
+    back = write_universe(u, tmp_path / "u.json")
+    assert Universe.model_validate_json(back.read_text()) == u
+
+
+def test_topic_without_scope_makes_no_classifier_calls(tmp_path, monkeypatch):
+    def boom(*a, **k):
+        raise AssertionError("no relevance checker for a topic without scope")
+
+    monkeypatch.setattr("sleeper.universe.RelevanceChecker.for_topic", boom)
+    u, _, _ = build(tmp_path, {"q1": [item(i) for i in range(1, 6)], "q2": []})
+    assert "off_topic" not in u.header.counts.excluded and "relevance" not in u.header.builder
+
+
+def test_relevance_false_disables_the_check(tmp_path, monkeypatch):
+    monkeypatch.setattr("sleeper.universe.RelevanceChecker.for_topic", lambda *a, **k: 1 / 0)
+    u, _, _ = build(tmp_path, {"q1": [item(i) for i in range(1, 6)], "q2": []}, topic=SCOPED, relevance=False)
+    assert u.header.counts.rows == 5
+
+
+def test_topics_have_scopes():
+    topics = load_topics(TOPICS_FILE)
+    for tid in ("rust-devtools", "local-first"):
+        scope = topics[tid].scope
+        assert scope and scope.startswith("Principle:") and "off topic" in scope
+        assert "\n" not in scope and "  " not in scope
 
 
 def test_cli_build_universe(tmp_path, monkeypatch):
