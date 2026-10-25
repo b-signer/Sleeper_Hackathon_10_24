@@ -6,152 +6,155 @@
 <title>Sleeper</title>
 <!-- No external assets: the page must load with no network (C4). -->
 <link rel="stylesheet" href="/static/app.css">
+<link rel="stylesheet" href="/static/cards.css">
 </head>
 <body>
-<header class="top">
-  <span class="brand"><span class="logo" aria-hidden="true"></span>Sleeper</span>
-  <span class="tagline">finds GitHub repos that are good but not yet discovered</span>
-  <span id="offline-pill" class="pill" hidden>offline</span>
-</header>
-
-<div class="layout">
-  <aside class="side">
-    <section class="panel">
-      <div class="mode" role="tablist" aria-label="Launcher mode">
-        <button id="mode-replay" type="button" role="tab" aria-selected="true" class="active">Replay<span class="mode-sub">free · offline</span></button>
-        <button id="mode-live" type="button" role="tab" aria-selected="false">Live run<span class="mode-sub">real model · costs money</span></button>
+<main class="shell">
+  <!-- The one visible window: type a topic, press Enter, everything else runs on its own. -->
+  <header class="hero">
+    <span class="brand"><span class="logo" aria-hidden="true"></span>Sleeper</span>
+    <form id="ask" class="ask" autocomplete="off">
+      <label for="q" class="ask-label">What do you want to discover?</label>
+      <div class="ask-row">
+        <input id="q" type="text" maxlength="300" placeholder="vector databases" aria-describedby="q-fine">
+        <button id="q-go" type="submit" aria-label="Discover">Discover</button>
       </div>
-      <p id="live-disabled" class="notice" hidden></p>
+      <p id="q-fine" class="fine"></p>
+    </form>
+    <div id="progress" class="progress" hidden><div id="progress-bar" class="progress-bar"></div></div>
+    <p id="q-status" class="status" aria-live="polite" hidden></p>
+    <p id="q-error" class="status error" role="alert" hidden></p>
+  </header>
 
-      <form id="replay-form" class="launcher">
-        <label>Recorded run
-          <select id="r-run" required></select>
-        </label>
-        <label>Speed
-          <select id="r-speed">
-            <option value="1">1×</option>
-            <option value="4" selected>4×</option>
-            <option value="16">16×</option>
-            <option value="0">Instant</option>
-          </select>
-        </label>
-        <p class="hint">Plays back a finished run from its records. No model calls, no spend.</p>
-        <button id="r-start" class="primary" type="submit">Replay run</button>
-      </form>
+  <section id="run" class="results" hidden>
+    <p class="run-line"><span id="run-title" class="run-title"></span> <span id="run-status" class="pill"></span></p>
+    <div id="cards" class="cards"></div>
+  </section>
 
-      <form id="launcher" class="launcher" hidden>
-        <label>Topic
-          <select id="f-universe" required></select>
-        </label>
-        <details id="nt" class="new-topic">
-          <summary>Research a new topic</summary>
-          <div class="nt-body">
-            <p id="nt-off" class="hint" hidden></p>
-            <label>Describe it
-              <input id="nt-text" type="text" maxlength="300" placeholder="e.g. Python static site generators">
-            </label>
-            <button id="nt-draft" type="button" class="secondary">Suggest searches</button>
-            <p class="hint">A model turns this into GitHub searches you can edit (under $0.01).</p>
-            <div id="nt-plan" class="nt-plan" hidden>
-              <label>Name <input id="nt-label" type="text" maxlength="60" required></label>
-              <div class="nt-head"><span>GitHub searches</span><span>matches</span></div>
-              <div id="nt-queries" class="nt-queries"></div>
-              <button id="nt-add" type="button" class="link">+ add a search</button>
-              <p id="nt-summary" class="hint"></p>
-              <p id="nt-warning" class="hint warn" hidden></p>
-              <div class="confirm-actions">
-                <button id="nt-recount" type="button">Recount</button>
-                <button id="nt-build" type="button" class="primary">Build topic</button>
-              </div>
-            </div>
-            <div id="nt-progress" class="nt-progress" hidden>
-              <progress id="nt-bar" max="1" value="0"></progress>
-              <p id="nt-status" class="hint"></p>
-              <pre id="nt-log" class="nt-log"></pre>
-            </div>
-            <div id="nt-error" class="refusal" role="alert" hidden>
-              <strong id="nt-error-title"></strong>
-              <p id="nt-error-msg"></p>
+  <div class="folds">
+    <details id="d-how" class="fold" hidden>
+      <summary>How it's working</summary>
+      <div class="fold-body">
+        <div id="launch-error" class="refusal" role="alert" hidden>
+          <strong id="launch-error-title"></strong>
+          <p id="launch-error-msg"></p>
+        </div>
+
+        <section id="nt" class="block" hidden>
+          <h3>The topic</h3>
+          <div id="nt-progress" class="nt-progress" hidden>
+            <progress id="nt-bar" max="1" value="0"></progress>
+            <p id="nt-status" class="hint"></p>
+            <pre id="nt-log" class="nt-log"></pre>
+          </div>
+          <div id="nt-plan" class="nt-plan" hidden>
+            <label class="field">Name <input id="nt-label" type="text" maxlength="60" required></label>
+            <div class="nt-head"><span>GitHub searches</span><span>matches</span></div>
+            <div id="nt-queries" class="nt-queries"></div>
+            <button id="nt-add" type="button" class="link">+ add a search</button>
+            <p id="nt-summary" class="hint"></p>
+            <p id="nt-warning" class="hint warn" hidden></p>
+            <div class="actions">
+              <button id="nt-recount" type="button" class="quiet">Recount</button>
+              <button id="nt-build" type="button" class="quiet">Rebuild and research</button>
             </div>
           </div>
-        </details>
-        <label>Model
-          <select id="f-model" required></select>
-        </label>
-        <div class="row">
-          <label>Max picks <input id="f-max-picks" type="number" min="1" max="5" value="5" required></label>
-          <label>Token budget <input id="f-budget" type="number" min="1000" step="1000" value="300000" required></label>
-        </div>
-        <p id="f-hint" class="hint"></p>
-        <p id="f-spend" class="hint"></p>
-        <button id="f-start" class="primary live" type="submit">Start live run</button>
-        <div id="f-confirm" class="confirm" hidden>
-          <p id="f-confirm-text"></p>
-          <div class="confirm-actions">
-            <button id="f-go" class="primary live" type="button">Yes, start it</button>
-            <button id="f-cancel" type="button">Cancel</button>
+          <div id="nt-error" class="refusal" role="alert" hidden>
+            <strong id="nt-error-title"></strong>
+            <p id="nt-error-msg"></p>
           </div>
-        </div>
-      </form>
-      <div id="launch-error" class="refusal" role="alert" hidden>
-        <strong id="launch-error-title"></strong>
-        <p id="launch-error-msg"></p>
-      </div>
-    </section>
-    <section class="panel">
-      <h2>Runs</h2>
-      <ul id="run-list" class="run-list"></ul>
-    </section>
-  </aside>
+        </section>
 
-  <main class="main">
-    <div id="empty" class="empty">
-      <p>Replay a recorded run, or start a live one. Pick a run from the list to open it.</p>
-    </div>
-
-    <section id="run" hidden>
-      <div class="run-head">
-        <div>
-          <h1 id="run-title"></h1>
-          <p class="meta"><span id="run-status" class="pill"></span> <span id="run-meta"></span></p>
-        </div>
-        <div class="replay-box">
-          <select id="speed" aria-label="Replay speed">
-            <option value="1">1×</option>
-            <option value="4" selected>4×</option>
-            <option value="16">16×</option>
-            <option value="0">Instant</option>
-          </select>
-          <button id="replay" type="button" disabled>Replay</button>
-        </div>
+        <section id="run-detail" class="block" hidden>
+          <div class="run-head">
+            <h3>The research</h3>
+            <div class="replay-box">
+              <select id="speed" aria-label="Replay speed">
+                <option value="1">1×</option>
+                <option value="4" selected>4×</option>
+                <option value="16">16×</option>
+                <option value="0">Instant</option>
+              </select>
+              <button id="replay" type="button" class="quiet" disabled>Replay</button>
+            </div>
+          </div>
+          <p id="run-meta" class="hint"></p>
+          <div id="meter" class="meter">
+            <div class="meter-stats">
+              <span><span class="muted">Tokens</span> <span id="m-tokens">—</span></span>
+              <span><span class="muted">Turn</span> <span id="m-turns">—</span></span>
+              <span><span class="muted">Cost</span> <span id="m-cost">—</span></span>
+            </div>
+            <div class="meter-track"><div id="m-bar" class="meter-bar"></div></div>
+          </div>
+          <ol id="trace" class="trace" aria-live="polite"></ol>
+        </section>
       </div>
+    </details>
 
-      <div id="meter" class="meter">
-        <div class="meter-stats">
-          <span><span class="muted">Tokens</span> <span id="m-tokens">—</span></span>
-          <span><span class="muted">Turn</span> <span id="m-turns">—</span></span>
-          <span><span class="muted">Cost</span> <span id="m-cost">—</span></span>
-        </div>
-        <div class="meter-track"><div id="m-bar" class="meter-bar"></div></div>
-      </div>
+    <details id="d-summary" class="fold" hidden>
+      <summary>Summary</summary>
+      <div class="fold-body"><p id="summary" hidden></p></div>
+    </details>
 
-      <nav class="tabs">
-        <button type="button" data-tab="trace" class="active">Trace</button>
-        <button type="button" data-tab="picks">Picks <span id="picks-count" class="count"></span></button>
-      </nav>
+    <details id="d-ranking" class="fold" hidden>
+      <summary>Full ranking</summary>
+      <div class="fold-body"><ol id="ranking"></ol></div>
+    </details>
 
-      <div id="tab-trace">
-        <ol id="trace" class="trace" aria-live="polite"></ol>
+    <details id="d-more" class="fold">
+      <summary>More options</summary>
+      <div class="fold-body">
+        <form id="replay-form" class="launcher block">
+          <h3>Replay a recorded run <span class="muted">· free, offline</span></h3>
+          <label class="field">Recorded run
+            <select id="r-run" required></select>
+          </label>
+          <label class="field">Speed
+            <select id="r-speed">
+              <option value="1">1×</option>
+              <option value="4" selected>4×</option>
+              <option value="16">16×</option>
+              <option value="0">Instant</option>
+            </select>
+          </label>
+          <p class="hint">Plays back a finished run from its records. No model calls, no spend.</p>
+          <div class="actions"><button id="r-start" class="quiet" type="submit">Replay run</button></div>
+        </form>
+
+        <form id="launcher" class="launcher block">
+          <h3>Live run on a prebuilt topic <span class="muted">· real model, costs money</span></h3>
+          <p id="live-disabled" class="hint" hidden></p>
+          <label class="field">Topic
+            <select id="f-universe" required></select>
+          </label>
+          <label class="field">Model
+            <select id="f-model" required></select>
+          </label>
+          <div class="row">
+            <label class="field">Max picks <input id="f-max-picks" type="number" min="1" max="5" value="5" required></label>
+            <label class="field">Token budget <input id="f-budget" type="number" min="1000" step="1000" value="300000" required></label>
+          </div>
+          <p id="f-hint" class="hint"></p>
+          <p id="f-spend" class="hint"></p>
+          <div class="actions"><button id="f-start" class="quiet" type="submit">Start live run</button></div>
+          <div id="f-confirm" class="confirm" hidden>
+            <p id="f-confirm-text"></p>
+            <div class="actions">
+              <button id="f-go" class="primary" type="button">Yes, start it</button>
+              <button id="f-cancel" class="quiet" type="button">Cancel</button>
+            </div>
+          </div>
+        </form>
+
+        <section class="block">
+          <h3>Past runs</h3>
+          <ul id="run-list" class="run-list"></ul>
+        </section>
       </div>
-      <div id="tab-picks" hidden>
-        <p id="summary" class="summary" hidden></p>
-        <div id="cards" class="cards"></div>
-        <h3>Ranking</h3>
-        <div class="wide"><table id="ranking" class="ranking"></table></div>
-      </div>
-    </section>
-  </main>
-</div>
+    </details>
+  </div>
+</main>
 
 <aside id="drawer" class="drawer" hidden>
   <div class="drawer-head">

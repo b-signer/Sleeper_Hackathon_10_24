@@ -1,4 +1,6 @@
-// Sleeper UI (T15 launcher, trace and budget meter; T16 cards). Talks only to the T14 API.
+// Sleeper UI: one input that runs the whole pipeline (draft -> build -> research -> picks), with
+// everything else (trace, meter, topic editing, replay, prebuilt live runs, past runs) behind
+// collapsed <details>. Talks only to the T14 API.
 
 import { renderPicks } from "./cards.js";
 import { Trace } from "./trace.js";
@@ -11,12 +13,13 @@ const EVENT_TYPES = [
 
 const $ = (id) => document.getElementById(id);
 const state = {
-  config: null, universes: [], runs: [], runId: null, source: null, lastSeq: -1, outputs: {}, tab: null,
-  mode: "replay", spend: null,
+  config: null, universes: [], runs: [], runId: null, source: null, lastSeq: -1, outputs: {},
+  spend: null, busy: false, replaying: false,
 };
 const trace = new Trace($("trace"));
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-// Errors carry `status`, and `reason` when the server refused a run (400 detail = {reason, message}).
+// Errors carry `status`, and `reason` when the server refused (400 detail = {reason, message}).
 async function api(path, options) {
   const res = await fetch(path, options);
   const body = await res.json().catch(() => ({}));
@@ -34,7 +37,17 @@ async function api(path, options) {
   return body;
 }
 
-// ---- Launcher: Replay (default, free) or Live run (real model, costs money) ------------
+const post = (path, body) =>
+  api(path, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+
+// ---- The status line, progress bar and errors under the input ------------------------------
+
+function setStage(text, fraction = null) {
+  $("q-status").textContent = text || "";
+  $("q-status").hidden = !text;
+  $("progress").hidden = fraction == null;
+  if (fraction != null) $("progress-bar").style.width = `${Math.round(Math.min(1, Math.max(0, fraction)) * 100)}%`;
+}
 
 const REFUSAL_TITLES = {
   spend_guard: "Not started: spend limit",
@@ -45,201 +58,136 @@ const REFUSAL_TITLES = {
   other: "Not started",
 };
 
+const PLAIN = {
+  spend_guard: "The spend limit is reached, so nothing was started.",
+  offline: "Offline mode: this needs the network. Replays still work under More options.",
+  no_universe: "That topic's data is missing, so nothing was started.",
+  no_api_key: "No API key is set on the server, so the model can't be called.",
+  web_model: "That model has web access, which Sleeper doesn't allow.",
+};
+
+function plainSentence(err) {
+  if (PLAIN[err.reason]) return PLAIN[err.reason];
+  if (!err.reason && err.status === 409) return "Something else is still running. Try again when it finishes.";
+  if (!err.reason && !err.status) return "Can't reach the server.";
+  const first = String(err.message || "Something went wrong.").split(/(?<=\.)\s/)[0];
+  return first.length > 160 ? "Something went wrong. Details are under “How it's working”." : first;
+}
+
+// One plain sentence under the input; the titled box with the full message in "How it's working".
 function showRefusal(err) {
   let title = REFUSAL_TITLES[err.reason] ?? "Not started";
-  if (!err.reason && err.status === 409) title = "Not started: a run is in progress";
+  if (!err.reason && err.status === 409) title = "Not started: something is in progress";
   else if (!err.reason && err.status === 422) title = "Not started: invalid settings";
   else if (!err.reason && !err.status) title = "Not started: can't reach the server";
   $("launch-error-title").textContent = title;
   $("launch-error-msg").textContent = err.message;
   $("launch-error").hidden = false;
+  $("d-how").hidden = false;
+  $("q-error").textContent = plainSentence(err);
+  $("q-error").hidden = false;
 }
 
 function hideRefusal() {
   $("launch-error").hidden = true;
+  $("q-error").hidden = true;
 }
 
-function setMode(mode) {
-  if (mode === "live" && state.config.live_disabled_reason) mode = "replay";
-  state.mode = mode;
-  for (const [id, m] of [["mode-replay", "replay"], ["mode-live", "live"]]) {
-    $(id).classList.toggle("active", mode === m);
-    $(id).setAttribute("aria-selected", String(mode === m));
-  }
-  $("replay-form").hidden = mode !== "replay";
-  $("launcher").hidden = mode !== "live";
-  cancelConfirm();
-  hideRefusal();
-  if (mode === "live") loadSpend();
-}
+// ---- The input: fine print with the worst-case cost --------------------------------------
 
-function fillLauncher() {
-  const { config } = state;
-  $("offline-pill").hidden = !config.offline;
-  const reason = config.live_disabled_reason;
-  $("mode-live").disabled = Boolean(reason);
-  $("mode-live").title = reason || "";
-  $("live-disabled").textContent = reason || "";
-  $("live-disabled").hidden = !reason;
-  $("f-model").replaceChildren(
-    ...config.models.map((m) => {
-      const price = m.input_per_m == null ? "" : ` · $${m.input_per_m}/$${m.output_per_m} per M`;
-      return h("option", { value: m.id }, m.label + price);
-    }),
-  );
-  $("f-model").value = config.default_model;
-  $("f-budget").value = config.default_token_budget;
-  fillNewTopic();
-  syncModel();
-  setMode("replay");
-}
+const DRAFT_USD = 0.01; // drafting the searches is one small dev-model call (under a cent)
+const shortModel = (id) => id.replace(/^.*\//, "");
 
-// Finished runs, newest first. Default: the newest with cards, else the recorded fake run.
-function fillReplay() {
-  const list = $("r-run");
-  const keep = list.value;
-  const done = state.runs.filter((r) => r.status !== "running");
-  list.replaceChildren(
-    ...done.map((r) =>
-      h("option", { value: r.run_id }, `${r.topic} · ${r.model.replace(/^.*\//, "")} · ${r.cards} picks · ${fmtTime(r.started_at)}`),
-    ),
-  );
-  const fallback = done.find((r) => r.cards > 0) ?? done.find((r) => r.topic === "fake") ?? done[0];
-  if (done.some((r) => r.run_id === keep)) list.value = keep;
-  else if (fallback) list.value = fallback.run_id;
-  $("r-start").disabled = !done.length;
-  if (!done.length) list.replaceChildren(h("option", { value: "" }, "No finished runs yet"));
-}
-
-const modelInfo = () => state.config.models.find((m) => m.id === $("f-model").value);
-const isFake = () => $("f-model").value === state.config.fake_model;
-
-// Same formula as sleeper.agent.spend.estimate_max_cost (unknown prices: the dearest known
-// model's). The server checks the guard again when the run starts.
-function worstCase() {
-  const m = modelInfo();
-  if (!m || isFake()) return 0;
-  const budget = Number($("f-budget").value) || 0;
+function modelWorst(model, budget) {
+  const m = state.config.models.find((x) => x.id === model);
+  if (!m || model === state.config.fake_model) return 0;
   const dearest = state.config.models.reduce((a, x) => ((x.input_per_m ?? 0) > (a.input_per_m ?? 0) ? x : a), {});
   const pin = m.input_per_m ?? dearest.input_per_m ?? 0;
   const pout = m.output_per_m ?? dearest.output_per_m ?? 0;
   return (budget * (pin + state.config.output_share * pout)) / 1e6;
 }
 
-// The scripted fake model only knows the fake universe; real models only the real ones.
-function syncModel() {
-  const fake = isFake();
-  const select = $("f-universe");
-  const keep = select.value;
-  const choices = state.universes.filter((u) => (u.topic === "fake") === fake);
-  select.replaceChildren(
-    ...choices.map((u) =>
-      h("option", { value: u.file, dataset: { topic: u.topic } },
-        `${u.topic_label} · ${u.rows} repos${u.topic.startsWith("custom-") ? " · custom" : ""}`),
-    ),
-  );
-  if (choices.some((u) => u.file === keep)) select.value = keep;
-  select.disabled = fake || !choices.length;
-  $("nt").hidden = fake;
-  $("f-budget").disabled = fake;
-  $("f-hint").textContent = fake
-    ? "Offline test: a scripted run on fake data. Free, no network."
-    : choices.length
-      ? "Real model calls on a prebuilt universe. This spends from the OpenRouter budget."
-      : "No real universe is built yet (sleeper build-universe).";
-  cancelConfirm();
-  syncCost();
-}
+// The pipeline's own worst case: the draft call plus a research run on the default model and budget.
+const askWorst = () => DRAFT_USD + modelWorst(state.config.default_model, state.config.default_token_budget);
 
-// Updates the cost text only; a changed setting cancels a pending confirm in its own handler.
-function syncCost() {
-  const cost = worstCase();
-  $("f-start").textContent = isFake() ? "Start offline test (free)" : `Start live run · up to ${fmtUsd(cost)}`;
-  $("f-start").disabled = !isFake() && !state.universes.some((u) => u.topic !== "fake");
-  const s = state.spend;
-  if (isFake() || !s) {
-    $("f-spend").textContent = "";
+function fillAsk() {
+  const { config } = state;
+  const reason = config.custom_topics_reason || config.live_disabled_reason;
+  $("q").disabled = Boolean(reason) || state.busy;
+  $("q-go").disabled = Boolean(reason) || state.busy;
+  if (reason) {
+    $("q-fine").textContent = `${reason} Replays of recorded runs are under More options.`;
     return;
   }
-  const over = s.spent_usd + cost > s.guard_usd;
-  $("f-spend").textContent =
-    `Spent so far: ${fmtUsd(s.spent_usd)} of the ${fmtUsd(s.guard_usd)} guard` +
-    (s.source === "local" ? " (local records; OpenRouter unreachable)" : "") +
-    (over ? ". This run would go past the guard and will be refused." : ".");
-  $("f-spend").classList.toggle("error", over);
+  const worst = askWorst();
+  let text = `Uses ${shortModel(config.default_model)}; at most ${fmtUsd(worst)}.`;
+  const s = state.spend;
+  if (s && s.spent_usd + worst > s.guard_usd) text += " That would pass the spend limit, so it will be refused.";
+  $("q-fine").textContent = text;
 }
 
-async function loadSpend() {
-  try {
-    state.spend = await api("/api/spend");
-  } catch {
-    state.spend = null;
-  }
-  syncCost();
+function setBusy(busy) {
+  state.busy = busy;
+  document.body.classList.toggle("busy", busy);
+  fillAsk();
 }
 
-function liveSettings() {
-  const select = $("f-universe");
-  return {
-    topic: select.selectedOptions[0]?.dataset.topic,
-    universe_file: select.value,
-    model: $("f-model").value,
-    max_picks: Number($("f-max-picks").value),
-    ...(isFake() ? {} : { token_budget: Number($("f-budget").value) }),
-  };
-}
+// ---- The pipeline: draft -> build -> run -> picks, no extra clicks --------------------------
+// Submitting is the consent to the cost shown in the fine print.
 
-// Step 1: a live run asks first; the free offline test starts at once.
-function askToStart(e) {
+async function discover(e) {
   e.preventDefault();
+  if (state.busy) return;
+  const text = $("q").value.trim();
+  if (!text) return $("q").focus();
   hideRefusal();
-  if (isFake()) return postRun();
-  const s = liveSettings();
-  $("f-confirm-text").textContent =
-    `Start a live run of ${s.model} on ${s.topic}? It makes real model calls and can cost up to ` +
-    `${fmtUsd(worstCase())} (token budget ${fmtInt(s.token_budget)}).`;
-  $("f-start").hidden = true;
-  $("f-confirm").hidden = false;
-  $("f-go").focus();
-}
-
-function cancelConfirm() {
-  $("f-confirm").hidden = true;
-  $("f-start").hidden = false;
-}
-
-// Step 2: POST. A refusal (spend guard, offline, ...) shows as a titled box; no run exists.
-async function postRun() {
-  // A paid run only ever starts from the confirm box (askToStart shows it first).
-  if (!isFake() && $("f-confirm").hidden) return;
-  const buttons = [$("f-start"), $("f-go")];
-  for (const b of buttons) b.disabled = true;
+  ntError(null);
+  clearRun();
+  setBusy(true);
+  $("d-how").hidden = false;
+  $("nt").hidden = false;
+  $("nt-plan").hidden = true;
+  $("nt-progress").hidden = true;
   try {
-    const { run_id } = await api("/api/runs", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(liveSettings()),
-    });
-    cancelConfirm();
-    await loadRuns();
-    openRun(run_id);
+    setStage("Finding repos…", 0.03);
+    const plan = await post("/api/topics/draft", { text });
+    ntShowPlan(plan);
+    if (!plan.total) throw Object.assign(new Error(plan.warning || "No repos match."), { reason: "other", plainText: `No repos match “${text}”. Try other words.` });
+    await buildAndResearch({ label: plan.label, queries: plan.queries.map((q) => q.query) });
   } catch (err) {
-    cancelConfirm();
-    showRefusal(err);
-  } finally {
-    for (const b of buttons) b.disabled = false;
-    syncCost();
+    fail(err);
   }
 }
 
-function startReplay(e) {
-  e.preventDefault();
-  const runId = $("r-run").value;
-  if (runId) openRun(runId, "replay", $("r-speed").value);
+// Shared by the input and by "Rebuild and research" in "How it's working". Throws on failure.
+async function buildAndResearch(draft) {
+  setBusy(true);
+  setStage("Building the topic…", 0.1);
+  const job = await post("/api/topics/build", draft);
+  $("nt-plan").hidden = true;
+  $("nt-progress").hidden = false;
+  const universe = await ntFollow(job.id);
+  setStage("Researching…", 0.4);
+  const { run_id } = await post("/api/runs", {
+    topic: universe.topic,
+    universe_file: universe.file,
+    model: state.config.default_model,
+    max_picks: 5,
+    token_budget: state.config.default_token_budget,
+  });
+  await loadRuns();
+  openRun(run_id);
+  // setBusy(false) once the run finishes (finishRun).
 }
 
-// ---- New topic: describe it -> suggested GitHub searches with match counts -> build -------
-// Building is free (GitHub's API), takes a minute or two, and adds the topic to the Topic list.
+function fail(err) {
+  setBusy(false);
+  setStage("");
+  showRefusal(err);
+  if (err.plainText) $("q-error").textContent = err.plainText;
+}
+
+// ---- Custom topic details: drafted searches with counts, recount, rebuild -------------------
 
 const NT_TITLES = {
   offline: "Offline mode",
@@ -290,51 +238,35 @@ function ntShowPlan(plan) {
   $("nt-plan").hidden = false;
 }
 
-// Runs one API call with `button` disabled; errors land in the new-topic error box.
-async function ntCall(button, path, body) {
+async function ntRecount() {
   ntError(null);
-  button.disabled = true;
+  $("nt-recount").disabled = true;
   try {
-    return await api(path, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+    ntShowPlan(await post("/api/topics/count", ntDraftFromForm()));
   } catch (err) {
     ntError(err);
-    return null;
   } finally {
-    button.disabled = false;
+    $("nt-recount").disabled = false;
   }
 }
 
-async function ntSuggest() {
-  const text = $("nt-text").value.trim();
-  if (!text) return $("nt-text").focus();
-  const plan = await ntCall($("nt-draft"), "/api/topics/draft", { text });
-  if (plan) ntShowPlan(plan);
+async function ntRebuild() {
+  if (state.busy) return;
+  ntError(null);
+  hideRefusal();
+  clearRun();
+  try {
+    await buildAndResearch(ntDraftFromForm());
+  } catch (err) {
+    $("nt-plan").hidden = false;
+    fail(err);
+  }
 }
 
-async function ntRecount() {
-  const plan = await ntCall($("nt-recount"), "/api/topics/count", ntDraftFromForm());
-  if (plan) ntShowPlan(plan);
-}
-
-async function ntBuild() {
-  const job = await ntCall($("nt-build"), "/api/topics/build", ntDraftFromForm());
-  if (!job) return;
-  $("nt-plan").hidden = true;
-  $("nt-progress").hidden = false;
-  for (const b of [$("nt-draft"), $("nt-text")]) b.disabled = true;
-  await ntFollow(job.id);
-  for (const b of [$("nt-draft"), $("nt-text")]) b.disabled = false;
-}
-
+// Polls a build until it is done; returns its UniverseInfo, or throws with the build's error.
 async function ntFollow(jobId) {
   for (;;) {
-    let job;
-    try {
-      job = await api(`/api/topics/build/${jobId}`);
-    } catch (err) {
-      ntError(err);
-      return;
-    }
+    const job = await api(`/api/topics/build/${jobId}`);
     $("nt-bar").max = Math.max(job.to_fetch, 1);
     $("nt-bar").value = job.state === "done" ? $("nt-bar").max : job.fetched;
     $("nt-log").textContent = job.lines.slice(-8).join("\n");
@@ -343,32 +275,182 @@ async function ntFollow(jobId) {
       $("nt-status").textContent = job.to_fetch
         ? `Building “${job.label}”: metrics for ${job.fetched} of ${job.to_fetch} repos…`
         : `Building “${job.label}”: searching GitHub…`;
-      await new Promise((r) => setTimeout(r, 1000));
+      setStage("Building the topic…", 0.1 + 0.3 * (job.to_fetch ? job.fetched / job.to_fetch : 0));
+      await sleep(1000);
       continue;
     }
     if (job.state === "error") {
       $("nt-status").textContent = "";
       $("nt-plan").hidden = false;
-      ntError({ reason: "other", message: job.error });
-      return;
+      throw Object.assign(new Error(job.error), { reason: "other", plainText: "Couldn't build the topic. Details are under “How it's working”." });
     }
-    state.universes = await api("/api/universes");
+    $("nt-status").textContent = `Built “${job.universe.topic_label}” with ${job.universe.rows} repos.`;
+    state.universes = await api("/api/universes").catch(() => state.universes);
     syncModel();
-    $("f-universe").value = job.universe.file;
-    $("nt-status").textContent =
-      `Built “${job.universe.topic_label}” with ${job.universe.rows} repos. It's selected above: start a live run when ready.`;
-    return;
+    return job.universe;
   }
 }
 
-function fillNewTopic() {
-  const reason = state.config.custom_topics_reason;
-  $("nt-off").textContent = reason ?? "";
-  $("nt-off").hidden = !reason;
-  for (const id of ["nt-text", "nt-draft", "nt-recount", "nt-build", "nt-add"]) $(id).disabled = Boolean(reason);
+// ---- More options: prebuilt live runs (with a confirm step), replay, past runs ---------------
+
+function fillLauncher() {
+  const { config } = state;
+  const reason = config.live_disabled_reason;
+  $("live-disabled").textContent = reason || "";
+  $("live-disabled").hidden = !reason;
+  $("f-model").replaceChildren(
+    ...config.models.map((m) => {
+      const price = m.input_per_m == null ? "" : ` · $${m.input_per_m}/$${m.output_per_m} per M`;
+      return h("option", { value: m.id }, m.label + price);
+    }),
+  );
+  // Offline or without a key only the scripted fake model can run.
+  $("f-model").value = reason ? config.fake_model : config.default_model;
+  for (const o of $("f-model").options) o.disabled = Boolean(reason) && o.value !== config.fake_model;
+  $("f-budget").value = config.default_token_budget;
+  syncModel();
 }
 
-// ---- Run list ------------------------------------------------------------------
+// Finished runs, newest first. Default: the newest with cards, else the recorded fake run.
+function fillReplay() {
+  const list = $("r-run");
+  const keep = list.value;
+  const done = state.runs.filter((r) => r.status !== "running");
+  list.replaceChildren(
+    ...done.map((r) =>
+      h("option", { value: r.run_id }, `${r.topic} · ${shortModel(r.model)} · ${r.cards} picks · ${fmtTime(r.started_at)}`),
+    ),
+  );
+  const fallback = done.find((r) => r.cards > 0) ?? done.find((r) => r.topic === "fake") ?? done[0];
+  if (done.some((r) => r.run_id === keep)) list.value = keep;
+  else if (fallback) list.value = fallback.run_id;
+  $("r-start").disabled = !done.length;
+  if (!done.length) list.replaceChildren(h("option", { value: "" }, "No finished runs yet"));
+}
+
+const isFake = () => $("f-model").value === state.config.fake_model;
+const worstCase = () => modelWorst($("f-model").value, Number($("f-budget").value) || 0);
+
+// The scripted fake model only knows the fake universe; real models only the real ones.
+function syncModel() {
+  const fake = isFake();
+  const select = $("f-universe");
+  const keep = select.value;
+  const choices = state.universes.filter((u) => (u.topic === "fake") === fake);
+  select.replaceChildren(
+    ...choices.map((u) =>
+      h("option", { value: u.file, dataset: { topic: u.topic } },
+        `${u.topic_label} · ${u.rows} repos${u.topic.startsWith("custom-") ? " · custom" : ""}`),
+    ),
+  );
+  if (choices.some((u) => u.file === keep)) select.value = keep;
+  select.disabled = fake || !choices.length;
+  $("f-budget").disabled = fake;
+  $("f-hint").textContent = fake
+    ? "Offline test: a scripted run on fake data. Free, no network."
+    : choices.length
+      ? "Real model calls on a prebuilt universe. This spends from the OpenRouter budget."
+      : "No real universe is built yet (sleeper build-universe).";
+  cancelConfirm();
+  syncCost();
+}
+
+// Updates the cost text only; a changed setting cancels a pending confirm in its own handler.
+function syncCost() {
+  const cost = worstCase();
+  $("f-start").textContent = isFake() ? "Start offline test (free)" : `Start live run · up to ${fmtUsd(cost)}`;
+  $("f-start").disabled = !isFake() && !state.universes.some((u) => u.topic !== "fake");
+  const s = state.spend;
+  if (isFake() || !s) {
+    $("f-spend").textContent = "";
+    return;
+  }
+  const over = s.spent_usd + cost > s.guard_usd;
+  $("f-spend").textContent =
+    `Spent so far: ${fmtUsd(s.spent_usd)} of the ${fmtUsd(s.guard_usd)} guard` +
+    (s.source === "local" ? " (local records; OpenRouter unreachable)" : "") +
+    (over ? ". This run would go past the guard and will be refused." : ".");
+  $("f-spend").classList.toggle("error", over);
+}
+
+async function loadSpend() {
+  if (state.config.live_disabled_reason) return;
+  try {
+    state.spend = await api("/api/spend");
+  } catch {
+    state.spend = null;
+  }
+  syncCost();
+  fillAsk();
+}
+
+function liveSettings() {
+  const select = $("f-universe");
+  return {
+    topic: select.selectedOptions[0]?.dataset.topic,
+    universe_file: select.value,
+    model: $("f-model").value,
+    max_picks: Number($("f-max-picks").value),
+    ...(isFake() ? {} : { token_budget: Number($("f-budget").value) }),
+  };
+}
+
+// Step 1: a live run from More options asks first; the free offline test starts at once.
+function askToStart(e) {
+  e.preventDefault();
+  hideRefusal();
+  if (isFake()) return postRun();
+  const s = liveSettings();
+  $("f-confirm-text").textContent =
+    `Start a live run of ${s.model} on ${s.topic}? It makes real model calls and can cost up to ` +
+    `${fmtUsd(worstCase())} (token budget ${fmtInt(s.token_budget)}).`;
+  $("f-start").hidden = true;
+  $("f-confirm").hidden = false;
+  $("f-go").focus();
+}
+
+function cancelConfirm() {
+  $("f-confirm").hidden = true;
+  $("f-start").hidden = false;
+}
+
+// Step 2: POST. A refusal (spend guard, offline, ...) shows under the input; no run exists.
+async function postRun() {
+  // A paid run from here only ever starts from the confirm box (askToStart shows it first).
+  if (!isFake() && $("f-confirm").hidden) return;
+  if (state.busy) return;
+  const buttons = [$("f-start"), $("f-go")];
+  for (const b of buttons) b.disabled = true;
+  try {
+    const { run_id } = await post("/api/runs", liveSettings());
+    cancelConfirm();
+    await loadRuns();
+    setBusy(true);
+    openRun(run_id);
+    toTop();
+  } catch (err) {
+    cancelConfirm();
+    showRefusal(err);
+    toTop();
+  } finally {
+    for (const b of buttons) b.disabled = false;
+    syncCost();
+  }
+}
+
+function startReplay(e) {
+  e.preventDefault();
+  const runId = $("r-run").value;
+  if (!runId) return;
+  hideRefusal();
+  openRun(runId, "replay", $("r-speed").value);
+  toTop();
+}
+
+function toTop() {
+  $("d-more").open = false;
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
 
 async function loadRuns() {
   state.runs = await api("/api/runs");
@@ -380,9 +462,17 @@ async function loadRuns() {
         {},
         h(
           "button",
-          { type: "button", class: `run-item${r.run_id === state.runId ? " active" : ""}`, onclick: () => openRun(r.run_id) },
+          {
+            type: "button",
+            class: `run-item${r.run_id === state.runId ? " active" : ""}`,
+            onclick: () => {
+              hideRefusal();
+              openRun(r.run_id);
+              toTop();
+            },
+          },
           h("span", { class: "run-top" }, h("span", { class: "run-topic" }, r.topic), h("span", { class: `pill status-${r.status}` }, r.status)),
-          h("span", { class: "run-sub" }, `${fmtTime(r.started_at)} · ${r.model}${r.status === "running" ? "" : ` · ${r.cards} picks`}`),
+          h("span", { class: "run-sub" }, `${fmtTime(r.started_at)} · ${shortModel(r.model)}${r.status === "running" ? "" : ` · ${r.cards} picks`}`),
         ),
       ),
     ),
@@ -413,35 +503,52 @@ function updateMeter(ev) {
 
 // ---- Opening, streaming and replaying a run ----------------------------------------
 
-function showTab(name) {
-  for (const b of document.querySelectorAll(".tabs button")) b.classList.toggle("active", b.dataset.tab === name);
-  $("tab-trace").hidden = name !== "trace";
-  $("tab-picks").hidden = name !== "picks";
-}
+const PHASE_TEXT = {
+  wrapping_up: "Wrapping up…",
+  submit_only: "Wrapping up…",
+  reviewing: "Double-checking the picks…",
+  fact_checking: "Checking the facts…",
+};
 
 function setStatus(status) {
   const pill = $("run-status");
-  pill.textContent = status;
+  pill.textContent = status === "ok" ? "" : status;
   pill.className = `pill status-${status}`;
+  pill.hidden = !pill.textContent;
+}
+
+// Empties the results and their folds (not the custom-topic details).
+function clearRun() {
+  if (state.source) state.source.close();
+  Object.assign(state, { runId: null, source: null });
+  $("run").hidden = true;
+  $("run-detail").hidden = true;
+  $("d-summary").hidden = true;
+  $("d-ranking").hidden = true;
+  document.body.classList.remove("has-results");
 }
 
 async function openRun(runId, mode = "events", speed = null) {
   if (state.source) state.source.close();
   closeDrawer();
-  Object.assign(state, { runId, source: null, lastSeq: -1, outputs: {} });
+  Object.assign(state, { runId, source: null, lastSeq: -1, outputs: {}, replaying: mode === "replay" });
   if (speed != null) $("speed").value = speed;
-  history.replaceState(null, "", `#run=${encodeURIComponent(runId)}${state.tab ? `&tab=${state.tab}` : ""}`);
-  $("empty").hidden = true;
+  history.replaceState(null, "", `#run=${encodeURIComponent(runId)}`);
+  document.body.classList.add("has-results");
   $("run").hidden = false;
+  $("d-how").hidden = false;
+  $("run-detail").hidden = false;
+  $("d-summary").hidden = true;
+  $("d-ranking").hidden = true;
   trace.reset();
   $("cards").replaceChildren();
   $("ranking").replaceChildren();
   $("summary").hidden = true;
-  $("picks-count").textContent = "";
   $("replay").disabled = true;
-  showTab("trace");
-  for (const el of document.querySelectorAll(".run-item")) el.classList.remove("active");
-  loadRuns();
+  $("run-title").textContent = "";
+  setStatus("ok");
+  setStage(mode === "replay" ? "Replaying…" : "Researching…", 0.4);
+  loadRuns().catch(() => {});
 
   let info;
   try {
@@ -449,11 +556,13 @@ async function openRun(runId, mode = "events", speed = null) {
   } catch (err) {
     $("run-title").textContent = runId;
     $("run-meta").textContent = err.message;
+    if (runId === state.runId) fail(err);
     return;
   }
+  if (runId !== state.runId) return;
   $("run-title").textContent = info.topic;
   $("run-meta").textContent = `${info.run_id} · ${info.model}`;
-  setStatus(mode === "replay" ? "replay" : info.status);
+  if (mode !== "replay" && info.status !== "running") setStage("Loading…", 0.9);
   resetMeter(null);
 
   const url =
@@ -477,12 +586,21 @@ async function openRun(runId, mode = "events", speed = null) {
 function handleEvent(ev) {
   if (ev.seq <= state.lastSeq) return; // already shown (e.g. after a reconnect)
   state.lastSeq = ev.seq;
+  const verb = state.replaying ? "Replaying…" : "Researching…";
   if (ev.type === "run_started") {
     resetMeter(ev.settings);
     $("run-title").textContent = ev.universe.topic_label;
   }
   if (ev.type === "tool_result") state.outputs[ev.call_id] = { tool: ev.output.tool, output: ev.output };
-  if (ev.type === "usage") updateMeter(ev);
+  if (ev.type === "usage") {
+    updateMeter(ev);
+    const share = Math.max(ev.turn / ev.max_turns, ev.usage.total_tokens / ev.token_budget);
+    setStage($("q-status").textContent || verb, 0.4 + 0.5 * Math.min(1, share));
+  }
+  if (ev.type === "status") {
+    const text = PHASE_TEXT[ev.phase] ?? (ev.phase === "researching" ? verb : null);
+    if (text) setStage(text, Number.parseFloat($("progress-bar").style.width) / 100 || 0.4);
+  }
   if (ev.type === "run_finished") setStatus(ev.status);
   trace.add(ev);
 }
@@ -490,17 +608,21 @@ function handleEvent(ev) {
 async function finishRun(runId) {
   if (runId !== state.runId) return;
   $("replay").disabled = false;
-  loadRuns();
+  loadRuns().catch(() => {});
   try {
     const result = await api(`/api/runs/${encodeURIComponent(runId)}/result`);
     if (runId !== state.runId) return;
     setStatus(result.status);
     renderPicks(result, { cardsEl: $("cards"), rankingEl: $("ranking"), summaryEl: $("summary"), open: openSource });
-    $("picks-count").textContent = result.cards.length ? String(result.cards.length) : "";
-    if (state.tab) showTab(state.tab);
-    else if (result.cards.length) showTab("picks");
+    $("d-summary").hidden = $("summary").hidden;
+    $("d-ranking").hidden = !$("ranking").childElementCount;
+    const n = result.cards.length;
+    setStage(n ? `Done · ${n} pick${n === 1 ? "" : "s"}` : "Done · no picks this time", null);
   } catch (err) {
     $("cards").replaceChildren(h("p", { class: "error" }, err.message));
+    setStage("");
+  } finally {
+    setBusy(false);
   }
 }
 
@@ -536,8 +658,7 @@ function closeDrawer() {
 // ---- Start-up --------------------------------------------------------------------------
 
 async function init() {
-  $("mode-replay").addEventListener("click", () => setMode("replay"));
-  $("mode-live").addEventListener("click", () => setMode("live"));
+  $("ask").addEventListener("submit", discover);
   $("replay-form").addEventListener("submit", startReplay);
   $("launcher").addEventListener("submit", askToStart);
   $("f-go").addEventListener("click", postRun);
@@ -549,39 +670,37 @@ async function init() {
     syncCost();
   });
   $("f-max-picks").addEventListener("input", cancelConfirm);
-  $("nt-draft").addEventListener("click", ntSuggest);
-  // Enter inside the new-topic panel must never submit the live-run form around it.
+  $("d-more").addEventListener("toggle", () => $("d-more").open && loadSpend());
+  // Enter inside the topic editor must never submit anything around it.
   $("nt").addEventListener("keydown", (e) => {
-    if (e.key !== "Enter" || e.target.tagName !== "INPUT") return;
-    e.preventDefault();
-    if (e.target.id === "nt-text") ntSuggest();
+    if (e.key === "Enter" && e.target.tagName === "INPUT") e.preventDefault();
   });
   $("nt-recount").addEventListener("click", ntRecount);
-  $("nt-build").addEventListener("click", ntBuild);
+  $("nt-build").addEventListener("click", ntRebuild);
   $("nt-add").addEventListener("click", () => $("nt-queries").append(ntQueryRow()));
-  $("replay").addEventListener("click", () => state.runId && openRun(state.runId, "replay"));
+  $("replay").addEventListener("click", () => {
+    if (!state.runId) return;
+    hideRefusal();
+    openRun(state.runId, "replay");
+  });
   $("drawer-close").addEventListener("click", closeDrawer);
   document.addEventListener("keydown", (e) => e.key === "Escape" && closeDrawer());
-  for (const b of document.querySelectorAll(".tabs button")) {
-    b.addEventListener("click", () => {
-      state.tab = null; // a click is a one-off choice; the next run picks its own tab again
-      showTab(b.dataset.tab);
-    });
-  }
 
   try {
     [state.config, state.universes] = await Promise.all([api("/api/config"), api("/api/universes")]);
     fillLauncher();
+    fillAsk();
     await loadRuns();
   } catch (err) {
-    $("launch-error-title").textContent = "Can't reach the server";
-    $("launch-error-msg").textContent = err.message;
-    $("launch-error").hidden = false;
+    $("q").disabled = $("q-go").disabled = true;
+    $("q-error").textContent = `Can't reach the server: ${err.message}`;
+    $("q-error").hidden = false;
     return;
   }
-  // Deep link: #run=<id>, optionally &tab=trace|picks to stay on that tab.
+  loadSpend();
+  if (!$("q").disabled) $("q").focus();
+  // Deep link: #run=<id> opens that run.
   const params = new URLSearchParams(location.hash.slice(1));
-  if (["trace", "picks"].includes(params.get("tab"))) state.tab = params.get("tab");
   if (params.get("run")) openRun(params.get("run"));
 }
 
