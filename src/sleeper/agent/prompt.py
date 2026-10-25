@@ -125,7 +125,7 @@ in that output, in its own unit. Good key figures: popularity /metrics/stars; mo
 /metrics/forks_30d; quality /metrics/authors_90d or /metrics/releases; newness /metrics/age_days.
 
 5. AN HONEST QUALITY CASE
-The quality score is a rough proxy built from volume (commits, authors, releases, recency, README length). Make \
+The quality score is a rough proxy built from volume (capped commits, authors and releases, recency of the last commit, and whether a real README exists). Make \
 the case from what the project does and how well, using the README: the concrete problem it solves, distinctive \
 capabilities or design, install and usage paths, docs, tests or CI, integrations. Back it with the healthy-project \
 numbers that matter: more than one active author, regular releases, recent commits.
